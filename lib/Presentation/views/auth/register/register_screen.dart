@@ -3,8 +3,11 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:grocery/Data/repository/auth/registration_repository.dart';
+import 'package:grocery/Data/services/auth/registration_service.dart';
 import 'package:grocery/Presentation/common/custom_button.dart';
 import 'package:grocery/Presentation/common/custom_text_field.dart';
+import 'package:grocery/Presentation/common/loading_indicator.dart';
 import 'package:grocery/Presentation/common/snack_bar_widget.dart';
 import 'package:grocery/Presentation/resources/app_strings.dart';
 import 'package:grocery/Presentation/resources/assets.dart';
@@ -15,6 +18,9 @@ import 'package:grocery/Presentation/resources/text_styles.dart';
 import 'package:grocery/Presentation/state%20management/bloc/set_bool_cubit.dart';
 import 'package:grocery/Presentation/views/auth/common/bottom_container.dart';
 import 'package:grocery/Presentation/views/auth/common/bottom_text.dart';
+import 'package:grocery/Presentation/views/auth/register/bloc/registration_cubit.dart';
+
+import '../../../../Data/errors/custom_error.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
@@ -45,19 +51,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   child: Column(
                     children: [
                       backButton(),
-                      //Image.asset(Assets.authBack1),
-                      Text(AppStrings.registerText,
-                          style: Styles.circularStdBook(
-                            AppSize.text34.sp,
-                            AppColors.blackColor,
-                          )),
+                      registerText(),
                       CustomSizedBox.height(25),
                       textFields(),
                       CustomSizedBox.height(30),
-                      CustomButton(
-                        text: AppStrings.registerText,
-                        onTap: () {
-                          if (formKey.currentState!.validate()) {
+                      BlocListener<RegistrationCubit, RegistrationState>(
+                        listener: (context, state) {
+                          if (state.status == RegisterEnum.success) {
                             SnackBarWidget.buildSnackBar(
                               context,
                               AppStrings.registerSuccessfullyText,
@@ -67,7 +67,40 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             );
                             Navigator.of(context).pop();
                           }
+                          if (state.error != const CustomError(error: '')) {
+                            SnackBarWidget.buildSnackBar(
+                              context,
+                              state.error.error,
+                              AppColors.redColor,
+                              Icons.close,
+                              true,
+                            );
+                          }
                         },
+                        child:
+                            BlocBuilder<RegistrationCubit, RegistrationState>(
+                          builder: (context, state) {
+                            if (state.status == RegisterEnum.loading) {
+                              return LoadingIndicator.loading();
+                            }
+                            return CustomButton(
+                              text: AppStrings.registerText,
+                              onTap: () async {
+                                if (formKey.currentState!.validate()) {
+                                  Map<String, dynamic> map = {
+                                    "email": emailController.text,
+                                    "first_name": firstNameController.text,
+                                    "last_name": lastNameContoller.text,
+                                    "password": passwordContoller.text,
+                                  };
+                                  await context
+                                      .read<RegistrationCubit>()
+                                      .registration(map);
+                                }
+                              },
+                            );
+                          },
+                        ),
                       ),
                       CustomSizedBox.height(20),
                       bottomText(
@@ -86,6 +119,14 @@ class _RegisterScreenState extends State<RegisterScreen> {
         ],
       ),
     );
+  }
+
+  Text registerText() {
+    return Text(AppStrings.registerText,
+        style: Styles.circularStdBook(
+          AppSize.text34.sp,
+          AppColors.blackColor,
+        ));
   }
 
   Widget backButton() {
@@ -200,6 +241,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     validator: (v) {
                       if (v!.trim().isEmpty) {
                         return AppStrings.providePasswordText;
+                      } else if (v.length < 6) {
+                        return AppStrings.passwordLengthText;
                       } else {
                         return null;
                       }

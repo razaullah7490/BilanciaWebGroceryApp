@@ -42,6 +42,7 @@ class AppStrings {
   static const String doYouWantToDeleteText = "Do you want to delete the";
   static const String cancelText = "Cancel";
   static const String deleteText = "Delete";
+  static const String passwordLengthText = "At least 6 digits password";
 
   //dashboard
   static const String dashboardText = "Dashboard";
@@ -211,7 +212,7 @@ class AppStrings {
 
   //SnackBar Text
   static const String loginSuccessfullyText = "Login Successfully";
-  static const String registerSuccessfullyText = "Register Successfully";
+  static const String registerSuccessfullyText = "Registered Successfully";
   static const String profileUpdatedSuccessText =
       "Profile Updated Successfully";
   static const String passwordUpdatedSuccessText =

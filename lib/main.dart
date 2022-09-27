@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:grocery/Data/repository/auth/registration_repository.dart';
+import 'package:grocery/Data/services/auth/registration_service.dart';
 import 'package:grocery/Presentation/resources/routes/routes_manager.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:grocery/Presentation/views/auth/login/login_screen.dart';
+import 'package:grocery/Presentation/views/auth/register/bloc/registration_cubit.dart';
 import 'package:grocery/Presentation/views/home/inventory/all%20tabs/category/bloc/category_cubit.dart';
 import 'package:grocery/Presentation/views/home/inventory/all%20tabs/processedResourceAction/bloc/proceed_resource_action_cubit.dart';
 import 'package:grocery/Presentation/views/home/inventory/all%20tabs/products/bloc/product_cubit.dart';
@@ -22,34 +25,44 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ScreenUtilInit(
-      designSize: const Size(360, 690),
-      minTextAdapt: true,
-      splitScreenMode: true,
-      builder: ((context, child) {
-        return MultiBlocProvider(
-          providers: [
-            BlocProvider<ProductCubit>(
-                create: (context) => ProductCubit(modelList: [])),
-            BlocProvider<CategoryCubit>(
-                create: (context) => CategoryCubit(modelList: [])),
-            BlocProvider<ResourceCubit>(
-                create: (context) => ResourceCubit(modelList: [])),
-            BlocProvider<ResourceActionCubit>(
-                create: (context) => ResourceActionCubit(modelList: [])),
-            BlocProvider<ProceedResourceCubit>(
-                create: (context) => ProceedResourceCubit(modelList: [])),
-            BlocProvider<ProceedResourceActionCubit>(
-                create: (context) => ProceedResourceActionCubit(modelList: [])),
-          ],
-          child: MaterialApp(
-            title: 'Bilancia Web',
-            debugShowCheckedModeBanner: false,
-            onGenerateRoute: (settings) => generateRoute(settings),
-            home: child,
-          ),
-        );
-      }),
-      child: const LoginScreen(),
-    );
+        designSize: const Size(360, 690),
+        minTextAdapt: true,
+        splitScreenMode: true,
+        builder: ((context, child) {
+          return MultiRepositoryProvider(
+              providers: [
+                RepositoryProvider(
+                    create: (context) => RegistrationRepository(
+                          registerationService: RegisterationService(),
+                        )),
+              ],
+              child: MultiBlocProvider(
+                providers: [
+                  BlocProvider<RegistrationCubit>(
+                      create: (context) => RegistrationCubit(
+                          repo: context.read<RegistrationRepository>())),
+                  BlocProvider<ProductCubit>(
+                      create: (context) => ProductCubit(modelList: [])),
+                  BlocProvider<CategoryCubit>(
+                      create: (context) => CategoryCubit(modelList: [])),
+                  BlocProvider<ResourceCubit>(
+                      create: (context) => ResourceCubit(modelList: [])),
+                  BlocProvider<ResourceActionCubit>(
+                      create: (context) => ResourceActionCubit(modelList: [])),
+                  BlocProvider<ProceedResourceCubit>(
+                      create: (context) => ProceedResourceCubit(modelList: [])),
+                  BlocProvider<ProceedResourceActionCubit>(
+                      create: (context) =>
+                          ProceedResourceActionCubit(modelList: [])),
+                ],
+                child: MaterialApp(
+                  title: 'Bilancia Web',
+                  debugShowCheckedModeBanner: false,
+                  onGenerateRoute: (settings) => generateRoute(settings),
+                  home: child,
+                ),
+              ));
+        }),
+        child: const LoginScreen());
   }
 }
