@@ -7,7 +7,7 @@ class CategoryViewModel {
     "N4",
     "N5",
     "N6",
-    "V1",
+    "VI",
   ];
   static const List<String> statusList = [
     "Active",

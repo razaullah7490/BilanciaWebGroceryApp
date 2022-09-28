@@ -1,7 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:grocery/Domain/models/products_model.dart';
 import 'package:grocery/Presentation/common/loading_indicator.dart';
 import 'package:grocery/Presentation/resources/app_strings.dart';
 import 'package:grocery/Presentation/resources/border_radius.dart';
@@ -9,6 +8,8 @@ import 'package:grocery/Presentation/resources/colors_palette.dart';
 import 'package:grocery/Presentation/resources/size.dart';
 import 'package:grocery/Presentation/resources/sized_box.dart';
 import 'package:grocery/Presentation/resources/text_styles.dart';
+
+import '../../../../../../Domain/models/inventory/products_model.dart';
 
 class ProductContainer extends StatelessWidget {
   final ProductModel model;

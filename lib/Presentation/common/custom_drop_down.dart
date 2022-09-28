@@ -9,16 +9,16 @@ import 'package:grocery/Presentation/resources/text_styles.dart';
 class CustomDropDownWidget extends StatefulWidget {
   final String hintText;
   dynamic value;
-  final List itemsList;
   final String validationText;
   final ValueChanged onChanged;
+  final List<DropdownMenuItem<Object>> itemsMap;
   CustomDropDownWidget({
     super.key,
     required this.hintText,
     required this.value,
-    required this.itemsList,
     required this.validationText,
     required this.onChanged,
+    required this.itemsMap,
   });
 
   @override
@@ -90,12 +90,7 @@ class _CustomDropDownWidgetState extends State<CustomDropDownWidget> {
       ),
       value: widget.value,
       onChanged: widget.onChanged,
-      items: widget.itemsList.map((v) {
-        return DropdownMenuItem(
-          value: v,
-          child: Text(v.toString()),
-        );
-      }).toList(),
+      items: widget.itemsMap,
     );
   }
 }

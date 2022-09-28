@@ -1,5 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'package:grocery/Domain/models/products_model.dart';
+
+import '../../../../../../Domain/models/inventory/products_model.dart';
 
 class ManageProductsViewModel {
   static List<ProductModel> productList = [

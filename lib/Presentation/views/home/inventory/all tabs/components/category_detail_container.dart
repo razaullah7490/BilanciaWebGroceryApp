@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:grocery/Domain/models/category_model.dart';
 import 'package:grocery/Presentation/common/delete_item_dialogue.dart';
 import 'package:grocery/Presentation/common/edit_delete_container.dart';
 import 'package:grocery/Presentation/common/snack_bar_widget.dart';
@@ -13,6 +12,8 @@ import 'package:grocery/Presentation/resources/size.dart';
 import 'package:grocery/Presentation/resources/sized_box.dart';
 import 'package:grocery/Presentation/resources/text_styles.dart';
 import 'package:grocery/Presentation/views/home/inventory/all%20tabs/category/bloc/category_cubit.dart';
+
+import '../../../../../../Domain/models/inventory/category_model.dart';
 
 class CategoryDetailContainer extends StatelessWidget {
   final CategoryModel model;
@@ -68,6 +69,7 @@ class CategoryDetailContainer extends StatelessWidget {
                 ivaType: model.ivaType,
                 status: model.status,
                 aliquotaIva: model.aliquotaIva,
+                discountPrice: model.discountPrice,
               );
               Navigator.pushNamed(
                 context,
@@ -95,7 +97,7 @@ class CategoryDetailContainer extends StatelessWidget {
         ).r,
       ),
       child: Text(
-        model.status,
+        model.status == true ? "Active" : "InActive",
         style: Styles.segoeUI(
           AppSize.text12.sp,
           AppColors.whiteColor,
@@ -131,9 +133,13 @@ class CategoryDetailContainer extends StatelessWidget {
         builder: (BuildContext context) {
           return DeleteItemDialogue(
             text: AppStrings.categoryText,
-            onDeleteButtonTap: () {
-              context.read<CategoryCubit>().deleteCategory(model.categoryId);
+            onDeleteButtonTap: () async {
+              await context
+                  .read<CategoryCubit>()
+                  .deleteCategory(model.categoryId);
               Navigator.of(context).pop();
+              Navigator.pushReplacementNamed(
+                  context, RoutesNames.categoryScreen);
               SnackBarWidget.buildSnackBar(
                 context,
                 AppStrings.categoryDeleteSuccessText,

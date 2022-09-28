@@ -3,7 +3,6 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:grocery/Domain/models/products_model.dart';
 import 'package:grocery/Presentation/common/app_bar.dart';
 import 'package:grocery/Presentation/common/custom_bottom_sheet.dart';
 import 'package:grocery/Presentation/common/custom_button.dart';
@@ -19,6 +18,8 @@ import 'package:grocery/Presentation/resources/sized_box.dart';
 import 'package:grocery/Presentation/resources/text_styles.dart';
 import 'package:grocery/Presentation/views/home/inventory/all%20tabs/products/bloc/product_cubit.dart';
 import 'package:image_picker/image_picker.dart';
+
+import '../../../../../../../Domain/models/inventory/products_model.dart';
 
 class AddProductScreen extends StatefulWidget {
   const AddProductScreen({super.key});

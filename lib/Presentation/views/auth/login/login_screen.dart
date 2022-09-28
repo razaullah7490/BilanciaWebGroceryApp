@@ -14,7 +14,10 @@ import 'package:grocery/Presentation/state%20management/bloc/set_bool_cubit.dart
 import 'package:grocery/Presentation/views/auth/common/bottom_container.dart';
 import 'package:grocery/Presentation/views/auth/common/bottom_text.dart';
 
+import '../../../../Data/errors/custom_error.dart';
+import '../../../common/loading_indicator.dart';
 import '../../../common/snack_bar_widget.dart';
+import 'bloc/login_cubit.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -46,12 +49,9 @@ class _LoginScreenState extends State<LoginScreen> {
                       CustomSizedBox.height(40),
                       textFields(),
                       CustomSizedBox.height(40),
-                      CustomButton(
-                        text: AppStrings.loginText,
-                        onTap: () {
-                          if (formKey.currentState!.validate()) {
-                            Navigator.pushReplacementNamed(
-                                context, RoutesNames.dashboardScreen);
+                      BlocListener<LoginCubit, LoginState>(
+                        listener: (context, state) {
+                          if (state.status == LoginEnum.success) {
                             SnackBarWidget.buildSnackBar(
                               context,
                               AppStrings.loginSuccessfullyText,
@@ -59,8 +59,38 @@ class _LoginScreenState extends State<LoginScreen> {
                               Icons.check,
                               true,
                             );
+                            Navigator.pushReplacementNamed(
+                                context, RoutesNames.dashboardScreen);
+                          }
+                          if (state.error != const CustomError(error: '')) {
+                            SnackBarWidget.buildSnackBar(
+                              context,
+                              state.error.error,
+                              AppColors.redColor,
+                              Icons.close,
+                              true,
+                            );
                           }
                         },
+                        child: BlocBuilder<LoginCubit, LoginState>(
+                            builder: (context, state) {
+                          if (state.status == LoginEnum.loading) {
+                            return LoadingIndicator.loading();
+                          }
+
+                          return CustomButton(
+                            text: AppStrings.loginText,
+                            onTap: () async {
+                              if (formKey.currentState!.validate()) {
+                                Map<String, dynamic> map = {
+                                  "username": emailController.text,
+                                  "password": passwordContoller.text,
+                                };
+                                await context.read<LoginCubit>().login(map);
+                              }
+                            },
+                          );
+                        }),
                       ),
                       CustomSizedBox.height(30),
                       bottomText(

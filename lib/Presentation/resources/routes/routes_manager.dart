@@ -1,10 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:grocery/Domain/models/category_model.dart';
-import 'package:grocery/Domain/models/proceed_resource_action_model.dart';
-import 'package:grocery/Domain/models/proceed_resource_model.dart';
-import 'package:grocery/Domain/models/products_model.dart';
-import 'package:grocery/Domain/models/resource_action_model.dart';
-import 'package:grocery/Domain/models/resources_model.dart';
 import 'package:grocery/Presentation/resources/app_strings.dart';
 import 'package:grocery/Presentation/resources/routes/routes_names.dart';
 import 'package:grocery/Presentation/views/auth/forget/confirmation/confirmation_screen.dart';
@@ -38,6 +32,12 @@ import 'package:grocery/Presentation/views/home/inventory/inventory.dart';
 
 import 'package:page_transition/page_transition.dart';
 
+import '../../../Domain/models/inventory/category_model.dart';
+import '../../../Domain/models/inventory/proceed_resource_action_model.dart';
+import '../../../Domain/models/inventory/proceed_resource_model.dart';
+import '../../../Domain/models/inventory/products_model.dart';
+import '../../../Domain/models/inventory/resource_action_model.dart';
+import '../../../Domain/models/inventory/resources_model.dart';
 import '../../views/home/inventory/all tabs/category/addEditDeleteCategory/add_category.dart';
 import '../../views/home/inventory/all tabs/category/addEditDeleteCategory/edit_category.dart';
 import '../../views/home/inventory/all tabs/products/addEditDeleteProduct/add_product.dart';

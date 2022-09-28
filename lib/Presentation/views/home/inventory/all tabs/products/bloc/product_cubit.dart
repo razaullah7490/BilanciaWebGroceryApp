@@ -1,6 +1,7 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:grocery/Domain/models/products_model.dart';
+
+import '../../../../../../../Domain/models/inventory/products_model.dart';
 part 'product_state.dart';
 
 class ProductCubit extends Cubit<ProductState> {

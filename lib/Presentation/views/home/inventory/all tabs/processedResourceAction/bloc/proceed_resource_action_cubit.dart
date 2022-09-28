@@ -1,7 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:grocery/Domain/models/proceed_resource_action_model.dart';
-import 'package:grocery/Domain/models/proceed_resource_model.dart';
+import '../../../../../../../Domain/models/inventory/proceed_resource_action_model.dart';
 part 'proceed_resource_action_state.dart';
 
 class ProceedResourceActionCubit extends Cubit<ProceedResourceActionState> {

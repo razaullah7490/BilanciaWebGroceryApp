@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:grocery/Domain/models/proceed_resource_model.dart';
 import 'package:grocery/Presentation/common/delete_item_dialogue.dart';
 import 'package:grocery/Presentation/common/edit_delete_container.dart';
 import 'package:grocery/Presentation/resources/border_radius.dart';
@@ -9,6 +8,7 @@ import 'package:grocery/Presentation/resources/colors_palette.dart';
 import 'package:grocery/Presentation/resources/routes/routes_names.dart';
 import 'package:grocery/Presentation/resources/sized_box.dart';
 
+import '../../../../../../Domain/models/inventory/proceed_resource_model.dart';
 import '../../../../../common/snack_bar_widget.dart';
 import '../../../../../resources/app_strings.dart';
 import '../../../../../resources/size.dart';

@@ -1,47 +1,103 @@
+import 'dart:developer';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:grocery/Domain/models/category_model.dart';
-
+import 'package:grocery/Data/repository/manager/category_repository.dart';
+import '../../../../../../../Data/errors/custom_error.dart';
+import '../../../../../../../Domain/models/inventory/category_model.dart';
 part 'category_state.dart';
 
 class CategoryCubit extends Cubit<CategoryState> {
-  final List<CategoryModel> modelList;
+  final CategoryRepository repo;
   CategoryCubit({
-    required this.modelList,
+    required this.repo,
   }) : super(CategoryState.initial());
 
-  Future addCategory(CategoryModel model) async {
-    emit(state.copyWith(status: CategoryEnum.loading, categoryModel: []));
+  Future<bool> addCategory(map) async {
+    emit(state.copyWith(
+      status: CategoryEnum.loading,
+      error: const CustomError(error: ""),
+    ));
     try {
-      modelList.add(model);
+      var res = await repo.addCategory(map);
       emit(state.copyWith(
-          status: CategoryEnum.success, categoryModel: modelList));
-    } catch (e) {
-      emit(state.copyWith(status: CategoryEnum.error, categoryModel: []));
+        status: CategoryEnum.success,
+        error: const CustomError(error: ""),
+      ));
+      return res;
+    } on CustomError catch (e) {
+      log("Cubit error $e");
+      emit(state.copyWith(
+        status: CategoryEnum.error,
+        error: CustomError(error: e.toString()),
+      ));
+      return false;
     }
   }
 
-  Future editCategory(int id, CategoryModel model) async {
-    emit(state.copyWith(status: CategoryEnum.loading, categoryModel: []));
+  Future<List<CategoryModel>> getCategory() async {
+    emit(state.copyWith(
+      status: CategoryEnum.loading,
+      error: const CustomError(error: ""),
+      categoryModel: [],
+    ));
     try {
-      var index = modelList.indexWhere((element) => element.categoryId == id);
-      modelList[index] = model;
+      var res = await repo.getCategory();
       emit(state.copyWith(
-          status: CategoryEnum.success, categoryModel: modelList));
-    } catch (e) {
-      emit(state.copyWith(status: CategoryEnum.error, categoryModel: []));
+        status: CategoryEnum.success,
+        error: const CustomError(error: ""),
+        categoryModel: res,
+      ));
+      return res;
+    } on CustomError catch (e) {
+      emit(state.copyWith(
+        status: CategoryEnum.error,
+        categoryModel: [],
+        error: CustomError(error: e.toString()),
+      ));
+      log("Cubit error $e");
+      return [];
     }
   }
 
-  Future deleteCategory(int id) async {
-    emit(state.copyWith(status: CategoryEnum.loading, categoryModel: []));
+  Future<bool> editCategory(id, map) async {
+    emit(state.copyWith(
+      status: CategoryEnum.loading,
+      error: const CustomError(error: ""),
+    ));
     try {
-      var index = modelList.indexWhere((element) => element.categoryId == id);
-      modelList.removeAt(index);
+      var res = await repo.editCategory(id, map);
       emit(state.copyWith(
-          status: CategoryEnum.success, categoryModel: modelList));
-    } catch (e) {
-      emit(state.copyWith(status: CategoryEnum.error, categoryModel: []));
+        status: CategoryEnum.success,
+        error: const CustomError(error: ""),
+      ));
+      return res;
+    } on CustomError catch (e) {
+      emit(state.copyWith(
+        status: CategoryEnum.error,
+        error: CustomError(error: e.toString()),
+      ));
+    }
+    return false;
+  }
+
+  Future<bool> deleteCategory(id) async {
+    emit(state.copyWith(
+      status: CategoryEnum.loading,
+      error: const CustomError(error: ""),
+    ));
+    try {
+      var res = await repo.deleteCategory(id);
+      emit(state.copyWith(
+        status: CategoryEnum.success,
+        error: const CustomError(error: ""),
+      ));
+      return res;
+    } on CustomError catch (e) {
+      emit(state.copyWith(
+        status: CategoryEnum.error,
+        error: CustomError(error: e.toString()),
+      ));
+      return false;
     }
   }
 }

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:grocery/Domain/models/resource_action_model.dart';
 import 'package:grocery/Presentation/common/delete_item_dialogue.dart';
 import 'package:grocery/Presentation/common/edit_delete_container.dart';
 import 'package:grocery/Presentation/common/snack_bar_widget.dart';
@@ -13,6 +12,7 @@ import 'package:grocery/Presentation/resources/size.dart';
 import 'package:grocery/Presentation/resources/sized_box.dart';
 import 'package:grocery/Presentation/resources/text_styles.dart';
 
+import '../../../../../../Domain/models/inventory/resource_action_model.dart';
 import '../resourceActions/bloc/resource_action_cubit.dart';
 
 class ResourceActionDetailContainer extends StatelessWidget {

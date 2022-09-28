@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:grocery/Presentation/resources/colors_palette.dart';
+import 'package:grocery/Presentation/resources/size.dart';
+import 'package:grocery/Presentation/resources/sized_box.dart';
+import 'package:grocery/Presentation/resources/text_styles.dart';
 
 class SnackBarWidget {
   static buildSnackBar(
@@ -18,7 +22,15 @@ class SnackBarWidget {
             color: Colors.white,
             size: 22.r,
           ),
-          Text(message),
+          CustomSizedBox.width(5),
+          Text(
+            message,
+            textAlign: TextAlign.start,
+            style: Styles.segoeUI(
+              AppSize.text14.sp,
+              AppColors.whiteColor,
+            ),
+          ),
         ],
       ),
       backgroundColor: color,

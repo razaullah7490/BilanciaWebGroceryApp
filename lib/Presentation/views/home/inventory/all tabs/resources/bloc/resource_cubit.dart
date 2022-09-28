@@ -1,6 +1,7 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:grocery/Domain/models/resources_model.dart';
+
+import '../../../../../../../Domain/models/inventory/resources_model.dart';
 part 'resource_state.dart';
 
 class ResourceCubit extends Cubit<ResourceState> {

@@ -1,6 +1,7 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:grocery/Domain/models/resource_action_model.dart';
+
+import '../../../../../../../Domain/models/inventory/resource_action_model.dart';
 
 part 'resource_action_state.dart';
 

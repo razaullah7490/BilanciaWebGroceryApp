@@ -2,7 +2,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:grocery/Domain/models/resource_action_model.dart';
 import 'package:grocery/Presentation/common/app_bar.dart';
 import 'package:grocery/Presentation/common/custom_button.dart';
 import 'package:grocery/Presentation/common/custom_drop_down.dart';
@@ -17,6 +16,8 @@ import 'package:grocery/Presentation/resources/sized_box.dart';
 import 'package:grocery/Presentation/resources/text_styles.dart';
 import 'package:grocery/Presentation/views/home/inventory/all%20tabs/resourceActions/bloc/resource_action_cubit.dart';
 import 'package:grocery/Presentation/views/home/inventory/all%20tabs/resourceActions/resource_action_view_model.dart';
+
+import '../../../../../../../Domain/models/inventory/resource_action_model.dart';
 
 class EditResourceActionScreen extends StatefulWidget {
   final ResourceActionModel model;
@@ -61,7 +62,7 @@ class _EditResourceActionScreenState extends State<EditResourceActionScreen> {
           physics: const BouncingScrollPhysics(),
           child: Column(
             children: [
-              textFields(),
+              // textFields(),
               BlocBuilder<ResourceActionCubit, ResourceActionState>(
                   builder: (context, state) {
                 if (state.status == ResourceActionEnum.loading) {
@@ -106,96 +107,96 @@ class _EditResourceActionScreenState extends State<EditResourceActionScreen> {
     );
   }
 
-  Widget textFields() {
-    return Form(
-      key: formKey,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          CustomSizedBox.height(30),
-          textFieldUpperText(AppStrings.selectActionTypeText),
-          CustomDropDownWidget(
-            hintText: AppStrings.actionTypeText,
-            value: actionType,
-            itemsList: ResourceActionViewModel.actionTypeList,
-            validationText: AppStrings.provideActionTypeText,
-            onChanged: (v) {
-              setState(() {
-                actionType = v;
-              });
-            },
-          ),
-          CustomSizedBox.height(20),
-          CustomTextField(
-            controller: quantityController,
-            labelText: AppStrings.quantityOnlyText,
-            hintText: AppStrings.enterQuantityText,
-            suffixIcon: const Text(""),
-            obscureText: false,
-            textInputType: TextInputType.number,
-            validator: (v) {
-              if (v!.trim().isEmpty) {
-                return AppStrings.provideQuantityText;
-              } else {
-                return null;
-              }
-            },
-          ),
-          CustomSizedBox.height(20),
-          CustomTextField(
-            controller: moneyController,
-            labelText: AppStrings.moneyText,
-            hintText: AppStrings.enterMoneyText,
-            suffixIcon: const Text(""),
-            obscureText: false,
-            textInputType: TextInputType.number,
-            validator: (v) {
-              if (v!.trim().isEmpty) {
-                return AppStrings.provideMoneyText;
-              } else {
-                return null;
-              }
-            },
-          ),
-          CustomSizedBox.height(20),
-          CustomTextField(
-            controller: printCounterController,
-            labelText: AppStrings.priceCounterText,
-            hintText: AppStrings.enterPriceCounterText,
-            suffixIcon: const Text(""),
-            obscureText: false,
-            textInputType: TextInputType.number,
-            validator: (v) {
-              if (v!.trim().isEmpty) {
-                return AppStrings.providePriceCounterText;
-              } else {
-                return null;
-              }
-            },
-          ),
-          CustomSizedBox.height(20),
-          CustomTextField(
-            controller: resourceController,
-            labelText: AppStrings.resourceText,
-            hintText: AppStrings.enterResourceText,
-            suffixIcon: const Text(""),
-            obscureText: false,
-            textInputType: TextInputType.number,
-            validator: (v) {
-              if (v!.trim().isEmpty) {
-                return AppStrings.provideResourceText;
-              } else {
-                return null;
-              }
-            },
-          ),
-          CustomSizedBox.height(10),
-          internalUsage(),
-          CustomSizedBox.height(30),
-        ],
-      ),
-    );
-  }
+  // Widget textFields() {
+  //   return Form(
+  //     key: formKey,
+  //     child: Column(
+  //       crossAxisAlignment: CrossAxisAlignment.start,
+  //       children: [
+  //         CustomSizedBox.height(30),
+  //         textFieldUpperText(AppStrings.selectActionTypeText),
+  //         CustomDropDownWidget(
+  //           hintText: AppStrings.actionTypeText,
+  //           value: actionType,
+  //           itemsList: ResourceActionViewModel.actionTypeList,
+  //           validationText: AppStrings.provideActionTypeText,
+  //           onChanged: (v) {
+  //             setState(() {
+  //               actionType = v;
+  //             });
+  //           },
+  //         ),
+  //         CustomSizedBox.height(20),
+  //         CustomTextField(
+  //           controller: quantityController,
+  //           labelText: AppStrings.quantityOnlyText,
+  //           hintText: AppStrings.enterQuantityText,
+  //           suffixIcon: const Text(""),
+  //           obscureText: false,
+  //           textInputType: TextInputType.number,
+  //           validator: (v) {
+  //             if (v!.trim().isEmpty) {
+  //               return AppStrings.provideQuantityText;
+  //             } else {
+  //               return null;
+  //             }
+  //           },
+  //         ),
+  //         CustomSizedBox.height(20),
+  //         CustomTextField(
+  //           controller: moneyController,
+  //           labelText: AppStrings.moneyText,
+  //           hintText: AppStrings.enterMoneyText,
+  //           suffixIcon: const Text(""),
+  //           obscureText: false,
+  //           textInputType: TextInputType.number,
+  //           validator: (v) {
+  //             if (v!.trim().isEmpty) {
+  //               return AppStrings.provideMoneyText;
+  //             } else {
+  //               return null;
+  //             }
+  //           },
+  //         ),
+  //         CustomSizedBox.height(20),
+  //         CustomTextField(
+  //           controller: printCounterController,
+  //           labelText: AppStrings.priceCounterText,
+  //           hintText: AppStrings.enterPriceCounterText,
+  //           suffixIcon: const Text(""),
+  //           obscureText: false,
+  //           textInputType: TextInputType.number,
+  //           validator: (v) {
+  //             if (v!.trim().isEmpty) {
+  //               return AppStrings.providePriceCounterText;
+  //             } else {
+  //               return null;
+  //             }
+  //           },
+  //         ),
+  //         CustomSizedBox.height(20),
+  //         CustomTextField(
+  //           controller: resourceController,
+  //           labelText: AppStrings.resourceText,
+  //           hintText: AppStrings.enterResourceText,
+  //           suffixIcon: const Text(""),
+  //           obscureText: false,
+  //           textInputType: TextInputType.number,
+  //           validator: (v) {
+  //             if (v!.trim().isEmpty) {
+  //               return AppStrings.provideResourceText;
+  //             } else {
+  //               return null;
+  //             }
+  //           },
+  //         ),
+  //         CustomSizedBox.height(10),
+  //         internalUsage(),
+  //         CustomSizedBox.height(30),
+  //       ],
+  //     ),
+  //   );
+  // }
 
   Widget internalUsage() {
     return Row(

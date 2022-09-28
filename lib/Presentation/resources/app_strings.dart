@@ -95,6 +95,8 @@ class AppStrings {
   static const String enterMinValueText = "Enter min value";
   static const String maxValueText = "Max value";
   static const String enterMaxValueText = "Enter max value";
+  static const String discountPriceText = "Discount Price";
+  static const String enterDiscountPriceText = "Enter Discount Price";
 
   //resources
   static const String resourcesText = "Resources";
@@ -184,6 +186,8 @@ class AppStrings {
   static const String provideDefaultPriceText = "Please provide default price";
   static const String provideMinValueText = "Please provide min value";
   static const String provideMaxValueText = "Please provide max value";
+  static const String provideDiscountPriceText =
+      "Please provide Discount Price";
   static const String provideIVAtypeText = "Please provide Iva type";
   static const String provideStatusText = "Please provide status";
   static const String provideResourceNameText = "Please provide resource name";

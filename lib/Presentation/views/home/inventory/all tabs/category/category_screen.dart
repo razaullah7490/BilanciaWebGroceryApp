@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:grocery/Presentation/common/add_item_button.dart';
@@ -9,6 +11,8 @@ import 'package:grocery/Presentation/resources/sized_box.dart';
 import 'package:grocery/Presentation/views/home/inventory/all%20tabs/category/bloc/category_cubit.dart';
 import 'package:grocery/Presentation/views/home/inventory/all%20tabs/components/category_detail_container.dart';
 
+import '../../../../../common/loading_indicator.dart';
+
 class CategoryScreen extends StatefulWidget {
   const CategoryScreen({super.key});
 
@@ -17,6 +21,14 @@ class CategoryScreen extends StatefulWidget {
 }
 
 class _CategoryScreenState extends State<CategoryScreen> {
+  @override
+  void initState() {
+    Future.wait([
+      context.read<CategoryCubit>().getCategory(),
+    ]);
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -34,6 +46,9 @@ class _CategoryScreenState extends State<CategoryScreen> {
           ),
           CustomSizedBox.height(15),
           BlocBuilder<CategoryCubit, CategoryState>(builder: ((context, state) {
+            if (state.status == CategoryEnum.loading) {
+              return LoadingIndicator.loadingExpanded();
+            }
             return state.categoryModel.isEmpty
                 ? DataNotAvailableText.withExpanded(
                     AppStrings.noCategoryAddedText,
@@ -45,6 +60,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                       itemCount: state.categoryModel.length,
                       itemBuilder: (context, index) {
                         var singleData = state.categoryModel[index];
+                        log("Single Data ${singleData.status.runtimeType}");
                         return CategoryDetailContainer(model: singleData);
                       },
                     ),

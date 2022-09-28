@@ -11,28 +11,33 @@ enum CategoryEnum {
 class CategoryState extends Equatable {
   final CategoryEnum status;
   final List<CategoryModel> categoryModel;
+  final CustomError error;
   const CategoryState({
     required this.status,
     required this.categoryModel,
+    required this.error,
   });
 
   factory CategoryState.initial() {
     return const CategoryState(
       status: CategoryEnum.initial,
       categoryModel: [],
+      error: CustomError(error: ""),
     );
   }
 
   @override
-  List<Object?> get props => [status, categoryModel];
+  List<Object?> get props => [status, categoryModel, error];
 
   CategoryState copyWith({
     CategoryEnum? status,
     List<CategoryModel>? categoryModel,
+    CustomError? error,
   }) {
     return CategoryState(
       status: status ?? this.status,
       categoryModel: categoryModel ?? this.categoryModel,
+      error: error ?? this.error,
     );
   }
 }
