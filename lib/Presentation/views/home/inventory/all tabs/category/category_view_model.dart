@@ -20,12 +20,4 @@ class CategoryViewModel {
     "m",
     "unit",
   ];
-
-  static const List<String> dummyCategoryList = [
-    "Category 1",
-    "Category 2",
-    "Category 3",
-    "Category 4",
-    "Category 5",
-  ];
 }

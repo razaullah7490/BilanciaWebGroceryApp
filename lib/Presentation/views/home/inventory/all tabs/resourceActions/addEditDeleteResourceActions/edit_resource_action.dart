@@ -45,7 +45,7 @@ class _EditResourceActionScreenState extends State<EditResourceActionScreen> {
     quantityController.text = widget.model.quantity.toString();
     moneyController.text = widget.model.money.toString();
     printCounterController.text = widget.model.priceCounter.toString();
-    resourceController.text = widget.model.resource;
+    resourceController.text = widget.model.resource.toString();
     isInternalUsage = widget.model.isForInternalUsage;
     super.initState();
   }
@@ -73,20 +73,20 @@ class _EditResourceActionScreenState extends State<EditResourceActionScreen> {
                   text: AppStrings.updateText,
                   onTap: () async {
                     if (formKey.currentState!.validate()) {
-                      await context
-                          .read<ResourceActionCubit>()
-                          .editResourceAction(
-                              widget.model.resourceActionId,
-                              ResourceActionModel(
-                                resourceActionId: widget.model.resourceActionId,
-                                resourceActionName: actionType.toString(),
-                                quantity: double.parse(quantityController.text),
-                                money: double.parse(moneyController.text),
-                                priceCounter:
-                                    double.parse(printCounterController.text),
-                                resource: resourceController.text,
-                                isForInternalUsage: isInternalUsage,
-                              ));
+                      //await context
+                      // .read<ResourceActionCubit>()
+                      // .editResourceAction(
+                      //     widget.model.resourceActionId,
+                      //     ResourceActionModel(
+                      //       resourceActionId: widget.model.resourceActionId,
+                      //       resourceActionName: actionType.toString(),
+                      //       quantity: double.parse(quantityController.text),
+                      //       money: double.parse(moneyController.text),
+                      //       priceCounter:
+                      //           double.parse(printCounterController.text),
+                      //       resource: resourceController.text,
+                      //       isForInternalUsage: isInternalUsage,
+                      //     ));
                     }
                     Navigator.of(context).pop();
                     SnackBarWidget.buildSnackBar(

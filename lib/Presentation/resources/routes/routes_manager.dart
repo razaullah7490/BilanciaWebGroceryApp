@@ -16,6 +16,9 @@ import 'package:grocery/Presentation/views/home/dashboard/all%20tabs/settings/se
 import 'package:grocery/Presentation/views/home/dashboard/dashboard.dart';
 import 'package:grocery/Presentation/views/home/dashboard/notifications/notifications_screen.dart';
 import 'package:grocery/Presentation/views/home/inventory/all%20tabs/category/category_screen.dart';
+import 'package:grocery/Presentation/views/home/inventory/all%20tabs/category/products_associated_category.dart';
+import 'package:grocery/Presentation/views/home/inventory/all%20tabs/components/category_detail_container.dart';
+import 'package:grocery/Presentation/views/home/inventory/all%20tabs/components/product_detail_container.dart';
 import 'package:grocery/Presentation/views/home/inventory/all%20tabs/proceedResource/addEditDeleteProceedResource/add_proceed_resource.dart';
 import 'package:grocery/Presentation/views/home/inventory/all%20tabs/proceedResource/addEditDeleteProceedResource/edit_proceed_resource.dart';
 import 'package:grocery/Presentation/views/home/inventory/all%20tabs/proceedResource/proceed_resource_screen.dart';
@@ -218,9 +221,10 @@ Route<dynamic> generateRoute(RouteSettings routeSettings) {
       );
 
     case RoutesNames.addResourceActionsScreen:
+      final ResourceData args = routeSettings.arguments as ResourceData;
       return PageTransition(
         type: PageTransitionType.topToBottom,
-        child: const AddResourceActionScreen(),
+        child: AddResourceActionScreen(resourceData: args),
         settings: routeSettings,
       );
 
@@ -276,6 +280,14 @@ Route<dynamic> generateRoute(RouteSettings routeSettings) {
       return PageTransition(
         type: PageTransitionType.topToBottom,
         child: EditProceedResourceAction(model: args),
+        settings: routeSettings,
+      );
+
+    case RoutesNames.productsAssociatedToCategoryScreen:
+      final CategoryData args = routeSettings.arguments as CategoryData;
+      return PageTransition(
+        type: PageTransitionType.topToBottom,
+        child: ProductsAssociatedToCategory(categoryData: args),
         settings: routeSettings,
       );
 

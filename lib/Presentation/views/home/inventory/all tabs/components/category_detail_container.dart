@@ -1,3 +1,5 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
+// ignore_for_file: use_build_context_synchronously
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -12,8 +14,16 @@ import 'package:grocery/Presentation/resources/size.dart';
 import 'package:grocery/Presentation/resources/sized_box.dart';
 import 'package:grocery/Presentation/resources/text_styles.dart';
 import 'package:grocery/Presentation/views/home/inventory/all%20tabs/category/bloc/category_cubit.dart';
-
 import '../../../../../../Domain/models/inventory/category_model.dart';
+
+class CategoryData {
+  final int id;
+  final String name;
+  CategoryData({
+    required this.id,
+    required this.name,
+  });
+}
 
 class CategoryDetailContainer extends StatelessWidget {
   final CategoryModel model;
@@ -24,62 +34,87 @@ class CategoryDetailContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(
-        horizontal: AppSize.p18,
-        vertical: AppSize.p15,
-      ).r,
-      margin: const EdgeInsets.symmetric(
-        vertical: AppSize.m8,
-        horizontal: AppSize.m8,
-      ).r,
-      decoration: BoxDecoration(
-        color: AppColors.searchTextFieldColor,
-        border: Border.all(
-          color: AppColors.primaryColor,
-          width: 1.w,
+    return GestureDetector(
+      onTap: () {
+        final args = CategoryData(
+          id: model.categoryId,
+          name: model.categoryName,
+        );
+        Navigator.pushNamed(
+          context,
+          RoutesNames.productsAssociatedToCategoryScreen,
+          arguments: args,
+        );
+      },
+      behavior: HitTestBehavior.opaque,
+      child: Container(
+        padding: const EdgeInsets.symmetric(
+          horizontal: AppSize.p18,
+          vertical: AppSize.p15,
+        ).r,
+        margin: const EdgeInsets.symmetric(
+          vertical: AppSize.m8,
+          horizontal: AppSize.m8,
+        ).r,
+        decoration: BoxDecoration(
+          color: AppColors.searchTextFieldColor,
+          border: Border.all(
+            color: AppColors.primaryColor,
+            width: 1.w,
+          ),
+          borderRadius:
+              BorderRadius.circular(AppBorderRadius.allDetailContainerRadius.r),
         ),
-        borderRadius:
-            BorderRadius.circular(AppBorderRadius.allDetailContainerRadius.r),
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              CustomSizedBox.height(5),
-              titleText(model.categoryName),
-              CustomSizedBox.height(5),
-              subTitleText("${AppStrings.aliquotaIVAText}: ",
-                  model.aliquotaIva.toString()),
-              subTitleText("${AppStrings.ivaTypeText}: ", model.ivaType),
-              CustomSizedBox.height(10),
-              statusContainer(),
-            ],
-          ),
-          editDeleteIcons(
-            onTapEdit: () {
-              final args = CategoryModel(
-                categoryId: model.categoryId,
-                categoryName: model.categoryName,
-                defaultPrice: model.defaultPrice,
-                minPrice: model.minPrice,
-                maxPrice: model.maxPrice,
-                ivaType: model.ivaType,
-                status: model.status,
-                aliquotaIva: model.aliquotaIva,
-                discountPrice: model.discountPrice,
-              );
-              Navigator.pushNamed(
-                context,
-                RoutesNames.editCategoryScreen,
-                arguments: args,
-              );
-            },
-            onTapDelete: () => deleteCategoryDialogue(context),
-          ),
-        ],
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                CustomSizedBox.height(5),
+                titleText(model.categoryName),
+                CustomSizedBox.height(5),
+                subTitleText("${AppStrings.aliquotaIVAText}: ",
+                    model.aliquotaIva.toString()),
+                subTitleText("${AppStrings.ivaTypeText}: ", model.ivaType),
+                CustomSizedBox.height(10),
+                statusContainer(),
+                model.isDeleted == true
+                    ? Padding(
+                        padding: const EdgeInsets.only(top: AppSize.p6).r,
+                        child: Text(AppStrings.categoryDeleteInText,
+                            style: Styles.segoeUI(
+                              AppSize.text10.sp,
+                              AppColors.redColor2,
+                            )),
+                      )
+                    : Container()
+              ],
+            ),
+            editDeleteIcons(
+              onTapEdit: () {
+                final args = CategoryModel(
+                  categoryId: model.categoryId,
+                  categoryName: model.categoryName,
+                  defaultPrice: model.defaultPrice,
+                  minPrice: model.minPrice,
+                  maxPrice: model.maxPrice,
+                  ivaType: model.ivaType,
+                  status: model.status,
+                  aliquotaIva: model.aliquotaIva,
+                  discountPrice: model.discountPrice,
+                  isDeleted: model.isDeleted,
+                );
+                Navigator.pushNamed(
+                  context,
+                  RoutesNames.editCategoryScreen,
+                  arguments: args,
+                );
+              },
+              onTapDelete: () => deleteCategoryDialogue(context),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -134,19 +169,30 @@ class CategoryDetailContainer extends StatelessWidget {
           return DeleteItemDialogue(
             text: AppStrings.categoryText,
             onDeleteButtonTap: () async {
-              await context
-                  .read<CategoryCubit>()
-                  .deleteCategory(model.categoryId);
-              Navigator.of(context).pop();
-              Navigator.pushReplacementNamed(
-                  context, RoutesNames.categoryScreen);
-              SnackBarWidget.buildSnackBar(
-                context,
-                AppStrings.categoryDeleteSuccessText,
-                AppColors.greenColor,
-                Icons.check,
-                true,
-              );
+              if (model.isDeleted != true) {
+                await context
+                    .read<CategoryCubit>()
+                    .deleteCategory(model.categoryId);
+                Navigator.of(context).pop();
+                Navigator.pushReplacementNamed(
+                    context, RoutesNames.categoryScreen);
+                SnackBarWidget.buildSnackBar(
+                  context,
+                  AppStrings.categoryDeleteSuccessText,
+                  AppColors.greenColor,
+                  Icons.check,
+                  true,
+                );
+              } else {
+                Navigator.of(context).pop();
+                SnackBarWidget.buildSnackBar(
+                  context,
+                  AppStrings.notFoundText,
+                  AppColors.redColor,
+                  Icons.close,
+                  true,
+                );
+              }
             },
           );
         });

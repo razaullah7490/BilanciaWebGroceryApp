@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:grocery/Data/services/manager/product_service.dart';
 import 'package:grocery/Presentation/common/add_item_button.dart';
 import 'package:grocery/Presentation/common/app_bar.dart';
 import 'package:grocery/Presentation/common/data_not_available_text.dart';
@@ -33,32 +34,41 @@ class _ProductsScreenState extends State<ProductsScreen> {
             text: AppStrings.addProductText,
             onTap: () =>
                 Navigator.pushNamed(context, RoutesNames.addProductsScreen),
+            // onTap: () async {
+            //   dynamic map = {
+            //     'insight_type': 'Hi',
+            //     'datetime_from': '12345',
+            //     'datetime_to': '12345',
+            //     'product': '1'
+            //   };
+            //   await ProductService.addProduct(map);
+            // },
           ),
           CustomSizedBox.height(25),
-          BlocBuilder<ProductCubit, ProductState>(
-            builder: (context, state) {
-              return state.productModel.isEmpty
-                  ? DataNotAvailableText.withExpanded(
-                      AppStrings.noProductAddedText,
-                    )
-                  : Expanded(
-                      child: Padding(
-                        padding:
-                            const EdgeInsets.symmetric(horizontal: AppSize.p8)
-                                .r,
-                        child: ListView.builder(
-                          shrinkWrap: true,
-                          physics: const BouncingScrollPhysics(),
-                          itemCount: state.productModel.length,
-                          itemBuilder: ((context, index) {
-                            var singleData = state.productModel[index];
-                            return ProductDetailContainer(model: singleData);
-                          }),
-                        ),
-                      ),
-                    );
-            },
-          )
+          // BlocBuilder<ProductCubit, ProductState>(
+          //   builder: (context, state) {
+          //     return state.productModel.isEmpty
+          //         ? DataNotAvailableText.withExpanded(
+          //             AppStrings.noProductAddedText,
+          //           )
+          //         : Expanded(
+          //             child: Padding(
+          //               padding:
+          //                   const EdgeInsets.symmetric(horizontal: AppSize.p8)
+          //                       .r,
+          //               child: ListView.builder(
+          //                 shrinkWrap: true,
+          //                 physics: const BouncingScrollPhysics(),
+          //                 itemCount: state.productModel.length,
+          //                 itemBuilder: ((context, index) {
+          //                   var singleData = state.productModel[index];
+          //                   return ProductDetailContainer(model: singleData);
+          //                 }),
+          //               ),
+          //             ),
+          //           );
+          //   },
+          // )
         ],
       ),
     );

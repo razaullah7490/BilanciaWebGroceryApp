@@ -139,7 +139,7 @@ class _LoginScreenState extends State<LoginScreen> {
               hintText: AppStrings.enterEmailText,
               suffixIcon: const Text(""),
               obscureText: false,
-              textInputType: TextInputType.text,
+              textInputType: TextInputType.emailAddress,
               validator: (v) {
                 Pattern pattern =
                     r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+";

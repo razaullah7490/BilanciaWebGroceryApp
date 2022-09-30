@@ -7,4 +7,8 @@ class ResourceActionViewModel {
     "waste",
     "production",
   ];
+  static const List<String> moneyTypeList = [
+    "unit_price",
+    "total_price",
+  ];
 }

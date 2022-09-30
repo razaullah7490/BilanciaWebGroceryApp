@@ -35,4 +35,6 @@ class RoutesNames {
       "/add-proceed-resource-actions";
   static const String editProceedResourceActionsScreen =
       "/edit-proceed-resource-actions";
+  static const String productsAssociatedToCategoryScreen =
+      "/products-associated-to-category";
 }

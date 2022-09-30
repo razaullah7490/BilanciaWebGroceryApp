@@ -53,11 +53,22 @@ class ResourceDetailContainer extends StatelessWidget {
               CustomSizedBox.height(5),
               subTitleText("${AppStrings.aliquotaIVAText} :",
                   model.aliquotaIva.toString()),
-              subTitleText("${AppStrings.categoryText} :", model.category),
+              subTitleText(
+                  "${AppStrings.categoryText} :", model.category.toString()),
               subTitleText("${AppStrings.quantityOnlyText} :",
                   model.stockQuantity.toString()),
               CustomSizedBox.height(2),
               salePriceText(model.unitSalePrice.toString()),
+              model.isDeleted == true
+                  ? Padding(
+                      padding: const EdgeInsets.only(top: AppSize.p6).r,
+                      child: Text(AppStrings.resourceDeleteInText,
+                          style: Styles.segoeUI(
+                            AppSize.text10.sp,
+                            AppColors.redColor2,
+                          )),
+                    )
+                  : Container()
             ],
           ),
           editDeleteIcons(
@@ -76,6 +87,13 @@ class ResourceDetailContainer extends StatelessWidget {
                 unitSalePrice: model.unitSalePrice,
                 revenuePercentage: model.revenuePercentage,
                 category: model.category,
+                tare: model.tare,
+                weightType: model.weightType,
+                packagingDate: model.packagingDate,
+                expirationDate: model.expirationDate,
+                ingrediant: model.ingrediant,
+                isDeleted: model.isDeleted,
+                unitPurchasePrice: model.unitPurchasePrice,
                 status: model.status,
               );
 
@@ -130,15 +148,28 @@ class ResourceDetailContainer extends StatelessWidget {
           return DeleteItemDialogue(
             text: AppStrings.resourcesText,
             onDeleteButtonTap: () {
-              context.read<ResourceCubit>().deleteResource(model.resourceId);
-              Navigator.of(context).pop();
-              SnackBarWidget.buildSnackBar(
-                context,
-                AppStrings.resourceDeleteSuccessText,
-                AppColors.greenColor,
-                Icons.check,
-                true,
-              );
+              if (model.isDeleted != true) {
+                context.read<ResourceCubit>().deleteResource(model.resourceId);
+                Navigator.of(context).pop();
+                Navigator.pushReplacementNamed(
+                    context, RoutesNames.resourcesScreen);
+                SnackBarWidget.buildSnackBar(
+                  context,
+                  AppStrings.resourceDeleteSuccessText,
+                  AppColors.greenColor,
+                  Icons.check,
+                  true,
+                );
+              } else {
+                Navigator.of(context).pop();
+                SnackBarWidget.buildSnackBar(
+                  context,
+                  AppStrings.notFoundText,
+                  AppColors.redColor,
+                  Icons.close,
+                  true,
+                );
+              }
             },
           );
         });

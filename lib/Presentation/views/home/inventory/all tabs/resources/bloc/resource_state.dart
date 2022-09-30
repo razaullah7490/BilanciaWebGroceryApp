@@ -11,28 +11,33 @@ enum ResourceEnum {
 class ResourceState extends Equatable {
   final ResourceEnum status;
   final List<ResourcesModel> resourceModel;
+  final CustomError error;
   const ResourceState({
     required this.status,
     required this.resourceModel,
+    required this.error,
   });
 
   factory ResourceState.initial() {
     return const ResourceState(
       status: ResourceEnum.initial,
       resourceModel: [],
+      error: CustomError(error: ""),
     );
   }
 
   @override
-  List<Object?> get props => [status, resourceModel];
+  List<Object?> get props => [status, resourceModel, error];
 
   ResourceState copyWith({
     ResourceEnum? status,
     List<ResourcesModel>? resourceModel,
+    CustomError? error,
   }) {
     return ResourceState(
       status: status ?? this.status,
       resourceModel: resourceModel ?? this.resourceModel,
+      error: error ?? this.error,
     );
   }
 }

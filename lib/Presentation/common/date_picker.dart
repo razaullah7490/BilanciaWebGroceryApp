@@ -1,13 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:grocery/Presentation/resources/colors_palette.dart';
-import 'package:intl/intl.dart' as intl;
 
-String getHumanReadableDateAndTime(String dt) {
-  DateTime dateTime = DateTime.parse(dt);
-  return intl.DateFormat('MMM dd, yyyy ').format(dateTime);
-}
-
-Future<String?> datePicker(
+Future<DateTime?> datePicker(
   BuildContext context,
 ) async {
   final initialDate = DateTime.now();
@@ -34,6 +28,6 @@ Future<String?> datePicker(
   if (newDate == null) {
     return null;
   } else {
-    return getHumanReadableDateAndTime(newDate.toString());
+    return newDate;
   }
 }

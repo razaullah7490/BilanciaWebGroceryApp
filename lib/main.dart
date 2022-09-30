@@ -1,12 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:grocery/Data/repository/auth/registration_repository.dart';
+import 'package:grocery/Data/repository/manager/resource_action_repository.dart';
+import 'package:grocery/Data/repository/manager/resources_repository.dart';
 import 'package:grocery/Data/services/auth/login_service.dart';
 import 'package:grocery/Data/services/auth/registration_service.dart';
 import 'package:grocery/Data/services/manager/category_service.dart';
+import 'package:grocery/Data/services/manager/ingredients_service.dart';
 import 'package:grocery/Data/services/manager/iva_service.dart';
+import 'package:grocery/Data/services/manager/resource_action_service.dart';
+import 'package:grocery/Data/services/manager/resources_service.dart';
 import 'package:grocery/Presentation/resources/routes/routes_manager.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:grocery/Presentation/state%20management/bloc/ingredientsBloc/ingredients_cubit.dart';
 import 'package:grocery/Presentation/state%20management/bloc/ivaBloc/manager_iva_cubit.dart';
 import 'package:grocery/Presentation/views/auth/login/login_screen.dart';
 import 'package:grocery/Presentation/views/auth/register/bloc/registration_cubit.dart';
@@ -18,6 +24,7 @@ import 'package:grocery/Presentation/views/home/inventory/all%20tabs/resources/b
 
 import 'Data/repository/auth/login_repository.dart';
 import 'Data/repository/manager/category_repository.dart';
+import 'Data/repository/manager/ingredient_repository.dart';
 import 'Data/repository/manager/iva_repository.dart';
 import 'Presentation/views/auth/login/bloc/login_cubit.dart';
 import 'Presentation/views/home/inventory/all tabs/proceedResource/bloc/proceed_resource_cubit.dart';
@@ -55,6 +62,18 @@ class MyApp extends StatelessWidget {
                     create: (context) => CategoryRepository(
                           catergoryService: CatergoryService(),
                         )),
+                RepositoryProvider(
+                    create: (context) => IngredientRepository(
+                          ingredientService: IngredientService(),
+                        )),
+                RepositoryProvider(
+                    create: (context) => ResourcesRepository(
+                          resourcesService: ResourcesService(),
+                        )),
+                RepositoryProvider(
+                    create: (context) => ResourceActionRepository(
+                          resourceActionService: ResourceActionService(),
+                        )),
               ],
               child: MultiBlocProvider(
                 providers: [
@@ -70,12 +89,17 @@ class MyApp extends StatelessWidget {
                   BlocProvider<CategoryCubit>(
                       create: (context) => CategoryCubit(
                           repo: context.read<CategoryRepository>())),
+                  BlocProvider<IngredientsCubit>(
+                      create: (context) => IngredientsCubit(
+                          repo: context.read<IngredientRepository>())),
+                  BlocProvider<ResourceCubit>(
+                      create: (context) => ResourceCubit(
+                          repo: context.read<ResourcesRepository>())),
+                  BlocProvider<ResourceActionCubit>(
+                      create: (context) => ResourceActionCubit(
+                          repo: context.read<ResourceActionRepository>())),
                   BlocProvider<ProductCubit>(
                       create: (context) => ProductCubit(modelList: [])),
-                  BlocProvider<ResourceCubit>(
-                      create: (context) => ResourceCubit(modelList: [])),
-                  BlocProvider<ResourceActionCubit>(
-                      create: (context) => ResourceActionCubit(modelList: [])),
                   BlocProvider<ProceedResourceCubit>(
                       create: (context) => ProceedResourceCubit(modelList: [])),
                   BlocProvider<ProceedResourceActionCubit>(

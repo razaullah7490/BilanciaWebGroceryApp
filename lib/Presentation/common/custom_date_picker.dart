@@ -5,10 +5,11 @@ import '../resources/app_strings.dart';
 import '../resources/border_radius.dart';
 import '../resources/size.dart';
 import '../resources/text_styles.dart';
+import 'package:intl/intl.dart' as intl;
 
 // ignore: must_be_immutable
 class CustomDatePickerWidget extends StatefulWidget {
-  String date;
+  DateTime? date;
   VoidCallback onTap;
   CustomDatePickerWidget({
     super.key,
@@ -48,12 +49,12 @@ class _CustomDatePickerWidgetState extends State<CustomDatePickerWidget> {
             Padding(
               padding: const EdgeInsets.only(top: AppSize.p2).r,
               child: Text(
-                widget.date.isNotEmpty
-                    ? widget.date
+                widget.date != null
+                    ? getHumanReadableDateAndTime(widget.date.toString())
                     : AppStrings.selectDateText,
                 style: Styles.circularStdBook(
                     AppSize.text15.sp,
-                    widget.date.isNotEmpty
+                    widget.date != null
                         ? AppColors.containerTextColor
                         : AppColors.hintTextColor),
               ),
@@ -66,5 +67,10 @@ class _CustomDatePickerWidgetState extends State<CustomDatePickerWidget> {
         ),
       ),
     );
+  }
+
+  String getHumanReadableDateAndTime(String dt) {
+    DateTime dateTime = DateTime.parse(dt);
+    return intl.DateFormat('MMM dd, yyyy ').format(dateTime);
   }
 }

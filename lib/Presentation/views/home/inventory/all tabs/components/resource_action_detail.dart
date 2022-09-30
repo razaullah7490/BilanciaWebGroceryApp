@@ -57,25 +57,25 @@ class ResourceActionDetailContainer extends StatelessWidget {
                   AppStrings.moneyText, "\$${model.money.toString()}"),
               subTitleText("${AppStrings.priceCounterText} :",
                   model.priceCounter.toString()),
-              moneyAndResourceText(AppStrings.resourceText, model.resource),
+              //moneyAndResourceText(AppStrings.resourceText, model.resource),
             ],
           ),
           editDeleteIcons(
             onTapEdit: () async {
-              final args = ResourceActionModel(
-                isForInternalUsage: model.isForInternalUsage,
-                resourceActionId: model.resourceActionId,
-                resourceActionName: model.resourceActionName,
-                quantity: model.quantity,
-                money: model.money,
-                priceCounter: model.priceCounter,
-                resource: model.resource,
-              );
+              // final args = ResourceActionModel(
+              //   isForInternalUsage: model.isForInternalUsage,
+              //   resourceActionId: model.resourceActionId,
+              //   resourceActionName: model.resourceActionName,
+              //   quantity: model.quantity,
+              //   money: model.money,
+              //   priceCounter: model.priceCounter,
+              //   resource: model.resource,
+              // );
 
               Navigator.pushNamed(
                 context,
                 RoutesNames.editResourceActionsScreen,
-                arguments: args,
+                //arguments: args,
               );
             },
             onTapDelete: () => deleteResourceActionDialogue(context),
@@ -123,9 +123,9 @@ class ResourceActionDetailContainer extends StatelessWidget {
           return DeleteItemDialogue(
             text: AppStrings.resourceActionText,
             onDeleteButtonTap: () {
-              context
-                  .read<ResourceActionCubit>()
-                  .deleteResourceAction(model.resourceActionId);
+              // context
+              //     .read<ResourceActionCubit>()
+              //     .deleteResourceAction(model.resourceActionId);
               Navigator.of(context).pop();
               SnackBarWidget.buildSnackBar(
                 context,

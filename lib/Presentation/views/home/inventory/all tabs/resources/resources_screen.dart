@@ -9,6 +9,8 @@ import 'package:grocery/Presentation/resources/sized_box.dart';
 import 'package:grocery/Presentation/views/home/inventory/all%20tabs/components/resource_detail_container.dart';
 import 'package:grocery/Presentation/views/home/inventory/all%20tabs/resources/bloc/resource_cubit.dart';
 
+import '../../../../../common/loading_indicator.dart';
+
 class ResorucesScreen extends StatefulWidget {
   const ResorucesScreen({super.key});
 
@@ -17,6 +19,14 @@ class ResorucesScreen extends StatefulWidget {
 }
 
 class _ResorucesScreenState extends State<ResorucesScreen> {
+  @override
+  void initState() {
+    Future.wait([
+      context.read<ResourceCubit>().getResource(),
+    ]);
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -34,6 +44,9 @@ class _ResorucesScreenState extends State<ResorucesScreen> {
           ),
           CustomSizedBox.height(25),
           BlocBuilder<ResourceCubit, ResourceState>(builder: (context, state) {
+            if (state.status == ResourceEnum.loading) {
+              return LoadingIndicator.loadingExpanded();
+            }
             return state.resourceModel.isEmpty
                 ? DataNotAvailableText.withExpanded(
                     AppStrings.noResourcesAddedText,

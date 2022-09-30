@@ -10,6 +10,7 @@ class CategoryModel {
   String ivaType;
   bool status;
   int aliquotaIva;
+  bool isDeleted;
   CategoryModel({
     required this.categoryId,
     required this.categoryName,
@@ -20,6 +21,7 @@ class CategoryModel {
     required this.ivaType,
     required this.status,
     required this.aliquotaIva,
+    required this.isDeleted,
   });
 
   Map<String, dynamic> toMap() {
@@ -47,6 +49,7 @@ class CategoryModel {
       ivaType: map['iva_type'] as String,
       status: map['is_active'],
       aliquotaIva: map['iva_aliquota'],
+      isDeleted: map['is_deleted'],
     );
   }
 

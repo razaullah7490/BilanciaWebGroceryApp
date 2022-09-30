@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_typing_uninitialized_variables, use_build_context_synchronously
-import 'dart:math';
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -12,16 +13,24 @@ import 'package:grocery/Presentation/common/snack_bar_widget.dart';
 import 'package:grocery/Presentation/resources/app_strings.dart';
 import 'package:grocery/Presentation/resources/border_radius.dart';
 import 'package:grocery/Presentation/resources/colors_palette.dart';
+import 'package:grocery/Presentation/resources/routes/routes_names.dart';
 import 'package:grocery/Presentation/resources/size.dart';
 import 'package:grocery/Presentation/resources/sized_box.dart';
 import 'package:grocery/Presentation/resources/text_styles.dart';
+import 'package:grocery/Presentation/views/home/inventory/all%20tabs/components/product_detail_container.dart';
 import 'package:grocery/Presentation/views/home/inventory/all%20tabs/resourceActions/bloc/resource_action_cubit.dart';
 import 'package:grocery/Presentation/views/home/inventory/all%20tabs/resourceActions/resource_action_view_model.dart';
 
-import '../../../../../../../Domain/models/inventory/resource_action_model.dart';
+import '../../../../../../../Data/errors/custom_error.dart';
+import '../../../../../../common/custom_date_picker.dart';
+import '../../../../../../common/date_picker.dart';
 
 class AddResourceActionScreen extends StatefulWidget {
-  const AddResourceActionScreen({super.key});
+  final ResourceData resourceData;
+  const AddResourceActionScreen({
+    super.key,
+    required this.resourceData,
+  });
 
   @override
   State<AddResourceActionScreen> createState() =>
@@ -36,6 +45,16 @@ class _AddResourceActionScreenState extends State<AddResourceActionScreen> {
   final resourceController = TextEditingController();
   var actionType;
   bool isInternalUsage = false;
+  DateTime? dateTime;
+  var moneyType;
+
+  @override
+  void initState() {
+    actionType = ResourceActionViewModel.actionTypeList[0].toString();
+    resourceController.text = widget.resourceData.name;
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -48,32 +67,10 @@ class _AddResourceActionScreenState extends State<AddResourceActionScreen> {
           physics: const BouncingScrollPhysics(),
           child: Column(
             children: [
-              //textFields(),
-              BlocBuilder<ResourceActionCubit, ResourceActionState>(
-                  builder: (context, state) {
-                if (state.status == ResourceActionEnum.loading) {
-                  return LoadingIndicator.loading();
-                }
-
-                return CustomButton(
-                  text: AppStrings.addActionText,
-                  onTap: () async {
-                    Random random = Random();
-                    int randomNumber = random.nextInt(100);
-                    if (formKey.currentState!.validate()) {
-                      await context
-                          .read<ResourceActionCubit>()
-                          .addResourceAction(ResourceActionModel(
-                            resourceActionId: randomNumber,
-                            resourceActionName: actionType.toString(),
-                            quantity: double.parse(quantityController.text),
-                            money: double.parse(moneyController.text),
-                            priceCounter:
-                                double.parse(printCounterController.text),
-                            resource: resourceController.text,
-                            isForInternalUsage: isInternalUsage,
-                          ));
-                    }
+              textFields(),
+              BlocListener<ResourceActionCubit, ResourceActionState>(
+                listener: (context, state) {
+                  if (state.status == ResourceActionEnum.success) {
                     Navigator.of(context).pop();
                     SnackBarWidget.buildSnackBar(
                       context,
@@ -82,9 +79,48 @@ class _AddResourceActionScreenState extends State<AddResourceActionScreen> {
                       Icons.check,
                       true,
                     );
-                  },
-                );
-              }),
+                  }
+                  if (state.error != const CustomError(error: '')) {
+                    SnackBarWidget.buildSnackBar(
+                      context,
+                      state.error.error,
+                      AppColors.redColor,
+                      Icons.close,
+                      true,
+                    );
+                  }
+                },
+                child: BlocBuilder<ResourceActionCubit, ResourceActionState>(
+                    builder: (context, state) {
+                  if (state.status == ResourceActionEnum.loading) {
+                    return LoadingIndicator.loading();
+                  }
+
+                  return CustomButton(
+                    text: AppStrings.addActionText,
+                    onTap: () async {
+                      if (formKey.currentState!.validate()) {
+                        Map map = {
+                          "action_type": actionType.toString(),
+                          "quantity": quantityController.text,
+                          "money": moneyController.text,
+                          "date_time":
+                              dateTime != null ? dateTime.toString() : "",
+                          "print_counter": printCounterController.text,
+                          "is_for_internal_usage":
+                              isInternalUsage == false ? "false" : "true",
+                          "resource": "${widget.resourceData.id}",
+                          "money_type": moneyType.toString(),
+                        };
+                        log("map $map");
+                        context
+                            .read<ResourceActionCubit>()
+                            .addResourceAction(map);
+                      }
+                    },
+                  );
+                }),
+              ),
               CustomSizedBox.height(10),
             ],
           ),
@@ -93,104 +129,141 @@ class _AddResourceActionScreenState extends State<AddResourceActionScreen> {
     );
   }
 
-  // Widget textFields() {
-  //   return Form(
-  //     key: formKey,
-  //     child: Column(
-  //       crossAxisAlignment: CrossAxisAlignment.start,
-  //       children: [
-  //         CustomSizedBox.height(30),
-  //         textFieldUpperText(AppStrings.selectActionTypeText),
-  //         CustomDropDownWidget(
-  //           hintText: AppStrings.actionTypeText,
-  //           value: actionType,
-  //           itemsList: ResourceActionViewModel.actionTypeList,
-  //           validationText: AppStrings.provideActionTypeText,
-  //           onChanged: (v) {
-  //             setState(() {
-  //               actionType = v;
-  //             });
-  //           },
-  //         ),
-  //         CustomSizedBox.height(20),
-  //         textFieldUpperText(AppStrings.quantityOnlyText),
-  //         CustomTextField(
-  //           controller: quantityController,
-  //           labelText: AppStrings.quantityOnlyText,
-  //           hintText: AppStrings.enterQuantityText,
-  //           suffixIcon: const Text(""),
-  //           obscureText: false,
-  //           textInputType: TextInputType.number,
-  //           isLabel: false,
-  //           validator: (v) {
-  //             if (v!.trim().isEmpty) {
-  //               return AppStrings.provideQuantityText;
-  //             } else {
-  //               return null;
-  //             }
-  //           },
-  //         ),
-  //         CustomSizedBox.height(20),
-  //         textFieldUpperText(AppStrings.moneyText),
-  //         CustomTextField(
-  //           controller: moneyController,
-  //           labelText: AppStrings.moneyText,
-  //           hintText: AppStrings.enterMoneyText,
-  //           suffixIcon: const Text(""),
-  //           obscureText: false,
-  //           textInputType: TextInputType.number,
-  //           isLabel: false,
-  //           validator: (v) {
-  //             if (v!.trim().isEmpty) {
-  //               return AppStrings.provideMoneyText;
-  //             } else {
-  //               return null;
-  //             }
-  //           },
-  //         ),
-  //         CustomSizedBox.height(20),
-  //         textFieldUpperText(AppStrings.priceCounterText),
-  //         CustomTextField(
-  //           controller: printCounterController,
-  //           labelText: AppStrings.priceCounterText,
-  //           hintText: AppStrings.enterPriceCounterText,
-  //           suffixIcon: const Text(""),
-  //           obscureText: false,
-  //           textInputType: TextInputType.number,
-  //           isLabel: false,
-  //           validator: (v) {
-  //             if (v!.trim().isEmpty) {
-  //               return AppStrings.providePriceCounterText;
-  //             } else {
-  //               return null;
-  //             }
-  //           },
-  //         ),
-  //         CustomSizedBox.height(20),
-  //         textFieldUpperText(AppStrings.resourceText),
-  //         CustomTextField(
-  //           controller: resourceController,
-  //           labelText: AppStrings.resourceText,
-  //           hintText: AppStrings.enterResourceText,
-  //           suffixIcon: const Text(""),
-  //           obscureText: false,
-  //           textInputType: TextInputType.number,
-  //           isLabel: false,
-  //           validator: (v) {
-  //             if (v!.trim().isEmpty) {
-  //               return AppStrings.provideResourceText;
-  //             } else {
-  //               return null;
-  //             }
-  //           },
-  //         ),
-  //         CustomSizedBox.height(15),
-  //         internalUsage(),
-  //         CustomSizedBox.height(30),
-  //       ],
-  //     ),
-  //   );
-  // }
+  Widget textFields() {
+    return Form(
+      key: formKey,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          CustomSizedBox.height(30),
+          textFieldUpperText(AppStrings.selectActionTypeText),
+          CustomDropDownWidget(
+            hintText: AppStrings.actionTypeText,
+            value: actionType,
+            itemsMap: ResourceActionViewModel.actionTypeList.map((v) {
+              return DropdownMenuItem(
+                value: v,
+                child: Text(v.toString()),
+              );
+            }).toList(),
+            validationText: AppStrings.provideActionTypeText,
+            onChanged: (v) {
+              setState(() {
+                actionType = v;
+              });
+            },
+          ),
+          CustomSizedBox.height(20),
+          textFieldUpperText(AppStrings.quantityOnlyText),
+          CustomTextField(
+            controller: quantityController,
+            labelText: AppStrings.quantityOnlyText,
+            hintText: AppStrings.enterQuantityText,
+            suffixIcon: const Text(""),
+            obscureText: false,
+            textInputType: TextInputType.number,
+            isLabel: false,
+            validator: (v) {
+              if (v!.trim().isEmpty) {
+                return AppStrings.provideQuantityText;
+              } else {
+                return null;
+              }
+            },
+          ),
+          CustomSizedBox.height(20),
+          textFieldUpperText(AppStrings.moneyText),
+          CustomTextField(
+            controller: moneyController,
+            labelText: AppStrings.moneyText,
+            hintText: AppStrings.enterMoneyText,
+            suffixIcon: const Text(""),
+            obscureText: false,
+            textInputType: TextInputType.number,
+            isLabel: false,
+            validator: (v) {
+              if (v!.trim().isEmpty) {
+                return AppStrings.provideMoneyText;
+              } else {
+                return null;
+              }
+            },
+          ),
+          CustomSizedBox.height(20),
+          textFieldUpperText(AppStrings.moneyTypeText),
+          CustomDropDownWidget(
+            hintText: AppStrings.moneyTypeText,
+            value: moneyType,
+            itemsMap: ResourceActionViewModel.moneyTypeList.map((v) {
+              return DropdownMenuItem(
+                value: v,
+                child: Text(v.toString()),
+              );
+            }).toList(),
+            validationText: AppStrings.provideMoneyTypeText,
+            onChanged: (v) {
+              setState(() {
+                moneyType = v;
+              });
+            },
+          ),
+          CustomSizedBox.height(20),
+          textFieldUpperText(AppStrings.dateText),
+          CustomDatePickerWidget(
+            date: dateTime,
+            onTap: () async {
+              var newDate = await datePicker(context);
+              setState(() {
+                dateTime = newDate;
+              });
+            },
+          ),
+          CustomSizedBox.height(20),
+          textFieldUpperText(AppStrings.priceCounterText),
+          CustomTextField(
+            controller: printCounterController,
+            labelText: AppStrings.priceCounterText,
+            hintText: AppStrings.enterPriceCounterText,
+            suffixIcon: const Text(""),
+            obscureText: false,
+            textInputType: TextInputType.number,
+            isLabel: false,
+            validator: (v) {
+              if (v!.trim().isEmpty) {
+                return AppStrings.providePriceCounterText;
+              } else {
+                return null;
+              }
+            },
+          ),
+          CustomSizedBox.height(20),
+          textFieldUpperText(AppStrings.resourceText),
+          AbsorbPointer(
+            absorbing: true,
+            child: CustomTextField(
+              controller: resourceController,
+              labelText: AppStrings.resourceText,
+              hintText: AppStrings.enterResourceText,
+              suffixIcon: const Text(""),
+              obscureText: false,
+              textInputType: TextInputType.number,
+              isLabel: false,
+              validator: (v) {
+                if (v!.trim().isEmpty) {
+                  return AppStrings.provideResourceText;
+                } else {
+                  return null;
+                }
+              },
+            ),
+          ),
+          CustomSizedBox.height(15),
+          internalUsage(),
+          CustomSizedBox.height(30),
+        ],
+      ),
+    );
+  }
 
   Widget internalUsage() {
     return Row(

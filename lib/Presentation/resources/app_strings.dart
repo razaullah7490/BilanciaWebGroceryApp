@@ -43,6 +43,11 @@ class AppStrings {
   static const String cancelText = "Cancel";
   static const String deleteText = "Delete";
   static const String passwordLengthText = "At least 6 digits password";
+  static const String categoryDeleteInText = "Category Delete in 24 hours";
+  static const String resourceDeleteInText = "Resource Delete in 24 hours";
+  static const String notFoundText = "Not Found";
+  static const String editText = "Edit";
+  static const String allCategoriesText = "All Categories";
 
   //dashboard
   static const String dashboardText = "Dashboard";
@@ -117,6 +122,10 @@ class AppStrings {
   static const String enterShelfLifeText = "Enter shelf life";
   static const String unitSalePriceText = "Unit sale price";
   static const String enterUnitSalePriceText = "Enter unit sale price";
+
+  static const String unitPurchasePriceText = "Unit purchase price";
+  static const String enterUnitPurchasePriceText = "Enter unit purchase price";
+
   static const String revenuePercentageText = "Revenue percentage";
   static const String enterRevenuePercentageText = "Enter revenue percentage";
   static const String selectCategoryText = "Select category";
@@ -136,11 +145,14 @@ class AppStrings {
   static const String selectActionTypeText = "Select Action Type";
   static const String actionTypeText = "Action Type";
   static const String enterMoneyText = "Enter money";
-  static const String enterPriceCounterText = "Enter price Counter";
+  static const String enterPriceCounterText = "Enter price counter";
   static const String enterResourceText = "Enter resource";
   static const String isForInternalUsageText = "Is for internal usage";
   static const String noResourceActionAddedText =
       "No Resource Action Added Yet";
+  static const String dateText = "Date";
+  static const String moneyTypeText = "Money Type";
+  static const String enterMoneyTypeText = "enter money type";
 
   //proceed resource
   static const String processedResourceText = "Processed Resource";
@@ -165,7 +177,7 @@ class AppStrings {
       "No Proceed Resource Action Added Yet";
 
   // manage products
-  static const String searchHereText = "Search here";
+  static const String searchHereText = "Search products here";
   static const String productIdText = "Product ID:";
   static const String quantityText = "Quantity:";
 
@@ -201,18 +213,21 @@ class AppStrings {
   static const String provideShelfLifeText = "Please provide shelf life";
   static const String provideUnitSalePriceText =
       "Please provide unit sale price";
+  static const String provideUnitPurchasePriceText =
+      "Please provide unit purchase price";
   static const String provideRevenuePercentageText =
       "Please provide revenue percantage";
   static const String provideCategoryText = "Please provide category";
   static const String provideCurrentPasswordText =
       "Plese provide current password";
-  static const String provideActionTypeText = "Plese provide action type";
-  static const String provideMoneyText = "Plese provide money";
-  static const String providePriceCounterText = "Plese provide price Counter";
-  static const String provideResourceText = "Plese provide resource";
-  static const String provideTareText = "Plese provide tare";
-  static const String provideWeightTypeText = "Plese provide weight type";
-  static const String provideIngredientText = "Plese provide ingredient";
+  static const String provideActionTypeText = "Please provide action type";
+  static const String provideMoneyTypeText = "Please money type";
+  static const String provideMoneyText = "Please provide money";
+  static const String providePriceCounterText = "Please provide price Counter";
+  static const String provideResourceText = "Please provide resource";
+  static const String provideTareText = "Please provide tare";
+  static const String provideWeightTypeText = "Please provide weight type";
+  static const String provideIngredientText = "Please provide ingredient";
 
   //SnackBar Text
   static const String loginSuccessfullyText = "Login Successfully";
