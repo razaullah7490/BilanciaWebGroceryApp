@@ -74,7 +74,7 @@ class ResourceCubit extends Cubit<ResourceState> {
     }
   }
 
-  Future editResource(id, map) async {
+  Future<bool> editResource(id, map) async {
     emit(state.copyWith(
       status: ResourceEnum.loading,
       error: const CustomError(error: ""),

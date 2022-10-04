@@ -6,26 +6,33 @@ import 'package:grocery/Application/api_urls.dart';
 import 'package:grocery/Domain/models/inventory/resources_model.dart';
 import 'package:http/http.dart' as http;
 import '../../errors/http_error_handler.dart';
+import 'package:dio/dio.dart';
 
 class ResourcesService {
   Future<bool> addResource(map) async {
+    var dio = Dio();
     var token = await AppPrefs.getLoginToken();
     try {
-      var res = await http.post(
-        Uri.parse(ApiUrls.resourcesUrl),
-        body: map,
-        headers: {
-          "Authorization": "Token $token",
-        },
+      var res = await dio.post(
+        ApiUrls.resourcesUrl,
+        data: map,
+        options: Options(
+          followRedirects: false,
+          contentType: 'multipart/form-data',
+          headers: {
+            "Authorization": "Token $token",
+            'Accept': 'application/json'
+          },
+        ),
       );
-      log("testing ${res.statusCode}");
-      var data = json.decode(res.body);
-      if (res.statusCode != 201) {
-        throw httpErrorHandler(data['detail'].toString());
-      }
+
       return true;
-    } catch (e) {
-      rethrow;
+    } on DioError catch (e) {
+      if (e.response!.statusCode != 201) {
+        throw httpErrorHandler(e.response!.data['detail']);
+      } else {
+        return false;
+      }
     }
   }
 
@@ -53,23 +60,29 @@ class ResourcesService {
 
   Future<bool> editResource(id, map) async {
     var token = await AppPrefs.getLoginToken();
+    var dio = Dio();
     String url = "${ApiUrls.resourcesUrl}/$id/";
     try {
-      var res = await http.put(
-        Uri.parse(url),
-        body: map,
-        headers: {
-          "Authorization": "Token $token",
-        },
+      var res = await dio.put(
+        url,
+        data: map,
+        options: Options(
+          //followRedirects: false,
+          contentType: 'multipart/form-data',
+          headers: {
+            "Authorization": "Token $token",
+            'Accept': 'application/json'
+          },
+        ),
       );
-      var data = json.decode(res.body);
-      log("testing ${res.statusCode}");
-      if (res.statusCode != 200) {
-        throw httpErrorHandler(data['detail'].toString());
-      }
       return true;
-    } catch (e) {
-      rethrow;
+    } on DioError catch (e) {
+      if (e.response!.statusCode != 200) {
+        log("1 ${e.response!.data['detail']}");
+        throw httpErrorHandler(e.response!.data['detail']);
+      } else {
+        return false;
+      }
     }
   }
 

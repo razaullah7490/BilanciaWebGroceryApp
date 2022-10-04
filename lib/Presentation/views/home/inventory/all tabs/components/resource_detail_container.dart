@@ -95,6 +95,14 @@ class ResourceDetailContainer extends StatelessWidget {
                 isDeleted: model.isDeleted,
                 unitPurchasePrice: model.unitPurchasePrice,
                 status: model.status,
+                image: model.image,
+                threshold1: model.threshold1,
+                threshold2: model.threshold2,
+                price1: model.price1,
+                price2: model.price2,
+                flgConfig: model.flgConfig,
+                traceability: model.traceability,
+                traceabilityId: model.traceabilityId,
               );
 
               Navigator.pushNamed(

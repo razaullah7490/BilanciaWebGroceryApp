@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:grocery/Presentation/common/delete_item_dialogue.dart';
-import 'package:grocery/Presentation/common/edit_delete_container.dart';
 import 'package:grocery/Presentation/common/snack_bar_widget.dart';
 import 'package:grocery/Presentation/resources/app_strings.dart';
 import 'package:grocery/Presentation/resources/border_radius.dart';
@@ -11,7 +10,6 @@ import 'package:grocery/Presentation/resources/routes/routes_names.dart';
 import 'package:grocery/Presentation/resources/size.dart';
 import 'package:grocery/Presentation/resources/sized_box.dart';
 import 'package:grocery/Presentation/resources/text_styles.dart';
-
 import '../../../../../../Domain/models/inventory/resource_action_model.dart';
 import '../resourceActions/bloc/resource_action_cubit.dart';
 
@@ -60,27 +58,52 @@ class ResourceActionDetailContainer extends StatelessWidget {
               //moneyAndResourceText(AppStrings.resourceText, model.resource),
             ],
           ),
-          editDeleteIcons(
-            onTapEdit: () async {
-              // final args = ResourceActionModel(
-              //   isForInternalUsage: model.isForInternalUsage,
-              //   resourceActionId: model.resourceActionId,
-              //   resourceActionName: model.resourceActionName,
-              //   quantity: model.quantity,
-              //   money: model.money,
-              //   priceCounter: model.priceCounter,
-              //   resource: model.resource,
-              // );
 
-              Navigator.pushNamed(
-                context,
-                RoutesNames.editResourceActionsScreen,
-                //arguments: args,
-              );
-            },
-            onTapDelete: () => deleteResourceActionDialogue(context),
-          ),
+          deleteButton(context),
+
+          // editDeleteIcons(
+          //   onTapEdit: () async {
+          //     // final args = ResourceActionModel(
+          //     //   isForInternalUsage: model.isForInternalUsage,
+          //     //   resourceActionId: model.resourceActionId,
+          //     //   resourceActionName: model.resourceActionName,
+          //     //   quantity: model.quantity,
+          //     //   money: model.money,
+          //     //   priceCounter: model.priceCounter,
+          //     //   resource: model.resource,
+          //     // );
+          //     Navigator.pushNamed(
+          //       context,
+          //       RoutesNames.editResourceActionsScreen,
+          //       //arguments: args,
+          //     );
+          //   },
+          //   onTapDelete: () => deleteResourceActionDialogue(context),
+          // ),
         ],
+      ),
+    );
+  }
+
+  GestureDetector deleteButton(BuildContext context) {
+    return GestureDetector(
+      onTap: () => deleteResourceActionDialogue(context),
+      behavior: HitTestBehavior.opaque,
+      child: Container(
+        padding:
+            const EdgeInsets.symmetric(horizontal: AppSize.p8, vertical: 7).r,
+        decoration: BoxDecoration(
+          color: AppColors.editDeleteFillColor,
+          border: Border.all(
+            color: AppColors.editDeleteBorderColor,
+          ),
+          borderRadius: BorderRadius.circular(8.r),
+        ),
+        child: Icon(
+          Icons.delete,
+          color: Colors.red.shade400,
+          size: AppSize.editDeleteIconSize.r,
+        ),
       ),
     );
   }
@@ -123,10 +146,12 @@ class ResourceActionDetailContainer extends StatelessWidget {
           return DeleteItemDialogue(
             text: AppStrings.resourceActionText,
             onDeleteButtonTap: () {
-              // context
-              //     .read<ResourceActionCubit>()
-              //     .deleteResourceAction(model.resourceActionId);
+              context
+                  .read<ResourceActionCubit>()
+                  .deleteResourceAction(model.resourceActionId);
               Navigator.of(context).pop();
+              Navigator.pushReplacementNamed(
+                  context, RoutesNames.resourceActionsScreen);
               SnackBarWidget.buildSnackBar(
                 context,
                 AppStrings.resourceActionDeleteSuccessText,

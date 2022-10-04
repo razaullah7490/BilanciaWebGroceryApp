@@ -1,5 +1,7 @@
 // ignore_for_file: prefer_typing_uninitialized_variables, use_build_context_synchronously
 import 'dart:developer';
+import 'dart:io';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -18,10 +20,15 @@ import 'package:grocery/Presentation/resources/text_styles.dart';
 import 'package:grocery/Presentation/views/home/inventory/all%20tabs/category/bloc/category_cubit.dart';
 import 'package:grocery/Presentation/views/home/inventory/all%20tabs/category/category_view_model.dart';
 import 'package:grocery/Presentation/views/home/inventory/all%20tabs/resources/bloc/resource_cubit.dart';
+import 'package:image_picker/image_picker.dart';
 import '../../../../../../../Data/errors/custom_error.dart';
+import '../../../../../../common/custom_bottom_sheet.dart';
 import '../../../../../../common/custom_date_picker.dart';
 import '../../../../../../common/date_picker.dart';
+import '../../../../../../common/image_picker.dart';
+import '../../../../../../resources/border_radius.dart';
 import '../../../../../../resources/size.dart';
+import '../../../../../../state management/bloc/ingredientsBloc/ingredients_cubit.dart';
 import '../../../../../../state management/bloc/ivaBloc/manager_iva_cubit.dart';
 import '../../proceedResource/proceed_resource_view_model.dart';
 
@@ -43,23 +50,31 @@ class _AddResourceScreenState extends State<AddResourceScreen> {
   final revenuePercentageController = TextEditingController();
   final barCodeController = TextEditingController();
   final tareController = TextEditingController();
+  final unitPurchasePriceController = TextEditingController();
   var ivaType;
   var measureUnit;
   var category;
   var weightType;
-  //var ingrediant;
+  var ingrediant;
   DateTime? packagingDate;
   DateTime? expirationDate;
   var aliquotaIva;
-
-  final unitPurchasePriceController = TextEditingController();
   var status;
+  File? image;
+
+  final threshold1Controller = TextEditingController();
+  final threshold2Controller = TextEditingController();
+  final price1Controller = TextEditingController();
+  final price2Controller = TextEditingController();
+  bool isFlgConfig = false;
+  var traceability;
+  final traceabilityIdController = TextEditingController();
 
   @override
   void initState() {
     Future.wait([
       context.read<CategoryCubit>().getCategory(),
-      //context.read<IngredientsCubit>().getIngredients(),
+      context.read<IngredientsCubit>().getIngredients(),
       context.read<ManagerIvaCubit>().getIva(),
     ]);
     stockQuantityController.text = "0";
@@ -69,6 +84,12 @@ class _AddResourceScreenState extends State<AddResourceScreen> {
     status = CategoryViewModel.statusList[0].toString();
     tareController.text = "0";
     weightType = ProcessedResourceViewModel.weightTypeList[0].toString();
+    threshold1Controller.text = "0";
+    threshold2Controller.text = "0";
+    price1Controller.text = "0";
+    price2Controller.text = "0";
+    traceability = ProcessedResourceViewModel.traceabilityList[0].toString();
+    traceabilityIdController.text = "0";
 
     super.initState();
   }
@@ -86,6 +107,34 @@ class _AddResourceScreenState extends State<AddResourceScreen> {
           child: Column(
             children: [
               textFields(),
+              CustomSizedBox.height(20),
+              Align(
+                  alignment: Alignment.centerLeft,
+                  child: textFieldUpperText(AppStrings.addImageText)),
+              CustomSizedBox.height(5),
+              Row(
+                children: [
+                  CustomBottomSheet(
+                    onCameraTap: () async {
+                      Navigator.of(context).pop();
+                      var imagePath =
+                          await CustomImagePicker.getImage(ImageSource.camera);
+                      setState(() {
+                        image = imagePath;
+                      });
+                    },
+                    onGalleryTap: () async {
+                      Navigator.of(context).pop();
+                      var imagePath =
+                          await CustomImagePicker.getImage(ImageSource.gallery);
+                      setState(() {
+                        image = imagePath;
+                      });
+                    },
+                  ),
+                  if (image != null) imageContainer(),
+                ],
+              ),
               CustomSizedBox.height(40),
               BlocListener<ResourceCubit, ResourceState>(
                 listener: (context, state) {
@@ -121,7 +170,7 @@ class _AddResourceScreenState extends State<AddResourceScreen> {
                     text: AppStrings.addResourceText,
                     onTap: () async {
                       if (formKey.currentState!.validate()) {
-                        Map map = {
+                        Map<String, dynamic> map = {
                           "name": resourceNameController.text,
                           "category": category.toString(),
                           "iva_aliquota": aliquotaIva.toString(),
@@ -137,7 +186,7 @@ class _AddResourceScreenState extends State<AddResourceScreen> {
                           "plu": pluController.text.toString(),
                           "tare": tareController.text.toString(),
                           "weight_type": weightType.toString(),
-                          //"ingredient": ingrediant.toString(),
+                          "ingredient": ingrediant.toString(),
                           "revenue_percentage":
                               revenuePercentageController.text.toString(),
                           "expiration_date": expirationDate != null
@@ -149,9 +198,26 @@ class _AddResourceScreenState extends State<AddResourceScreen> {
                           "unit_purchase_price":
                               unitPurchasePriceController.text.toString(),
                           "is_active": status == "Active" ? "true" : "false",
+                          "threshold_1": threshold1Controller.text.toString(),
+                          "threshold_2": threshold2Controller.text.toString(),
+                          "price_1": price1Controller.text.toString(),
+                          "price_2": price2Controller.text.toString(),
+                          "flg_config": isFlgConfig,
+                          "traceability": traceability.toString(),
+                          "traceability_id":
+                              traceabilityIdController.text.toString(),
                         };
-                        log("map $map");
-                        await context.read<ResourceCubit>().addResource(map);
+                        var formData = FormData.fromMap(map);
+
+                        if (image != null) {
+                          formData.files.add(MapEntry("image",
+                              MultipartFile.fromFileSync(image!.path)));
+                        }
+
+                        await context
+                            .read<ResourceCubit>()
+                            .addResource(formData);
+                        log("map $formData");
                       }
                     },
                   );
@@ -464,27 +530,27 @@ class _AddResourceScreenState extends State<AddResourceScreen> {
               });
             },
           ),
-          // CustomSizedBox.height(20),
-          // textFieldUpperText(AppStrings.ingredientsText),
-          // BlocBuilder<IngredientsCubit, IngredientsState>(
-          //     builder: (context, state) {
-          //   return CustomDropDownWidget(
-          //     hintText: AppStrings.ingredientsText,
-          //     value: ingrediant,
-          //     itemsMap: state.modelList.map((v) {
-          //       return DropdownMenuItem(
-          //         value: v.ingrediantId,
-          //         child: Text(v.description.toString()),
-          //       );
-          //     }).toList(),
-          //     validationText: AppStrings.provideIngredientText,
-          //     onChanged: (v) {
-          //       setState(() {
-          //         ingrediant = v;
-          //       });
-          //     },
-          //   );
-          // }),
+          CustomSizedBox.height(20),
+          textFieldUpperText(AppStrings.ingredientsText),
+          BlocBuilder<IngredientsCubit, IngredientsState>(
+              builder: (context, state) {
+            return CustomDropDownWidget(
+              hintText: AppStrings.ingredientsText,
+              value: ingrediant,
+              itemsMap: state.modelList.map((v) {
+                return DropdownMenuItem(
+                  value: v.ingrediantId,
+                  child: Text(v.description.toString()),
+                );
+              }).toList(),
+              validationText: AppStrings.provideIngredientText,
+              onChanged: (v) {
+                setState(() {
+                  ingrediant = v;
+                });
+              },
+            );
+          }),
           CustomSizedBox.height(20),
           textFieldUpperText(AppStrings.packagingDateText),
           CustomDatePickerWidget(
@@ -507,6 +573,116 @@ class _AddResourceScreenState extends State<AddResourceScreen> {
               });
             },
           ),
+          CustomSizedBox.height(20),
+          textFieldUpperText(AppStrings.threshold1Text),
+          CustomTextField(
+            controller: threshold1Controller,
+            labelText: AppStrings.threshold1Text,
+            hintText: AppStrings.enterThreshold1Text,
+            suffixIcon: const Text(""),
+            obscureText: false,
+            textInputType: TextInputType.number,
+            isLabel: false,
+            validator: (v) {
+              if (v!.trim().isEmpty) {
+                return AppStrings.provideThreshold1Text;
+              } else {
+                return null;
+              }
+            },
+          ),
+          CustomSizedBox.height(20),
+          textFieldUpperText(AppStrings.threshold2Text),
+          CustomTextField(
+            controller: threshold2Controller,
+            labelText: AppStrings.threshold2Text,
+            hintText: AppStrings.enterThreshold2Text,
+            suffixIcon: const Text(""),
+            obscureText: false,
+            textInputType: TextInputType.number,
+            isLabel: false,
+            validator: (v) {
+              if (v!.trim().isEmpty) {
+                return AppStrings.provideThreshold2Text;
+              } else {
+                return null;
+              }
+            },
+          ),
+          CustomSizedBox.height(20),
+          textFieldUpperText(AppStrings.price1Text),
+          CustomTextField(
+            controller: price1Controller,
+            labelText: AppStrings.price1Text,
+            hintText: AppStrings.enterPrice1Text,
+            suffixIcon: const Text(""),
+            obscureText: false,
+            textInputType: TextInputType.number,
+            isLabel: false,
+            validator: (v) {
+              if (v!.trim().isEmpty) {
+                return AppStrings.providePrice1Text;
+              } else {
+                return null;
+              }
+            },
+          ),
+          CustomSizedBox.height(20),
+          textFieldUpperText(AppStrings.price2Text),
+          CustomTextField(
+            controller: price2Controller,
+            labelText: AppStrings.price2Text,
+            hintText: AppStrings.enterPrice2Text,
+            suffixIcon: const Text(""),
+            obscureText: false,
+            textInputType: TextInputType.number,
+            isLabel: false,
+            validator: (v) {
+              if (v!.trim().isEmpty) {
+                return AppStrings.providePrice2Text;
+              } else {
+                return null;
+              }
+            },
+          ),
+          CustomSizedBox.height(10),
+          flyConfigWidget(),
+          CustomSizedBox.height(10),
+          textFieldUpperText(AppStrings.traceabilityText),
+          CustomDropDownWidget(
+            hintText: AppStrings.traceabilityText,
+            value: traceability,
+            itemsMap: ProcessedResourceViewModel.traceabilityList.map((v) {
+              return DropdownMenuItem(
+                value: v,
+                child: Text(v.toString()),
+              );
+            }).toList(),
+            validationText: AppStrings.provideTraceabilityText,
+            onChanged: (v) {
+              setState(() {
+                traceability = v;
+              });
+            },
+          ),
+          CustomSizedBox.height(20),
+          textFieldUpperText(AppStrings.traceabilityIdText),
+          CustomTextField(
+            controller: traceabilityIdController,
+            labelText: AppStrings.traceabilityIdText,
+            hintText: AppStrings.enterTraceabilityIdText,
+            suffixIcon: const Text(""),
+            obscureText: false,
+            textInputType: TextInputType.number,
+            isLabel: false,
+            validator: (v) {
+              if (v!.trim().isEmpty) {
+                return AppStrings.provideTraceabilityIdText;
+              } else {
+                return null;
+              }
+            },
+          ),
         ],
       ),
     );
@@ -527,6 +703,65 @@ class _AddResourceScreenState extends State<AddResourceScreen> {
           ),
           CustomSizedBox.height(10),
         ],
+      ),
+    );
+  }
+
+  Widget flyConfigWidget() {
+    return Row(
+      children: [
+        SizedBox(
+          width: 20.w,
+          child: Theme(
+            data: Theme.of(context).copyWith(
+              unselectedWidgetColor: AppColors.primaryColor,
+            ),
+            child: Checkbox(
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.all(
+                      Radius.circular(AppBorderRadius.checkBoxRadius.r))),
+              activeColor: AppColors.primaryColor,
+              value: isFlgConfig,
+              onChanged: (value) {
+                setState(() {
+                  isFlgConfig = value!;
+                });
+              },
+            ),
+          ),
+        ),
+        CustomSizedBox.width(10),
+        Padding(
+          padding: const EdgeInsets.only(top: AppSize.p9).r,
+          child: textFieldUpperText(AppStrings.flgConfigText),
+        ),
+      ],
+    );
+  }
+
+  Widget imageContainer() {
+    return Container(
+      padding: const EdgeInsets.all(AppSize.p6).r,
+      margin: const EdgeInsets.symmetric(horizontal: AppSize.m15).r,
+      width: 120.w,
+      height: 110.h,
+      decoration: BoxDecoration(
+        border: Border.all(
+          color: AppColors.secondaryColor,
+          width: 1.5.w,
+        ),
+        borderRadius: BorderRadius.circular(
+          AppBorderRadius.chooseImageContainerRadius.r,
+        ),
+      ),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(
+          AppBorderRadius.chooseImageContainerRadius.r,
+        ),
+        child: Image.file(
+          image!,
+          fit: BoxFit.fill,
+        ),
       ),
     );
   }

@@ -102,6 +102,15 @@ class AppStrings {
   static const String enterMaxValueText = "Enter max value";
   static const String discountPriceText = "Discount Price";
   static const String enterDiscountPriceText = "Enter Discount Price";
+  static const String keyModifierText = "Key modifier";
+  static const String enterKeyModifierText = "Enter key modifier";
+  static const String idGruppoText = "Id gruppo";
+  static const String enterIdGruppoText = "Enter id gruppo";
+  static const String idAuxLanText = "Id aux lan";
+  static const String enterIdAuxLanText = "Enter id aux lan";
+  static const String tipoScontoText = "Tipo sconto";
+  static const String enterTipoScontoText = "Enter tipo sconto";
+  static const String battSingolaText = "Batt singola";
 
   //resources
   static const String resourcesText = "Resources";
@@ -153,6 +162,19 @@ class AppStrings {
   static const String dateText = "Date";
   static const String moneyTypeText = "Money Type";
   static const String enterMoneyTypeText = "enter money type";
+  static const String threshold1Text = "Threshold 1";
+  static const String threshold2Text = "Threshold 2";
+  static const String enterThreshold1Text = "Enter threshold 1";
+  static const String enterThreshold2Text = "Enter threshold 2";
+  static const String price1Text = "Price 1";
+  static const String price2Text = "Price 2";
+  static const String enterPrice1Text = "Enter price 1";
+  static const String enterPrice2Text = "Enter price 2";
+  static const String flgConfigText = "Flg config";
+  static const String traceabilityText = "Traceability";
+  static const String traceabilityIdText = "Traceability ID";
+  static const String enterTraceabilityText = "Enter traceability";
+  static const String enterTraceabilityIdText = "Enter traceability ID";
 
   //proceed resource
   static const String processedResourceText = "Processed Resource";
@@ -219,7 +241,7 @@ class AppStrings {
       "Please provide revenue percantage";
   static const String provideCategoryText = "Please provide category";
   static const String provideCurrentPasswordText =
-      "Plese provide current password";
+      "Please provide current password";
   static const String provideActionTypeText = "Please provide action type";
   static const String provideMoneyTypeText = "Please money type";
   static const String provideMoneyText = "Please provide money";
@@ -228,6 +250,18 @@ class AppStrings {
   static const String provideTareText = "Please provide tare";
   static const String provideWeightTypeText = "Please provide weight type";
   static const String provideIngredientText = "Please provide ingredient";
+  static const String provideThreshold1Text = "Please provide threshold 1";
+  static const String provideThreshold2Text = "Please provide threshold 2";
+  static const String providePrice1Text = "Please provide price 1";
+  static const String providePrice2Text = "Please provide price 2";
+  static const String provideTraceabilityText = "Please provide traceability";
+  static const String provideTraceabilityIdText =
+      "Please provide traceability ID";
+
+  static const String provideKeyModifierText = "Please provide key modifier";
+  static const String provideIdGruppoText = "Please provide id gruppo";
+  static const String provideIdAuxLanText = "Please provide id aux lan";
+  static const String provideTipoScontoText = "Please provide tipo sconto";
 
   //SnackBar Text
   static const String loginSuccessfullyText = "Login Successfully";

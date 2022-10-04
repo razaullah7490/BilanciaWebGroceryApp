@@ -22,6 +22,14 @@ class ResourcesModel {
   bool isDeleted;
   bool status;
   double unitPurchasePrice;
+  String image;
+  double threshold1;
+  double threshold2;
+  double price1;
+  double price2;
+  bool flgConfig;
+  int traceability;
+  int traceabilityId;
 
   ResourcesModel({
     required this.resourceId,
@@ -45,6 +53,14 @@ class ResourcesModel {
     required this.isDeleted,
     required this.status,
     required this.unitPurchasePrice,
+    required this.image,
+    required this.threshold1,
+    required this.threshold2,
+    required this.price1,
+    required this.price2,
+    required this.flgConfig,
+    required this.traceability,
+    required this.traceabilityId,
   });
 
   Map<String, dynamic> toMap() {
@@ -93,6 +109,14 @@ class ResourcesModel {
       isDeleted: map['is_deleted'],
       status: map['is_active'] ?? false,
       unitPurchasePrice: map['unit_purchase_price'] ?? 0.0,
+      image: map["image"] ?? "",
+      threshold1: map["threshold_1"],
+      threshold2: map["threshold_2"],
+      price1: map["price_1"],
+      price2: map["price_2"],
+      flgConfig: map["flg_config"],
+      traceability: map["traceability"],
+      traceabilityId: map["traceability_id"],
     );
   }
 

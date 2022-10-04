@@ -27,4 +27,13 @@ class ResourceActionRepository {
       throw CustomError(error: e.toString());
     }
   }
+
+  Future<bool> deleteResourceAction(id) async {
+    try {
+      var res = await resourceActionService.deleteResourceAction(id);
+      return res;
+    } catch (e) {
+      throw CustomError(error: e.toString());
+    }
+  }
 }

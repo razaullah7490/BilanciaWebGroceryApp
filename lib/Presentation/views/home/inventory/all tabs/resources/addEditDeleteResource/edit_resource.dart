@@ -1,5 +1,10 @@
 // ignore_for_file: prefer_typing_uninitialized_variables, use_build_context_synchronously
 
+import 'dart:developer';
+import 'dart:io';
+
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -15,12 +20,16 @@ import 'package:grocery/Presentation/resources/sized_box.dart';
 import 'package:grocery/Presentation/resources/text_styles.dart';
 import 'package:grocery/Presentation/views/home/inventory/all%20tabs/category/category_view_model.dart';
 import 'package:grocery/Presentation/views/home/inventory/all%20tabs/resources/bloc/resource_cubit.dart';
+import 'package:image_picker/image_picker.dart';
 
 import '../../../../../../../Data/errors/custom_error.dart';
 import '../../../../../../../Domain/models/inventory/resources_model.dart';
+import '../../../../../../common/custom_bottom_sheet.dart';
 import '../../../../../../common/custom_date_picker.dart';
 import '../../../../../../common/date_picker.dart';
+import '../../../../../../common/image_picker.dart';
 import '../../../../../../common/loading_indicator.dart';
+import '../../../../../../resources/border_radius.dart';
 import '../../../../../../resources/routes/routes_names.dart';
 import '../../../../../../resources/size.dart';
 import '../../../../../../state management/bloc/ingredientsBloc/ingredients_cubit.dart';
@@ -50,18 +59,25 @@ class _EditResourceScreenState extends State<EditResourceScreen> {
   final revenuePercentageController = TextEditingController();
   final barCodeController = TextEditingController();
   final tareController = TextEditingController();
+  final unitPurchasePriceController = TextEditingController();
   var ivaType;
   var measureUnit;
   var category;
-
   var weightType;
-  // var ingrediant;
+  var ingrediant;
   DateTime? packagingDate;
   DateTime? expirationDate;
   var aliquotaIva;
-
-  final unitPurchasePriceController = TextEditingController();
   var status;
+  File? image;
+
+  final threshold1Controller = TextEditingController();
+  final threshold2Controller = TextEditingController();
+  final price1Controller = TextEditingController();
+  final price2Controller = TextEditingController();
+  bool isFlgConfig = false;
+  var traceability;
+  final traceabilityIdController = TextEditingController();
 
   @override
   void initState() {
@@ -91,16 +107,23 @@ class _EditResourceScreenState extends State<EditResourceScreen> {
 
     unitPurchasePriceController.text =
         widget.model.unitPurchasePrice.toString();
-
     status = widget.model.status == true ? "Active" : "InActive";
+
+    threshold1Controller.text = widget.model.threshold1.toString();
+    threshold2Controller.text = widget.model.threshold2.toString();
+    price1Controller.text = widget.model.price1.toString();
+    price2Controller.text = widget.model.price2.toString();
+    traceability = widget.model.traceability.toString();
+    traceabilityIdController.text = widget.model.traceabilityId.toString();
+    isFlgConfig = widget.model.flgConfig;
 
     Future.wait([
       context.read<CategoryCubit>().getCategory(),
-      // context.read<IngredientsCubit>().getIngredients(),
+      context.read<IngredientsCubit>().getIngredients(),
       context.read<ManagerIvaCubit>().getIva(),
     ]);
-    // ingrediant =
-    //     widget.model.ingrediant != 0 ? widget.model.ingrediant : ingrediant;
+    ingrediant =
+        widget.model.ingrediant != 0 ? widget.model.ingrediant : ingrediant;
     super.initState();
   }
 
@@ -117,6 +140,36 @@ class _EditResourceScreenState extends State<EditResourceScreen> {
           child: Column(
             children: [
               textFields(),
+              CustomSizedBox.height(20),
+              Align(
+                  alignment: Alignment.centerLeft,
+                  child: textFieldUpperText(AppStrings.addImageText)),
+              CustomSizedBox.height(5),
+              Row(
+                children: [
+                  CustomBottomSheet(
+                    onCameraTap: () async {
+                      Navigator.of(context).pop();
+                      var imagePath =
+                          await CustomImagePicker.getImage(ImageSource.camera);
+                      setState(() {
+                        image = imagePath;
+                      });
+                    },
+                    onGalleryTap: () async {
+                      Navigator.of(context).pop();
+                      var imagePath =
+                          await CustomImagePicker.getImage(ImageSource.gallery);
+                      setState(() {
+                        image = imagePath;
+                      });
+                    },
+                  ),
+                  if (image != null) imageContainer(),
+                  if (widget.model.image.isNotEmpty && image == null)
+                    oldImage(),
+                ],
+              ),
               CustomSizedBox.height(40),
               BlocListener<ResourceCubit, ResourceState>(
                 listener: (context, state) {
@@ -134,6 +187,7 @@ class _EditResourceScreenState extends State<EditResourceScreen> {
                   }
 
                   if (state.error != const CustomError(error: '')) {
+                    log("state error ${state.error.error}");
                     SnackBarWidget.buildSnackBar(
                       context,
                       state.error.error,
@@ -152,7 +206,7 @@ class _EditResourceScreenState extends State<EditResourceScreen> {
                     text: AppStrings.editResourceText,
                     onTap: () async {
                       if (formKey.currentState!.validate()) {
-                        Map map = {
+                        Map<String, dynamic> map = {
                           "name": resourceNameController.text,
                           "category": category.toString(),
                           "iva_aliquota": aliquotaIva.toString(),
@@ -180,10 +234,26 @@ class _EditResourceScreenState extends State<EditResourceScreen> {
                           "unit_purchase_price":
                               unitPurchasePriceController.text.toString(),
                           "is_active": status == "Active" ? "true" : "false",
+                          "threshold_1": threshold1Controller.text.toString(),
+                          "threshold_2": threshold2Controller.text.toString(),
+                          "price_1": price1Controller.text.toString(),
+                          "price_2": price2Controller.text.toString(),
+                          "flg_config": isFlgConfig,
+                          "traceability": traceability.toString(),
+                          "traceability_id":
+                              traceabilityIdController.text.toString(),
                         };
+
+                        var formData = FormData.fromMap(map);
+                        if (image != null) {
+                          formData.files.add(MapEntry("image",
+                              MultipartFile.fromFileSync(image!.path)));
+                        }
+
                         await context
                             .read<ResourceCubit>()
-                            .editResource(widget.model.resourceId, map);
+                            .editResource(widget.model.resourceId, formData);
+                        log("map $formData");
                       }
                     },
                   );
@@ -192,6 +262,68 @@ class _EditResourceScreenState extends State<EditResourceScreen> {
               CustomSizedBox.height(10),
             ],
           ),
+        ),
+      ),
+    );
+  }
+
+  CachedNetworkImage oldImage() {
+    return CachedNetworkImage(
+      imageUrl: widget.model.image,
+      imageBuilder: (context, imageProvider) => Container(
+        padding: const EdgeInsets.all(AppSize.p6).r,
+        margin: const EdgeInsets.symmetric(horizontal: AppSize.m15).r,
+        width: 120.w,
+        height: 110.h,
+        decoration: BoxDecoration(
+          border: Border.all(
+            color: AppColors.secondaryColor,
+            width: 1.5.w,
+          ),
+          borderRadius: BorderRadius.circular(
+            AppBorderRadius.chooseImageContainerRadius.r,
+          ),
+        ),
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(
+            AppBorderRadius.chooseImageContainerRadius.r,
+          ),
+          child: Image(
+            image: imageProvider,
+            fit: BoxFit.cover,
+          ),
+        ),
+      ),
+      placeholder: (context, url) => LoadingIndicator.loading(),
+      errorWidget: (context, url, error) => Icon(
+        Icons.error,
+        size: AppSize.icon28.r,
+      ),
+    );
+  }
+
+  Widget imageContainer() {
+    return Container(
+      padding: const EdgeInsets.all(AppSize.p6).r,
+      margin: const EdgeInsets.symmetric(horizontal: AppSize.m15).r,
+      width: 120.w,
+      height: 110.h,
+      decoration: BoxDecoration(
+        border: Border.all(
+          color: AppColors.secondaryColor,
+          width: 1.5.w,
+        ),
+        borderRadius: BorderRadius.circular(
+          AppBorderRadius.chooseImageContainerRadius.r,
+        ),
+      ),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(
+          AppBorderRadius.chooseImageContainerRadius.r,
+        ),
+        child: Image.file(
+          image!,
+          fit: BoxFit.fill,
         ),
       ),
     );
@@ -477,27 +609,27 @@ class _EditResourceScreenState extends State<EditResourceScreen> {
               });
             },
           ),
-          // CustomSizedBox.height(20),
-          // textFieldUpperText(AppStrings.ingredientsText),
-          // BlocBuilder<IngredientsCubit, IngredientsState>(
-          //     builder: (context, state) {
-          //   return CustomDropDownWidget(
-          //     hintText: AppStrings.ingredientsText,
-          //     value: ingrediant,
-          //     itemsMap: state.modelList.map((v) {
-          //       return DropdownMenuItem(
-          //         value: v.ingrediantId,
-          //         child: Text(v.description.toString()),
-          //       );
-          //     }).toList(),
-          //     validationText: AppStrings.provideIngredientText,
-          //     onChanged: (v) {
-          //       setState(() {
-          //         ingrediant = v;
-          //       });
-          //     },
-          //   );
-          // }),
+          CustomSizedBox.height(20),
+          textFieldUpperText(AppStrings.ingredientsText),
+          BlocBuilder<IngredientsCubit, IngredientsState>(
+              builder: (context, state) {
+            return CustomDropDownWidget(
+              hintText: AppStrings.ingredientsText,
+              value: ingrediant,
+              itemsMap: state.modelList.map((v) {
+                return DropdownMenuItem(
+                  value: v.ingrediantId,
+                  child: Text(v.description.toString()),
+                );
+              }).toList(),
+              validationText: AppStrings.provideIngredientText,
+              onChanged: (v) {
+                setState(() {
+                  ingrediant = v;
+                });
+              },
+            );
+          }),
           CustomSizedBox.height(20),
           textFieldUpperText(AppStrings.packagingDateText),
           CustomDatePickerWidget(
@@ -520,8 +652,140 @@ class _EditResourceScreenState extends State<EditResourceScreen> {
               });
             },
           ),
+          CustomSizedBox.height(20),
+          CustomTextField(
+            controller: threshold1Controller,
+            labelText: AppStrings.threshold1Text,
+            hintText: AppStrings.enterThreshold1Text,
+            suffixIcon: const Text(""),
+            obscureText: false,
+            textInputType: TextInputType.number,
+            validator: (v) {
+              if (v!.trim().isEmpty) {
+                return AppStrings.provideThreshold1Text;
+              } else {
+                return null;
+              }
+            },
+          ),
+          CustomSizedBox.height(20),
+          CustomTextField(
+            controller: threshold2Controller,
+            labelText: AppStrings.threshold2Text,
+            hintText: AppStrings.enterThreshold2Text,
+            suffixIcon: const Text(""),
+            obscureText: false,
+            textInputType: TextInputType.number,
+            validator: (v) {
+              if (v!.trim().isEmpty) {
+                return AppStrings.provideThreshold2Text;
+              } else {
+                return null;
+              }
+            },
+          ),
+          CustomSizedBox.height(20),
+          CustomTextField(
+            controller: price1Controller,
+            labelText: AppStrings.price1Text,
+            hintText: AppStrings.enterPrice1Text,
+            suffixIcon: const Text(""),
+            obscureText: false,
+            textInputType: TextInputType.number,
+            validator: (v) {
+              if (v!.trim().isEmpty) {
+                return AppStrings.providePrice1Text;
+              } else {
+                return null;
+              }
+            },
+          ),
+          CustomSizedBox.height(20),
+          CustomTextField(
+            controller: price2Controller,
+            labelText: AppStrings.price2Text,
+            hintText: AppStrings.enterPrice2Text,
+            suffixIcon: const Text(""),
+            obscureText: false,
+            textInputType: TextInputType.number,
+            validator: (v) {
+              if (v!.trim().isEmpty) {
+                return AppStrings.providePrice2Text;
+              } else {
+                return null;
+              }
+            },
+          ),
+          CustomSizedBox.height(10),
+          flyConfigWidget(),
+          CustomSizedBox.height(10),
+          textFieldUpperText(AppStrings.traceabilityText),
+          CustomDropDownWidget(
+            hintText: AppStrings.traceabilityText,
+            value: traceability,
+            itemsMap: ProcessedResourceViewModel.traceabilityList.map((v) {
+              return DropdownMenuItem(
+                value: v,
+                child: Text(v.toString()),
+              );
+            }).toList(),
+            validationText: AppStrings.provideTraceabilityText,
+            onChanged: (v) {
+              setState(() {
+                traceability = v;
+              });
+            },
+          ),
+          CustomSizedBox.height(20),
+          CustomTextField(
+            controller: traceabilityIdController,
+            labelText: AppStrings.traceabilityIdText,
+            hintText: AppStrings.enterTraceabilityIdText,
+            suffixIcon: const Text(""),
+            obscureText: false,
+            textInputType: TextInputType.number,
+            validator: (v) {
+              if (v!.trim().isEmpty) {
+                return AppStrings.provideTraceabilityIdText;
+              } else {
+                return null;
+              }
+            },
+          ),
         ],
       ),
+    );
+  }
+
+  Widget flyConfigWidget() {
+    return Row(
+      children: [
+        SizedBox(
+          width: 20.w,
+          child: Theme(
+            data: Theme.of(context).copyWith(
+              unselectedWidgetColor: AppColors.primaryColor,
+            ),
+            child: Checkbox(
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.all(
+                      Radius.circular(AppBorderRadius.checkBoxRadius.r))),
+              activeColor: AppColors.primaryColor,
+              value: isFlgConfig,
+              onChanged: (value) {
+                setState(() {
+                  isFlgConfig = value!;
+                });
+              },
+            ),
+          ),
+        ),
+        CustomSizedBox.width(10),
+        Padding(
+          padding: const EdgeInsets.only(top: AppSize.p9).r,
+          child: textFieldUpperText(AppStrings.flgConfigText),
+        ),
+      ],
     );
   }
 

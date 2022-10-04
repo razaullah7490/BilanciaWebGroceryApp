@@ -11,6 +11,11 @@ class CategoryModel {
   bool status;
   int aliquotaIva;
   bool isDeleted;
+  int keyModifier;
+  int idGruppo;
+  int idAuxLan;
+  int tipoSconto;
+  bool battSingola;
   CategoryModel({
     required this.categoryId,
     required this.categoryName,
@@ -22,6 +27,11 @@ class CategoryModel {
     required this.status,
     required this.aliquotaIva,
     required this.isDeleted,
+    required this.keyModifier,
+    required this.idGruppo,
+    required this.idAuxLan,
+    required this.tipoSconto,
+    required this.battSingola,
   });
 
   Map<String, dynamic> toMap() {
@@ -50,6 +60,11 @@ class CategoryModel {
       status: map['is_active'],
       aliquotaIva: map['iva_aliquota'],
       isDeleted: map['is_deleted'],
+      keyModifier: map["key_modifier"],
+      idGruppo: map["id_gruppo"],
+      idAuxLan: map["id_aux_lan"],
+      tipoSconto: map["tipo_sconto"],
+      battSingola: map["batt_singola"],
     );
   }
 

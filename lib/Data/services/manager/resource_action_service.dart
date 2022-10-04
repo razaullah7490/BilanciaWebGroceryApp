@@ -49,4 +49,25 @@ class ResourceActionService {
       rethrow;
     }
   }
+
+  Future<bool> deleteResourceAction(id) async {
+    var token = await AppPrefs.getLoginToken();
+    var url = "${ApiUrls.resourcesActionUrl}/$id/";
+    try {
+      var res = await http.delete(
+        Uri.parse(url),
+        headers: {
+          "Authorization": "Token $token",
+        },
+      );
+      // var data = json.decode(res.body);
+      log("testing ${res.statusCode}");
+      if (res.statusCode != 204) {
+        throw httpErrorHandler("not deleted");
+      }
+      return true;
+    } catch (e) {
+      rethrow;
+    }
+  }
 }

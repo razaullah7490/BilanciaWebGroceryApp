@@ -104,6 +104,11 @@ class CategoryDetailContainer extends StatelessWidget {
                   aliquotaIva: model.aliquotaIva,
                   discountPrice: model.discountPrice,
                   isDeleted: model.isDeleted,
+                  keyModifier: model.keyModifier,
+                  idGruppo: model.idGruppo,
+                  idAuxLan: model.idAuxLan,
+                  tipoSconto: model.tipoSconto,
+                  battSingola: model.battSingola,
                 );
                 Navigator.pushNamed(
                   context,

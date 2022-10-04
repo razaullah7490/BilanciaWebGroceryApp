@@ -20,6 +20,7 @@ import 'package:grocery/Presentation/views/home/inventory/all%20tabs/category/ca
 import '../../../../../../../Data/errors/custom_error.dart';
 import '../../../../../../../Domain/models/inventory/category_model.dart';
 import '../../../../../../common/loading_indicator.dart';
+import '../../../../../../resources/border_radius.dart';
 import '../../../../../../resources/routes/routes_names.dart';
 import '../../../../../../state management/bloc/ivaBloc/manager_iva_cubit.dart';
 
@@ -45,6 +46,12 @@ class _EditCategoryScreenState extends State<EditCategoryScreen> {
   var status;
   var aliquotaIva;
 
+  final keyModifierController = TextEditingController();
+  final idGruppoController = TextEditingController();
+  final idAuxLanController = TextEditingController();
+  final tipoScontoController = TextEditingController();
+  bool isBattSingola = false;
+
   @override
   void initState() {
     categoryNameController.text = widget.model.categoryName;
@@ -55,13 +62,17 @@ class _EditCategoryScreenState extends State<EditCategoryScreen> {
     ivaType = widget.model.ivaType.toString();
     status = widget.model.status == true ? "Active" : "InActive";
     aliquotaIva = widget.model.aliquotaIva;
+    keyModifierController.text = widget.model.keyModifier.toString();
+    idGruppoController.text = widget.model.idGruppo.toString();
+    idAuxLanController.text = widget.model.idAuxLan.toString();
+    tipoScontoController.text = widget.model.tipoSconto.toString();
+    isBattSingola = widget.model.battSingola;
     context.read<ManagerIvaCubit>().getIva();
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    log("Discount ${widget.model.discountPrice}");
     return Scaffold(
       appBar: const CustomAppBar(
         title: AppStrings.editCategoryText,
@@ -116,6 +127,12 @@ class _EditCategoryScreenState extends State<EditCategoryScreen> {
                           "iva_type": ivaType.toString(),
                           "iva_aliquota": aliquotaIva.toString(),
                           "is_active": status == "Active" ? "true" : "false",
+                          "key_modifier": keyModifierController.text.toString(),
+                          "id_gruppo": idGruppoController.text.toString(),
+                          "batt_singola":
+                              isBattSingola == true ? "true" : "false",
+                          "id_aux_lan": idAuxLanController.text.toString(),
+                          "tipo_sconto": tipoScontoController.text.toString(),
                         };
 
                         await context
@@ -277,6 +294,72 @@ class _EditCategoryScreenState extends State<EditCategoryScreen> {
               }).toList(),
             );
           }),
+          CustomSizedBox.height(20),
+          CustomTextField(
+            controller: keyModifierController,
+            labelText: AppStrings.keyModifierText,
+            hintText: AppStrings.enterKeyModifierText,
+            suffixIcon: const Text(""),
+            obscureText: false,
+            textInputType: TextInputType.number,
+            validator: (v) {
+              if (v!.trim().isEmpty) {
+                return AppStrings.provideKeyModifierText;
+              } else {
+                return null;
+              }
+            },
+          ),
+          CustomSizedBox.height(20),
+          CustomTextField(
+            controller: idGruppoController,
+            labelText: AppStrings.idGruppoText,
+            hintText: AppStrings.enterIdGruppoText,
+            suffixIcon: const Text(""),
+            obscureText: false,
+            textInputType: TextInputType.number,
+            validator: (v) {
+              if (v!.trim().isEmpty) {
+                return AppStrings.provideIdGruppoText;
+              } else {
+                return null;
+              }
+            },
+          ),
+          CustomSizedBox.height(10),
+          battSingolaWidget(),
+          CustomSizedBox.height(10),
+          CustomTextField(
+            controller: idAuxLanController,
+            labelText: AppStrings.idAuxLanText,
+            hintText: AppStrings.enterIdAuxLanText,
+            suffixIcon: const Text(""),
+            obscureText: false,
+            textInputType: TextInputType.number,
+            validator: (v) {
+              if (v!.trim().isEmpty) {
+                return AppStrings.provideIdAuxLanText;
+              } else {
+                return null;
+              }
+            },
+          ),
+          CustomSizedBox.height(20),
+          CustomTextField(
+            controller: tipoScontoController,
+            labelText: AppStrings.tipoScontoText,
+            hintText: AppStrings.enterTipoScontoText,
+            suffixIcon: const Text(""),
+            obscureText: false,
+            textInputType: TextInputType.number,
+            validator: (v) {
+              if (v!.trim().isEmpty) {
+                return AppStrings.provideTipoScontoText;
+              } else {
+                return null;
+              }
+            },
+          ),
         ],
       ),
     );
@@ -298,6 +381,38 @@ class _EditCategoryScreenState extends State<EditCategoryScreen> {
           CustomSizedBox.height(10),
         ],
       ),
+    );
+  }
+
+  Widget battSingolaWidget() {
+    return Row(
+      children: [
+        SizedBox(
+          width: 20.w,
+          child: Theme(
+            data: Theme.of(context).copyWith(
+              unselectedWidgetColor: AppColors.primaryColor,
+            ),
+            child: Checkbox(
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.all(
+                      Radius.circular(AppBorderRadius.checkBoxRadius.r))),
+              activeColor: AppColors.primaryColor,
+              value: isBattSingola,
+              onChanged: (value) {
+                setState(() {
+                  isBattSingola = value!;
+                });
+              },
+            ),
+          ),
+        ),
+        CustomSizedBox.width(10),
+        Padding(
+          padding: const EdgeInsets.only(top: AppSize.p9).r,
+          child: textFieldUpperText(AppStrings.battSingolaText),
+        ),
+      ],
     );
   }
 }

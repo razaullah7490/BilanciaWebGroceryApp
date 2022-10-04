@@ -34,34 +34,49 @@ class ResourceActionCubit extends Cubit<ResourceActionState> {
     }
   }
 
-//   Future editResourceAction(int id, ResourceActionModel model) async {
-//     emit(state
-//         .copyWith(status: ResourceActionEnum.loading, resourceActionModel: []));
-//     try {
-//       var index =
-//           modelList.indexWhere((element) => element.resourceActionId == id);
-//       modelList[index] = model;
-//       emit(state.copyWith(
-//           status: ResourceActionEnum.success, resourceActionModel: modelList));
-//     } catch (e) {
-//       emit(state
-//           .copyWith(status: ResourceActionEnum.error, resourceActionModel: []));
-//     }
-//   }
+  Future<List<ResourceActionModel>> getResourceAction() async {
+    emit(state.copyWith(
+      status: ResourceActionEnum.loading,
+      error: const CustomError(error: ""),
+      resourceActionModel: [],
+    ));
+    try {
+      var res = await repo.getResoruceAction();
+      emit(state.copyWith(
+        status: ResourceActionEnum.success,
+        error: const CustomError(error: ""),
+        resourceActionModel: res,
+      ));
+      return res;
+    } on CustomError catch (e) {
+      emit(state.copyWith(
+        status: ResourceActionEnum.loading,
+        error: CustomError(error: e.toString()),
+        resourceActionModel: [],
+      ));
+      return [];
+    }
+  }
 
-//   Future deleteResourceAction(int id) async {
-//     emit(state
-//         .copyWith(status: ResourceActionEnum.loading, resourceActionModel: []));
+  Future<bool> deleteResourceAction(id) async {
+    emit(state.copyWith(
+      status: ResourceActionEnum.loading,
+      error: const CustomError(error: ""),
+    ));
 
-//     try {
-//       var index =
-//           modelList.indexWhere((element) => element.resourceActionId == id);
-//       modelList.removeAt(index);
-//       emit(state.copyWith(
-//           status: ResourceActionEnum.success, resourceActionModel: modelList));
-//     } catch (e) {
-//       emit(state
-//           .copyWith(status: ResourceActionEnum.error, resourceActionModel: []));
-//     }
-//   }
+    try {
+      var res = await repo.deleteResourceAction(id);
+      emit(state.copyWith(
+        status: ResourceActionEnum.success,
+        error: const CustomError(error: ""),
+      ));
+      return res;
+    } catch (e) {
+      emit(state.copyWith(
+        status: ResourceActionEnum.loading,
+        error: CustomError(error: e.toString()),
+      ));
+      return false;
+    }
+  }
 }

@@ -1,4 +1,5 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:cached_network_image/cached_network_image.dart';
@@ -90,8 +91,9 @@ class ProductDetailContainer extends StatelessWidget {
                 //   ),
                 //for api
                 CachedNetworkImage(
-                  imageUrl:
-                      "https://hips.hearstapps.com/hmg-prod/images/healthy-groceries-1525213305.jpg",
+                  imageUrl: model.image.isNotEmpty
+                      ? model.image
+                      : "https://www.ncenet.com/wp-content/uploads/2020/04/no-image-png-2.png",
                   imageBuilder: (context, imageProvider) => Container(
                     width: 80.w,
                     height: 77.w,
@@ -101,7 +103,9 @@ class ProductDetailContainer extends StatelessWidget {
                       ),
                       image: DecorationImage(
                         image: imageProvider,
-                        fit: BoxFit.cover,
+                        fit: model.image.isNotEmpty
+                            ? BoxFit.cover
+                            : BoxFit.contain,
                       ),
                     ),
                   ),
@@ -154,6 +158,14 @@ class ProductDetailContainer extends StatelessWidget {
                     isDeleted: model.isDeleted,
                     unitPurchasePrice: model.unitPurchasePrice,
                     status: model.status,
+                    image: model.image,
+                    threshold1: model.threshold1,
+                    threshold2: model.threshold2,
+                    price1: model.price1,
+                    price2: model.price2,
+                    flgConfig: model.flgConfig,
+                    traceability: model.traceability,
+                    traceabilityId: model.traceabilityId,
                   );
 
                   Navigator.pushNamed(
