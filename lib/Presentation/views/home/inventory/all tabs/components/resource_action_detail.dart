@@ -1,7 +1,10 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:grocery/Presentation/common/delete_item_dialogue.dart';
+import 'package:grocery/Presentation/common/loading_indicator.dart';
 import 'package:grocery/Presentation/common/snack_bar_widget.dart';
 import 'package:grocery/Presentation/resources/app_strings.dart';
 import 'package:grocery/Presentation/resources/border_radius.dart';
@@ -143,21 +146,27 @@ class ResourceActionDetailContainer extends StatelessWidget {
         barrierColor: AppColors.deleteDialogueBarrierColor,
         context: context,
         builder: (BuildContext context) {
-          return DeleteItemDialogue(
-            text: AppStrings.resourceActionText,
-            onDeleteButtonTap: () {
-              context
-                  .read<ResourceActionCubit>()
-                  .deleteResourceAction(model.resourceActionId);
-              Navigator.of(context).pop();
-              Navigator.pushReplacementNamed(
-                  context, RoutesNames.resourceActionsScreen);
-              SnackBarWidget.buildSnackBar(
-                context,
-                AppStrings.resourceActionDeleteSuccessText,
-                AppColors.greenColor,
-                Icons.check,
-                true,
+          return BlocBuilder<ResourceActionCubit, ResourceActionState>(
+            builder: (context, state) {
+              return DeleteItemDialogue(
+                text: AppStrings.resourceActionText,
+                onDeleteButtonTap: () async {
+                  await context
+                      .read<ResourceActionCubit>()
+                      .deleteResourceAction(model.resourceActionId);
+
+                  Navigator.of(context).pop();
+                  Navigator.pushReplacementNamed(
+                      context, RoutesNames.resourceActionsScreen);
+
+                  SnackBarWidget.buildSnackBar(
+                    context,
+                    AppStrings.resourceActionDeleteSuccessText,
+                    AppColors.greenColor,
+                    Icons.check,
+                    true,
+                  );
+                },
               );
             },
           );

@@ -57,24 +57,25 @@ class ProceedResourceActionDetailContainer extends StatelessWidget {
                   AppStrings.moneyText, "\$${model.money.toString()}"),
               subTitleText("${AppStrings.priceCounterText} :",
                   model.priceCounter.toString()),
-              moneyAndResourceText(AppStrings.resourceText, model.resource),
+              moneyAndResourceText(
+                  AppStrings.resourceText, model.resource.toString()),
             ],
           ),
           editDeleteIcons(
             onTapEdit: () {
-              final args = ProcessedResourceActionModel(
-                processedresourceActionId: model.processedresourceActionId,
-                processedresourceActionName: model.processedresourceActionName,
-                quantity: model.quantity,
-                money: model.money,
-                priceCounter: model.priceCounter,
-                resource: model.resource,
-                isForInternalUsage: model.isForInternalUsage,
-              );
+              // final args = ProcessedResourceActionModel(
+              //   processedresourceActionId: model.processedresourceActionId,
+              //   processedresourceActionName: model.processedresourceActionName,
+              //   quantity: model.quantity,
+              //   money: model.money,
+              //   priceCounter: model.priceCounter,
+              //   resource: model.resource,
+              //   isForInternalUsage: model.isForInternalUsage,
+              // );
               Navigator.pushNamed(
                 context,
                 RoutesNames.editProceedResourceActionsScreen,
-                arguments: args,
+                //arguments: args,
               );
             },
             onTapDelete: () => deleteProceedResourceActionDialogue(context),

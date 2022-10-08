@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -7,6 +9,7 @@ import 'package:grocery/Presentation/common/data_not_available_text.dart';
 import 'package:grocery/Presentation/resources/app_strings.dart';
 import 'package:grocery/Presentation/resources/routes/routes_names.dart';
 import 'package:grocery/Presentation/resources/sized_box.dart';
+import 'package:grocery/Presentation/views/home/inventory/all%20tabs/components/product_detail_container.dart';
 import 'package:grocery/Presentation/views/home/inventory/all%20tabs/components/resource_action_detail.dart';
 import 'package:grocery/Presentation/views/home/inventory/all%20tabs/resourceActions/bloc/resource_action_cubit.dart';
 import '../../../../../common/loading_indicator.dart';
@@ -39,17 +42,35 @@ class _ResourceActionsScreenState extends State<ResourceActionsScreen> {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          CustomSizedBox.height(15),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              titleText("All Actions"),
+              addItemButtonWidget(
+                context: context,
+                text: AppStrings.addActionText,
+                onTap: () {
+                  final args = ResourceData(
+                    id: 0,
+                    name: '',
+                    isInventoryAction: true,
+                  );
+
+                  Navigator.pushNamed(
+                    context,
+                    RoutesNames.addResourceActionsScreen,
+                    arguments: args,
+                  );
+                },
+              ),
+            ],
+          ),
           CustomSizedBox.height(10),
-          titleText("All Actions"),
-          // addItemButtonWidget(
-          //   context: context,
-          //   text: AppStrings.addActionText,
-          //   onTap: () => Navigator.pushNamed(
-          //       context, RoutesNames.addResourceActionsScreen),
-          // ),
-          // CustomSizedBox.height(25),
           BlocBuilder<ResourceActionCubit, ResourceActionState>(
               builder: (context, state) {
+            log("state of resource actions ${state.status}");
+            log(" resource actions list  ${state.resourceActionModel}");
             if (state.status == ResourceActionEnum.loading) {
               return LoadingIndicator.loadingExpanded();
             }

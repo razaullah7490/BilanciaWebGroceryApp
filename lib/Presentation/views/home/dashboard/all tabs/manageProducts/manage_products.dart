@@ -109,13 +109,14 @@ class _ManageProductsScreenState extends State<ManageProductsScreen> {
                   barCodeWidget(),
                 ],
               ),
-              CustomSizedBox.height(10),
+              CustomSizedBox.height(15),
               if (isLoad == false)
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       titleText(AppStrings.allCategoriesText),
+                      CustomSizedBox.height(5),
                       BlocBuilder<CategoryCubit, CategoryState>(
                           builder: (context, state) {
                         if (state.status == CategoryEnum.loading) {
@@ -225,7 +226,7 @@ class _ManageProductsScreenState extends State<ManageProductsScreen> {
         text,
         style: Styles.circularStdMedium(
           AppSize.text17.sp,
-          AppColors.containerTextColor,
+          AppColors.primaryColor,
         ),
       ),
     );

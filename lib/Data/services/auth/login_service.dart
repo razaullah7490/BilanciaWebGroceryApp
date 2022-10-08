@@ -13,7 +13,9 @@ class LoginService {
       log("testing ${res.statusCode}");
       if (res.statusCode == 200) {
         log("Login Token : ${data["token"].toString()}");
+        log("User ${data['user']['email']}");
         AppPrefs.setLoginToken(data['token'].toString());
+        AppPrefs.setUserEmail(data['user']['email'].toString());
         return true;
       }
       throw httpErrorHandler(data['non_field_errors'][0]);

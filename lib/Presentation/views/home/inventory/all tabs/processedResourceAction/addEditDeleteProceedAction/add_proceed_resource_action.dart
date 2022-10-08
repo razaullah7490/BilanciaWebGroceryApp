@@ -60,23 +60,21 @@ class _AddProceedResourceActionScreenState
                   return CustomButton(
                     text: AppStrings.addActionText,
                     onTap: () async {
-                      Random random = Random();
-                      int randomNumber = random.nextInt(100);
                       if (formKey.currentState!.validate()) {
-                        await context
-                            .read<ProceedResourceActionCubit>()
-                            .addProceedResourceAction(
-                                ProcessedResourceActionModel(
-                              processedresourceActionId: randomNumber,
-                              processedresourceActionName:
-                                  actionType.toString(),
-                              quantity: double.parse(quantityController.text),
-                              money: double.parse(moneyController.text),
-                              priceCounter:
-                                  double.parse(printCounterController.text),
-                              resource: resourceController.text,
-                              isForInternalUsage: isInternalUsage,
-                            ));
+                        // await context
+                        //     .read<ProceedResourceActionCubit>()
+                        //     .addProceedResourceAction(
+                        //         ProcessedResourceActionModel(
+                        //       processedresourceActionId: randomNumber,
+                        //       processedresourceActionName:
+                        //           actionType.toString(),
+                        //       quantity: double.parse(quantityController.text),
+                        //       money: double.parse(moneyController.text),
+                        //       priceCounter:
+                        //           double.parse(printCounterController.text),
+                        //       resource: resourceController.text,
+                        //       isForInternalUsage: isInternalUsage,
+                        //     ));
                         Navigator.of(context).pop();
                         SnackBarWidget.buildSnackBar(
                           context,

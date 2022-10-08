@@ -43,6 +43,7 @@ class ResourceActionService {
       if (res.statusCode != 200) {
         throw httpErrorHandler("No data");
       }
+      log("data ${res.body}");
       log("Data ${data.map((e) => ResourceActionModel.fromMap(e)).toList()}");
       return data.map((e) => ResourceActionModel.fromMap(e)).toList();
     } catch (e) {

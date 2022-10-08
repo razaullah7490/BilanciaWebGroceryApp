@@ -14,4 +14,15 @@ class AppPrefs {
     var loginToken = _prefs.getString(AppPrefsKeys.loginKey) ?? "";
     return loginToken;
   }
+
+  static Future<void> setUserEmail(String userEmail) async {
+    SharedPreferences _prefs = await SharedPreferences.getInstance();
+    await _prefs.setString(AppPrefsKeys.userEmail, userEmail);
+  }
+
+  static Future<String> getUserEmail() async {
+    SharedPreferences _prefs = await SharedPreferences.getInstance();
+    var userEmail = _prefs.getString(AppPrefsKeys.userEmail) ?? "";
+    return userEmail;
+  }
 }

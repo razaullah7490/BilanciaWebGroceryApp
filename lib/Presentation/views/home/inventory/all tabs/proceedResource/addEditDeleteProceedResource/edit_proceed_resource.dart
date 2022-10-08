@@ -1,7 +1,12 @@
-// ignore_for_file: prefer_typing_uninitialized_variables, use_build_context_synchronously
+// ignore_for_file: prefer_typing_uninitialized_variables, use_build_context_synchronously, prefer_null_aware_operators
+import 'dart:developer';
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:grocery/Data/services/manager/proceed_resource_service.dart';
 import 'package:grocery/Presentation/common/app_bar.dart';
 import 'package:grocery/Presentation/common/bar_code_scan.dart';
 import 'package:grocery/Presentation/common/custom_button.dart';
@@ -9,16 +14,23 @@ import 'package:grocery/Presentation/common/custom_drop_down.dart';
 import 'package:grocery/Presentation/common/snack_bar_widget.dart';
 import 'package:grocery/Presentation/resources/sized_box.dart';
 import 'package:grocery/Presentation/views/home/inventory/all%20tabs/proceedResource/proceed_resource_view_model.dart';
+import '../../../../../../../Data/errors/custom_error.dart';
 import '../../../../../../../Domain/models/inventory/proceed_resource_model.dart';
 import '../../../../../../common/custom_date_picker.dart';
 import '../../../../../../common/custom_text_field.dart';
 import '../../../../../../common/date_picker.dart';
 import '../../../../../../common/loading_indicator.dart';
 import '../../../../../../resources/app_strings.dart';
+import '../../../../../../resources/border_radius.dart';
 import '../../../../../../resources/colors_palette.dart';
+import '../../../../../../resources/routes/routes_names.dart';
 import '../../../../../../resources/size.dart';
 import '../../../../../../resources/text_styles.dart';
+import '../../../../../../state management/bloc/ingredientsBloc/ingredients_cubit.dart';
+import '../../../../../../state management/bloc/ivaBloc/manager_iva_cubit.dart';
+import '../../category/bloc/category_cubit.dart';
 import '../../category/category_view_model.dart';
+import '../../resources/bloc/resource_cubit.dart';
 import '../bloc/proceed_resource_cubit.dart';
 
 class EditProceedResourceScreen extends StatefulWidget {
@@ -36,7 +48,6 @@ class EditProceedResourceScreen extends StatefulWidget {
 class _EditProceedResourceScreenState extends State<EditProceedResourceScreen> {
   final formKey = GlobalKey<FormState>();
   final resourceNameController = TextEditingController();
-  final aliquotaIvaContoller = TextEditingController();
   final stockQuantityController = TextEditingController();
   final stockQuantityThresholdController = TextEditingController();
   final pluController = TextEditingController();
@@ -45,41 +56,100 @@ class _EditProceedResourceScreenState extends State<EditProceedResourceScreen> {
   final revenuePercentageController = TextEditingController();
   final barCodeController = TextEditingController();
   final tareController = TextEditingController();
+  final unitPurchasePriceController = TextEditingController();
+  final threshold1Controller = TextEditingController();
+  final threshold2Controller = TextEditingController();
+  final price1Controller = TextEditingController();
+  final price2Controller = TextEditingController();
+  final traceabilityIdController = TextEditingController();
   var ivaType;
   var measureUnit;
   var category;
-  var status;
   var weightType;
   var ingrediant;
-  String packagingDate = "";
-  String expirationDate = "";
+  DateTime? packagingDate;
+  DateTime? expirationDate;
+  var aliquotaIva;
+  var status;
+  File? image;
+  bool isFlgConfig = false;
+  var traceability;
+
+  List<Map> madeWithList = List.empty(growable: true);
+  List controllers = List.empty(growable: true);
+  List resourceIds = [];
+
   @override
   void initState() {
-    resourceNameController.text = widget.model.resourceName;
+    resourceNameController.text = widget.model.name!;
     pluController.text = widget.model.plu.toString();
     shelfLifeController.text = widget.model.shelfLife.toString();
     unitSalePriceController.text = widget.model.unitSalePrice.toString();
     stockQuantityThresholdController.text =
         widget.model.stockQuantityThreshold.toString();
-    aliquotaIvaContoller.text = widget.model.aliquotaIva.toString();
+    aliquotaIva = widget.model.ivaAliquota;
     revenuePercentageController.text =
         widget.model.revenuePercentage.toString();
-    barCodeController.text = widget.model.barCode.toString();
+    barCodeController.text = widget.model.barcode.toString();
     stockQuantityController.text = widget.model.stockQuantity.toString();
     ivaType = widget.model.ivaType;
-    status = widget.model.status;
+    status = widget.model.isActive == true ? "Active" : "InActive";
     measureUnit = widget.model.measureUnit;
     category = widget.model.category;
     tareController.text = widget.model.tare.toString();
-    weightType = widget.model.weightType;
-    ingrediant = widget.model.ingrediant;
-    packagingDate = widget.model.packagingDate;
-    expirationDate = widget.model.expirationDate;
+    weightType = widget.model.weightType ?? weightType;
+    ingrediant = widget.model.ingredient;
+    expirationDate = widget.model.expirationDate != "null"
+        ? DateTime.parse(widget.model.expirationDate!)
+        : expirationDate;
+    packagingDate = widget.model.packagingDate != "null"
+        ? DateTime.parse(widget.model.packagingDate!)
+        : packagingDate;
+    unitPurchasePriceController.text =
+        widget.model.unitPurchasePrice.toString();
+    threshold1Controller.text = widget.model.threshold1.toString();
+    threshold2Controller.text = widget.model.threshold2.toString();
+    price1Controller.text = widget.model.price1.toString();
+    price2Controller.text = widget.model.price2.toString();
+    isFlgConfig = widget.model.flgConfig!;
+    traceability = widget.model.traceability;
+    traceabilityIdController.text = widget.model.traceabilityId.toString();
+    madeWithList = widget.model.madeWith!;
+    addFields();
+    Future.wait([
+      context.read<CategoryCubit>().getCategory(),
+      context.read<IngredientsCubit>().getIngredients(),
+      context.read<ManagerIvaCubit>().getIva(),
+      context.read<ResourceCubit>().getResource(),
+    ]);
     super.initState();
+  }
+
+  addFields() {
+    for (var i = 0; i < madeWithList.length; i++) {
+      var controllerText = TextEditingController();
+      controllerText.text =
+          madeWithList[i]['resource_percentage_used'].toString();
+      controllers.add(controllerText);
+      resourceIds.add(madeWithList[i]['resource']);
+    }
+  }
+
+  allListWidget() {
+    final controller = TextEditingController();
+    var ids;
+    setState(() {
+      controllers.add(controller);
+      resourceIds.add(ids);
+    });
   }
 
   @override
   Widget build(BuildContext context) {
+    log("Made With $madeWithList");
+    for (var i = 0; i < madeWithList.length; i++) {
+      log("MadeWith ${madeWithList[i]['resource_percentage_used']}");
+    }
     return Scaffold(
       appBar: const CustomAppBar(
         title: AppStrings.editProceedResourceText,
@@ -90,56 +160,110 @@ class _EditProceedResourceScreenState extends State<EditProceedResourceScreen> {
           physics: const BouncingScrollPhysics(),
           child: Column(
             children: [
-              //textFields(),
+              textFields(),
               CustomSizedBox.height(40),
-              BlocBuilder<ProceedResourceCubit, ProceedResourceState>(
-                  builder: (context, state) {
-                return CustomButton(
-                  text: AppStrings.updateText,
-                  onTap: () async {
-                    if (formKey.currentState!.validate()) {
-                      await context
-                          .read<ProceedResourceCubit>()
-                          .editProceedResource(
-                            widget.model.resourceId,
-                            ProceedResourcesModel(
-                              resourceId: widget.model.resourceId,
-                              resourceName: resourceNameController.text,
-                              aliquotaIva: int.parse(aliquotaIvaContoller.text),
-                              ivaType: ivaType.toString(),
-                              stockQuantity:
-                                  double.parse(stockQuantityController.text),
-                              stockQuantityThreshold: double.parse(
-                                  stockQuantityThresholdController.text),
-                              measureUnit: measureUnit.toString(),
-                              barCode: barCodeController.text,
-                              plu: double.parse(pluController.text),
-                              shelfLife: double.parse(shelfLifeController.text),
-                              unitSalePrice:
-                                  double.parse(unitSalePriceController.text),
-                              revenuePercentage: double.parse(
-                                  revenuePercentageController.text),
-                              category: category.toString(),
-                              status: status.toString(),
-                              tare: double.parse(tareController.text),
-                              weightType: weightType,
-                              ingrediant: ingrediant,
-                              expirationDate: expirationDate.toString(),
-                              packagingDate: packagingDate.toString(),
-                            ),
+              BlocListener<ProceedResourceCubit, ProceedResourceState>(
+                listener: (context, state) {
+                  if (state.status == ProceedResourceEnum.success) {
+                    SnackBarWidget.buildSnackBar(
+                      context,
+                      AppStrings.proceedResourceUpdatedSuccessText,
+                      AppColors.greenColor,
+                      Icons.check,
+                      true,
+                    );
+                    Navigator.of(context).pop();
+                    Navigator.pushReplacementNamed(
+                        context, RoutesNames.proceedResourceScreen);
+                  }
+                  if (state.error != const CustomError(error: '')) {
+                    SnackBarWidget.buildSnackBar(
+                      context,
+                      state.error.error,
+                      AppColors.redColor,
+                      Icons.close,
+                      true,
+                    );
+                  }
+                },
+                child: BlocBuilder<ProceedResourceCubit, ProceedResourceState>(
+                    builder: (context, state) {
+                  if (state.status == ProceedResourceEnum.loading) {
+                    return LoadingIndicator.loading();
+                  }
+                  return CustomButton(
+                    text: AppStrings.updateText,
+                    onTap: () async {
+                      if (formKey.currentState!.validate()) {
+                        if (controllers.isEmpty && resourceIds.isEmpty) {
+                          SnackBarWidget.buildSnackBar(
+                            context,
+                            AppStrings.addAtleastOneText,
+                            AppColors.redColor,
+                            Icons.close,
+                            true,
                           );
-                      Navigator.of(context).pop();
-                      SnackBarWidget.buildSnackBar(
-                        context,
-                        AppStrings.proceedResourceUpdatedSuccessText,
-                        AppColors.greenColor,
-                        Icons.check,
-                        true,
-                      );
-                    }
-                  },
-                );
-              }),
+                        } else {
+                          madeWithList = [];
+
+                          for (var i = 0; i < controllers.length; i++) {
+                            madeWithList.add({
+                              "resource_percentage_used":
+                                  controllers[i].text.toString(),
+                              "resource": resourceIds[i].toString()
+                            });
+                          }
+                          log("MADE WITH $madeWithList");
+
+                          Map<String, dynamic> map = {
+                            "name": resourceNameController.text,
+                            "category": category.toString(),
+                            "iva_aliquota": aliquotaIva.toString(),
+                            "iva_type": ivaType.toString(),
+                            "stock_quantity":
+                                stockQuantityController.text.toString(),
+                            "stock_quantity_threshold":
+                                stockQuantityThresholdController.text
+                                    .toString(),
+                            "measure_unit": measureUnit.toString(),
+                            "barcode": barCodeController.text.toString(),
+                            "unit_sale_price":
+                                unitSalePriceController.text.toString(),
+                            "plu": pluController.text.toString(),
+                            "tare": tareController.text.toString(),
+                            "weight_type": weightType.toString(),
+                            "ingredient": ingrediant.toString(),
+                            "revenue_percentage":
+                                revenuePercentageController.text.toString(),
+                            "expiration_date": expirationDate != null
+                                ? expirationDate.toString()
+                                : null,
+                            "packaging_date": packagingDate != null
+                                ? packagingDate.toString()
+                                : null,
+                            "unit_purchase_price":
+                                unitPurchasePriceController.text.toString(),
+                            "is_active": status == "Active" ? "true" : "false",
+                            "threshold_1": threshold1Controller.text.toString(),
+                            "threshold_2": threshold2Controller.text.toString(),
+                            "price_1": price1Controller.text.toString(),
+                            "price_2": price2Controller.text.toString(),
+                            "flg_config": isFlgConfig,
+                            "traceability": traceability.toString(),
+                            "traceability_id":
+                                traceabilityIdController.text.toString(),
+                            "made_with": madeWithList,
+                          };
+
+                          context
+                              .read<ProceedResourceCubit>()
+                              .editProceedResource(widget.model.id, map);
+                        }
+                      }
+                    },
+                  );
+                }),
+              ),
               CustomSizedBox.height(10),
             ],
           ),
@@ -148,276 +272,697 @@ class _EditProceedResourceScreenState extends State<EditProceedResourceScreen> {
     );
   }
 
-  // Widget textFields() {
-  //   return Form(
-  //     key: formKey,
-  //     child: Column(
-  //       crossAxisAlignment: CrossAxisAlignment.start,
-  //       children: [
-  //         CustomSizedBox.height(30),
-  //         CustomTextField(
-  //           controller: resourceNameController,
-  //           labelText: AppStrings.resourceNameText,
-  //           hintText: AppStrings.enterResourceNameText,
-  //           suffixIcon: const Text(""),
-  //           obscureText: false,
-  //           textInputType: TextInputType.text,
-  //           validator: (v) {
-  //             if (v!.trim().isEmpty) {
-  //               return AppStrings.provideResourceNameText;
-  //             } else {
-  //               return null;
-  //             }
-  //           },
-  //         ),
-  //         CustomSizedBox.height(20),
-  //         CustomTextField(
-  //           controller: aliquotaIvaContoller,
-  //           labelText: AppStrings.aliquotaIVAText,
-  //           hintText: AppStrings.enterAliquotaIvaText,
-  //           suffixIcon: const Text(""),
-  //           obscureText: false,
-  //           textInputType: TextInputType.number,
-  //           validator: (v) {
-  //             if (v!.trim().isEmpty) {
-  //               return AppStrings.provideAliquotaIvaText;
-  //             } else {
-  //               return null;
-  //             }
-  //           },
-  //         ),
-  //         CustomSizedBox.height(20),
-  //         textFieldUpperText(AppStrings.selectIvaTypeText),
-  //         CustomDropDownWidget(
-  //           hintText: AppStrings.ivaTypeText,
-  //           value: ivaType,
-  //           itemsList: CategoryViewModel.ivaTypeList,
-  //           validationText: AppStrings.provideIVAtypeText,
-  //           onChanged: (v) {
-  //             setState(() {
-  //               ivaType = v;
-  //             });
-  //           },
-  //         ),
-  //         CustomSizedBox.height(20),
-  //         CustomTextField(
-  //           controller: stockQuantityController,
-  //           labelText: AppStrings.stockQuantityText,
-  //           hintText: AppStrings.enterStockQuantityText,
-  //           suffixIcon: const Text(""),
-  //           obscureText: false,
-  //           textInputType: TextInputType.number,
-  //           validator: (v) {
-  //             if (v!.trim().isEmpty) {
-  //               return AppStrings.provideStockQuantityText;
-  //             } else {
-  //               return null;
-  //             }
-  //           },
-  //         ),
-  //         CustomSizedBox.height(20),
-  //         CustomTextField(
-  //           controller: stockQuantityThresholdController,
-  //           labelText: AppStrings.stockQuantityThresholdText,
-  //           hintText: AppStrings.enterStockQuantityThresholdText,
-  //           suffixIcon: const Text(""),
-  //           obscureText: false,
-  //           textInputType: TextInputType.number,
-  //           validator: (v) {
-  //             if (v!.trim().isEmpty) {
-  //               return AppStrings.provideStockQuantityThresholdText;
-  //             } else {
-  //               return null;
-  //             }
-  //           },
-  //         ),
-  //         CustomSizedBox.height(20),
-  //         textFieldUpperText(AppStrings.measureUnitText),
-  //         CustomDropDownWidget(
-  //           hintText: AppStrings.measureUnitText,
-  //           value: measureUnit,
-  //           itemsList: CategoryViewModel.measureUnitList,
-  //           validationText: AppStrings.provideMeasureUnitText,
-  //           onChanged: (v) {
-  //             setState(() {
-  //               measureUnit = v;
-  //             });
-  //           },
-  //         ),
-  //         CustomSizedBox.height(20),
-  //         CustomTextField(
-  //           controller: barCodeController,
-  //           labelText: AppStrings.barcodeText,
-  //           hintText: AppStrings.scanACodeText,
-  //           suffixIcon: BarcodeScanWidget(barCodeController: barCodeController),
-  //           obscureText: false,
-  //           textInputType: TextInputType.text,
-  //           validator: (v) {
-  //             if (v!.trim().isEmpty) {
-  //               return AppStrings.providBarCodeText;
-  //             } else {
-  //               return null;
-  //             }
-  //           },
-  //         ),
-  //         CustomSizedBox.height(20),
-  //         CustomTextField(
-  //           controller: pluController,
-  //           labelText: AppStrings.pluText,
-  //           hintText: AppStrings.enterPluText,
-  //           suffixIcon: const Text(""),
-  //           obscureText: false,
-  //           textInputType: TextInputType.number,
-  //           validator: (v) {
-  //             if (v!.trim().isEmpty) {
-  //               return AppStrings.providePluText;
-  //             } else {
-  //               return null;
-  //             }
-  //           },
-  //         ),
-  //         CustomSizedBox.height(20),
-  //         CustomTextField(
-  //           controller: shelfLifeController,
-  //           labelText: AppStrings.shelfLifeText,
-  //           hintText: AppStrings.enterShelfLifeText,
-  //           suffixIcon: const Text(""),
-  //           obscureText: false,
-  //           textInputType: TextInputType.number,
-  //           validator: (v) {
-  //             if (v!.trim().isEmpty) {
-  //               return AppStrings.provideShelfLifeText;
-  //             } else {
-  //               return null;
-  //             }
-  //           },
-  //         ),
-  //         CustomSizedBox.height(20),
-  //         CustomTextField(
-  //           controller: unitSalePriceController,
-  //           labelText: AppStrings.unitSalePriceText,
-  //           hintText: AppStrings.enterUnitSalePriceText,
-  //           suffixIcon: const Text(""),
-  //           obscureText: false,
-  //           textInputType: TextInputType.number,
-  //           validator: (v) {
-  //             if (v!.trim().isEmpty) {
-  //               return AppStrings.provideUnitSalePriceText;
-  //             } else {
-  //               return null;
-  //             }
-  //           },
-  //         ),
-  //         CustomSizedBox.height(20),
-  //         CustomTextField(
-  //           controller: revenuePercentageController,
-  //           labelText: AppStrings.revenuePercentageText,
-  //           hintText: AppStrings.enterRevenuePercentageText,
-  //           suffixIcon: const Text(""),
-  //           obscureText: false,
-  //           textInputType: TextInputType.number,
-  //           validator: (v) {
-  //             if (v!.trim().isEmpty) {
-  //               return AppStrings.provideRevenuePercentageText;
-  //             } else {
-  //               return null;
-  //             }
-  //           },
-  //         ),
-  //         CustomSizedBox.height(20),
-  //         textFieldUpperText(AppStrings.categoryText),
-  //         CustomDropDownWidget(
-  //           hintText: AppStrings.categoryText,
-  //           value: category,
-  //           itemsList: CategoryViewModel.dummyCategoryList,
-  //           validationText: AppStrings.provideCategoryText,
-  //           onChanged: (v) {
-  //             setState(() {
-  //               category = v;
-  //             });
-  //           },
-  //         ),
-  //         CustomSizedBox.height(20),
-  //         textFieldUpperText(AppStrings.statusText),
-  //         CustomDropDownWidget(
-  //           hintText: AppStrings.statusText,
-  //           value: status,
-  //           itemsList: CategoryViewModel.statusList,
-  //           validationText: AppStrings.provideStatusText,
-  //           onChanged: (v) {
-  //             setState(() {
-  //               status = v;
-  //             });
-  //           },
-  //         ),
-  //         CustomSizedBox.height(20),
-  //         CustomTextField(
-  //           controller: tareController,
-  //           labelText: AppStrings.tareText,
-  //           hintText: AppStrings.enterTareText,
-  //           suffixIcon: const Text(""),
-  //           obscureText: false,
-  //           textInputType: TextInputType.number,
-  //           validator: (v) {
-  //             if (v!.trim().isEmpty) {
-  //               return AppStrings.provideTareText;
-  //             } else {
-  //               return null;
-  //             }
-  //           },
-  //         ),
-  //         CustomSizedBox.height(20),
-  //         textFieldUpperText(AppStrings.weightTypeText),
-  //         CustomDropDownWidget(
-  //           hintText: AppStrings.weightTypeText,
-  //           value: weightType,
-  //           itemsList: ProcessedResourceViewModel.weightTypeList,
-  //           validationText: AppStrings.provideWeightTypeText,
-  //           onChanged: (v) {
-  //             setState(() {
-  //               weightType = v;
-  //             });
-  //           },
-  //         ),
-  //         CustomSizedBox.height(20),
-  //         textFieldUpperText(AppStrings.ingredientsText),
-  //         CustomDropDownWidget(
-  //           hintText: AppStrings.ingredientsText,
-  //           value: ingrediant,
-  //           itemsList: ProcessedResourceViewModel.dummyIngrediantsList,
-  //           validationText: AppStrings.provideIngredientText,
-  //           onChanged: (v) {
-  //             setState(() {
-  //               ingrediant = v;
-  //             });
-  //           },
-  //         ),
-  //         CustomSizedBox.height(20),
-  //         textFieldUpperText(AppStrings.packagingDateText),
-  //         CustomDatePickerWidget(
-  //           date: packagingDate,
-  //           onTap: () async {
-  //             var newDate = await datePicker(context);
-  //             setState(() {
-  //               packagingDate = newDate!;
-  //             });
-  //           },
-  //         ),
-  //         CustomSizedBox.height(20),
-  //         textFieldUpperText(AppStrings.expirationDateText),
-  //         CustomDatePickerWidget(
-  //           date: expirationDate,
-  //           onTap: () async {
-  //             var newDate = await datePicker(context);
-  //             setState(() {
-  //               expirationDate = newDate!;
-  //             });
-  //           },
-  //         ),
-  //       ],
-  //     ),
-  //   );
-  // }
+  Widget textFields() {
+    return Form(
+      key: formKey,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          CustomSizedBox.height(30),
+          textFieldUpperText(AppStrings.resourceNameText),
+          CustomTextField(
+            controller: resourceNameController,
+            labelText: AppStrings.resourceNameText,
+            hintText: AppStrings.enterResourceNameText,
+            suffixIcon: const Text(""),
+            obscureText: false,
+            textInputType: TextInputType.text,
+            isLabel: false,
+            validator: (v) {
+              if (v!.trim().isEmpty) {
+                return AppStrings.provideResourceNameText;
+              } else {
+                return null;
+              }
+            },
+          ),
+          CustomSizedBox.height(20),
+          textFieldUpperText(AppStrings.aliquotaIVAText),
+          BlocBuilder<ManagerIvaCubit, ManagerIvaState>(
+              builder: (context, state) {
+            return CustomDropDownWidget(
+              hintText: AppStrings.aliquotaIVAText,
+              value: aliquotaIva,
+              validationText: AppStrings.provideAliquotaIvaText,
+              onChanged: (v) {
+                setState(() {
+                  aliquotaIva = v;
+                });
+              },
+              itemsMap: state.modelList.map((v) {
+                return DropdownMenuItem(
+                  value: v.id,
+                  child: Text(v.value.toString()),
+                );
+              }).toList(),
+            );
+          }),
+          CustomSizedBox.height(20),
+          textFieldUpperText(AppStrings.selectIvaTypeText),
+          CustomDropDownWidget(
+            hintText: AppStrings.ivaTypeText,
+            value: ivaType,
+            itemsMap: CategoryViewModel.ivaTypeList.map((v) {
+              return DropdownMenuItem(
+                value: v,
+                child: Text(v.toString()),
+              );
+            }).toList(),
+            validationText: AppStrings.provideIVAtypeText,
+            onChanged: (v) {
+              setState(() {
+                ivaType = v;
+              });
+            },
+          ),
+          CustomSizedBox.height(20),
+          textFieldUpperText(AppStrings.stockQuantityText),
+          CustomTextField(
+            controller: stockQuantityController,
+            labelText: AppStrings.stockQuantityText,
+            hintText: AppStrings.enterStockQuantityText,
+            suffixIcon: const Text(""),
+            obscureText: false,
+            textInputType: TextInputType.number,
+            isLabel: false,
+            validator: (v) {
+              if (v!.trim().isEmpty) {
+                return AppStrings.provideStockQuantityText;
+              } else {
+                return null;
+              }
+            },
+          ),
+          CustomSizedBox.height(20),
+          textFieldUpperText(AppStrings.stockQuantityThresholdText),
+          CustomTextField(
+            controller: stockQuantityThresholdController,
+            labelText: AppStrings.stockQuantityThresholdText,
+            hintText: AppStrings.enterStockQuantityThresholdText,
+            suffixIcon: const Text(""),
+            obscureText: false,
+            textInputType: TextInputType.number,
+            isLabel: false,
+            validator: (v) {
+              if (v!.trim().isEmpty) {
+                return AppStrings.provideStockQuantityThresholdText;
+              } else {
+                return null;
+              }
+            },
+          ),
+          CustomSizedBox.height(20),
+          textFieldUpperText(AppStrings.measureUnitText),
+          CustomDropDownWidget(
+            hintText: AppStrings.measureUnitText,
+            value: measureUnit,
+            itemsMap: CategoryViewModel.measureUnitList.map((v) {
+              return DropdownMenuItem(
+                value: v,
+                child: Text(v.toString()),
+              );
+            }).toList(),
+            validationText: AppStrings.provideMeasureUnitText,
+            onChanged: (v) {
+              setState(() {
+                measureUnit = v;
+              });
+            },
+          ),
+          CustomSizedBox.height(20),
+          textFieldUpperText(AppStrings.barcodeText),
+          CustomTextField(
+            controller: barCodeController,
+            labelText: AppStrings.barcodeText,
+            hintText: AppStrings.scanACodeText,
+            suffixIcon: BarcodeScanWidget(barCodeController: barCodeController),
+            obscureText: false,
+            textInputType: TextInputType.text,
+            isLabel: false,
+            validator: (v) {
+              // if (v!.trim().isEmpty) {
+              //   return AppStrings.providBarCodeText;
+              // } else {
+              //   return null;
+              // }
+            },
+          ),
+          CustomSizedBox.height(20),
+          textFieldUpperText(AppStrings.pluText),
+          CustomTextField(
+            controller: pluController,
+            labelText: AppStrings.pluText,
+            hintText: AppStrings.enterPluText,
+            suffixIcon: const Text(""),
+            obscureText: false,
+            textInputType: TextInputType.number,
+            isLabel: false,
+            validator: (v) {
+              if (v!.trim().isEmpty) {
+                return AppStrings.providePluText;
+              } else {
+                return null;
+              }
+            },
+          ),
+          CustomSizedBox.height(20),
+          textFieldUpperText(AppStrings.shelfLifeText),
+          CustomTextField(
+            controller: shelfLifeController,
+            labelText: AppStrings.shelfLifeText,
+            hintText: AppStrings.enterShelfLifeText,
+            suffixIcon: const Text(""),
+            obscureText: false,
+            textInputType: TextInputType.number,
+            isLabel: false,
+            validator: (v) {
+              if (v!.trim().isEmpty) {
+                return AppStrings.provideShelfLifeText;
+              } else {
+                return null;
+              }
+            },
+          ),
+          CustomSizedBox.height(20),
+          textFieldUpperText(AppStrings.unitSalePriceText),
+          CustomTextField(
+            controller: unitSalePriceController,
+            labelText: AppStrings.unitSalePriceText,
+            hintText: AppStrings.enterUnitSalePriceText,
+            suffixIcon: const Text(""),
+            obscureText: false,
+            textInputType: TextInputType.number,
+            isLabel: false,
+            validator: (v) {
+              if (v!.trim().isEmpty) {
+                return AppStrings.provideUnitSalePriceText;
+              } else {
+                return null;
+              }
+            },
+          ),
+          CustomSizedBox.height(20),
+          textFieldUpperText(AppStrings.unitPurchasePriceText),
+          CustomTextField(
+            controller: unitPurchasePriceController,
+            labelText: AppStrings.unitPurchasePriceText,
+            hintText: AppStrings.enterUnitPurchasePriceText,
+            suffixIcon: const Text(""),
+            obscureText: false,
+            textInputType: TextInputType.number,
+            isLabel: false,
+            validator: (v) {
+              // if (v!.trim().isEmpty) {
+              //   return AppStrings.provideUnitPurchasePriceText;
+              // } else {
+              //   return null;
+              // }
+            },
+          ),
+          CustomSizedBox.height(20),
+          textFieldUpperText(AppStrings.revenuePercentageText),
+          CustomTextField(
+            controller: revenuePercentageController,
+            labelText: AppStrings.revenuePercentageText,
+            hintText: AppStrings.enterRevenuePercentageText,
+            suffixIcon: const Text(""),
+            obscureText: false,
+            textInputType: TextInputType.number,
+            isLabel: false,
+            validator: (v) {
+              // if (v!.trim().isEmpty) {
+              //   return AppStrings.provideRevenuePercentageText;
+              // } else {
+              //   return null;
+              // }
+            },
+          ),
+          CustomSizedBox.height(20),
+          textFieldUpperText(AppStrings.categoryText),
+          BlocBuilder<CategoryCubit, CategoryState>(builder: (context, state) {
+            return CustomDropDownWidget(
+              hintText: AppStrings.categoryText,
+              value: category,
+              itemsMap: state.categoryModel.map((v) {
+                return DropdownMenuItem(
+                  value: v.categoryId,
+                  child: Text(v.categoryName),
+                );
+              }).toList(),
+              validationText: AppStrings.provideCategoryText,
+              onChanged: (v) {
+                setState(() {
+                  category = v;
+                });
+              },
+            );
+          }),
+          CustomSizedBox.height(20),
+          textFieldUpperText(AppStrings.statusText),
+          CustomDropDownWidget(
+            hintText: AppStrings.statusText,
+            value: status,
+            itemsMap: CategoryViewModel.statusList.map((v) {
+              return DropdownMenuItem(
+                value: v,
+                child: Text(v.toString()),
+              );
+            }).toList(),
+            validationText: AppStrings.provideStatusText,
+            onChanged: (v) {
+              setState(() {
+                status = v;
+              });
+            },
+          ),
+          CustomSizedBox.height(20),
+          textFieldUpperText(AppStrings.tareText),
+          CustomTextField(
+            controller: tareController,
+            labelText: AppStrings.tareText,
+            hintText: AppStrings.enterTareText,
+            suffixIcon: const Text(""),
+            obscureText: false,
+            textInputType: TextInputType.number,
+            isLabel: false,
+            validator: (v) {
+              if (v!.trim().isEmpty) {
+                return AppStrings.provideTareText;
+              } else {
+                return null;
+              }
+            },
+          ),
+          CustomSizedBox.height(20),
+          textFieldUpperText(AppStrings.weightTypeText),
+          CustomDropDownWidget(
+            hintText: AppStrings.weightTypeText,
+            value: weightType.toString(),
+            itemsMap: ProcessedResourceViewModel.weightTypeList.map((v) {
+              return DropdownMenuItem(
+                value: v,
+                child: Text(v.toString()),
+              );
+            }).toList(),
+            validationText: AppStrings.provideWeightTypeText,
+            onChanged: (v) {
+              setState(() {
+                weightType = v;
+              });
+            },
+          ),
+          CustomSizedBox.height(20),
+          textFieldUpperText(AppStrings.ingredientsText),
+          BlocBuilder<IngredientsCubit, IngredientsState>(
+              builder: (context, state) {
+            return CustomDropDownWidget(
+              hintText: AppStrings.ingredientsText,
+              value: ingrediant,
+              itemsMap: state.modelList.map((v) {
+                return DropdownMenuItem(
+                  value: v.ingrediantId,
+                  child: Text(v.description.toString()),
+                );
+              }).toList(),
+              validationText: AppStrings.provideIngredientText,
+              onChanged: (v) {
+                setState(() {
+                  ingrediant = v;
+                });
+              },
+            );
+          }),
+          CustomSizedBox.height(20),
+          textFieldUpperText(AppStrings.packagingDateText),
+          CustomDatePickerWidget(
+            date: packagingDate,
+            onTap: () async {
+              var newDate = await datePicker(context);
+              setState(() {
+                packagingDate = newDate;
+              });
+            },
+          ),
+          CustomSizedBox.height(20),
+          textFieldUpperText(AppStrings.expirationDateText),
+          CustomDatePickerWidget(
+            date: expirationDate,
+            onTap: () async {
+              var newDate = await datePicker(context);
+              setState(() {
+                expirationDate = newDate;
+              });
+            },
+          ),
+          CustomSizedBox.height(20),
+          textFieldUpperText(AppStrings.threshold1Text),
+          CustomTextField(
+            controller: threshold1Controller,
+            labelText: AppStrings.threshold1Text,
+            hintText: AppStrings.enterThreshold1Text,
+            suffixIcon: const Text(""),
+            obscureText: false,
+            textInputType: TextInputType.number,
+            isLabel: false,
+            validator: (v) {
+              if (v!.trim().isEmpty) {
+                return AppStrings.provideThreshold1Text;
+              } else {
+                return null;
+              }
+            },
+          ),
+          CustomSizedBox.height(20),
+          textFieldUpperText(AppStrings.threshold2Text),
+          CustomTextField(
+            controller: threshold2Controller,
+            labelText: AppStrings.threshold2Text,
+            hintText: AppStrings.enterThreshold2Text,
+            suffixIcon: const Text(""),
+            obscureText: false,
+            textInputType: TextInputType.number,
+            isLabel: false,
+            validator: (v) {
+              if (v!.trim().isEmpty) {
+                return AppStrings.provideThreshold2Text;
+              } else {
+                return null;
+              }
+            },
+          ),
+          CustomSizedBox.height(20),
+          textFieldUpperText(AppStrings.price1Text),
+          CustomTextField(
+            controller: price1Controller,
+            labelText: AppStrings.price1Text,
+            hintText: AppStrings.enterPrice1Text,
+            suffixIcon: const Text(""),
+            obscureText: false,
+            textInputType: TextInputType.number,
+            isLabel: false,
+            validator: (v) {
+              if (v!.trim().isEmpty) {
+                return AppStrings.providePrice1Text;
+              } else {
+                return null;
+              }
+            },
+          ),
+          CustomSizedBox.height(20),
+          textFieldUpperText(AppStrings.price2Text),
+          CustomTextField(
+            controller: price2Controller,
+            labelText: AppStrings.price2Text,
+            hintText: AppStrings.enterPrice2Text,
+            suffixIcon: const Text(""),
+            obscureText: false,
+            textInputType: TextInputType.number,
+            isLabel: false,
+            validator: (v) {
+              if (v!.trim().isEmpty) {
+                return AppStrings.providePrice2Text;
+              } else {
+                return null;
+              }
+            },
+          ),
+          CustomSizedBox.height(10),
+          flyConfigWidget(),
+          CustomSizedBox.height(10),
+          textFieldUpperText(AppStrings.traceabilityText),
+          CustomDropDownWidget(
+            hintText: AppStrings.traceabilityText,
+            value: traceability.toString(),
+            itemsMap: ProcessedResourceViewModel.traceabilityList.map((v) {
+              return DropdownMenuItem(
+                value: v,
+                child: Text(v.toString()),
+              );
+            }).toList(),
+            validationText: AppStrings.provideTraceabilityText,
+            onChanged: (v) {
+              setState(() {
+                traceability = v;
+              });
+            },
+          ),
+          CustomSizedBox.height(20),
+          textFieldUpperText(AppStrings.traceabilityIdText),
+          CustomTextField(
+            controller: traceabilityIdController,
+            labelText: AppStrings.traceabilityIdText,
+            hintText: AppStrings.enterTraceabilityIdText,
+            suffixIcon: const Text(""),
+            obscureText: false,
+            textInputType: TextInputType.number,
+            isLabel: false,
+            validator: (v) {
+              if (v!.trim().isEmpty) {
+                return AppStrings.provideTraceabilityIdText;
+              } else {
+                return null;
+              }
+            },
+          ),
+          CustomSizedBox.height(20),
+          tableRowWidget(),
+        ],
+      ),
+    );
+  }
+
+  Widget flyConfigWidget() {
+    return Row(
+      children: [
+        SizedBox(
+          width: 20.w,
+          child: Theme(
+            data: Theme.of(context).copyWith(
+              unselectedWidgetColor: AppColors.primaryColor,
+            ),
+            child: Checkbox(
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.all(
+                      Radius.circular(AppBorderRadius.checkBoxRadius.r))),
+              activeColor: AppColors.primaryColor,
+              value: isFlgConfig,
+              onChanged: (value) {
+                setState(() {
+                  isFlgConfig = value!;
+                });
+              },
+            ),
+          ),
+        ),
+        CustomSizedBox.width(10),
+        Padding(
+          padding: const EdgeInsets.only(top: AppSize.p9).r,
+          child: textFieldUpperText(AppStrings.flgConfigText),
+        ),
+      ],
+    );
+  }
+
+  Widget tableRowWidget() {
+    return Column(
+      children: [
+        Row(
+          children: [
+            Flexible(
+                child: tableText(AppStrings.resourceAndResourcePercentageText)),
+            CustomSizedBox.width(15),
+            addResourceButton(),
+          ],
+        ),
+        CustomSizedBox.height(15),
+        Padding(
+          padding: const EdgeInsets.only(bottom: AppSize.p10).r,
+          child: ListView.builder(
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
+            itemCount: controllers.length,
+            itemBuilder: (context, index) {
+              return Padding(
+                padding: const EdgeInsets.only(bottom: AppSize.p10).r,
+                child: Row(
+                  children: [
+                    Flexible(
+                      child: BlocBuilder<ResourceCubit, ResourceState>(
+                          builder: (context, state) {
+                        return DropdownButtonFormField(
+                          autovalidateMode: AutovalidateMode.onUserInteraction,
+                          validator: (value) {
+                            if (value == null) {
+                              return AppStrings.selectResourceText;
+                            } else {
+                              return null;
+                            }
+                          },
+                          decoration: InputDecoration(
+                            errorMaxLines: 1,
+                            contentPadding: const EdgeInsets.only(
+                                    left: 16, right: 16, top: 12, bottom: 12)
+                                .r,
+                            errorBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(
+                                        AppBorderRadius.dropDownBorderRadius)
+                                    .r,
+                                borderSide: BorderSide(
+                                  color: AppColors.redColor2,
+                                  width: 1.w,
+                                )),
+                            enabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(
+                                        AppBorderRadius.dropDownBorderRadius)
+                                    .r,
+                                borderSide: BorderSide(
+                                  color: AppColors.secondaryColor,
+                                  width: 1.w,
+                                )),
+                            focusedBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(
+                                        AppBorderRadius.dropDownBorderRadius)
+                                    .r,
+                                borderSide: BorderSide(
+                                  color: AppColors.secondaryColor,
+                                  width: 1.w,
+                                )),
+                            focusedErrorBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(
+                                        AppBorderRadius.dropDownBorderRadius)
+                                    .r,
+                                borderSide: BorderSide(
+                                  color: AppColors.secondaryColor,
+                                  width: 1.w,
+                                )),
+                          ),
+                          hint: Text(
+                            AppStrings.resourceText,
+                            style: Styles.circularStdBook(
+                              AppSize.text14.sp,
+                              AppColors.hintTextColor,
+                            ),
+                          ),
+                          dropdownColor: Colors.white,
+                          icon: const Icon(
+                            Icons.keyboard_arrow_down,
+                            color: AppColors.secondaryColor,
+                          ),
+                          iconSize: AppSize.icon28.r,
+                          isExpanded: true,
+                          style: Styles.circularStdMedium(
+                            AppSize.text14.sp,
+                            AppColors.primaryColor,
+                          ),
+                          value: resourceIds[index],
+                          items: state.resourceModel.map((v) {
+                            return DropdownMenuItem(
+                              value: v.resourceId,
+                              child: Text(
+                                v.resourceName.toString(),
+                                maxLines: 1,
+                                style: const TextStyle(
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                              ),
+                            );
+                          }).toList(),
+                          onChanged: (v) {
+                            setState(() {
+                              resourceIds[index] = v;
+                            });
+                          },
+                        );
+                      }),
+                    ),
+                    CustomSizedBox.width(10),
+                    Flexible(
+                      child: CustomTextField(
+                        controller: controllers[index],
+                        labelText: AppStrings.percentageText,
+                        hintText: AppStrings.percentageUsedText,
+                        suffixIcon: SizedBox(
+                          width: 10.w,
+                          height: 10.h,
+                          child: Center(
+                            child: Text(
+                              "%",
+                              style: TextStyle(
+                                color: AppColors.primaryColor,
+                                fontSize: 16.sp,
+                              ),
+                            ),
+                          ),
+                        ),
+                        obscureText: false,
+                        textInputType: TextInputType.number,
+                        isLabel: false,
+                        validator: (v) {
+                          if (v!.trim().isEmpty) {
+                            return AppStrings.providePercentageText;
+                          } else {
+                            return null;
+                          }
+                        },
+                      ),
+                    ),
+                    CustomSizedBox.width(10),
+                    GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          controllers.removeAt(index);
+                          resourceIds.removeAt(index);
+                        });
+                      },
+                      behavior: HitTestBehavior.opaque,
+                      child: Icon(
+                        Icons.delete,
+                        color: AppColors.redColor2,
+                        size: 27.r,
+                      ),
+                    ),
+                  ],
+                ),
+              );
+            },
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget tableText(String text) {
+    return Padding(
+      padding: const EdgeInsets.only(
+        left: AppSize.p2,
+      ).r,
+      child: Text(
+        text,
+        maxLines: 2,
+        style: Styles.circularStdBook(
+          AppSize.text15.sp,
+          AppColors.primaryColor,
+        ),
+      ),
+    );
+  }
+
+  Widget addResourceButton() {
+    return Container(
+      width: 30.w,
+      height: 30.h,
+      decoration: const BoxDecoration(
+        color: AppColors.addProductContainerColor,
+        shape: BoxShape.circle,
+      ),
+      child: GestureDetector(
+          onTap: () {
+            allListWidget();
+          },
+          behavior: HitTestBehavior.opaque,
+          child: Center(child: Icon(Icons.add, size: 20.r))),
+    );
+  }
 
   Widget textFieldUpperText(String text) {
     return Padding(

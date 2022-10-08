@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:grocery/Data/services/manager/proceed_resource_service.dart';
 import 'package:grocery/Presentation/common/add_item_button.dart';
 import 'package:grocery/Presentation/common/app_bar.dart';
 import 'package:grocery/Presentation/resources/app_strings.dart';
@@ -11,6 +12,7 @@ import 'package:grocery/Presentation/views/home/inventory/all%20tabs/components/
 import 'package:grocery/Presentation/views/home/inventory/all%20tabs/proceedResource/bloc/proceed_resource_cubit.dart';
 
 import '../../../../../common/data_not_available_text.dart';
+import '../../../../../common/loading_indicator.dart';
 
 class ProceedResourceScreen extends StatefulWidget {
   const ProceedResourceScreen({super.key});
@@ -20,6 +22,15 @@ class ProceedResourceScreen extends StatefulWidget {
 }
 
 class _ProceedResourceScreenState extends State<ProceedResourceScreen> {
+  @override
+  void initState() {
+    Future.wait([
+      context.read<ProceedResourceCubit>().getProceedResource(),
+    ]);
+
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -38,6 +49,9 @@ class _ProceedResourceScreenState extends State<ProceedResourceScreen> {
           CustomSizedBox.height(25),
           BlocBuilder<ProceedResourceCubit, ProceedResourceState>(
               builder: (context, state) {
+            if (state.status == ProceedResourceEnum.loading) {
+              return LoadingIndicator.loadingExpanded();
+            }
             return state.proceedResourceModel.isEmpty
                 ? DataNotAvailableText.withExpanded(
                     AppStrings.noProceedResourceAddedText,
@@ -49,6 +63,7 @@ class _ProceedResourceScreenState extends State<ProceedResourceScreen> {
                         itemCount: state.proceedResourceModel.length,
                         itemBuilder: (context, index) {
                           var singleData = state.proceedResourceModel[index];
+                          log("Single Data ${singleData.name}");
                           return ProceedResourceDetailContainer(
                               model: singleData);
                         }),

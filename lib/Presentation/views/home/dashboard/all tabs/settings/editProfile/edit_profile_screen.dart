@@ -6,7 +6,7 @@ import 'package:grocery/Presentation/common/snack_bar_widget.dart';
 import 'package:grocery/Presentation/resources/app_strings.dart';
 import 'package:grocery/Presentation/resources/colors_palette.dart';
 import 'package:grocery/Presentation/resources/sized_box.dart';
-
+import '../../../../../../../Application/Prefs/app_prefs.dart';
 import '../../../../../../common/app_bar.dart';
 import '../../../../../../resources/size.dart';
 
@@ -22,6 +22,20 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   final firstNameController = TextEditingController();
   final lastNameController = TextEditingController();
   final emailController = TextEditingController();
+
+  getUserEmail() async {
+    var userEmail = await AppPrefs.getUserEmail();
+    setState(() {
+      emailController.text = userEmail;
+    });
+  }
+
+  @override
+  void initState() {
+    getUserEmail();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -97,25 +111,19 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
             },
           ),
           CustomSizedBox.height(20),
-          CustomTextField(
-            controller: emailController,
-            labelText: AppStrings.emailText,
-            hintText: AppStrings.enterEmailText,
-            suffixIcon: const Text(""),
-            obscureText: false,
-            textInputType: TextInputType.text,
-            validator: (v) {
-              Pattern pattern =
-                  r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+";
-              RegExp regExp = RegExp(pattern.toString());
-              if (v!.trim().isEmpty) {
-                return AppStrings.provideEmailText;
-              } else if (!regExp.hasMatch(v)) {
-                return AppStrings.provideValidEmailText;
-              } else {
+          AbsorbPointer(
+            absorbing: true,
+            child: CustomTextField(
+              controller: emailController,
+              labelText: AppStrings.emailText,
+              hintText: AppStrings.enterEmailText,
+              suffixIcon: const Text(""),
+              obscureText: false,
+              textInputType: TextInputType.text,
+              validator: (v) {
                 return null;
-              }
-            },
+              },
+            ),
           ),
         ],
       ),

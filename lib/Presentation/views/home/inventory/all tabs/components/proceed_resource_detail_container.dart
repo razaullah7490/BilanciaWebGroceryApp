@@ -1,6 +1,9 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:grocery/Data/services/manager/proceed_resource_service.dart';
 import 'package:grocery/Presentation/common/delete_item_dialogue.dart';
 import 'package:grocery/Presentation/common/edit_delete_container.dart';
 import 'package:grocery/Presentation/resources/border_radius.dart';
@@ -49,48 +52,65 @@ class ProceedResourceDetailContainer extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               CustomSizedBox.height(5),
-              titleText(model.resourceName),
+              titleText(model.name.toString()),
               CustomSizedBox.height(5),
               subTitleText("${AppStrings.aliquotaIVAText} :",
-                  model.aliquotaIva.toString()),
-              subTitleText("${AppStrings.categoryText} :", model.category),
+                  model.ivaAliquota.toString()),
+              subTitleText(
+                  "${AppStrings.categoryText} :", model.category.toString()),
               subTitleText("${AppStrings.quantityOnlyText} :",
                   model.stockQuantity.toString()),
-              CustomSizedBox.height(2),
               salePriceText(model.unitSalePrice.toString()),
-              Row(
-                children: [
-                  subTitleText("${AppStrings.weightTypeText} :",
-                      model.weightType.toString()),
-                  CustomSizedBox.width(30),
-                  subTitleText(
-                      "${AppStrings.tareText} :", model.tare.toString()),
-                ],
-              ),
+              subTitleText("${AppStrings.weightTypeText} :",
+                  model.weightType.toString()),
+              CustomSizedBox.height(3),
+              model.isDeleted == true
+                  ? Padding(
+                      padding: const EdgeInsets.only(top: AppSize.p6).r,
+                      child: Text(AppStrings.proceedResourceDeleteInText,
+                          style: Styles.segoeUI(
+                            AppSize.text10.sp,
+                            AppColors.redColor2,
+                          )),
+                    )
+                  : Container()
             ],
           ),
           editDeleteIcons(
             onTapEdit: () {
               final args = ProceedResourcesModel(
-                resourceId: model.resourceId,
-                resourceName: model.resourceName,
-                aliquotaIva: model.aliquotaIva,
+                id: model.id,
+                name: model.name,
+                ivaAliquota: model.ivaAliquota,
                 ivaType: model.ivaType,
                 stockQuantity: model.stockQuantity,
                 stockQuantityThreshold: model.stockQuantityThreshold,
                 measureUnit: model.measureUnit,
-                barCode: model.barCode,
+                barcode: model.barcode,
                 plu: model.plu,
                 shelfLife: model.shelfLife,
                 unitSalePrice: model.unitSalePrice,
                 revenuePercentage: model.revenuePercentage,
                 category: model.category,
-                status: model.status,
+                isActive: model.isActive,
                 tare: model.tare,
                 weightType: model.weightType,
-                ingrediant: model.ingrediant,
+                ingredient: model.ingredient,
                 expirationDate: model.expirationDate.toString(),
                 packagingDate: model.packagingDate.toString(),
+                threshold1: model.threshold1,
+                threshold2: model.threshold2,
+                price1: model.price1,
+                price2: model.price2,
+                isDeleted: model.isDeleted,
+                unitPurchasePrice: model.unitPurchasePrice,
+                traceability: model.traceability,
+                traceabilityId: model.traceabilityId,
+                assignedTo: model.assignedTo,
+                flgConfig: model.flgConfig,
+                image: model.image,
+                business: model.business,
+                madeWith: model.madeWith,
               );
               Navigator.pushNamed(
                   context, RoutesNames.editProceedResourceScreen,
@@ -139,20 +159,33 @@ class ProceedResourceDetailContainer extends StatelessWidget {
         context: context,
         builder: (BuildContext context) {
           return DeleteItemDialogue(
-            text: AppStrings.resourceActionText,
-            onDeleteButtonTap: () {
-              context
-                  .read<ProceedResourceCubit>()
-                  .deleteProceedResource(model.resourceId);
+            text: AppStrings.processedResourceText,
+            onDeleteButtonTap: () async {
+              if (model.isDeleted != true) {
+                context
+                    .read<ProceedResourceCubit>()
+                    .deleteProceedResource(model.id);
 
-              Navigator.of(context).pop();
-              SnackBarWidget.buildSnackBar(
-                context,
-                AppStrings.proceedResourceDeleteSuccessText,
-                AppColors.greenColor,
-                Icons.check,
-                true,
-              );
+                Navigator.of(context).pop();
+                Navigator.pushReplacementNamed(
+                    context, RoutesNames.proceedResourceScreen);
+                SnackBarWidget.buildSnackBar(
+                  context,
+                  AppStrings.proceedResourceDeleteSuccessText,
+                  AppColors.greenColor,
+                  Icons.check,
+                  true,
+                );
+              } else {
+                Navigator.of(context).pop();
+                SnackBarWidget.buildSnackBar(
+                  context,
+                  AppStrings.notFoundText,
+                  AppColors.redColor,
+                  Icons.close,
+                  true,
+                );
+              }
             },
           );
         });

@@ -222,9 +222,12 @@ Route<dynamic> generateRoute(RouteSettings routeSettings) {
 
     case RoutesNames.addResourceActionsScreen:
       final ResourceData args = routeSettings.arguments as ResourceData;
+
       return PageTransition(
         type: PageTransitionType.topToBottom,
-        child: AddResourceActionScreen(resourceData: args),
+        child: AddResourceActionScreen(
+          resourceData: args,
+        ),
         settings: routeSettings,
       );
 

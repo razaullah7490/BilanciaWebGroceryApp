@@ -12,6 +12,7 @@ import 'package:grocery/Presentation/common/delete_item_dialogue.dart';
 import 'package:grocery/Presentation/common/edit_delete_container.dart';
 import 'package:grocery/Presentation/common/snack_bar_widget.dart';
 import 'package:grocery/Presentation/resources/app_strings.dart';
+import 'package:grocery/Presentation/resources/assets.dart';
 import 'package:grocery/Presentation/resources/border_radius.dart';
 import 'package:grocery/Presentation/resources/colors_palette.dart';
 import 'package:grocery/Presentation/resources/routes/routes_names.dart';
@@ -19,15 +20,20 @@ import 'package:grocery/Presentation/resources/size.dart';
 import 'package:grocery/Presentation/resources/sized_box.dart';
 import 'package:grocery/Presentation/resources/text_styles.dart';
 import 'package:grocery/Presentation/views/home/inventory/all%20tabs/components/pop_up_menu.dart';
+import 'package:grocery/Presentation/views/home/inventory/all%20tabs/resourceActions/addEditDeleteResourceActions/add_resource_action.dart';
 
 import '../../../../../common/loading_indicator.dart';
+import '../resources/bloc/resource_cubit.dart';
 
 class ResourceData {
   int id;
   String name;
+  bool isInventoryAction;
+
   ResourceData({
     required this.id,
     required this.name,
+    required this.isInventoryAction,
   });
 }
 
@@ -45,6 +51,7 @@ class ProductDetailContainer extends StatelessWidget {
         final args = ResourceData(
           id: model.resourceId,
           name: model.resourceName,
+          isInventoryAction: false,
         );
         Navigator.pushNamed(
           context,
@@ -76,46 +83,48 @@ class ProductDetailContainer extends StatelessWidget {
           children: [
             Row(
               children: [
-                // Container(
-                //   width: 80.w,
-                //   height: 77.w,
-                //   decoration: BoxDecoration(
-                //     borderRadius: BorderRadius.circular(12.r),
-                //   ),
-                //   child: ClipRRect(
-                //     borderRadius: BorderRadius.circular(5.r),
-                //     child: Image.file(
-                //       File(model.imageUrl),
-                //       fit: BoxFit.cover,
-                //     ),
-                //   ),
-                //for api
-                CachedNetworkImage(
-                  imageUrl: model.image.isNotEmpty
-                      ? model.image
-                      : "https://www.ncenet.com/wp-content/uploads/2020/04/no-image-png-2.png",
-                  imageBuilder: (context, imageProvider) => Container(
-                    width: 80.w,
-                    height: 77.w,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(
-                        AppBorderRadius.dashboardSliderBorderRadius,
+                model.image.isEmpty
+                    ? Container(
+                        width: 80.w,
+                        height: 77.w,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(12.r),
+                          border: Border.all(
+                            color: AppColors.secondaryColor,
+                            width: 1.w,
+                          ),
+                        ),
+                        child: Center(
+                          child: Image.asset(
+                            Assets.noImage,
+                            width: 45.w,
+                            height: 45.h,
+                            color: AppColors.primaryColor,
+                          ),
+                        ),
+                      )
+                    : CachedNetworkImage(
+                        imageUrl: model.image,
+                        imageBuilder: (context, imageProvider) => Container(
+                          width: 80.w,
+                          height: 77.w,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(
+                              AppBorderRadius.dashboardSliderBorderRadius,
+                            ),
+                            image: DecorationImage(
+                              image: imageProvider,
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                        ),
+                        placeholder: (context, url) =>
+                            LoadingIndicator.loading(),
+                        errorWidget: (context, url, error) => Icon(
+                          Icons.error,
+                          size: AppSize.icon28.r,
+                        ),
                       ),
-                      image: DecorationImage(
-                        image: imageProvider,
-                        fit: model.image.isNotEmpty
-                            ? BoxFit.cover
-                            : BoxFit.contain,
-                      ),
-                    ),
-                  ),
-                  placeholder: (context, url) => LoadingIndicator.loading(),
-                  errorWidget: (context, url, error) => Icon(
-                    Icons.error,
-                    size: AppSize.icon28.r,
-                  ),
-                ),
-
                 CustomSizedBox.width(12),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -134,7 +143,9 @@ class ProductDetailContainer extends StatelessWidget {
 
             PopUpMenuWidget(
               onSelected: (value) {
-                if (value == AppStrings.deleteText) {}
+                if (value == AppStrings.deleteText) {
+                  deleteProductDialogue(context);
+                }
                 if (value == AppStrings.editText) {
                   final args = ResourcesModel(
                     resourceId: model.resourceId,
@@ -228,15 +239,27 @@ class ProductDetailContainer extends StatelessWidget {
         return DeleteItemDialogue(
           text: AppStrings.productText,
           onDeleteButtonTap: () {
-            //context.read<ProductCubit>().deleteProduct(model.productID);
-            Navigator.of(context).pop();
-            SnackBarWidget.buildSnackBar(
-              context,
-              AppStrings.productDeleteSuccessText,
-              AppColors.greenColor,
-              Icons.check,
-              true,
-            );
+            if (model.isDeleted != true) {
+              context.read<ResourceCubit>().deleteResource(model.resourceId);
+
+              Navigator.of(context).pop();
+              SnackBarWidget.buildSnackBar(
+                context,
+                AppStrings.productDeleteSuccessText,
+                AppColors.greenColor,
+                Icons.check,
+                true,
+              );
+            } else {
+              Navigator.of(context).pop();
+              SnackBarWidget.buildSnackBar(
+                context,
+                AppStrings.notFoundText,
+                AppColors.redColor,
+                Icons.close,
+                true,
+              );
+            }
           },
         );
       },

@@ -6,14 +6,14 @@ import 'package:grocery/Presentation/resources/routes/routes_names.dart';
 
 class InventoryViewModel {
   static List<InventoryGridModel> inventoryList = [
-    InventoryGridModel(
-      imageUrl: Assets.products,
-      name: AppStrings.productsText,
-      backgroundColor: AppColors.dashContainerBack1,
-      iconColor: AppColors.dashContainerIcon1,
-      borderColor: AppColors.dashContainerBorder1,
-      onTap: RoutesNames.productsScreen,
-    ),
+    // InventoryGridModel(
+    //   imageUrl: Assets.products,
+    //   name: AppStrings.productsText,
+    //   backgroundColor: AppColors.dashContainerBack1,
+    //   iconColor: AppColors.dashContainerIcon1,
+    //   borderColor: AppColors.dashContainerBorder1,
+    //   onTap: RoutesNames.productsScreen,
+    // ),
     InventoryGridModel(
       imageUrl: Assets.categories,
       name: AppStrings.categoriesText,

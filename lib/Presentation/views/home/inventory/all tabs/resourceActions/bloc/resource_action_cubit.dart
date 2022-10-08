@@ -13,6 +13,12 @@ class ResourceActionCubit extends Cubit<ResourceActionState> {
     required this.repo,
   }) : super(ResourceActionState.initial());
 
+  // fromStart() async {
+  //   emit(state.copyWith(
+  //       status: ResourceActionEnum.initial,
+  //       error: const CustomError(error: "")));
+  // }
+
   Future<bool> addResourceAction(map) async {
     emit(state.copyWith(
       status: ResourceActionEnum.loading,
@@ -70,6 +76,7 @@ class ResourceActionCubit extends Cubit<ResourceActionState> {
         status: ResourceActionEnum.success,
         error: const CustomError(error: ""),
       ));
+
       return res;
     } catch (e) {
       emit(state.copyWith(

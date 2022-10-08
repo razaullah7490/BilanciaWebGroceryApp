@@ -1,7 +1,7 @@
 class ResourceActionViewModel {
   static const List<String> actionTypeList = [
     "purchase",
-    "inernal_purchase",
+    "internal_purchase",
     "sale",
     "internal_usage",
     "waste",

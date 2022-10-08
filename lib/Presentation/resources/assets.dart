@@ -25,4 +25,5 @@ class Assets {
   static const String settingNotification = "assets/images/notifications.png";
   static const String logout = "assets/images/logout.png";
   static const String noProductFound = "assets/images/no_product_found.png";
+  static const String noImage = "assets/images/noImage.png";
 }

@@ -8,7 +8,6 @@ import 'package:grocery/Presentation/resources/app_strings.dart';
 import 'package:grocery/Presentation/resources/colors_palette.dart';
 import 'package:grocery/Presentation/resources/sized_box.dart';
 import 'package:grocery/Presentation/resources/text_styles.dart';
-
 import '../../../../../../resources/size.dart';
 
 class ChangePasswordScreen extends StatefulWidget {
@@ -23,6 +22,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
   final currentPasswordController = TextEditingController();
   final newPasswordController = TextEditingController();
   final confirmNewPasswordController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

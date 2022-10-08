@@ -51,6 +51,11 @@ class _AddResourceScreenState extends State<AddResourceScreen> {
   final barCodeController = TextEditingController();
   final tareController = TextEditingController();
   final unitPurchasePriceController = TextEditingController();
+  final threshold1Controller = TextEditingController();
+  final threshold2Controller = TextEditingController();
+  final price1Controller = TextEditingController();
+  final price2Controller = TextEditingController();
+  final traceabilityIdController = TextEditingController();
   var ivaType;
   var measureUnit;
   var category;
@@ -61,14 +66,8 @@ class _AddResourceScreenState extends State<AddResourceScreen> {
   var aliquotaIva;
   var status;
   File? image;
-
-  final threshold1Controller = TextEditingController();
-  final threshold2Controller = TextEditingController();
-  final price1Controller = TextEditingController();
-  final price2Controller = TextEditingController();
   bool isFlgConfig = false;
   var traceability;
-  final traceabilityIdController = TextEditingController();
 
   @override
   void initState() {

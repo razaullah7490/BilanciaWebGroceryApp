@@ -45,6 +45,8 @@ class AppStrings {
   static const String passwordLengthText = "At least 6 digits password";
   static const String categoryDeleteInText = "Category Delete in 24 hours";
   static const String resourceDeleteInText = "Resource Delete in 24 hours";
+  static const String proceedResourceDeleteInText =
+      "Proceed resource Delete in 24 hours";
   static const String notFoundText = "Not Found";
   static const String editText = "Edit";
   static const String allCategoriesText = "All Categories";
@@ -190,6 +192,11 @@ class AppStrings {
   static const String expirationDateText = "Expiration date";
   static const String noProceedResourceAddedText =
       "No Proceed Resource Added Yet";
+  static const String resourceAndResourcePercentageText =
+      "Add Resource And Resource Percentage Used";
+
+  static const String percentageText = "Percentage";
+  static const String percentageUsedText = "Percentage used";
 
   //Processed Resource Action
   static const String processedResourceActionText = "Processed Resource Action";
@@ -257,6 +264,8 @@ class AppStrings {
   static const String provideTraceabilityText = "Please provide traceability";
   static const String provideTraceabilityIdText =
       "Please provide traceability ID";
+  static const String providePercentageText = "Percentage used";
+  static const String selectResourceText = "Select Resource";
 
   static const String provideKeyModifierText = "Please provide key modifier";
   static const String provideIdGruppoText = "Please provide id gruppo";
@@ -293,6 +302,8 @@ class AppStrings {
       "Resource Action Deleted Successfully";
   static const String proceedResourceAddedSuccessText =
       "Proceed Resource Added Successfully";
+  static const String addAtleastOneText =
+      "Add at least one resource and resource percentage used";
   static const String proceedResourceUpdatedSuccessText =
       "Proceed Resource Updated Successfully";
   static const String proceedResourceDeleteSuccessText =

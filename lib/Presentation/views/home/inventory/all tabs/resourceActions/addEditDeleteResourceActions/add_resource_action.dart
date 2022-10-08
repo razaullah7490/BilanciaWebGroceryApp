@@ -1,8 +1,11 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 // ignore_for_file: prefer_typing_uninitialized_variables, use_build_context_synchronously
 import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+
 import 'package:grocery/Presentation/common/app_bar.dart';
 import 'package:grocery/Presentation/common/custom_button.dart';
 import 'package:grocery/Presentation/common/custom_drop_down.dart';
@@ -18,12 +21,16 @@ import 'package:grocery/Presentation/resources/text_styles.dart';
 import 'package:grocery/Presentation/views/home/inventory/all%20tabs/components/product_detail_container.dart';
 import 'package:grocery/Presentation/views/home/inventory/all%20tabs/resourceActions/bloc/resource_action_cubit.dart';
 import 'package:grocery/Presentation/views/home/inventory/all%20tabs/resourceActions/resource_action_view_model.dart';
+import 'package:grocery/Presentation/views/home/inventory/all%20tabs/resources/bloc/resource_cubit.dart';
+
 import '../../../../../../../Data/errors/custom_error.dart';
 import '../../../../../../common/custom_date_picker.dart';
 import '../../../../../../common/date_picker.dart';
+import '../../../../../../resources/routes/routes_names.dart';
 
 class AddResourceActionScreen extends StatefulWidget {
   final ResourceData resourceData;
+
   const AddResourceActionScreen({
     super.key,
     required this.resourceData,
@@ -44,12 +51,22 @@ class _AddResourceActionScreenState extends State<AddResourceActionScreen> {
   bool isInternalUsage = false;
   DateTime? dateTime;
   var moneyType;
+  var allResources;
 
   @override
   void initState() {
     actionType = ResourceActionViewModel.actionTypeList[0].toString();
     resourceController.text = widget.resourceData.name;
+    getResource();
     super.initState();
+  }
+
+  getResource() async {
+    if (widget.resourceData.isInventoryAction == true) {
+      Future.wait([
+        context.read<ResourceCubit>().getResource(),
+      ]);
+    }
   }
 
   @override
@@ -68,14 +85,27 @@ class _AddResourceActionScreenState extends State<AddResourceActionScreen> {
               BlocListener<ResourceActionCubit, ResourceActionState>(
                 listener: (context, state) {
                   if (state.status == ResourceActionEnum.success) {
-                    Navigator.of(context).pop();
-                    SnackBarWidget.buildSnackBar(
-                      context,
-                      AppStrings.resourceActionAddedSuccessText,
-                      AppColors.greenColor,
-                      Icons.check,
-                      true,
-                    );
+                    if (widget.resourceData.isInventoryAction == true) {
+                      Navigator.of(context).pop();
+                      Navigator.pushReplacementNamed(
+                          context, RoutesNames.resourceActionsScreen);
+                      SnackBarWidget.buildSnackBar(
+                        context,
+                        AppStrings.resourceActionAddedSuccessText,
+                        AppColors.greenColor,
+                        Icons.check,
+                        true,
+                      );
+                    } else {
+                      Navigator.of(context).pop();
+                      SnackBarWidget.buildSnackBar(
+                        context,
+                        AppStrings.resourceActionAddedSuccessText,
+                        AppColors.greenColor,
+                        Icons.check,
+                        true,
+                      );
+                    }
                   }
                   if (state.error != const CustomError(error: '')) {
                     SnackBarWidget.buildSnackBar(
@@ -106,7 +136,10 @@ class _AddResourceActionScreenState extends State<AddResourceActionScreen> {
                           "print_counter": printCounterController.text,
                           "is_for_internal_usage":
                               isInternalUsage == false ? "false" : "true",
-                          "resource": "${widget.resourceData.id}",
+                          "resource":
+                              widget.resourceData.isInventoryAction == true
+                                  ? allResources.toString()
+                                  : "${widget.resourceData.id}",
                           "money_type": moneyType.toString(),
                         };
                         log("map $map");
@@ -235,25 +268,46 @@ class _AddResourceActionScreenState extends State<AddResourceActionScreen> {
           ),
           CustomSizedBox.height(20),
           textFieldUpperText(AppStrings.resourceText),
-          AbsorbPointer(
-            absorbing: true,
-            child: CustomTextField(
-              controller: resourceController,
-              labelText: AppStrings.resourceText,
-              hintText: AppStrings.enterResourceText,
-              suffixIcon: const Text(""),
-              obscureText: false,
-              textInputType: TextInputType.number,
-              isLabel: false,
-              validator: (v) {
-                if (v!.trim().isEmpty) {
-                  return AppStrings.provideResourceText;
-                } else {
-                  return null;
-                }
-              },
+          if (widget.resourceData.isInventoryAction == true)
+            BlocBuilder<ResourceCubit, ResourceState>(
+                builder: (context, state) {
+              return CustomDropDownWidget(
+                hintText: AppStrings.resourceText,
+                value: allResources,
+                itemsMap: state.resourceModel.map((v) {
+                  return DropdownMenuItem(
+                    value: v.resourceId,
+                    child: Text(v.resourceName.toString()),
+                  );
+                }).toList(),
+                validationText: AppStrings.provideResourceText,
+                onChanged: (v) {
+                  setState(() {
+                    allResources = v;
+                  });
+                },
+              );
+            }),
+          if (widget.resourceData.isInventoryAction == false)
+            AbsorbPointer(
+              absorbing: true,
+              child: CustomTextField(
+                controller: resourceController,
+                labelText: AppStrings.resourceText,
+                hintText: AppStrings.enterResourceText,
+                suffixIcon: const Text(""),
+                obscureText: false,
+                textInputType: TextInputType.number,
+                isLabel: false,
+                validator: (v) {
+                  if (v!.trim().isEmpty) {
+                    return AppStrings.provideResourceText;
+                  } else {
+                    return null;
+                  }
+                },
+              ),
             ),
-          ),
           CustomSizedBox.height(15),
           internalUsage(),
           CustomSizedBox.height(30),

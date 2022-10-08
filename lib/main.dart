@@ -1,13 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:grocery/Data/repository/auth/registration_repository.dart';
+import 'package:grocery/Data/repository/auth/user_repository.dart';
+import 'package:grocery/Data/repository/manager/proceed_resource_repository.dart';
 import 'package:grocery/Data/repository/manager/resource_action_repository.dart';
 import 'package:grocery/Data/repository/manager/resources_repository.dart';
 import 'package:grocery/Data/services/auth/login_service.dart';
 import 'package:grocery/Data/services/auth/registration_service.dart';
+import 'package:grocery/Data/services/auth/user_services.dart';
 import 'package:grocery/Data/services/manager/category_service.dart';
 import 'package:grocery/Data/services/manager/ingredients_service.dart';
 import 'package:grocery/Data/services/manager/iva_service.dart';
+import 'package:grocery/Data/services/manager/proceed_resource_service.dart';
 import 'package:grocery/Data/services/manager/resource_action_service.dart';
 import 'package:grocery/Data/services/manager/resources_service.dart';
 import 'package:grocery/Presentation/resources/routes/routes_manager.dart';
@@ -21,11 +25,11 @@ import 'package:grocery/Presentation/views/home/inventory/all%20tabs/processedRe
 import 'package:grocery/Presentation/views/home/inventory/all%20tabs/products/bloc/product_cubit.dart';
 import 'package:grocery/Presentation/views/home/inventory/all%20tabs/resourceActions/bloc/resource_action_cubit.dart';
 import 'package:grocery/Presentation/views/home/inventory/all%20tabs/resources/bloc/resource_cubit.dart';
-
 import 'Data/repository/auth/login_repository.dart';
 import 'Data/repository/manager/category_repository.dart';
 import 'Data/repository/manager/ingredient_repository.dart';
 import 'Data/repository/manager/iva_repository.dart';
+import 'Presentation/state management/bloc/userBloc/user_cubit.dart';
 import 'Presentation/views/auth/login/bloc/login_cubit.dart';
 import 'Presentation/views/home/inventory/all tabs/proceedResource/bloc/proceed_resource_cubit.dart';
 
@@ -74,6 +78,14 @@ class MyApp extends StatelessWidget {
                     create: (context) => ResourceActionRepository(
                           resourceActionService: ResourceActionService(),
                         )),
+                RepositoryProvider(
+                    create: (context) => UserRepository(
+                          userServices: UserServices(),
+                        )),
+                RepositoryProvider(
+                    create: (context) => ProceedResourceRepository(
+                          proceedResourceService: ProceedResourceService(),
+                        )),
               ],
               child: MultiBlocProvider(
                 providers: [
@@ -101,10 +113,14 @@ class MyApp extends StatelessWidget {
                   BlocProvider<ProductCubit>(
                       create: (context) => ProductCubit(modelList: [])),
                   BlocProvider<ProceedResourceCubit>(
-                      create: (context) => ProceedResourceCubit(modelList: [])),
+                      create: (context) => ProceedResourceCubit(
+                          repo: context.read<ProceedResourceRepository>())),
                   BlocProvider<ProceedResourceActionCubit>(
                       create: (context) =>
                           ProceedResourceActionCubit(modelList: [])),
+                  BlocProvider<UserCubit>(
+                      create: (context) =>
+                          UserCubit(repo: context.read<UserRepository>())),
                 ],
                 child: MaterialApp(
                   title: 'Bilancia Web',
