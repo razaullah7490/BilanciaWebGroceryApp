@@ -56,7 +56,7 @@ class ResourceActionCubit extends Cubit<ResourceActionState> {
       return res;
     } on CustomError catch (e) {
       emit(state.copyWith(
-        status: ResourceActionEnum.loading,
+        status: ResourceActionEnum.error,
         error: CustomError(error: e.toString()),
         resourceActionModel: [],
       ));
@@ -78,9 +78,9 @@ class ResourceActionCubit extends Cubit<ResourceActionState> {
       ));
 
       return res;
-    } catch (e) {
+    } on CustomError catch (e) {
       emit(state.copyWith(
-        status: ResourceActionEnum.loading,
+        status: ResourceActionEnum.error,
         error: CustomError(error: e.toString()),
       ));
       return false;

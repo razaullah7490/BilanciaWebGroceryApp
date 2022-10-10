@@ -17,4 +17,7 @@ class ApiUrls {
       "$baseUrl/manager/processed-resource/";
   static const String changePasswordUrl = "$baseUrl/auth/change-password/";
   static const String logoutUrl = "$baseUrl/auth/logout";
+  static const String proceedResourceActionUrl =
+      "$baseUrl/manager/processed-resource-action/";
+  static const String requestPasswordResetUrl = "$baseUrl/auth/password_reset/";
 }

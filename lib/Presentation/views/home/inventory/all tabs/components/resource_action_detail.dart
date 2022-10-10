@@ -61,28 +61,7 @@ class ResourceActionDetailContainer extends StatelessWidget {
               //moneyAndResourceText(AppStrings.resourceText, model.resource),
             ],
           ),
-
           deleteButton(context),
-
-          // editDeleteIcons(
-          //   onTapEdit: () async {
-          //     // final args = ResourceActionModel(
-          //     //   isForInternalUsage: model.isForInternalUsage,
-          //     //   resourceActionId: model.resourceActionId,
-          //     //   resourceActionName: model.resourceActionName,
-          //     //   quantity: model.quantity,
-          //     //   money: model.money,
-          //     //   priceCounter: model.priceCounter,
-          //     //   resource: model.resource,
-          //     // );
-          //     Navigator.pushNamed(
-          //       context,
-          //       RoutesNames.editResourceActionsScreen,
-          //       //arguments: args,
-          //     );
-          //   },
-          //   onTapDelete: () => deleteResourceActionDialogue(context),
-          // ),
         ],
       ),
     );

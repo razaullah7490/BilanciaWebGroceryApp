@@ -4,6 +4,7 @@ import 'package:grocery/Data/repository/auth/change_password_repository.dart';
 import 'package:grocery/Data/repository/auth/logout_repository.dart';
 import 'package:grocery/Data/repository/auth/registration_repository.dart';
 import 'package:grocery/Data/repository/auth/user_repository.dart';
+import 'package:grocery/Data/repository/manager/proceed_resource_action_repository.dart';
 import 'package:grocery/Data/repository/manager/proceed_resource_repository.dart';
 import 'package:grocery/Data/repository/manager/resource_action_repository.dart';
 import 'package:grocery/Data/repository/manager/resources_repository.dart';
@@ -14,6 +15,7 @@ import 'package:grocery/Data/services/auth/user_services.dart';
 import 'package:grocery/Data/services/manager/category_service.dart';
 import 'package:grocery/Data/services/manager/ingredients_service.dart';
 import 'package:grocery/Data/services/manager/iva_service.dart';
+import 'package:grocery/Data/services/manager/proceed_resource_action_service.dart';
 import 'package:grocery/Data/services/manager/proceed_resource_service.dart';
 import 'package:grocery/Data/services/manager/resource_action_service.dart';
 import 'package:grocery/Data/services/manager/resources_service.dart';
@@ -100,6 +102,11 @@ class MyApp extends StatelessWidget {
                     create: (context) => LogoutRepository(
                           logoutService: LogoutService(),
                         )),
+                RepositoryProvider(
+                    create: (context) => ProceedResourceActionRepository(
+                          proceedResourceActionService:
+                              ProceedResourceActionService(),
+                        )),
               ],
               child: MultiBlocProvider(
                 providers: [
@@ -130,8 +137,9 @@ class MyApp extends StatelessWidget {
                       create: (context) => ProceedResourceCubit(
                           repo: context.read<ProceedResourceRepository>())),
                   BlocProvider<ProceedResourceActionCubit>(
-                      create: (context) =>
-                          ProceedResourceActionCubit(modelList: [])),
+                      create: (context) => ProceedResourceActionCubit(
+                          repo:
+                              context.read<ProceedResourceActionRepository>())),
                   BlocProvider<UserCubit>(
                       create: (context) =>
                           UserCubit(repo: context.read<UserRepository>())),

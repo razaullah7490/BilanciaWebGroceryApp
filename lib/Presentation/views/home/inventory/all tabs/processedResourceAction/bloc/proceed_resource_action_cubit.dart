@@ -1,58 +1,79 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:grocery/Data/repository/manager/proceed_resource_action_repository.dart';
+import '../../../../../../../Data/errors/custom_error.dart';
 import '../../../../../../../Domain/models/inventory/proceed_resource_action_model.dart';
 part 'proceed_resource_action_state.dart';
 
 class ProceedResourceActionCubit extends Cubit<ProceedResourceActionState> {
-  final List<ProcessedResourceActionModel> modelList;
+  final ProceedResourceActionRepository repo;
   ProceedResourceActionCubit({
-    required this.modelList,
+    required this.repo,
   }) : super(ProceedResourceActionState.initial());
 
-  Future addProceedResourceAction(ProcessedResourceActionModel model) async {
+  Future<bool> addProceedResourceAction(map) async {
     emit(state.copyWith(
-        status: ProceedResourceActionEnum.loading, resourceActionModel: []));
+      status: ProceedResourceActionEnum.loading,
+      error: const CustomError(error: ""),
+    ));
     try {
-      modelList.add(model);
+      var res = await repo.addProceedResourceAction(map);
       emit(state.copyWith(
-          status: ProceedResourceActionEnum.success,
-          resourceActionModel: modelList));
-    } catch (e) {
+        status: ProceedResourceActionEnum.success,
+        error: const CustomError(error: ""),
+      ));
+      return res;
+    } on CustomError catch (e) {
       emit(state.copyWith(
-          status: ProceedResourceActionEnum.error, resourceActionModel: []));
+        status: ProceedResourceActionEnum.error,
+        error: CustomError(error: e.toString()),
+      ));
+      return false;
     }
   }
 
-  Future editProceedResourceAction(
-      int id, ProcessedResourceActionModel model) async {
+  Future<List<ProcessedResourceActionModel>> getProceedResourceAction() async {
     emit(state.copyWith(
-        status: ProceedResourceActionEnum.loading, resourceActionModel: []));
+      status: ProceedResourceActionEnum.loading,
+      error: const CustomError(error: ""),
+      resourceActionModel: [],
+    ));
     try {
-      var index = modelList
-          .indexWhere((element) => element.processedresourceActionId == id);
-      modelList[index] = model;
+      var res = await repo.getProceedResourceAction();
       emit(state.copyWith(
-          status: ProceedResourceActionEnum.success,
-          resourceActionModel: modelList));
-    } catch (e) {
+        status: ProceedResourceActionEnum.success,
+        error: const CustomError(error: ""),
+        resourceActionModel: res,
+      ));
+      return res;
+    } on CustomError catch (e) {
       emit(state.copyWith(
-          status: ProceedResourceActionEnum.error, resourceActionModel: []));
+        status: ProceedResourceActionEnum.error,
+        error: CustomError(error: e.toString()),
+        resourceActionModel: [],
+      ));
+      return [];
     }
   }
 
-  Future deletProceedResourceAction(int id) async {
+  Future<bool> deletProceedResourceAction(id) async {
     emit(state.copyWith(
-        status: ProceedResourceActionEnum.loading, resourceActionModel: []));
+      status: ProceedResourceActionEnum.loading,
+      error: const CustomError(error: ""),
+    ));
     try {
-      var index = modelList
-          .indexWhere((element) => element.processedresourceActionId == id);
-      modelList.removeAt(index);
+      var res = await repo.deletProceedResourceAction(id);
       emit(state.copyWith(
-          status: ProceedResourceActionEnum.success,
-          resourceActionModel: modelList));
-    } catch (e) {
+        status: ProceedResourceActionEnum.success,
+        error: const CustomError(error: ""),
+      ));
+      return res;
+    } on CustomError catch (e) {
       emit(state.copyWith(
-          status: ProceedResourceActionEnum.error, resourceActionModel: []));
+        status: ProceedResourceActionEnum.error,
+        error: CustomError(error: e.toString()),
+      ));
+      return false;
     }
   }
 }

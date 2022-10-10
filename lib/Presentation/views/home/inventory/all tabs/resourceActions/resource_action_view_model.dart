@@ -11,4 +11,10 @@ class ResourceActionViewModel {
     "unit_price",
     "total_price",
   ];
+  static const List<String> proceedResourceActionTypeList = [
+    "creation",
+    "sale",
+    "internal_usage",
+    "waste",
+  ];
 }

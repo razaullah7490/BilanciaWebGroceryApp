@@ -6,7 +6,6 @@ import 'package:grocery/Presentation/resources/routes/routes_names.dart';
 import 'package:grocery/Presentation/resources/size.dart';
 import 'package:grocery/Presentation/resources/sized_box.dart';
 import 'package:grocery/Presentation/resources/text_styles.dart';
-
 import '../../../../../../Domain/models/inventory/proceed_resource_action_model.dart';
 import '../../../../../common/delete_item_dialogue.dart';
 import '../../../../../common/snack_bar_widget.dart';
@@ -61,26 +60,31 @@ class ProceedResourceActionDetailContainer extends StatelessWidget {
                   AppStrings.resourceText, model.resource.toString()),
             ],
           ),
-          editDeleteIcons(
-            onTapEdit: () {
-              // final args = ProcessedResourceActionModel(
-              //   processedresourceActionId: model.processedresourceActionId,
-              //   processedresourceActionName: model.processedresourceActionName,
-              //   quantity: model.quantity,
-              //   money: model.money,
-              //   priceCounter: model.priceCounter,
-              //   resource: model.resource,
-              //   isForInternalUsage: model.isForInternalUsage,
-              // );
-              Navigator.pushNamed(
-                context,
-                RoutesNames.editProceedResourceActionsScreen,
-                //arguments: args,
-              );
-            },
-            onTapDelete: () => deleteProceedResourceActionDialogue(context),
-          ),
+          deleteButton(context),
         ],
+      ),
+    );
+  }
+
+  GestureDetector deleteButton(BuildContext context) {
+    return GestureDetector(
+      onTap: () => deleteProceedResourceActionDialogue(context),
+      behavior: HitTestBehavior.opaque,
+      child: Container(
+        padding:
+            const EdgeInsets.symmetric(horizontal: AppSize.p8, vertical: 7).r,
+        decoration: BoxDecoration(
+          color: AppColors.editDeleteFillColor,
+          border: Border.all(
+            color: AppColors.editDeleteBorderColor,
+          ),
+          borderRadius: BorderRadius.circular(8.r),
+        ),
+        child: Icon(
+          Icons.delete,
+          color: Colors.red.shade400,
+          size: AppSize.editDeleteIconSize.r,
+        ),
       ),
     );
   }
@@ -120,19 +124,27 @@ class ProceedResourceActionDetailContainer extends StatelessWidget {
         barrierColor: AppColors.deleteDialogueBarrierColor,
         context: context,
         builder: (BuildContext context) {
-          return DeleteItemDialogue(
-            text: AppStrings.processedResourceActionText,
-            onDeleteButtonTap: () {
-              context
-                  .read<ProceedResourceActionCubit>()
-                  .deletProceedResourceAction(model.processedresourceActionId);
-              Navigator.of(context).pop();
-              SnackBarWidget.buildSnackBar(
-                context,
-                AppStrings.proceedResourceActionDeleteSuccessText,
-                AppColors.greenColor,
-                Icons.check,
-                true,
+          return BlocBuilder<ProceedResourceActionCubit,
+              ProceedResourceActionState>(
+            builder: (context, state) {
+              return DeleteItemDialogue(
+                text: AppStrings.processedResourceActionText,
+                onDeleteButtonTap: () async {
+                  context
+                      .read<ProceedResourceActionCubit>()
+                      .deletProceedResourceAction(
+                          model.processedresourceActionId);
+                  Navigator.of(context).pop();
+                  Navigator.pushReplacementNamed(
+                      context, RoutesNames.proceedResourceActionsScreen);
+                  SnackBarWidget.buildSnackBar(
+                    context,
+                    AppStrings.proceedResourceActionDeleteSuccessText,
+                    AppColors.greenColor,
+                    Icons.check,
+                    true,
+                  );
+                },
               );
             },
           );

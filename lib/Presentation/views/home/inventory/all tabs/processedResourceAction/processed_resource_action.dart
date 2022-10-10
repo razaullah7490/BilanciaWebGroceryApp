@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:grocery/Presentation/views/home/inventory/all%20tabs/components/proceed_resource_action_detail_container.dart';
+import 'package:grocery/Presentation/views/home/inventory/all%20tabs/components/proceed_resource_detail_container.dart';
 import 'package:grocery/Presentation/views/home/inventory/all%20tabs/processedResourceAction/bloc/proceed_resource_action_cubit.dart';
-
 import '../../../../../common/add_item_button.dart';
 import '../../../../../common/app_bar.dart';
 import '../../../../../common/data_not_available_text.dart';
+import '../../../../../common/loading_indicator.dart';
 import '../../../../../resources/app_strings.dart';
 import '../../../../../resources/routes/routes_names.dart';
 import '../../../../../resources/sized_box.dart';
@@ -21,6 +22,14 @@ class ProcessedResourceActionScreen extends StatefulWidget {
 class _ProcessedResourceActionScreenState
     extends State<ProcessedResourceActionScreen> {
   @override
+  void initState() {
+    Future.wait([
+      context.read<ProceedResourceActionCubit>().getProceedResourceAction(),
+    ]);
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: const CustomAppBar(
@@ -32,12 +41,24 @@ class _ProcessedResourceActionScreenState
           addItemButtonWidget(
             context: context,
             text: AppStrings.addNewText,
-            onTap: () => Navigator.pushNamed(
-                context, RoutesNames.addProceedResourceActionsScreen),
+            onTap: () {
+              final args = ProceedResourceData(
+                id: 0,
+                name: "",
+                isInventoryAction: true,
+              );
+
+              Navigator.pushNamed(
+                  context, RoutesNames.addProceedResourceActionsScreen,
+                  arguments: args);
+            },
           ),
           CustomSizedBox.height(25),
           BlocBuilder<ProceedResourceActionCubit, ProceedResourceActionState>(
               builder: (context, state) {
+            if (state.status == ProceedResourceActionEnum.loading) {
+              return LoadingIndicator.loadingExpanded();
+            }
             return state.resourceActionModel.isEmpty
                 ? DataNotAvailableText.withExpanded(
                     AppStrings.noProceedResourceActionAddedText,

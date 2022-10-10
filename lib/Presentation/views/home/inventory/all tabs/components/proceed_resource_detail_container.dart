@@ -10,13 +10,24 @@ import 'package:grocery/Presentation/resources/border_radius.dart';
 import 'package:grocery/Presentation/resources/colors_palette.dart';
 import 'package:grocery/Presentation/resources/routes/routes_names.dart';
 import 'package:grocery/Presentation/resources/sized_box.dart';
-
 import '../../../../../../Domain/models/inventory/proceed_resource_model.dart';
 import '../../../../../common/snack_bar_widget.dart';
 import '../../../../../resources/app_strings.dart';
 import '../../../../../resources/size.dart';
 import '../../../../../resources/text_styles.dart';
 import '../proceedResource/bloc/proceed_resource_cubit.dart';
+
+class ProceedResourceData {
+  int id;
+  String name;
+  bool isInventoryAction;
+
+  ProceedResourceData({
+    required this.id,
+    required this.name,
+    required this.isInventoryAction,
+  });
+}
 
 class ProceedResourceDetailContainer extends StatelessWidget {
   final ProceedResourcesModel model;
@@ -27,98 +38,113 @@ class ProceedResourceDetailContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(
-        horizontal: AppSize.p18,
-        vertical: AppSize.p15,
-      ).r,
-      margin: const EdgeInsets.symmetric(
-        vertical: AppSize.m8,
-        horizontal: AppSize.m8,
-      ).r,
-      decoration: BoxDecoration(
-        color: AppColors.containerColor,
-        border: Border.all(
-          color: AppColors.containerBorderColor,
-          width: 1.w,
+    return GestureDetector(
+      onTap: () {
+        final args = ProceedResourceData(
+          id: model.id!,
+          name: model.name!,
+          isInventoryAction: false,
+        );
+        Navigator.pushNamed(
+          context,
+          RoutesNames.addProceedResourceActionsScreen,
+          arguments: args,
+        );
+      },
+      behavior: HitTestBehavior.opaque,
+      child: Container(
+        padding: const EdgeInsets.symmetric(
+          horizontal: AppSize.p18,
+          vertical: AppSize.p15,
+        ).r,
+        margin: const EdgeInsets.symmetric(
+          vertical: AppSize.m8,
+          horizontal: AppSize.m8,
+        ).r,
+        decoration: BoxDecoration(
+          color: AppColors.containerColor,
+          border: Border.all(
+            color: AppColors.containerBorderColor,
+            width: 1.w,
+          ),
+          borderRadius:
+              BorderRadius.circular(AppBorderRadius.allDetailContainerRadius.r),
         ),
-        borderRadius:
-            BorderRadius.circular(AppBorderRadius.allDetailContainerRadius.r),
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              CustomSizedBox.height(5),
-              titleText(model.name.toString()),
-              CustomSizedBox.height(5),
-              subTitleText("${AppStrings.aliquotaIVAText} :",
-                  model.ivaAliquota.toString()),
-              subTitleText(
-                  "${AppStrings.categoryText} :", model.category.toString()),
-              subTitleText("${AppStrings.quantityOnlyText} :",
-                  model.stockQuantity.toString()),
-              salePriceText(model.unitSalePrice.toString()),
-              subTitleText("${AppStrings.weightTypeText} :",
-                  model.weightType.toString()),
-              CustomSizedBox.height(3),
-              model.isDeleted == true
-                  ? Padding(
-                      padding: const EdgeInsets.only(top: AppSize.p6).r,
-                      child: Text(AppStrings.proceedResourceDeleteInText,
-                          style: Styles.segoeUI(
-                            AppSize.text10.sp,
-                            AppColors.redColor2,
-                          )),
-                    )
-                  : Container()
-            ],
-          ),
-          editDeleteIcons(
-            onTapEdit: () {
-              final args = ProceedResourcesModel(
-                id: model.id,
-                name: model.name,
-                ivaAliquota: model.ivaAliquota,
-                ivaType: model.ivaType,
-                stockQuantity: model.stockQuantity,
-                stockQuantityThreshold: model.stockQuantityThreshold,
-                measureUnit: model.measureUnit,
-                barcode: model.barcode,
-                plu: model.plu,
-                shelfLife: model.shelfLife,
-                unitSalePrice: model.unitSalePrice,
-                revenuePercentage: model.revenuePercentage,
-                category: model.category,
-                isActive: model.isActive,
-                tare: model.tare,
-                weightType: model.weightType,
-                ingredient: model.ingredient,
-                expirationDate: model.expirationDate.toString(),
-                packagingDate: model.packagingDate.toString(),
-                threshold1: model.threshold1,
-                threshold2: model.threshold2,
-                price1: model.price1,
-                price2: model.price2,
-                isDeleted: model.isDeleted,
-                unitPurchasePrice: model.unitPurchasePrice,
-                traceability: model.traceability,
-                traceabilityId: model.traceabilityId,
-                assignedTo: model.assignedTo,
-                flgConfig: model.flgConfig,
-                image: model.image,
-                business: model.business,
-                madeWith: model.madeWith,
-              );
-              Navigator.pushNamed(
-                  context, RoutesNames.editProceedResourceScreen,
-                  arguments: args);
-            },
-            onTapDelete: () => deleteProceedResourceDialogue(context),
-          ),
-        ],
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                CustomSizedBox.height(5),
+                titleText(model.name.toString()),
+                CustomSizedBox.height(5),
+                subTitleText("${AppStrings.aliquotaIVAText} :",
+                    model.ivaAliquota.toString()),
+                subTitleText(
+                    "${AppStrings.categoryText} :", model.category.toString()),
+                subTitleText("${AppStrings.quantityOnlyText} :",
+                    model.stockQuantity.toString()),
+                salePriceText(model.unitSalePrice.toString()),
+                subTitleText("${AppStrings.weightTypeText} :",
+                    model.weightType.toString()),
+                CustomSizedBox.height(3),
+                model.isDeleted == true
+                    ? Padding(
+                        padding: const EdgeInsets.only(top: AppSize.p6).r,
+                        child: Text(AppStrings.proceedResourceDeleteInText,
+                            style: Styles.segoeUI(
+                              AppSize.text10.sp,
+                              AppColors.redColor2,
+                            )),
+                      )
+                    : Container()
+              ],
+            ),
+            editDeleteIcons(
+              onTapEdit: () {
+                final args = ProceedResourcesModel(
+                  id: model.id,
+                  name: model.name,
+                  ivaAliquota: model.ivaAliquota,
+                  ivaType: model.ivaType,
+                  stockQuantity: model.stockQuantity,
+                  stockQuantityThreshold: model.stockQuantityThreshold,
+                  measureUnit: model.measureUnit,
+                  barcode: model.barcode,
+                  plu: model.plu,
+                  shelfLife: model.shelfLife,
+                  unitSalePrice: model.unitSalePrice,
+                  revenuePercentage: model.revenuePercentage,
+                  category: model.category,
+                  isActive: model.isActive,
+                  tare: model.tare,
+                  weightType: model.weightType,
+                  ingredient: model.ingredient,
+                  expirationDate: model.expirationDate.toString(),
+                  packagingDate: model.packagingDate.toString(),
+                  threshold1: model.threshold1,
+                  threshold2: model.threshold2,
+                  price1: model.price1,
+                  price2: model.price2,
+                  isDeleted: model.isDeleted,
+                  unitPurchasePrice: model.unitPurchasePrice,
+                  traceability: model.traceability,
+                  traceabilityId: model.traceabilityId,
+                  assignedTo: model.assignedTo,
+                  flgConfig: model.flgConfig,
+                  image: model.image,
+                  business: model.business,
+                  madeWith: model.madeWith,
+                );
+                Navigator.pushNamed(
+                    context, RoutesNames.editProceedResourceScreen,
+                    arguments: args);
+              },
+              onTapDelete: () => deleteProceedResourceDialogue(context),
+            ),
+          ],
+        ),
       ),
     );
   }

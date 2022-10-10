@@ -18,6 +18,7 @@ import 'package:grocery/Presentation/views/home/dashboard/notifications/notifica
 import 'package:grocery/Presentation/views/home/inventory/all%20tabs/category/category_screen.dart';
 import 'package:grocery/Presentation/views/home/inventory/all%20tabs/category/products_associated_category.dart';
 import 'package:grocery/Presentation/views/home/inventory/all%20tabs/components/category_detail_container.dart';
+import 'package:grocery/Presentation/views/home/inventory/all%20tabs/components/proceed_resource_detail_container.dart';
 import 'package:grocery/Presentation/views/home/inventory/all%20tabs/components/product_detail_container.dart';
 import 'package:grocery/Presentation/views/home/inventory/all%20tabs/proceedResource/addEditDeleteProceedResource/add_proceed_resource.dart';
 import 'package:grocery/Presentation/views/home/inventory/all%20tabs/proceedResource/addEditDeleteProceedResource/edit_proceed_resource.dart';
@@ -271,9 +272,11 @@ Route<dynamic> generateRoute(RouteSettings routeSettings) {
       );
 
     case RoutesNames.addProceedResourceActionsScreen:
+      final ProceedResourceData args =
+          routeSettings.arguments as ProceedResourceData;
       return PageTransition(
         type: PageTransitionType.topToBottom,
-        child: const AddProceedResourceActionScreen(),
+        child: AddProceedResourceActionScreen(model: args),
         settings: routeSettings,
       );
 
