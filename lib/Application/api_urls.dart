@@ -15,4 +15,6 @@ class ApiUrls {
   static const String userUrl = "$baseUrl/auth/user";
   static const String proceedResourceUrl =
       "$baseUrl/manager/processed-resource/";
+  static const String changePasswordUrl = "$baseUrl/auth/change-password/";
+  static const String logoutUrl = "$baseUrl/auth/logout";
 }

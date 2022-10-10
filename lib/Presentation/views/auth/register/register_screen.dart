@@ -1,10 +1,6 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:grocery/Data/repository/auth/registration_repository.dart';
-import 'package:grocery/Data/services/auth/registration_service.dart';
 import 'package:grocery/Presentation/common/custom_button.dart';
 import 'package:grocery/Presentation/common/custom_text_field.dart';
 import 'package:grocery/Presentation/common/loading_indicator.dart';

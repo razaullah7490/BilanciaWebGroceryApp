@@ -314,4 +314,7 @@ class AppStrings {
       "Proceed Resource Action Updated Successfully";
   static const String proceedResourceActionDeleteSuccessText =
       "Proceed Resource Action Deleted Successfully";
+  static const String errorOccuredText =
+      "An error occured, Please try again!!!";
+  static const String logoutText = "Logout Successfully";
 }

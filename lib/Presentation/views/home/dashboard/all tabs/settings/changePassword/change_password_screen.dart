@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:grocery/Data/services/auth/change_password.dart';
 import 'package:grocery/Presentation/common/app_bar.dart';
 import 'package:grocery/Presentation/common/custom_button.dart';
 import 'package:grocery/Presentation/common/custom_text_field.dart';
@@ -8,6 +10,9 @@ import 'package:grocery/Presentation/resources/app_strings.dart';
 import 'package:grocery/Presentation/resources/colors_palette.dart';
 import 'package:grocery/Presentation/resources/sized_box.dart';
 import 'package:grocery/Presentation/resources/text_styles.dart';
+import 'package:grocery/Presentation/views/home/dashboard/all%20tabs/settings/changePassword/Bloc/change_password_cubit.dart';
+import '../../../../../../../Data/errors/custom_error.dart';
+import '../../../../../../common/loading_indicator.dart';
 import '../../../../../../resources/size.dart';
 
 class ChangePasswordScreen extends StatefulWidget {
@@ -38,10 +43,9 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
               CustomSizedBox.height(30),
               textFields(),
               CustomSizedBox.height(50),
-              CustomButton(
-                text: AppStrings.updateText,
-                onTap: () {
-                  if (formKey.currentState!.validate()) {
+              BlocListener<ChangePasswordCubit, ChangePasswordState>(
+                listener: (context, state) {
+                  if (state.status == ChangePasswordEnum.success) {
                     Navigator.of(context).pop();
                     SnackBarWidget.buildSnackBar(
                       context,
@@ -51,8 +55,41 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                       true,
                     );
                   }
+                  if (state.error != const CustomError(error: '')) {
+                    SnackBarWidget.buildSnackBar(
+                      context,
+                      state.error.error,
+                      AppColors.redColor,
+                      Icons.close,
+                      true,
+                    );
+                  }
                 },
+                child: BlocBuilder<ChangePasswordCubit, ChangePasswordState>(
+                  builder: (context, state) {
+                    if (state.status == ChangePasswordEnum.loading) {
+                      return LoadingIndicator.loading();
+                    }
+
+                    return CustomButton(
+                      text: AppStrings.updateText,
+                      onTap: () async {
+                        if (formKey.currentState!.validate()) {
+                          Map<String, dynamic> map = {
+                            "old_password": currentPasswordController.text,
+                            "new_password": confirmNewPasswordController.text,
+                          };
+
+                          context
+                              .read<ChangePasswordCubit>()
+                              .changePassword(map);
+                        }
+                      },
+                    );
+                  },
+                ),
               ),
+              CustomSizedBox.height(10),
             ],
           ),
         ),
@@ -96,6 +133,8 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
             validator: (v) {
               if (v!.trim().isEmpty) {
                 return AppStrings.provideNewPasswordText;
+              } else if (v.length < 6) {
+                return AppStrings.passwordLengthText;
               } else {
                 return null;
               }

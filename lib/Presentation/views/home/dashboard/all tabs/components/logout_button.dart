@@ -5,19 +5,21 @@ import 'package:grocery/Presentation/resources/colors_palette.dart';
 import 'package:grocery/Presentation/resources/size.dart';
 import 'package:grocery/Presentation/resources/sized_box.dart';
 import 'package:grocery/Presentation/resources/text_styles.dart';
-import 'package:grocery/Presentation/views/home/dashboard/all%20tabs/settings/setting_view_model.dart';
 
-class SettingComponentsContainer extends StatelessWidget {
-  final SettingGridModel model;
-  const SettingComponentsContainer({
+import '../../../../../resources/app_strings.dart';
+import '../../../../../resources/assets.dart';
+
+class LogoutButton extends StatelessWidget {
+  final VoidCallback onTap;
+  const LogoutButton({
+    required this.onTap,
     super.key,
-    required this.model,
   });
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => Navigator.pushNamed(context, model.onTap),
+      onTap: onTap,
       behavior: HitTestBehavior.opaque,
       child: Container(
         padding: const EdgeInsets.symmetric(
@@ -26,10 +28,10 @@ class SettingComponentsContainer extends StatelessWidget {
         ).r,
         margin: const EdgeInsets.symmetric(vertical: AppSize.m10).r,
         decoration: BoxDecoration(
-          color: model.backgroundColor,
+          color: AppColors.addProductContainerColor,
           borderRadius: BorderRadius.circular(
               AppBorderRadius.notificationchildContainerRadius.r),
-          border: Border.all(color: model.borderColor, width: 1.w),
+          border: Border.all(color: AppColors.logoutborderColor, width: 1.w),
         ),
         child: Row(
           children: [
@@ -37,20 +39,20 @@ class SettingComponentsContainer extends StatelessWidget {
               width: 60.w,
               height: 60.w,
               decoration: BoxDecoration(
-                color: model.iconColor,
+                color: AppColors.logoutborderColor,
                 borderRadius: BorderRadius.circular(
                     AppBorderRadius.appBarContainerBorderRadius.r),
               ),
               child: Center(
                   child: Image.asset(
-                model.imageUrl,
+                Assets.logout,
                 width: 24.w,
                 height: 24.w,
               )),
             ),
             CustomSizedBox.width(20),
             Text(
-              model.name,
+              AppStrings.logOutText,
               style: Styles.circularStdBook(
                 AppSize.text17.sp,
                 AppColors.containerTextColor,

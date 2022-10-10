@@ -3,9 +3,7 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:grocery/Data/repository/auth/user_repository.dart';
 import 'package:grocery/Domain/models/auth/user_model.dart';
-
 import '../../../../../../../../Data/errors/custom_error.dart';
-
 part 'user_state.dart';
 
 class UserCubit extends Cubit<UserState> {
@@ -38,5 +36,26 @@ class UserCubit extends Cubit<UserState> {
       log("Cubit error $e");
       return [];
     }
+  }
+
+  Future<bool> editUser(map) async {
+    emit(state.copyWith(
+      status: UserEnum.loading,
+      error: const CustomError(error: ""),
+    ));
+    try {
+      var res = await repo.editUser(map);
+      emit(state.copyWith(
+        status: UserEnum.success,
+        error: const CustomError(error: ""),
+      ));
+      return res;
+    } on CustomError catch (e) {
+      emit(state.copyWith(
+        status: UserEnum.error,
+        error: CustomError(error: e.toString()),
+      ));
+    }
+    return false;
   }
 }

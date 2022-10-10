@@ -30,14 +30,14 @@ class SettingViewModel {
       borderColor: AppColors.notificationborderColor,
       onTap: RoutesNames.notificationSettingScreen,
     ),
-    SettingGridModel(
-      imageUrl: Assets.logout,
-      name: AppStrings.logOutText,
-      backgroundColor: AppColors.addProductContainerColor,
-      iconColor: AppColors.logoutborderColor,
-      borderColor: AppColors.logoutborderColor,
-      onTap: "",
-    ),
+    // SettingGridModel(
+    //   imageUrl: Assets.logout,
+    //   name: AppStrings.logOutText,
+    //   backgroundColor: AppColors.addProductContainerColor,
+    //   iconColor: AppColors.logoutborderColor,
+    //   borderColor: AppColors.logoutborderColor,
+    //   onTap: "",
+    // ),
   ];
 }
 

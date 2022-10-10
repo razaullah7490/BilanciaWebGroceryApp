@@ -25,4 +25,37 @@ class AppPrefs {
     var userEmail = _prefs.getString(AppPrefsKeys.userEmail) ?? "";
     return userEmail;
   }
+
+  static Future<void> setUserFirstName(String firstName) async {
+    SharedPreferences _prefs = await SharedPreferences.getInstance();
+    await _prefs.setString(AppPrefsKeys.userFirstName, firstName);
+  }
+
+  static Future<String> getUserFirstName() async {
+    SharedPreferences _prefs = await SharedPreferences.getInstance();
+    var firstName = _prefs.getString(AppPrefsKeys.userFirstName) ?? "";
+    return firstName;
+  }
+
+  static Future<void> setUserLastName(String lastName) async {
+    SharedPreferences _prefs = await SharedPreferences.getInstance();
+    await _prefs.setString(AppPrefsKeys.userLastName, lastName);
+  }
+
+  static Future<String> getUserLastName() async {
+    SharedPreferences _prefs = await SharedPreferences.getInstance();
+    var lastName = _prefs.getString(AppPrefsKeys.userLastName) ?? "";
+    return lastName;
+  }
+
+  static Future<void> setUserId(String id) async {
+    SharedPreferences _prefs = await SharedPreferences.getInstance();
+    await _prefs.setString(AppPrefsKeys.userId, id);
+  }
+
+  static Future<String> getUserId() async {
+    SharedPreferences _prefs = await SharedPreferences.getInstance();
+    var id = _prefs.getString(AppPrefsKeys.userId) ?? "";
+    return id;
+  }
 }

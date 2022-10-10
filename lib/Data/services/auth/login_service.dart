@@ -13,9 +13,12 @@ class LoginService {
       log("testing ${res.statusCode}");
       if (res.statusCode == 200) {
         log("Login Token : ${data["token"].toString()}");
-        log("User ${data['user']['email']}");
-        AppPrefs.setLoginToken(data['token'].toString());
-        AppPrefs.setUserEmail(data['user']['email'].toString());
+        log("User $data");
+        await AppPrefs.setLoginToken(data['token'].toString());
+        await AppPrefs.setUserId(data['user']['id'].toString());
+        await AppPrefs.setUserEmail(data['user']['email'].toString());
+        await AppPrefs.setUserFirstName(data['user']['first_name'].toString());
+        await AppPrefs.setUserLastName(data['user']['last_name'].toString());
         return true;
       }
       throw httpErrorHandler(data['non_field_errors'][0]);

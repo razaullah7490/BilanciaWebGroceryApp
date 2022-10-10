@@ -1,4 +1,4 @@
-// ignore_for_file: depend_on_referenced_packages
+// ignore_for_file: depend_on_referenced_packages, unused_local_variable
 import 'dart:convert';
 import 'dart:developer';
 import 'package:grocery/Application/Prefs/app_prefs.dart';
@@ -30,6 +30,27 @@ class UserServices {
       list.add(newData);
 
       return list;
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<bool> editUser(map) async {
+    var token = await AppPrefs.getLoginToken();
+    try {
+      var res = await http.put(
+        Uri.parse(ApiUrls.userUrl),
+        body: map,
+        headers: {
+          "Authorization": "Token $token",
+        },
+      );
+      log("testing ${res.statusCode}");
+      log("Data ${res.body}");
+      if (res.statusCode != 200) {
+        throw httpErrorHandler("no data");
+      }
+      return true;
     } catch (e) {
       rethrow;
     }

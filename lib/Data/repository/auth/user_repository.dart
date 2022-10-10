@@ -16,4 +16,13 @@ class UserRepository {
       throw CustomError(error: e.toString());
     }
   }
+
+  Future<bool> editUser(map) async {
+    try {
+      var res = await userServices.editUser(map);
+      return res;
+    } catch (e) {
+      throw CustomError(error: e.toString());
+    }
+  }
 }
