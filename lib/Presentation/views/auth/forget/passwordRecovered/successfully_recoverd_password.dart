@@ -4,11 +4,10 @@ import 'package:grocery/Presentation/common/custom_button.dart';
 import 'package:grocery/Presentation/resources/app_strings.dart';
 import 'package:grocery/Presentation/resources/assets.dart';
 import 'package:grocery/Presentation/resources/colors_palette.dart';
-import 'package:grocery/Presentation/resources/routes/routes_names.dart';
-import 'package:grocery/Presentation/resources/size.dart';
 import 'package:grocery/Presentation/resources/sized_box.dart';
 import 'package:grocery/Presentation/resources/text_styles.dart';
 import 'package:grocery/Presentation/views/auth/common/screen_pattern.dart';
+import 'package:grocery/Presentation/views/auth/login/login_screen.dart';
 
 class SuccessfullyRecoveredPasswordScreen extends StatefulWidget {
   const SuccessfullyRecoveredPasswordScreen({super.key});
@@ -35,7 +34,10 @@ class _SuccessfullyRecoveredPasswordScreenState
           CustomButton(
             text: AppStrings.loginText,
             onTap: () {
-              Navigator.pushReplacementNamed(context, RoutesNames.loginScreen);
+              Navigator.pushAndRemoveUntil(
+                  context,
+                  MaterialPageRoute(builder: (context) => const LoginScreen()),
+                  (Route<dynamic> route) => false);
             },
           ),
         ],

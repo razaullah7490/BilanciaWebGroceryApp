@@ -14,12 +14,14 @@ import 'package:grocery/Presentation/common/loading_indicator.dart';
 import 'package:grocery/Presentation/common/snack_bar_widget.dart';
 import 'package:grocery/Presentation/resources/app_strings.dart';
 import 'package:grocery/Presentation/resources/colors_palette.dart';
+import 'package:grocery/Presentation/resources/routes/navigation.dart';
 import 'package:grocery/Presentation/resources/routes/routes_names.dart';
 import 'package:grocery/Presentation/resources/sized_box.dart';
 import 'package:grocery/Presentation/resources/text_styles.dart';
 import 'package:grocery/Presentation/views/home/inventory/all%20tabs/category/bloc/category_cubit.dart';
 import 'package:grocery/Presentation/views/home/inventory/all%20tabs/category/category_view_model.dart';
 import 'package:grocery/Presentation/views/home/inventory/all%20tabs/resources/bloc/resource_cubit.dart';
+import 'package:grocery/Presentation/views/home/inventory/all%20tabs/resources/resources_screen.dart';
 import 'package:image_picker/image_picker.dart';
 import '../../../../../../../Data/errors/custom_error.dart';
 import '../../../../../../common/custom_bottom_sheet.dart';
@@ -146,8 +148,9 @@ class _AddResourceScreenState extends State<AddResourceScreen> {
                       true,
                     );
                     Navigator.of(context).pop();
-                    Navigator.pushReplacementNamed(
-                        context, RoutesNames.resourcesScreen);
+                    Navigate.toReplace(context, const ResorucesScreen());
+                    // Navigator.pushReplacementNamed(
+                    //     context, RoutesNames.resourcesScreen);
                   }
                   if (state.error != const CustomError(error: '')) {
                     SnackBarWidget.buildSnackBar(
@@ -206,6 +209,7 @@ class _AddResourceScreenState extends State<AddResourceScreen> {
                           "traceability_id":
                               traceabilityIdController.text.toString(),
                         };
+
                         var formData = FormData.fromMap(map);
 
                         if (image != null) {

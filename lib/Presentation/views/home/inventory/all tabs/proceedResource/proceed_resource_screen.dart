@@ -9,10 +9,12 @@ import 'package:grocery/Presentation/resources/app_strings.dart';
 import 'package:grocery/Presentation/resources/routes/routes_names.dart';
 import 'package:grocery/Presentation/resources/sized_box.dart';
 import 'package:grocery/Presentation/views/home/inventory/all%20tabs/components/proceed_resource_detail_container.dart';
+import 'package:grocery/Presentation/views/home/inventory/all%20tabs/proceedResource/addEditDeleteProceedResource/add_proceed_resource.dart';
 import 'package:grocery/Presentation/views/home/inventory/all%20tabs/proceedResource/bloc/proceed_resource_cubit.dart';
 
 import '../../../../../common/data_not_available_text.dart';
 import '../../../../../common/loading_indicator.dart';
+import '../../../../../resources/routes/navigation.dart';
 
 class ProceedResourceScreen extends StatefulWidget {
   const ProceedResourceScreen({super.key});
@@ -43,8 +45,9 @@ class _ProceedResourceScreenState extends State<ProceedResourceScreen> {
           addItemButtonWidget(
             context: context,
             text: AppStrings.addProccedText,
-            onTap: () => Navigator.pushNamed(
-                context, RoutesNames.addProceedResourceScreen),
+            onTap: () => Navigate.to(context, const AddProceedResource()),
+            // Navigator.pushNamed(
+            //     context, RoutesNames.addProceedResourceScreen),
           ),
           CustomSizedBox.height(25),
           BlocBuilder<ProceedResourceCubit, ProceedResourceState>(

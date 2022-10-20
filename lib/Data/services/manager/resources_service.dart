@@ -96,8 +96,8 @@ class ResourcesService {
           "Authorization": "Token $token",
         },
       );
-      log("testing ${res.statusCode}");
-      var data = json.decode(res.body);
+      //log("testing ${res.statusCode}");
+      //var data = json.decode(res.body);
       if (res.statusCode != 204) {
         throw httpErrorHandler("no data");
       }

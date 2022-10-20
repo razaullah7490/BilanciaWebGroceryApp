@@ -5,4 +5,5 @@ class AppPrefsKeys {
   static const String userFirstName = "user_first_name";
   static const String userLastName = "user_last_name";
   static const String userId = "user_id";
+  static const String userPassword = "user_password";
 }

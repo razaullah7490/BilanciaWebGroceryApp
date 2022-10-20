@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:grocery/Presentation/resources/routes/navigation.dart';
 import 'package:grocery/Presentation/views/home/inventory/all%20tabs/components/proceed_resource_action_detail_container.dart';
 import 'package:grocery/Presentation/views/home/inventory/all%20tabs/components/proceed_resource_detail_container.dart';
+import 'package:grocery/Presentation/views/home/inventory/all%20tabs/processedResourceAction/addEditDeleteProceedAction/add_proceed_resource_action.dart';
 import 'package:grocery/Presentation/views/home/inventory/all%20tabs/processedResourceAction/bloc/proceed_resource_action_cubit.dart';
 import '../../../../../common/add_item_button.dart';
 import '../../../../../common/app_bar.dart';
@@ -48,9 +50,11 @@ class _ProcessedResourceActionScreenState
                 isInventoryAction: true,
               );
 
-              Navigator.pushNamed(
-                  context, RoutesNames.addProceedResourceActionsScreen,
-                  arguments: args);
+              Navigate.to(context, AddProceedResourceActionScreen(model: args));
+
+              // Navigator.pushNamed(
+              //     context, RoutesNames.addProceedResourceActionsScreen,
+              //     arguments: args);
             },
           ),
           CustomSizedBox.height(25),

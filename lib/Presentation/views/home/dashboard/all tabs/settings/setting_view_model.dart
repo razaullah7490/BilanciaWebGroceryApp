@@ -3,6 +3,9 @@ import 'package:grocery/Presentation/resources/app_strings.dart';
 import 'package:grocery/Presentation/resources/assets.dart';
 import 'package:grocery/Presentation/resources/colors_palette.dart';
 import 'package:grocery/Presentation/resources/routes/routes_names.dart';
+import 'package:grocery/Presentation/views/home/dashboard/all%20tabs/settings/changePassword/change_password_screen.dart';
+import 'package:grocery/Presentation/views/home/dashboard/all%20tabs/settings/editProfile/edit_profile_screen.dart';
+import 'package:grocery/Presentation/views/home/dashboard/all%20tabs/settings/notificationSetting/notification_setting.dart';
 
 class SettingViewModel {
   static List<SettingGridModel> settingList = [
@@ -12,7 +15,7 @@ class SettingViewModel {
       backgroundColor: AppColors.dashContainerBack1,
       iconColor: AppColors.dashContainerIcon1,
       borderColor: AppColors.dashContainerBorder1,
-      onTap: RoutesNames.editProfileScreen,
+      onTap: const EditProfileScreen(),
     ),
     SettingGridModel(
       imageUrl: Assets.changePassword,
@@ -20,7 +23,7 @@ class SettingViewModel {
       backgroundColor: AppColors.changePasswordFillColor,
       iconColor: AppColors.dashContainerBack5,
       borderColor: AppColors.changePasswordborderColor,
-      onTap: RoutesNames.changePasswordScreen,
+      onTap: const ChangePasswordScreen(),
     ),
     SettingGridModel(
       imageUrl: Assets.settingNotification,
@@ -28,7 +31,7 @@ class SettingViewModel {
       backgroundColor: AppColors.notificationFillColor,
       iconColor: AppColors.notificationborderColor,
       borderColor: AppColors.notificationborderColor,
-      onTap: RoutesNames.notificationSettingScreen,
+      onTap: const NotificationSettingScreen(),
     ),
     // SettingGridModel(
     //   imageUrl: Assets.logout,
@@ -47,7 +50,7 @@ class SettingGridModel {
   Color backgroundColor;
   Color iconColor;
   Color borderColor;
-  String onTap;
+  Widget onTap;
 
   SettingGridModel({
     required this.imageUrl,

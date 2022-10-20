@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "696234262014",
+    "project_id": "bilancia-web",
+    "storage_bucket": "bilancia-web.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:696234262014:android:6c55efda40a6f62ed914af",
+        "android_client_info": {
+          "package_name": "com.example.grocery"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "696234262014-l8qe0phjdvqpv1lahuuc0083lo9bk3p1.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.grocery",
+            "certificate_hash": "19581be41abe9ea224a3f75b41ea8a80bb375fe1"
+          }
+        },
+        {
+          "client_id": "696234262014-ok4ja70svgh7tr34sr377g95e1akdh3o.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCq6ubgv59NNtgNNPkvx7IHAFG6CR2jDOw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "696234262014-ok4ja70svgh7tr34sr377g95e1akdh3o.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -6,9 +6,11 @@ import 'package:grocery/Presentation/common/add_item_button.dart';
 import 'package:grocery/Presentation/common/app_bar.dart';
 import 'package:grocery/Presentation/common/data_not_available_text.dart';
 import 'package:grocery/Presentation/resources/app_strings.dart';
+import 'package:grocery/Presentation/resources/routes/navigation.dart';
 import 'package:grocery/Presentation/resources/routes/routes_names.dart';
 import 'package:grocery/Presentation/resources/size.dart';
 import 'package:grocery/Presentation/resources/sized_box.dart';
+import 'package:grocery/Presentation/views/home/inventory/all%20tabs/products/addEditDeleteProduct/add_product.dart';
 import 'package:grocery/Presentation/views/home/inventory/all%20tabs/products/bloc/product_cubit.dart';
 import 'package:grocery/Presentation/views/home/inventory/all%20tabs/components/product_detail_container.dart';
 
@@ -32,8 +34,8 @@ class _ProductsScreenState extends State<ProductsScreen> {
           addItemButtonWidget(
             context: context,
             text: AppStrings.addProductText,
-            onTap: () =>
-                Navigator.pushNamed(context, RoutesNames.addProductsScreen),
+            onTap: () => Navigate.to(context, const AddProductScreen()),
+            //Navigator.pushNamed(context, RoutesNames.addProductsScreen),
             // onTap: () async {
             //   dynamic map = {
             //     'insight_type': 'Hi',

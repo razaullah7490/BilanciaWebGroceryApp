@@ -7,10 +7,12 @@ import 'package:grocery/Presentation/common/add_item_button.dart';
 import 'package:grocery/Presentation/common/app_bar.dart';
 import 'package:grocery/Presentation/common/data_not_available_text.dart';
 import 'package:grocery/Presentation/resources/app_strings.dart';
+import 'package:grocery/Presentation/resources/routes/navigation.dart';
 import 'package:grocery/Presentation/resources/routes/routes_names.dart';
 import 'package:grocery/Presentation/resources/sized_box.dart';
 import 'package:grocery/Presentation/views/home/inventory/all%20tabs/components/product_detail_container.dart';
 import 'package:grocery/Presentation/views/home/inventory/all%20tabs/components/resource_action_detail.dart';
+import 'package:grocery/Presentation/views/home/inventory/all%20tabs/resourceActions/addEditDeleteResourceActions/add_resource_action.dart';
 import 'package:grocery/Presentation/views/home/inventory/all%20tabs/resourceActions/bloc/resource_action_cubit.dart';
 import '../../../../../common/loading_indicator.dart';
 import '../../../../../resources/colors_palette.dart';
@@ -57,11 +59,14 @@ class _ResourceActionsScreenState extends State<ResourceActionsScreen> {
                     isInventoryAction: true,
                   );
 
-                  Navigator.pushNamed(
-                    context,
-                    RoutesNames.addResourceActionsScreen,
-                    arguments: args,
-                  );
+                  Navigate.to(
+                      context, AddResourceActionScreen(resourceData: args));
+
+                  // Navigator.pushNamed(
+                  //   context,
+                  //   RoutesNames.addResourceActionsScreen,
+                  //   arguments: args,
+                  // );
                 },
               ),
             ],

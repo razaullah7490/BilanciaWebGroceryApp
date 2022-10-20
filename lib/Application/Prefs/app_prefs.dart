@@ -58,4 +58,15 @@ class AppPrefs {
     var id = _prefs.getString(AppPrefsKeys.userId) ?? "";
     return id;
   }
+
+  static Future<void> setUserPassword(String password) async {
+    SharedPreferences _prefs = await SharedPreferences.getInstance();
+    await _prefs.setString(AppPrefsKeys.userPassword, password);
+  }
+
+  static Future<String> getUserPassword() async {
+    SharedPreferences _prefs = await SharedPreferences.getInstance();
+    var password = _prefs.getString(AppPrefsKeys.userPassword) ?? "";
+    return password;
+  }
 }

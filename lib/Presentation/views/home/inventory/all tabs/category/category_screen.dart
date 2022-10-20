@@ -8,10 +8,12 @@ import 'package:grocery/Presentation/common/data_not_available_text.dart';
 import 'package:grocery/Presentation/resources/app_strings.dart';
 import 'package:grocery/Presentation/resources/routes/routes_names.dart';
 import 'package:grocery/Presentation/resources/sized_box.dart';
+import 'package:grocery/Presentation/views/home/inventory/all%20tabs/category/addEditDeleteCategory/add_category.dart';
 import 'package:grocery/Presentation/views/home/inventory/all%20tabs/category/bloc/category_cubit.dart';
 import 'package:grocery/Presentation/views/home/inventory/all%20tabs/components/category_detail_container.dart';
 
 import '../../../../../common/loading_indicator.dart';
+import '../../../../../resources/routes/navigation.dart';
 
 class CategoryScreen extends StatefulWidget {
   const CategoryScreen({super.key});
@@ -41,8 +43,8 @@ class _CategoryScreenState extends State<CategoryScreen> {
           addItemButtonWidget(
             context: context,
             text: AppStrings.addCategoryText,
-            onTap: () =>
-                Navigator.pushNamed(context, RoutesNames.addCategoryScreen),
+            onTap: () => Navigate.to(context, const AddCategoryScreen()),
+            //    Navigator.pushNamed(context, RoutesNames.addCategoryScreen),
           ),
           CustomSizedBox.height(15),
           BlocBuilder<CategoryCubit, CategoryState>(builder: ((context, state) {

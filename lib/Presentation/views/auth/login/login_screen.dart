@@ -1,11 +1,18 @@
+// ignore_for_file: use_build_context_synchronously
+
+import 'dart:developer';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:grocery/Application/Prefs/app_prefs.dart';
+import 'package:grocery/Application/Prefs/prefs_keys.dart';
 import 'package:grocery/Presentation/common/custom_button.dart';
 import 'package:grocery/Presentation/common/custom_text_field.dart';
 import 'package:grocery/Presentation/resources/app_strings.dart';
 import 'package:grocery/Presentation/resources/assets.dart';
 import 'package:grocery/Presentation/resources/colors_palette.dart';
+import 'package:grocery/Presentation/resources/routes/navigation.dart';
 import 'package:grocery/Presentation/resources/routes/routes_names.dart';
 import 'package:grocery/Presentation/resources/size.dart';
 import 'package:grocery/Presentation/resources/sized_box.dart';
@@ -13,11 +20,15 @@ import 'package:grocery/Presentation/resources/text_styles.dart';
 import 'package:grocery/Presentation/state%20management/bloc/set_bool_cubit.dart';
 import 'package:grocery/Presentation/views/auth/common/bottom_container.dart';
 import 'package:grocery/Presentation/views/auth/common/bottom_text.dart';
-
+import 'package:grocery/Presentation/views/home/dashboard/dashboard.dart';
 import '../../../../Data/errors/custom_error.dart';
 import '../../../common/loading_indicator.dart';
 import '../../../common/snack_bar_widget.dart';
+import '../forget/forgetPassword/forget_password.dart';
+import '../forget/setNewPassword/set_new_password.dart';
+import '../register/register_screen.dart';
 import 'bloc/login_cubit.dart';
+import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -28,8 +39,37 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   final emailController = TextEditingController();
-  final passwordContoller = TextEditingController();
+  final passwordController = TextEditingController();
   final formKey = GlobalKey<FormState>();
+  FirebaseDynamicLinks dynamicLinks = FirebaseDynamicLinks.instance;
+
+  checkUserLogin() async {
+    var token = await AppPrefs.getLoginToken();
+    log("Init Token $token");
+    if (token.isNotEmpty) {
+      Navigate.toReplace(context, const DashBoardScreen());
+    }
+  }
+
+  initDynamicLink() async {
+    dynamicLinks.onLink.listen((event) {
+      try {
+        log("Initial Link ${event.link}");
+        Navigate.toReplace(context, SetNewPasswordScreen(initialLink: event));
+      } catch (e) {
+        log("eeeeee $e");
+      }
+    }).onError((e) {
+      log("login screen Error $e");
+    });
+  }
+
+  @override
+  void initState() {
+    checkUserLogin();
+    initDynamicLink();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -59,8 +99,8 @@ class _LoginScreenState extends State<LoginScreen> {
                               Icons.check,
                               true,
                             );
-                            Navigator.pushReplacementNamed(
-                                context, RoutesNames.dashboardScreen);
+                            Navigate.toReplace(
+                                context, const DashBoardScreen());
                           }
                           if (state.error != const CustomError(error: '')) {
                             SnackBarWidget.buildSnackBar(
@@ -84,9 +124,14 @@ class _LoginScreenState extends State<LoginScreen> {
                               if (formKey.currentState!.validate()) {
                                 Map<String, dynamic> map = {
                                   "username": emailController.text,
-                                  "password": passwordContoller.text,
+                                  "password": passwordController.text,
                                 };
-                                await context.read<LoginCubit>().login(map);
+                                var isValid =
+                                    await context.read<LoginCubit>().login(map);
+                                if (isValid == true) {
+                                  await AppPrefs.setUserPassword(
+                                      passwordController.text);
+                                }
                               }
                             },
                           );
@@ -94,13 +139,15 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                       CustomSizedBox.height(30),
                       bottomText(
-                          context,
-                          AppStrings.createNewAccountText,
-                          AppStrings.signUpText,
-                          () => Navigator.pushNamed(
-                                context,
-                                RoutesNames.registerScreen,
-                              )),
+                        context,
+                        AppStrings.createNewAccountText,
+                        AppStrings.signUpText,
+                        () => Navigate.to(context, const RegisterScreen()),
+                        // Navigator.pushNamed(
+                        //   context,
+                        //   RoutesNames.registerScreen,
+                        // ),
+                      ),
                     ],
                   ),
                 ),
@@ -159,7 +206,7 @@ class _LoginScreenState extends State<LoginScreen> {
               child: BlocBuilder<SetBoolCubit, bool>(
                 builder: (context, state) {
                   return CustomTextField(
-                    controller: passwordContoller,
+                    controller: passwordController,
                     labelText: AppStrings.passwordText,
                     hintText: AppStrings.enterPasswordText,
                     suffixIcon: IconButton(
@@ -198,8 +245,8 @@ class _LoginScreenState extends State<LoginScreen> {
       alignment: Alignment.bottomRight,
       child: GestureDetector(
         behavior: HitTestBehavior.opaque,
-        onTap: () =>
-            Navigator.pushNamed(context, RoutesNames.forgetPasswordScreen),
+        onTap: () => Navigate.to(context, const ForgetPasswordScreen()),
+        // Navigator.pushNamed(context, RoutesNames.forgetPasswordScreen),
         child: Text(
           "${AppStrings.forgetPasswordText}?",
           style:

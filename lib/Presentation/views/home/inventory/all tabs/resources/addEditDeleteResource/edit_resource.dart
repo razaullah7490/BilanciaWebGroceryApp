@@ -30,12 +30,14 @@ import '../../../../../../common/date_picker.dart';
 import '../../../../../../common/image_picker.dart';
 import '../../../../../../common/loading_indicator.dart';
 import '../../../../../../resources/border_radius.dart';
+import '../../../../../../resources/routes/navigation.dart';
 import '../../../../../../resources/routes/routes_names.dart';
 import '../../../../../../resources/size.dart';
 import '../../../../../../state management/bloc/ingredientsBloc/ingredients_cubit.dart';
 import '../../../../../../state management/bloc/ivaBloc/manager_iva_cubit.dart';
 import '../../category/bloc/category_cubit.dart';
 import '../../proceedResource/proceed_resource_view_model.dart';
+import '../resources_screen.dart';
 
 class EditResourceScreen extends StatefulWidget {
   final ResourcesModel model;
@@ -182,8 +184,9 @@ class _EditResourceScreenState extends State<EditResourceScreen> {
                       true,
                     );
                     Navigator.of(context).pop();
-                    Navigator.pushReplacementNamed(
-                        context, RoutesNames.resourcesScreen);
+                    Navigate.toReplace(context, const ResorucesScreen());
+                    // Navigator.pushReplacementNamed(
+                    //     context, RoutesNames.resourcesScreen);
                   }
 
                   if (state.error != const CustomError(error: '')) {
@@ -222,7 +225,7 @@ class _EditResourceScreenState extends State<EditResourceScreen> {
                           "plu": pluController.text.toString(),
                           "tare": tareController.text.toString(),
                           "weight_type": weightType.toString(),
-                          //"ingredient": ingrediant.toString(),
+                          "ingredient": ingrediant.toString(),
                           "revenue_percentage":
                               revenuePercentageController.text.toString(),
                           "expiration_date": expirationDate != null
@@ -244,6 +247,8 @@ class _EditResourceScreenState extends State<EditResourceScreen> {
                               traceabilityIdController.text.toString(),
                         };
 
+                        log("map $map");
+
                         var formData = FormData.fromMap(map);
                         if (image != null) {
                           formData.files.add(MapEntry("image",
@@ -253,7 +258,7 @@ class _EditResourceScreenState extends State<EditResourceScreen> {
                         await context
                             .read<ResourceCubit>()
                             .editResource(widget.model.resourceId, formData);
-                        log("map $formData");
+                        log("formData $formData");
                       }
                     },
                   );

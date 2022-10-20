@@ -18,6 +18,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../../../../../common/loading_indicator.dart';
 import '../../../../../common/snack_bar_widget.dart';
 import '../../../../../resources/colors_palette.dart';
+import '../../../../auth/login/login_screen.dart';
 
 class SettingScreen extends StatefulWidget {
   const SettingScreen({super.key});
@@ -59,10 +60,15 @@ class _SettingScreenState extends State<SettingScreen> {
                           Icons.check,
                           true,
                         );
-                        Navigator.of(context).pushNamedAndRemoveUntil(
-                          RoutesNames.loginScreen,
-                          (Route<dynamic> route) => false,
-                        );
+                        Navigator.of(context).pushAndRemoveUntil(
+                            MaterialPageRoute(
+                                builder: (context) => const LoginScreen()),
+                            (Route<dynamic> route) => false);
+
+                        // Navigator.of(context).pushNamedAndRemoveUntil(
+                        //   RoutesNames.loginScreen,
+                        //   (Route<dynamic> route) => false,
+                        // );
                       }
 
                       if (state.status == LogoutEnum.error) {

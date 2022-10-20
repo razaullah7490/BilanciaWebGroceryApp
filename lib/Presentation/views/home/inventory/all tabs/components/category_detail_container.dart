@@ -9,11 +9,15 @@ import 'package:grocery/Presentation/common/snack_bar_widget.dart';
 import 'package:grocery/Presentation/resources/app_strings.dart';
 import 'package:grocery/Presentation/resources/border_radius.dart';
 import 'package:grocery/Presentation/resources/colors_palette.dart';
+import 'package:grocery/Presentation/resources/routes/navigation.dart';
 import 'package:grocery/Presentation/resources/routes/routes_names.dart';
 import 'package:grocery/Presentation/resources/size.dart';
 import 'package:grocery/Presentation/resources/sized_box.dart';
 import 'package:grocery/Presentation/resources/text_styles.dart';
+import 'package:grocery/Presentation/views/home/inventory/all%20tabs/category/addEditDeleteCategory/edit_category.dart';
 import 'package:grocery/Presentation/views/home/inventory/all%20tabs/category/bloc/category_cubit.dart';
+import 'package:grocery/Presentation/views/home/inventory/all%20tabs/category/category_screen.dart';
+import 'package:grocery/Presentation/views/home/inventory/all%20tabs/category/products_associated_category.dart';
 import '../../../../../../Domain/models/inventory/category_model.dart';
 
 class CategoryData {
@@ -40,11 +44,12 @@ class CategoryDetailContainer extends StatelessWidget {
           id: model.categoryId,
           name: model.categoryName,
         );
-        Navigator.pushNamed(
-          context,
-          RoutesNames.productsAssociatedToCategoryScreen,
-          arguments: args,
-        );
+        Navigate.to(context, ProductsAssociatedToCategory(categoryData: args));
+        // Navigator.pushNamed(
+        //   context,
+        //   RoutesNames.productsAssociatedToCategoryScreen,
+        //   arguments: args,
+        // );
       },
       behavior: HitTestBehavior.opaque,
       child: Container(
@@ -68,28 +73,30 @@ class CategoryDetailContainer extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                CustomSizedBox.height(5),
-                titleText(model.categoryName),
-                CustomSizedBox.height(5),
-                subTitleText("${AppStrings.aliquotaIVAText}: ",
-                    model.aliquotaIva.toString()),
-                subTitleText("${AppStrings.ivaTypeText}: ", model.ivaType),
-                CustomSizedBox.height(10),
-                statusContainer(),
-                model.isDeleted == true
-                    ? Padding(
-                        padding: const EdgeInsets.only(top: AppSize.p6).r,
-                        child: Text(AppStrings.categoryDeleteInText,
-                            style: Styles.segoeUI(
-                              AppSize.text10.sp,
-                              AppColors.redColor2,
-                            )),
-                      )
-                    : Container()
-              ],
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  CustomSizedBox.height(5),
+                  titleText(model.categoryName),
+                  CustomSizedBox.height(5),
+                  subTitleText("${AppStrings.aliquotaIVAText}: ",
+                      model.aliquotaIva.toString()),
+                  subTitleText("${AppStrings.ivaTypeText}: ", model.ivaType),
+                  CustomSizedBox.height(10),
+                  statusContainer(),
+                  model.isDeleted == true
+                      ? Padding(
+                          padding: const EdgeInsets.only(top: AppSize.p6).r,
+                          child: Text(AppStrings.categoryDeleteInText,
+                              style: Styles.segoeUI(
+                                AppSize.text10.sp,
+                                AppColors.redColor2,
+                              )),
+                        )
+                      : Container()
+                ],
+              ),
             ),
             editDeleteIcons(
               onTapEdit: () {
@@ -110,11 +117,12 @@ class CategoryDetailContainer extends StatelessWidget {
                   tipoSconto: model.tipoSconto,
                   battSingola: model.battSingola,
                 );
-                Navigator.pushNamed(
-                  context,
-                  RoutesNames.editCategoryScreen,
-                  arguments: args,
-                );
+                Navigate.to(context, EditCategoryScreen(model: args));
+                // Navigator.pushNamed(
+                //   context,
+                //   RoutesNames.editCategoryScreen,
+                //   arguments: args,
+                // );
               },
               onTapDelete: () => deleteCategoryDialogue(context),
             ),
@@ -159,6 +167,8 @@ class CategoryDetailContainer extends StatelessWidget {
   Widget titleText(String text) {
     return Text(
       text,
+      maxLines: 2,
+      overflow: TextOverflow.ellipsis,
       style: Styles.circularStdMedium(
         AppSize.text15.sp,
         AppColors.containerTextColor,
@@ -179,8 +189,9 @@ class CategoryDetailContainer extends StatelessWidget {
                     .read<CategoryCubit>()
                     .deleteCategory(model.categoryId);
                 Navigator.of(context).pop();
-                Navigator.pushReplacementNamed(
-                    context, RoutesNames.categoryScreen);
+                Navigate.toReplace(context, const CategoryScreen());
+                // Navigator.pushReplacementNamed(
+                //     context, RoutesNames.categoryScreen);
                 SnackBarWidget.buildSnackBar(
                   context,
                   AppStrings.categoryDeleteSuccessText,

@@ -9,10 +9,12 @@ import 'package:grocery/Presentation/common/snack_bar_widget.dart';
 import 'package:grocery/Presentation/resources/app_strings.dart';
 import 'package:grocery/Presentation/resources/border_radius.dart';
 import 'package:grocery/Presentation/resources/colors_palette.dart';
+import 'package:grocery/Presentation/resources/routes/navigation.dart';
 import 'package:grocery/Presentation/resources/routes/routes_names.dart';
 import 'package:grocery/Presentation/resources/size.dart';
 import 'package:grocery/Presentation/resources/sized_box.dart';
 import 'package:grocery/Presentation/resources/text_styles.dart';
+import 'package:grocery/Presentation/views/home/inventory/all%20tabs/resourceActions/resource_actions_screen.dart';
 import '../../../../../../Domain/models/inventory/resource_action_model.dart';
 import '../resourceActions/bloc/resource_action_cubit.dart';
 
@@ -135,8 +137,9 @@ class ResourceActionDetailContainer extends StatelessWidget {
                       .deleteResourceAction(model.resourceActionId);
 
                   Navigator.of(context).pop();
-                  Navigator.pushReplacementNamed(
-                      context, RoutesNames.resourceActionsScreen);
+                  Navigate.toReplace(context, const ResourceActionsScreen());
+                  // Navigator.pushReplacementNamed(
+                  //     context, RoutesNames.resourceActionsScreen);
 
                   SnackBarWidget.buildSnackBar(
                     context,

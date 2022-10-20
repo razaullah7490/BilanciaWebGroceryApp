@@ -13,6 +13,7 @@ import 'package:grocery/Presentation/common/custom_button.dart';
 import 'package:grocery/Presentation/common/custom_drop_down.dart';
 import 'package:grocery/Presentation/common/snack_bar_widget.dart';
 import 'package:grocery/Presentation/resources/sized_box.dart';
+import 'package:grocery/Presentation/views/home/inventory/all%20tabs/proceedResource/proceed_resource_screen.dart';
 import 'package:grocery/Presentation/views/home/inventory/all%20tabs/proceedResource/proceed_resource_view_model.dart';
 import 'package:image_picker/image_picker.dart';
 import '../../../../../../../Data/errors/custom_error.dart';
@@ -28,6 +29,7 @@ import '../../../../../../common/loading_indicator.dart';
 import '../../../../../../resources/app_strings.dart';
 import '../../../../../../resources/border_radius.dart';
 import '../../../../../../resources/colors_palette.dart';
+import '../../../../../../resources/routes/navigation.dart';
 import '../../../../../../resources/routes/routes_names.dart';
 import '../../../../../../resources/size.dart';
 import '../../../../../../resources/text_styles.dart';
@@ -100,6 +102,8 @@ class _AddProceedResourceState extends State<AddProceedResource> {
     price2Controller.text = "0";
     traceability = ProcessedResourceViewModel.traceabilityList[0].toString();
     traceabilityIdController.text = "0";
+    unitPurchasePriceController.text = "0";
+    revenuePercentageController.text = "0";
     //allListWidget();
     super.initState();
   }
@@ -138,8 +142,9 @@ class _AddProceedResourceState extends State<AddProceedResource> {
                       true,
                     );
                     Navigator.of(context).pop();
-                    Navigator.pushReplacementNamed(
-                        context, RoutesNames.proceedResourceScreen);
+                    Navigate.to(context, const ProceedResourceScreen());
+                    // Navigator.pushReplacementNamed(
+                    //     context, RoutesNames.proceedResourceScreen);
                   }
 
                   if (state.error != const CustomError(error: '')) {
@@ -440,11 +445,11 @@ class _AddProceedResourceState extends State<AddProceedResource> {
             textInputType: TextInputType.number,
             isLabel: false,
             validator: (v) {
-              // if (v!.trim().isEmpty) {
-              //   return AppStrings.provideUnitPurchasePriceText;
-              // } else {
-              //   return null;
-              // }
+              if (v!.trim().isEmpty) {
+                return AppStrings.provideUnitPurchasePriceText;
+              } else {
+                return null;
+              }
             },
           ),
           CustomSizedBox.height(20),
@@ -458,11 +463,11 @@ class _AddProceedResourceState extends State<AddProceedResource> {
             textInputType: TextInputType.number,
             isLabel: false,
             validator: (v) {
-              // if (v!.trim().isEmpty) {
-              //   return AppStrings.provideRevenuePercentageText;
-              // } else {
-              //   return null;
-              // }
+              if (v!.trim().isEmpty) {
+                return AppStrings.provideRevenuePercentageText;
+              } else {
+                return null;
+              }
             },
           ),
           CustomSizedBox.height(20),

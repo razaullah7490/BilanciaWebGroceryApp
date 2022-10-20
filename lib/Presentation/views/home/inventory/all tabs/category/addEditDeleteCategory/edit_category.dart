@@ -15,12 +15,14 @@ import 'package:grocery/Presentation/resources/size.dart';
 import 'package:grocery/Presentation/resources/sized_box.dart';
 import 'package:grocery/Presentation/resources/text_styles.dart';
 import 'package:grocery/Presentation/views/home/inventory/all%20tabs/category/bloc/category_cubit.dart';
+import 'package:grocery/Presentation/views/home/inventory/all%20tabs/category/category_screen.dart';
 import 'package:grocery/Presentation/views/home/inventory/all%20tabs/category/category_view_model.dart';
 
 import '../../../../../../../Data/errors/custom_error.dart';
 import '../../../../../../../Domain/models/inventory/category_model.dart';
 import '../../../../../../common/loading_indicator.dart';
 import '../../../../../../resources/border_radius.dart';
+import '../../../../../../resources/routes/navigation.dart';
 import '../../../../../../resources/routes/routes_names.dart';
 import '../../../../../../state management/bloc/ivaBloc/manager_iva_cubit.dart';
 
@@ -96,8 +98,9 @@ class _EditCategoryScreenState extends State<EditCategoryScreen> {
                       true,
                     );
                     Navigator.of(context).pop();
-                    Navigator.pushReplacementNamed(
-                        context, RoutesNames.categoryScreen);
+                    Navigate.toReplace(context, const CategoryScreen());
+                    // Navigator.pushReplacementNamed(
+                    //     context, RoutesNames.categoryScreen);
                   }
                   if (state.error != const CustomError(error: '')) {
                     SnackBarWidget.buildSnackBar(

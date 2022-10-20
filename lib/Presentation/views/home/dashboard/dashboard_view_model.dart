@@ -3,6 +3,11 @@ import 'package:grocery/Presentation/resources/app_strings.dart';
 import 'package:grocery/Presentation/resources/assets.dart';
 import 'package:grocery/Presentation/resources/colors_palette.dart';
 import 'package:grocery/Presentation/resources/routes/routes_names.dart';
+import 'package:grocery/Presentation/views/home/dashboard/all%20tabs/manageProducts/manage_products.dart';
+import 'package:grocery/Presentation/views/home/dashboard/all%20tabs/settings/setting_screen.dart';
+import 'package:grocery/Presentation/views/home/inventory/inventory.dart';
+
+import 'all tabs/webPortal/web_portal_screen.dart';
 
 class DashBoardViewModel {
   static List<String> dashImages = [
@@ -18,7 +23,7 @@ class DashBoardViewModel {
       backgroundColor: AppColors.dashContainerBack1,
       iconColor: AppColors.dashContainerIcon1,
       borderColor: AppColors.dashContainerBorder1,
-      onTap: RoutesNames.manageProductsScreen,
+      onTap: const ManageProductsScreen(),
     ),
     DashBoardGridModel(
       imageUrl: Assets.inventory,
@@ -26,7 +31,7 @@ class DashBoardViewModel {
       backgroundColor: AppColors.dashContainerBack2,
       iconColor: AppColors.dashContainerIcon2,
       borderColor: AppColors.dashContainerBorder2,
-      onTap: RoutesNames.inventoryScreen,
+      onTap: const Inventory(),
     ),
     DashBoardGridModel(
       imageUrl: Assets.setting,
@@ -34,7 +39,7 @@ class DashBoardViewModel {
       backgroundColor: AppColors.dashContainerBack3,
       iconColor: AppColors.dashContainerIcon3,
       borderColor: AppColors.dashContainerBorder3,
-      onTap: RoutesNames.settingScreen,
+      onTap: const SettingScreen(),
     ),
     DashBoardGridModel(
       imageUrl: Assets.webPortal,
@@ -42,7 +47,7 @@ class DashBoardViewModel {
       backgroundColor: AppColors.dashContainerBack4,
       iconColor: AppColors.dashContainerIcon4,
       borderColor: AppColors.dashContainerBorder4,
-      onTap: "",
+      onTap: const WebPortalScreen(),
     ),
   ];
 }
@@ -53,7 +58,7 @@ class DashBoardGridModel {
   Color backgroundColor;
   Color iconColor;
   Color borderColor;
-  String onTap;
+  Widget onTap;
 
   DashBoardGridModel({
     required this.imageUrl,

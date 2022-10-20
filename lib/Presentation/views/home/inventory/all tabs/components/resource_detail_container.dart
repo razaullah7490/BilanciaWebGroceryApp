@@ -7,13 +7,16 @@ import 'package:grocery/Presentation/common/snack_bar_widget.dart';
 import 'package:grocery/Presentation/resources/app_strings.dart';
 import 'package:grocery/Presentation/resources/border_radius.dart';
 import 'package:grocery/Presentation/resources/colors_palette.dart';
+import 'package:grocery/Presentation/resources/routes/navigation.dart';
 import 'package:grocery/Presentation/resources/routes/routes_names.dart';
 import 'package:grocery/Presentation/resources/size.dart';
 import 'package:grocery/Presentation/resources/sized_box.dart';
 import 'package:grocery/Presentation/resources/text_styles.dart';
 import 'package:grocery/Presentation/views/home/inventory/all%20tabs/resources/bloc/resource_cubit.dart';
+import 'package:grocery/Presentation/views/home/inventory/all%20tabs/resources/resources_screen.dart';
 
 import '../../../../../../Domain/models/inventory/resources_model.dart';
+import '../resources/addEditDeleteResource/edit_resource.dart';
 
 class ResourceDetailContainer extends StatelessWidget {
   final ResourcesModel model;
@@ -45,31 +48,33 @@ class ResourceDetailContainer extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              CustomSizedBox.height(5),
-              titleText(model.resourceName),
-              CustomSizedBox.height(5),
-              subTitleText("${AppStrings.aliquotaIVAText} :",
-                  model.aliquotaIva.toString()),
-              subTitleText(
-                  "${AppStrings.categoryText} :", model.category.toString()),
-              subTitleText("${AppStrings.quantityOnlyText} :",
-                  model.stockQuantity.toString()),
-              CustomSizedBox.height(2),
-              salePriceText(model.unitSalePrice.toString()),
-              model.isDeleted == true
-                  ? Padding(
-                      padding: const EdgeInsets.only(top: AppSize.p6).r,
-                      child: Text(AppStrings.resourceDeleteInText,
-                          style: Styles.segoeUI(
-                            AppSize.text10.sp,
-                            AppColors.redColor2,
-                          )),
-                    )
-                  : Container()
-            ],
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                CustomSizedBox.height(5),
+                titleText(model.resourceName),
+                CustomSizedBox.height(5),
+                subTitleText("${AppStrings.aliquotaIVAText} :",
+                    model.aliquotaIva.toString()),
+                subTitleText(
+                    "${AppStrings.categoryText} :", model.category.toString()),
+                subTitleText("${AppStrings.quantityOnlyText} :",
+                    model.stockQuantity.toString()),
+                CustomSizedBox.height(2),
+                salePriceText(model.unitSalePrice.toString()),
+                model.isDeleted == true
+                    ? Padding(
+                        padding: const EdgeInsets.only(top: AppSize.p6).r,
+                        child: Text(AppStrings.resourceDeleteInText,
+                            style: Styles.segoeUI(
+                              AppSize.text10.sp,
+                              AppColors.redColor2,
+                            )),
+                      )
+                    : Container()
+              ],
+            ),
           ),
           editDeleteIcons(
             onTapEdit: () {
@@ -105,11 +110,12 @@ class ResourceDetailContainer extends StatelessWidget {
                 traceabilityId: model.traceabilityId,
               );
 
-              Navigator.pushNamed(
-                context,
-                RoutesNames.editResourceScreen,
-                arguments: args,
-              );
+              Navigate.to(context, EditResourceScreen(model: args));
+              // Navigator.pushNamed(
+              //   context,
+              //   RoutesNames.editResourceScreen,
+              //   arguments: args,
+              // );
             },
             onTapDelete: () => deleteResourceDialogue(context),
           ),
@@ -141,6 +147,8 @@ class ResourceDetailContainer extends StatelessWidget {
   Widget titleText(String text) {
     return Text(
       text,
+      maxLines: 2,
+      overflow: TextOverflow.ellipsis,
       style: Styles.circularStdMedium(
         AppSize.text15.sp,
         AppColors.containerTextColor,
@@ -159,8 +167,9 @@ class ResourceDetailContainer extends StatelessWidget {
               if (model.isDeleted != true) {
                 context.read<ResourceCubit>().deleteResource(model.resourceId);
                 Navigator.of(context).pop();
-                Navigator.pushReplacementNamed(
-                    context, RoutesNames.resourcesScreen);
+                Navigate.toReplace(context, const ResorucesScreen());
+                // Navigator.pushReplacementNamed(
+                //     context, RoutesNames.resourcesScreen);
                 SnackBarWidget.buildSnackBar(
                   context,
                   AppStrings.resourceDeleteSuccessText,

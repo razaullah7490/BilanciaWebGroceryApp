@@ -23,6 +23,7 @@ import '../../../../../../common/loading_indicator.dart';
 import '../../../../../../resources/app_strings.dart';
 import '../../../../../../resources/border_radius.dart';
 import '../../../../../../resources/colors_palette.dart';
+import '../../../../../../resources/routes/navigation.dart';
 import '../../../../../../resources/routes/routes_names.dart';
 import '../../../../../../resources/size.dart';
 import '../../../../../../resources/text_styles.dart';
@@ -32,6 +33,7 @@ import '../../category/bloc/category_cubit.dart';
 import '../../category/category_view_model.dart';
 import '../../resources/bloc/resource_cubit.dart';
 import '../bloc/proceed_resource_cubit.dart';
+import '../proceed_resource_screen.dart';
 
 class EditProceedResourceScreen extends StatefulWidget {
   final ProceedResourcesModel model;
@@ -173,8 +175,9 @@ class _EditProceedResourceScreenState extends State<EditProceedResourceScreen> {
                       true,
                     );
                     Navigator.of(context).pop();
-                    Navigator.pushReplacementNamed(
-                        context, RoutesNames.proceedResourceScreen);
+                    Navigate.toReplace(context, const ProceedResourceScreen());
+                    // Navigator.pushReplacementNamed(
+                    //     context, RoutesNames.proceedResourceScreen);
                   }
                   if (state.error != const CustomError(error: '')) {
                     SnackBarWidget.buildSnackBar(

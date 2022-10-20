@@ -279,6 +279,7 @@ class AppStrings {
       "Profile Updated Successfully";
   static const String passwordUpdatedSuccessText =
       "Password Updated Successfully";
+
   static const String pleaseSelectImageText = "Please select image";
   static const String productAddedSuccessText = "Product Added Successfully";
   static const String productUpdatedSuccessText =
@@ -317,4 +318,9 @@ class AppStrings {
   static const String errorOccuredText =
       "An error occured, Please try again!!!";
   static const String logoutText = "Logout Successfully";
+  static const String emailVerifiedText =
+      "Email Verified!\nPlease check you email address to reset your password";
+
+  static const String passwordChangedSuccessText =
+      "Password Changed Successfully";
 }

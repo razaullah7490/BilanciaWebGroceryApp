@@ -4,9 +4,11 @@ import 'package:grocery/Presentation/common/add_item_button.dart';
 import 'package:grocery/Presentation/common/app_bar.dart';
 import 'package:grocery/Presentation/common/data_not_available_text.dart';
 import 'package:grocery/Presentation/resources/app_strings.dart';
+import 'package:grocery/Presentation/resources/routes/navigation.dart';
 import 'package:grocery/Presentation/resources/routes/routes_names.dart';
 import 'package:grocery/Presentation/resources/sized_box.dart';
 import 'package:grocery/Presentation/views/home/inventory/all%20tabs/components/resource_detail_container.dart';
+import 'package:grocery/Presentation/views/home/inventory/all%20tabs/resources/addEditDeleteResource/add_resource.dart';
 import 'package:grocery/Presentation/views/home/inventory/all%20tabs/resources/bloc/resource_cubit.dart';
 
 import '../../../../../common/loading_indicator.dart';
@@ -39,8 +41,8 @@ class _ResorucesScreenState extends State<ResorucesScreen> {
           addItemButtonWidget(
             context: context,
             text: AppStrings.addResourceText,
-            onTap: () =>
-                Navigator.pushNamed(context, RoutesNames.addResourceScreen),
+            onTap: () => Navigate.to(context, const AddResourceScreen()),
+            //Navigator.pushNamed(context, RoutesNames.addResourceScreen),
           ),
           CustomSizedBox.height(25),
           BlocBuilder<ResourceCubit, ResourceState>(builder: (context, state) {

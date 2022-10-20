@@ -1,11 +1,16 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:grocery/Presentation/common/edit_delete_container.dart';
+import 'package:grocery/Presentation/resources/routes/navigation.dart';
 import 'package:grocery/Presentation/resources/routes/routes_names.dart';
 import 'package:grocery/Presentation/resources/size.dart';
 import 'package:grocery/Presentation/resources/sized_box.dart';
 import 'package:grocery/Presentation/resources/text_styles.dart';
+import 'package:grocery/Presentation/views/home/inventory/all%20tabs/processedResourceAction/addEditDeleteProceedAction/add_proceed_resource_action.dart';
+import 'package:grocery/Presentation/views/home/inventory/all%20tabs/processedResourceAction/processed_resource_action.dart';
 import '../../../../../../Domain/models/inventory/proceed_resource_action_model.dart';
 import '../../../../../common/delete_item_dialogue.dart';
 import '../../../../../common/snack_bar_widget.dart';
@@ -130,13 +135,16 @@ class ProceedResourceActionDetailContainer extends StatelessWidget {
               return DeleteItemDialogue(
                 text: AppStrings.processedResourceActionText,
                 onDeleteButtonTap: () async {
-                  context
+                  await context
                       .read<ProceedResourceActionCubit>()
                       .deletProceedResourceAction(
                           model.processedresourceActionId);
+
                   Navigator.of(context).pop();
-                  Navigator.pushReplacementNamed(
-                      context, RoutesNames.proceedResourceActionsScreen);
+                  Navigate.toReplace(
+                      context, const ProcessedResourceActionScreen());
+                  // Navigator.pushReplacementNamed(
+                  //     context, RoutesNames.proceedResourceActionsScreen);
                   SnackBarWidget.buildSnackBar(
                     context,
                     AppStrings.proceedResourceActionDeleteSuccessText,

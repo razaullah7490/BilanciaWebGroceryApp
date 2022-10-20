@@ -12,12 +12,14 @@ import 'package:grocery/Presentation/common/custom_text_field.dart';
 import 'package:grocery/Presentation/resources/app_strings.dart';
 import 'package:grocery/Presentation/resources/border_radius.dart';
 import 'package:grocery/Presentation/resources/colors_palette.dart';
+import 'package:grocery/Presentation/resources/routes/navigation.dart';
 import 'package:grocery/Presentation/resources/routes/routes_names.dart';
 import 'package:grocery/Presentation/resources/size.dart';
 import 'package:grocery/Presentation/resources/sized_box.dart';
 import 'package:grocery/Presentation/resources/text_styles.dart';
 import 'package:grocery/Presentation/views/home/inventory/all%20tabs/components/proceed_resource_detail_container.dart';
 import 'package:grocery/Presentation/views/home/inventory/all%20tabs/proceedResource/bloc/proceed_resource_cubit.dart';
+import 'package:grocery/Presentation/views/home/inventory/all%20tabs/processedResourceAction/processed_resource_action.dart';
 import 'package:grocery/Presentation/views/home/inventory/all%20tabs/resourceActions/resource_action_view_model.dart';
 import '../../../../../../../Data/errors/custom_error.dart';
 import '../../../../../../../Domain/models/inventory/proceed_resource_action_model.dart';
@@ -87,8 +89,10 @@ class _AddProceedResourceActionScreenState
                 if (state.status == ProceedResourceActionEnum.success) {
                   if (widget.model.isInventoryAction == true) {
                     Navigator.of(context).pop();
-                    Navigator.pushReplacementNamed(
-                        context, RoutesNames.proceedResourceActionsScreen);
+                    Navigate.toReplace(
+                        context, const ProcessedResourceActionScreen());
+                    // Navigator.pushReplacementNamed(
+                    //     context, RoutesNames.proceedResourceActionsScreen);
                     SnackBarWidget.buildSnackBar(
                       context,
                       AppStrings.proceedResourceActionAddedSuccessText,

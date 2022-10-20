@@ -8,8 +8,13 @@ import 'package:grocery/Presentation/common/delete_item_dialogue.dart';
 import 'package:grocery/Presentation/common/edit_delete_container.dart';
 import 'package:grocery/Presentation/resources/border_radius.dart';
 import 'package:grocery/Presentation/resources/colors_palette.dart';
+import 'package:grocery/Presentation/resources/routes/navigation.dart';
 import 'package:grocery/Presentation/resources/routes/routes_names.dart';
 import 'package:grocery/Presentation/resources/sized_box.dart';
+import 'package:grocery/Presentation/views/home/inventory/all%20tabs/proceedResource/addEditDeleteProceedResource/edit_proceed_resource.dart';
+import 'package:grocery/Presentation/views/home/inventory/all%20tabs/proceedResource/proceed_resource_screen.dart';
+import 'package:grocery/Presentation/views/home/inventory/all%20tabs/processedResourceAction/addEditDeleteProceedAction/add_proceed_resource_action.dart';
+import 'package:grocery/Presentation/views/home/inventory/all%20tabs/processedResourceAction/processed_resource_action.dart';
 import '../../../../../../Domain/models/inventory/proceed_resource_model.dart';
 import '../../../../../common/snack_bar_widget.dart';
 import '../../../../../resources/app_strings.dart';
@@ -45,11 +50,12 @@ class ProceedResourceDetailContainer extends StatelessWidget {
           name: model.name!,
           isInventoryAction: false,
         );
-        Navigator.pushNamed(
-          context,
-          RoutesNames.addProceedResourceActionsScreen,
-          arguments: args,
-        );
+        Navigate.to(context, AddProceedResourceActionScreen(model: args));
+        // Navigator.pushNamed(
+        //   context,
+        //   RoutesNames.addProceedResourceActionsScreen,
+        //   arguments: args,
+        // );
       },
       behavior: HitTestBehavior.opaque,
       child: Container(
@@ -137,9 +143,10 @@ class ProceedResourceDetailContainer extends StatelessWidget {
                   business: model.business,
                   madeWith: model.madeWith,
                 );
-                Navigator.pushNamed(
-                    context, RoutesNames.editProceedResourceScreen,
-                    arguments: args);
+                Navigate.to(context, EditProceedResourceScreen(model: args));
+                // Navigator.pushNamed(
+                //     context, RoutesNames.editProceedResourceScreen,
+                //     arguments: args);
               },
               onTapDelete: () => deleteProceedResourceDialogue(context),
             ),
@@ -193,8 +200,9 @@ class ProceedResourceDetailContainer extends StatelessWidget {
                     .deleteProceedResource(model.id);
 
                 Navigator.of(context).pop();
-                Navigator.pushReplacementNamed(
-                    context, RoutesNames.proceedResourceScreen);
+                Navigate.toReplace(context, const ProceedResourceScreen());
+                // Navigator.pushReplacementNamed(
+                //     context, RoutesNames.proceedResourceScreen);
                 SnackBarWidget.buildSnackBar(
                   context,
                   AppStrings.proceedResourceDeleteSuccessText,

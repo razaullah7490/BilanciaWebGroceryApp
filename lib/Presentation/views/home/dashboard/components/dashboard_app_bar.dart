@@ -11,7 +11,10 @@ import 'package:grocery/Presentation/resources/size.dart';
 import 'package:grocery/Presentation/resources/sized_box.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:grocery/Presentation/views/home/dashboard/dashboard_view_model.dart';
+import 'package:grocery/Presentation/views/home/dashboard/notifications/notifications_screen.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
+
+import '../../../../resources/routes/navigation.dart';
 
 class DashBoardLargeAppBar extends StatefulWidget {
   const DashBoardLargeAppBar({super.key});
@@ -71,8 +74,8 @@ class _DashBoardLargeAppBarState extends State<DashBoardLargeAppBar> {
             fit: BoxFit.fill,
           ),
           GestureDetector(
-            onTap: () =>
-                Navigator.pushNamed(context, RoutesNames.notificationScreen),
+            onTap: () => Navigate.to(context, const NotificationScreen()),
+            //Navigator.pushNamed(context, RoutesNames.notificationScreen),
             behavior: HitTestBehavior.opaque,
             child: Container(
               width: 42.w,

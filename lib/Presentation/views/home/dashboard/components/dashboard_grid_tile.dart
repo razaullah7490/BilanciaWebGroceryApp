@@ -6,6 +6,8 @@ import 'package:grocery/Presentation/resources/size.dart';
 import 'package:grocery/Presentation/resources/text_styles.dart';
 import 'package:grocery/Presentation/views/home/dashboard/dashboard_view_model.dart';
 
+import '../../../../resources/routes/navigation.dart';
+
 class DashBoardGridTile extends StatelessWidget {
   const DashBoardGridTile({super.key});
 
@@ -31,7 +33,8 @@ class DashBoardGridTile extends StatelessWidget {
   Widget buildGridContainer(
       BuildContext context, DashBoardGridModel singleData) {
     return GestureDetector(
-      onTap: () => Navigator.pushNamed(context, singleData.onTap),
+      onTap: () => Navigate.to(context, singleData.onTap),
+      //Navigator.pushNamed(context, singleData.onTap),
       behavior: HitTestBehavior.opaque,
       child: Container(
         margin: const EdgeInsets.symmetric(

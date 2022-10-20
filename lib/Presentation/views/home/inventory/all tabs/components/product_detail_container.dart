@@ -15,12 +15,14 @@ import 'package:grocery/Presentation/resources/app_strings.dart';
 import 'package:grocery/Presentation/resources/assets.dart';
 import 'package:grocery/Presentation/resources/border_radius.dart';
 import 'package:grocery/Presentation/resources/colors_palette.dart';
+import 'package:grocery/Presentation/resources/routes/navigation.dart';
 import 'package:grocery/Presentation/resources/routes/routes_names.dart';
 import 'package:grocery/Presentation/resources/size.dart';
 import 'package:grocery/Presentation/resources/sized_box.dart';
 import 'package:grocery/Presentation/resources/text_styles.dart';
 import 'package:grocery/Presentation/views/home/inventory/all%20tabs/components/pop_up_menu.dart';
 import 'package:grocery/Presentation/views/home/inventory/all%20tabs/resourceActions/addEditDeleteResourceActions/add_resource_action.dart';
+import 'package:grocery/Presentation/views/home/inventory/all%20tabs/resources/addEditDeleteResource/edit_resource.dart';
 
 import '../../../../../common/loading_indicator.dart';
 import '../resources/bloc/resource_cubit.dart';
@@ -53,11 +55,12 @@ class ProductDetailContainer extends StatelessWidget {
           name: model.resourceName,
           isInventoryAction: false,
         );
-        Navigator.pushNamed(
-          context,
-          RoutesNames.addResourceActionsScreen,
-          arguments: args,
-        );
+        Navigate.to(context, AddResourceActionScreen(resourceData: args));
+        // Navigator.pushNamed(
+        //   context,
+        //   RoutesNames.addResourceActionsScreen,
+        //   arguments: args,
+        // );
       },
       behavior: HitTestBehavior.opaque,
       child: Container(
@@ -81,64 +84,68 @@ class ProductDetailContainer extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Row(
-              children: [
-                model.image.isEmpty
-                    ? Container(
-                        width: 80.w,
-                        height: 77.w,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(12.r),
-                          border: Border.all(
-                            color: AppColors.secondaryColor,
-                            width: 1.w,
-                          ),
-                        ),
-                        child: Center(
-                          child: Image.asset(
-                            Assets.noImage,
-                            width: 45.w,
-                            height: 45.h,
-                            color: AppColors.primaryColor,
-                          ),
-                        ),
-                      )
-                    : CachedNetworkImage(
-                        imageUrl: model.image,
-                        imageBuilder: (context, imageProvider) => Container(
+            Expanded(
+              child: Row(
+                children: [
+                  model.image.isEmpty
+                      ? Container(
                           width: 80.w,
                           height: 77.w,
                           decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(
-                              AppBorderRadius.dashboardSliderBorderRadius,
-                            ),
-                            image: DecorationImage(
-                              image: imageProvider,
-                              fit: BoxFit.cover,
+                            borderRadius: BorderRadius.circular(12.r),
+                            border: Border.all(
+                              color: AppColors.secondaryColor,
+                              width: 1.w,
                             ),
                           ),
+                          child: Center(
+                            child: Image.asset(
+                              Assets.noImage,
+                              width: 45.w,
+                              height: 45.h,
+                              color: AppColors.primaryColor,
+                            ),
+                          ),
+                        )
+                      : CachedNetworkImage(
+                          imageUrl: model.image,
+                          imageBuilder: (context, imageProvider) => Container(
+                            width: 80.w,
+                            height: 77.w,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(
+                                AppBorderRadius.dashboardSliderBorderRadius,
+                              ),
+                              image: DecorationImage(
+                                image: imageProvider,
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                          ),
+                          placeholder: (context, url) =>
+                              LoadingIndicator.loading(),
+                          errorWidget: (context, url, error) => Icon(
+                            Icons.error,
+                            size: AppSize.icon28.r,
+                          ),
                         ),
-                        placeholder: (context, url) =>
-                            LoadingIndicator.loading(),
-                        errorWidget: (context, url, error) => Icon(
-                          Icons.error,
-                          size: AppSize.icon28.r,
-                        ),
-                      ),
-                CustomSizedBox.width(12),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    titleText(model.resourceName),
-                    CustomSizedBox.height(6),
-                    subTitleText(AppStrings.unitSalePriceText,
-                        model.unitSalePrice.toString()),
-                    CustomSizedBox.height(1),
-                    subTitleText(AppStrings.quantityOnlyText,
-                        model.stockQuantity.toString()),
-                  ],
-                ),
-              ],
+                  CustomSizedBox.width(12),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        titleText(model.resourceName),
+                        CustomSizedBox.height(6),
+                        subTitleText(AppStrings.unitSalePriceText,
+                            model.unitSalePrice.toString()),
+                        CustomSizedBox.height(1),
+                        subTitleText(AppStrings.quantityOnlyText,
+                            model.stockQuantity.toString()),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
             ),
 
             PopUpMenuWidget(
@@ -179,11 +186,12 @@ class ProductDetailContainer extends StatelessWidget {
                     traceabilityId: model.traceabilityId,
                   );
 
-                  Navigator.pushNamed(
-                    context,
-                    RoutesNames.editResourceScreen,
-                    arguments: args,
-                  );
+                  Navigate.to(context, EditResourceScreen(model: args));
+                  // Navigator.pushNamed(
+                  //   context,
+                  //   RoutesNames.editResourceScreen,
+                  //   arguments: args,
+                  // );
                 }
               },
             ),
@@ -224,6 +232,8 @@ class ProductDetailContainer extends StatelessWidget {
   Widget titleText(String text) {
     return Text(
       text,
+      maxLines: 2,
+      overflow: TextOverflow.ellipsis,
       style: Styles.circularStdMedium(
         AppSize.text15.sp,
         AppColors.containerTextColor,
