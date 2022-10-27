@@ -1,18 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:grocery/Presentation/common/app_bar.dart';
+import 'package:grocery/Presentation/common/extensions/media_query_extension.dart';
 import 'package:grocery/Presentation/resources/app_strings.dart';
 import 'package:grocery/Presentation/resources/border_radius.dart';
 import 'package:grocery/Presentation/resources/colors_palette.dart';
 import 'package:grocery/Presentation/resources/size.dart';
 import 'package:grocery/Presentation/resources/sized_box.dart';
 import 'package:grocery/Presentation/resources/text_styles.dart';
-import 'package:grocery/Presentation/views/home/inventory/all%20tabs/processedResourceAction/processed_resource_action.dart';
+import 'package:grocery/Presentation/views/home/inventory/all%20tabs/category/category_screen.dart';
 import 'package:grocery/Presentation/views/home/inventory/inventory_view_model.dart';
-
 import '../../../resources/assets.dart';
 import '../../../resources/routes/navigation.dart';
-import '../../../resources/routes/routes_names.dart';
 
 class Inventory extends StatelessWidget {
   const Inventory({super.key});
@@ -24,33 +23,35 @@ class Inventory extends StatelessWidget {
         title: AppStrings.inventoryText,
       ),
       body: SafeArea(
-        child: Column(
-          children: [
-            CustomSizedBox.height(15),
-            Expanded(
-              child: Column(
-                children: [
-                  GridView.builder(
-                    shrinkWrap: true,
-                    scrollDirection: Axis.vertical,
-                    physics: const BouncingScrollPhysics(),
-                    gridDelegate:
-                        const SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 2,
-                            crossAxisSpacing: 10,
-                            mainAxisSpacing: 25),
-                    itemCount: InventoryViewModel.inventoryList.length,
-                    itemBuilder: (context, index) {
-                      var singleData = InventoryViewModel.inventoryList[index];
-                      return buildGridContainer(context, singleData);
-                    },
-                  ),
-                  CustomSizedBox.height(22),
-                  proceedResourceGridContainer(context),
-                ],
-              ),
+        child: SizedBox(
+          height: MediaQueryValues(context).height,
+          width: MediaQueryValues(context).width,
+          child: SingleChildScrollView(
+            scrollDirection: Axis.vertical,
+            physics: const BouncingScrollPhysics(),
+            child: Column(
+              children: [
+                CustomSizedBox.height(15),
+                categoryGridContainer(context),
+                CustomSizedBox.height(20),
+                GridView.builder(
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2,
+                      crossAxisSpacing: 10,
+                      mainAxisSpacing: 25),
+                  itemCount: InventoryViewModel.inventoryList.length,
+                  itemBuilder: (context, index) {
+                    var singleData = InventoryViewModel.inventoryList[index];
+                    return buildGridContainer(context, singleData);
+                  },
+                ),
+                CustomSizedBox.height(20),
+        
+              ],
             ),
-          ],
+          ),
         ),
       ),
     );
@@ -62,7 +63,6 @@ class Inventory extends StatelessWidget {
   ) {
     return GestureDetector(
       onTap: () => Navigate.to(context, singleData.onTap),
-      //Navigator.pushNamed(context, singleData.onTap),
       behavior: HitTestBehavior.opaque,
       child: Container(
         margin: const EdgeInsets.symmetric(horizontal: 6).r,
@@ -106,29 +106,79 @@ class Inventory extends StatelessWidget {
     );
   }
 
-  Widget proceedResourceGridContainer(BuildContext context) {
+  // Widget proceedResourceGridContainer(BuildContext context) {
+  //   return GestureDetector(
+  //     onTap: () => Navigate.to(context, const ProcessedResourceActionScreen()),
+  //     behavior: HitTestBehavior.opaque,
+  //     child: Container(
+  //       margin: const EdgeInsets.symmetric(horizontal: 6).r,
+  //       padding: const EdgeInsets.symmetric(
+  //         horizontal: AppSize.p15,
+  //         vertical: AppSize.p35,
+  //       ).r,
+  //       decoration: BoxDecoration(
+  //         color: AppColors.dashContainerBack6,
+  //         borderRadius: BorderRadius.circular(
+  //           AppBorderRadius.dashboardGridContainerBorderRadius,
+  //         ).r,
+  //         border: Border.all(
+  //           color: AppColors.dashContainerBorder6,
+  //         ),
+  //       ),
+  //       child: Row(
+  //         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+  //         children: [
+  //           Container(
+  //             padding: const EdgeInsets.symmetric(
+  //               horizontal: AppSize.p18,
+  //               vertical: AppSize.p10,
+  //             ).r,
+  //             decoration: BoxDecoration(
+  //               color: AppColors.dashContainerIcon6,
+  //               borderRadius: BorderRadius.circular(
+  //                 AppBorderRadius.dashboardContainerBorderRadius,
+  //               ),
+  //             ),
+  //             child: Image.asset(
+  //               Assets.processedResourceAction,
+  //               width: 50.w,
+  //               height: 50.h,
+  //             ),
+  //           ),
+  //           Text(
+  //             AppStrings.processedResourceActionText,
+  //             textAlign: TextAlign.center,
+  //             style: Styles.circularStdBook(
+  //               AppSize.text14.sp,
+  //               AppColors.blackColor,
+  //             ),
+  //           ),
+  //         ],
+  //       ),
+  //     ),
+  //   );
+  // }
+
+  Widget categoryGridContainer(BuildContext context) {
     return GestureDetector(
-      onTap: () => Navigate.to(context, const ProcessedResourceActionScreen()),
-      // Navigator.pushNamed(
-      //     context, RoutesNames.proceedResourceActionsScreen),
+      onTap: () => Navigate.to(context, const CategoryScreen()),
       behavior: HitTestBehavior.opaque,
       child: Container(
         margin: const EdgeInsets.symmetric(horizontal: 6).r,
         padding: const EdgeInsets.symmetric(
-          horizontal: AppSize.p15,
-          vertical: AppSize.p35,
+          horizontal: AppSize.p40,
+          vertical: AppSize.p32,
         ).r,
         decoration: BoxDecoration(
-          color: AppColors.dashContainerBack6,
+          color: AppColors.dashContainerBack2,
           borderRadius: BorderRadius.circular(
             AppBorderRadius.dashboardGridContainerBorderRadius,
           ).r,
           border: Border.all(
-            color: AppColors.dashContainerBorder6,
+            color: AppColors.dashContainerBorder2,
           ),
         ),
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             Container(
               padding: const EdgeInsets.symmetric(
@@ -136,19 +186,20 @@ class Inventory extends StatelessWidget {
                 vertical: AppSize.p10,
               ).r,
               decoration: BoxDecoration(
-                color: AppColors.dashContainerIcon6,
+                color: AppColors.dashContainerIcon2,
                 borderRadius: BorderRadius.circular(
                   AppBorderRadius.dashboardContainerBorderRadius,
                 ),
               ),
               child: Image.asset(
-                Assets.processedResourceAction,
+                Assets.categories,
                 width: 50.w,
                 height: 50.h,
               ),
             ),
+            CustomSizedBox.width(20),
             Text(
-              AppStrings.processedResourceActionText,
+              AppStrings.categoriesText,
               textAlign: TextAlign.center,
               style: Styles.circularStdBook(
                 AppSize.text14.sp,

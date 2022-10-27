@@ -26,4 +26,7 @@ class Assets {
   static const String logout = "assets/images/logout.png";
   static const String noProductFound = "assets/images/no_product_found.png";
   static const String noImage = "assets/images/noImage.png";
+  static const String dashNewImage = "assets/images/dash_new.webp";
+  static const String tagImage = "assets/images/tag.png";
+  static const String noTagImage = "assets/images/noTag.png";
 }

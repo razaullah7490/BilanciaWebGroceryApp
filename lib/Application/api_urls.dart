@@ -17,4 +17,7 @@ class ApiUrls {
   static const String proceedResourceActionUrl =
       "$baseUrl/manager/processed-resource-action/";
   static const String requestPasswordResetUrl = "$baseUrl/auth/password_reset/";
+  static const String getAllUsersUrl = "$baseUrl/manager/list_users";
+  static const String tagUrl = "$baseUrl/agenda/tag/";
+  static const String eventUrl = "$baseUrl/agenda/event/";
 }

@@ -6,20 +6,26 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:grocery/Data/repository/agenda/event_repository.dart';
+import 'package:grocery/Data/repository/agenda/tag_repository.dart';
 import 'package:grocery/Data/repository/auth/change_password_repository.dart';
 import 'package:grocery/Data/repository/auth/forget_password_repository.dart';
 import 'package:grocery/Data/repository/auth/logout_repository.dart';
 import 'package:grocery/Data/repository/auth/registration_repository.dart';
 import 'package:grocery/Data/repository/auth/user_repository.dart';
+import 'package:grocery/Data/repository/manager/all_users_repository.dart';
 import 'package:grocery/Data/repository/manager/proceed_resource_action_repository.dart';
 import 'package:grocery/Data/repository/manager/proceed_resource_repository.dart';
 import 'package:grocery/Data/repository/manager/resource_action_repository.dart';
 import 'package:grocery/Data/repository/manager/resources_repository.dart';
+import 'package:grocery/Data/services/agenda/event_service.dart';
+import 'package:grocery/Data/services/agenda/tag_services.dart';
 import 'package:grocery/Data/services/auth/change_password.dart';
 import 'package:grocery/Data/services/auth/forget_password_service.dart';
 import 'package:grocery/Data/services/auth/login_service.dart';
 import 'package:grocery/Data/services/auth/registration_service.dart';
 import 'package:grocery/Data/services/auth/user_services.dart';
+import 'package:grocery/Data/services/manager/all_users_service.dart';
 import 'package:grocery/Data/services/manager/category_service.dart';
 import 'package:grocery/Data/services/manager/ingredients_service.dart';
 import 'package:grocery/Data/services/manager/iva_service.dart';
@@ -35,6 +41,9 @@ import 'package:grocery/Presentation/views/auth/forget/Bloc/forget_password_cubi
 import 'package:grocery/Presentation/views/auth/forget/setNewPassword/set_new_password.dart';
 import 'package:grocery/Presentation/views/auth/login/login_screen.dart';
 import 'package:grocery/Presentation/views/auth/register/bloc/registration_cubit.dart';
+import 'package:grocery/Presentation/views/home/dashboard/agenda/events/Bloc/event_cubit.dart';
+import 'package:grocery/Presentation/views/home/dashboard/agenda/events/Bloc/participants_cubit.dart';
+import 'package:grocery/Presentation/views/home/dashboard/agenda/tags/Bloc/tags_cubit.dart';
 import 'package:grocery/Presentation/views/home/dashboard/all%20tabs/settings/changePassword/Bloc/change_password_cubit.dart';
 import 'package:grocery/Presentation/views/home/dashboard/all%20tabs/settings/logout%20bloc/logout_cubit.dart';
 import 'package:grocery/Presentation/views/home/inventory/all%20tabs/category/bloc/category_cubit.dart';
@@ -150,6 +159,18 @@ class _MyAppState extends State<MyApp> {
                 create: (context) => ForgetPasswordRepository(
                       forgetPasswordService: ForgetPasswordService(),
                     )),
+            RepositoryProvider(
+                create: (context) => AllUsersRepository(
+                      allUsersService: AllUsersService(),
+                    )),
+            RepositoryProvider(
+                create: (context) => TagRepository(
+                      tagService: TagService(),
+                    )),
+            RepositoryProvider(
+                create: (context) => EventRepository(
+                      eventService: EventService(),
+                    )),
           ],
           child: MultiBlocProvider(
             providers: [
@@ -194,6 +215,15 @@ class _MyAppState extends State<MyApp> {
               BlocProvider<ForgetPasswordCubit>(
                   create: (context) => ForgetPasswordCubit(
                       repo: context.read<ForgetPasswordRepository>())),
+              BlocProvider<ParticipantsCubit>(
+                  create: (context) => ParticipantsCubit(
+                      repo: context.read<AllUsersRepository>())),
+              BlocProvider<TagsCubit>(
+                  create: (context) =>
+                      TagsCubit(repo: context.read<TagRepository>())),
+              BlocProvider<EventCubit>(
+                  create: (context) =>
+                      EventCubit(repo: context.read<EventRepository>())),
             ],
             child: MaterialApp(
               title: 'Bilancia Web',

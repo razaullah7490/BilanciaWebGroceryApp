@@ -45,11 +45,6 @@ class CategoryDetailContainer extends StatelessWidget {
           name: model.categoryName,
         );
         Navigate.to(context, ProductsAssociatedToCategory(categoryData: args));
-        // Navigator.pushNamed(
-        //   context,
-        //   RoutesNames.productsAssociatedToCategoryScreen,
-        //   arguments: args,
-        // );
       },
       behavior: HitTestBehavior.opaque,
       child: Container(
@@ -118,11 +113,6 @@ class CategoryDetailContainer extends StatelessWidget {
                   battSingola: model.battSingola,
                 );
                 Navigate.to(context, EditCategoryScreen(model: args));
-                // Navigator.pushNamed(
-                //   context,
-                //   RoutesNames.editCategoryScreen,
-                //   arguments: args,
-                // );
               },
               onTapDelete: () => deleteCategoryDialogue(context),
             ),
@@ -190,8 +180,7 @@ class CategoryDetailContainer extends StatelessWidget {
                     .deleteCategory(model.categoryId);
                 Navigator.of(context).pop();
                 Navigate.toReplace(context, const CategoryScreen());
-                // Navigator.pushReplacementNamed(
-                //     context, RoutesNames.categoryScreen);
+
                 SnackBarWidget.buildSnackBar(
                   context,
                   AppStrings.categoryDeleteSuccessText,

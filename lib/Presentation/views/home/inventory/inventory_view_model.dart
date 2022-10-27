@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:grocery/Presentation/resources/app_strings.dart';
 import 'package:grocery/Presentation/resources/assets.dart';
 import 'package:grocery/Presentation/resources/colors_palette.dart';
-import 'package:grocery/Presentation/resources/routes/routes_names.dart';
-import 'package:grocery/Presentation/views/home/inventory/all%20tabs/category/category_screen.dart';
 import 'package:grocery/Presentation/views/home/inventory/all%20tabs/proceedResource/proceed_resource_screen.dart';
 import 'package:grocery/Presentation/views/home/inventory/all%20tabs/resourceActions/resource_actions_screen.dart';
 import 'package:grocery/Presentation/views/home/inventory/all%20tabs/resources/resources_screen.dart';
+
+import 'all tabs/processedResourceAction/processed_resource_action.dart';
 
 class InventoryViewModel {
   static List<InventoryGridModel> inventoryList = [
@@ -18,14 +18,14 @@ class InventoryViewModel {
     //   borderColor: AppColors.dashContainerBorder1,
     //   onTap: RoutesNames.productsScreen,
     // ),
-    InventoryGridModel(
-      imageUrl: Assets.categories,
-      name: AppStrings.categoriesText,
-      backgroundColor: AppColors.dashContainerBack2,
-      iconColor: AppColors.dashContainerIcon2,
-      borderColor: AppColors.dashContainerBorder2,
-      onTap: const CategoryScreen(),
-    ),
+    // InventoryGridModel(
+    //   imageUrl: Assets.categories,
+    //   name: AppStrings.categoriesText,
+    //   backgroundColor: AppColors.dashContainerBack2,
+    //   iconColor: AppColors.dashContainerIcon2,
+    //   borderColor: AppColors.dashContainerBorder2,
+    //   onTap: const CategoryScreen(),
+    // ),
     InventoryGridModel(
       imageUrl: Assets.resources,
       name: AppStrings.resourcesText,
@@ -33,6 +33,14 @@ class InventoryViewModel {
       iconColor: AppColors.dashContainerIcon3,
       borderColor: AppColors.dashContainerBorder3,
       onTap: const ResorucesScreen(),
+    ),
+    InventoryGridModel(
+      imageUrl: Assets.processedResource,
+      name: AppStrings.processedResourceText,
+      backgroundColor: AppColors.dashContainerBack5,
+      iconColor: AppColors.dashContainerIcon5,
+      borderColor: AppColors.dashContainerBorder5,
+      onTap: const ProceedResourceScreen(),
     ),
     InventoryGridModel(
       imageUrl: Assets.resourceActions,
@@ -43,21 +51,13 @@ class InventoryViewModel {
       onTap: const ResourceActionsScreen(),
     ),
     InventoryGridModel(
-      imageUrl: Assets.processedResource,
-      name: AppStrings.processedResourceText,
-      backgroundColor: AppColors.dashContainerBack5,
-      iconColor: AppColors.dashContainerIcon5,
-      borderColor: AppColors.dashContainerBorder5,
-      onTap: const ProceedResourceScreen(),
+      imageUrl: Assets.processedResourceAction,
+      name: AppStrings.processedResourceActionText,
+      backgroundColor: AppColors.dashContainerBack6,
+      iconColor: AppColors.dashContainerIcon6,
+      borderColor: AppColors.dashContainerBorder6,
+      onTap: const ProcessedResourceActionScreen(),
     ),
-    // InventoryGridModel(
-    //   imageUrl: Assets.processedResourceAction,
-    //   name: AppStrings.processedResourceActionText,
-    //   backgroundColor: AppColors.dashContainerBack6,
-    //   iconColor: AppColors.dashContainerIcon6,
-    //   borderColor: AppColors.dashContainerBorder6,
-    //   onTap: RoutesNames.proceedResourceActionsScreen,
-    // ),
   ];
 }
 

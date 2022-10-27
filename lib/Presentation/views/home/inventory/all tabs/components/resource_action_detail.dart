@@ -138,9 +138,6 @@ class ResourceActionDetailContainer extends StatelessWidget {
 
                   Navigator.of(context).pop();
                   Navigate.toReplace(context, const ResourceActionsScreen());
-                  // Navigator.pushReplacementNamed(
-                  //     context, RoutesNames.resourceActionsScreen);
-
                   SnackBarWidget.buildSnackBar(
                     context,
                     AppStrings.resourceActionDeleteSuccessText,

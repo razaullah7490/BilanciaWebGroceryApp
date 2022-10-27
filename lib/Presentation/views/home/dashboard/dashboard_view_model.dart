@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:grocery/Presentation/resources/app_strings.dart';
 import 'package:grocery/Presentation/resources/assets.dart';
 import 'package:grocery/Presentation/resources/colors_palette.dart';
-import 'package:grocery/Presentation/resources/routes/routes_names.dart';
 import 'package:grocery/Presentation/views/home/dashboard/all%20tabs/manageProducts/manage_products.dart';
 import 'package:grocery/Presentation/views/home/dashboard/all%20tabs/settings/setting_screen.dart';
 import 'package:grocery/Presentation/views/home/inventory/inventory.dart';

@@ -66,6 +66,39 @@ class AppStrings {
   static const String currentPasswordText = "Current password";
   static const String turnOnOffNotificationText = "Turn ON / OFF notifications";
   static const String notificationText = "Notification";
+  static const String addEventText = "Add Event";
+  static const String allEventsText = "All Events";
+  static const String editEventText = "Edit Event";
+  static const String deleteEventText = "Delete Event";
+  static const String tagText = "Tags";
+  static const String allTagsText = "All Tags";
+  static const String addTagText = "Add Tag";
+  static const String editTagText = "Edit Tag";
+  static const String deleteTagText = "Delete Tag";
+  static const String titleText = "Title";
+  static const String enterTitleText = "Enter title here";
+  static const String descriptionText = "Description";
+  static const String enterDescriptionText = "Enter description here...";
+  static const String beginDateText = "Begin date";
+  static const String endDateText = "End date";
+  static const String participantsText = "Participants";
+  static const String addText = "Add";
+  static const String searchParticipantsText = "Search Participants";
+  static const String searchParticipantsHereText = "Search participants here";
+  static const String selectParticipantsText = "participants selected";
+  static const String tagNameText = "Tag name";
+  static const String selectTagColorText = "Select Tag Color";
+  static const String enterTagText = "Enter tag here";
+  static const String pickAColorText = "Pick Your Color";
+  static const String selectText = "Select";
+  static const String selectTagText = "Select tag";
+  static const String nameText = "Name";
+  static const String colorText = "Color";
+  static const String noTagsAddedText = "No Tag Added Yet";
+  static const String noEventsAddedText = "No Events Added Yet";
+  static const String noTagText = "No tag";
+  static const String participantsLoadingText =
+      "Please wait, while participants being loaded";
 
   //Inventory
 
@@ -271,6 +304,10 @@ class AppStrings {
   static const String provideIdGruppoText = "Please provide id gruppo";
   static const String provideIdAuxLanText = "Please provide id aux lan";
   static const String provideTipoScontoText = "Please provide tipo sconto";
+  static const String provideTitleText = "Please provide title";
+  static const String provideDescriptionText = "Please provide description";
+  static const String providetagNameText = "Please provide tag name";
+  static const String descriptionValidateText = "Minimum length will be 40";
 
   //SnackBar Text
   static const String loginSuccessfullyText = "Login Successfully";
@@ -323,4 +360,12 @@ class AppStrings {
 
   static const String passwordChangedSuccessText =
       "Password Changed Successfully";
+  static const String tagAddedSuccessText = "Tag Added Successfully";
+  static const String tagUpdatedSuccessText = "Tag Updated Successfully";
+  static const String tagDeleteSuccessText = "Tag Deleted Successfully";
+  static const String selectBeginDateText = "Please select begin date/time";
+  static const String selectEndDateText = "Please select end date/time";
+  static const String eventAddedSuccessText = "Event Added Successfully";
+  static const String eventUpdatedSuccessText = "Event Updated Successfully";
+  static const String eventDeleteSuccessText = "Event Deleted Successfully";
 }

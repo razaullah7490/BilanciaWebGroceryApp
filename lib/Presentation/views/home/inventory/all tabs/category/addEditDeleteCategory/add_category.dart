@@ -88,8 +88,6 @@ class _AddCategoryScreenState extends State<AddCategoryScreen> {
                     );
                     Navigator.of(context).pop();
                     Navigate.toReplace(context, const CategoryScreen());
-                    // Navigator.pushReplacementNamed(
-                    //     context, RoutesNames.categoryScreen);
                   }
 
                   if (state.error != const CustomError(error: '')) {
