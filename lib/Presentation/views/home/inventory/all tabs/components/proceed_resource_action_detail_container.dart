@@ -3,13 +3,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:grocery/Presentation/common/edit_delete_container.dart';
 import 'package:grocery/Presentation/resources/routes/navigation.dart';
-import 'package:grocery/Presentation/resources/routes/routes_names.dart';
 import 'package:grocery/Presentation/resources/size.dart';
 import 'package:grocery/Presentation/resources/sized_box.dart';
 import 'package:grocery/Presentation/resources/text_styles.dart';
-import 'package:grocery/Presentation/views/home/inventory/all%20tabs/processedResourceAction/addEditDeleteProceedAction/add_proceed_resource_action.dart';
 import 'package:grocery/Presentation/views/home/inventory/all%20tabs/processedResourceAction/processed_resource_action.dart';
 import '../../../../../../Domain/models/inventory/proceed_resource_action_model.dart';
 import '../../../../../common/delete_item_dialogue.dart';
@@ -133,7 +130,7 @@ class ProceedResourceActionDetailContainer extends StatelessWidget {
               ProceedResourceActionState>(
             builder: (context, state) {
               return DeleteItemDialogue(
-                text: AppStrings.processedResourceActionText,
+                text: model.processedresourceActionName,
                 onDeleteButtonTap: () async {
                   await context
                       .read<ProceedResourceActionCubit>()

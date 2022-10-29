@@ -130,7 +130,7 @@ class ResourceActionDetailContainer extends StatelessWidget {
           return BlocBuilder<ResourceActionCubit, ResourceActionState>(
             builder: (context, state) {
               return DeleteItemDialogue(
-                text: AppStrings.resourceActionText,
+                text: model.resourceActionName,
                 onDeleteButtonTap: () async {
                   await context
                       .read<ResourceActionCubit>()

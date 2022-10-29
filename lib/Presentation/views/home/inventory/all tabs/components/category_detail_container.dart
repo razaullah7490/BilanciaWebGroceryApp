@@ -172,7 +172,7 @@ class CategoryDetailContainer extends StatelessWidget {
         context: context,
         builder: (BuildContext context) {
           return DeleteItemDialogue(
-            text: AppStrings.categoryText,
+            text: model.categoryName,
             onDeleteButtonTap: () async {
               if (model.isDeleted != true) {
                 await context

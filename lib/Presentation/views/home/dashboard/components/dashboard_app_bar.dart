@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -7,6 +6,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:grocery/Presentation/common/extensions/color_extension.dart';
 import 'package:grocery/Presentation/common/extensions/media_query_extension.dart';
 import 'package:grocery/Presentation/common/loading_indicator.dart';
+import 'package:grocery/Presentation/common/shimmer%20effect/event_container_shimmer.dart';
 import 'package:grocery/Presentation/resources/app_strings.dart';
 import 'package:grocery/Presentation/resources/assets.dart';
 import 'package:grocery/Presentation/resources/border_radius.dart';
@@ -59,7 +59,7 @@ class _DashBoardLargeAppBarState extends State<DashBoardLargeAppBar> {
             BlocBuilder<EventCubit, EventState>(builder: (context, state) {
               var tagModel = context.read<TagsCubit>().state.tagModel;
               if (state.status == EventEnum.loading) {
-                return loading(context);
+                return const EventContainerShimmerEffect();
               }
               return state.eventModel.isEmpty
                   ? buildContainer()
@@ -86,7 +86,6 @@ class _DashBoardLargeAppBarState extends State<DashBoardLargeAppBar> {
                                 isContain.map((e) => e.color).toString();
                             var splitColor =
                                 color.substring(1, color.length - 1);
-
                             return buildEventContainer(
                               model: model,
                               isContain: data,

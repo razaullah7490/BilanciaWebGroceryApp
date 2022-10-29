@@ -1,19 +1,15 @@
 import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:grocery/Data/services/manager/proceed_resource_service.dart';
 import 'package:grocery/Presentation/common/add_item_button.dart';
 import 'package:grocery/Presentation/common/app_bar.dart';
 import 'package:grocery/Presentation/resources/app_strings.dart';
-import 'package:grocery/Presentation/resources/routes/routes_names.dart';
 import 'package:grocery/Presentation/resources/sized_box.dart';
 import 'package:grocery/Presentation/views/home/inventory/all%20tabs/components/proceed_resource_detail_container.dart';
 import 'package:grocery/Presentation/views/home/inventory/all%20tabs/proceedResource/addEditDeleteProceedResource/add_proceed_resource.dart';
 import 'package:grocery/Presentation/views/home/inventory/all%20tabs/proceedResource/bloc/proceed_resource_cubit.dart';
-
 import '../../../../../common/data_not_available_text.dart';
-import '../../../../../common/loading_indicator.dart';
+import '../../../../../common/shimmer effect/list_tile_shimmer.dart';
 import '../../../../../resources/routes/navigation.dart';
 
 class ProceedResourceScreen extends StatefulWidget {
@@ -53,7 +49,7 @@ class _ProceedResourceScreenState extends State<ProceedResourceScreen> {
           BlocBuilder<ProceedResourceCubit, ProceedResourceState>(
               builder: (context, state) {
             if (state.status == ProceedResourceEnum.loading) {
-              return LoadingIndicator.loadingExpanded();
+              return const ListTileShimmerEffect();
             }
             return state.proceedResourceModel.isEmpty
                 ? DataNotAvailableText.withExpanded(

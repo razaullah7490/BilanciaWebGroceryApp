@@ -124,7 +124,7 @@ class _EventDetailContainerState extends State<EventDetailContainer> {
           return BlocBuilder<EventCubit, EventState>(
             builder: (context, state) {
               return DeleteItemDialogue(
-                text: AppStrings.resourceActionText,
+                text: widget.model.title,
                 onDeleteButtonTap: () async {
                   await context.read<EventCubit>().deleteEvent(widget.model.id);
                   Navigator.of(context).pop();

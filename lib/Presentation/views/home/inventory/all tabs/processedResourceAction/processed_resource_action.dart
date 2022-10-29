@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:grocery/Presentation/common/shimmer%20effect/list_tile_shimmer.dart';
 import 'package:grocery/Presentation/resources/routes/navigation.dart';
 import 'package:grocery/Presentation/views/home/inventory/all%20tabs/components/proceed_resource_action_detail_container.dart';
 import 'package:grocery/Presentation/views/home/inventory/all%20tabs/components/proceed_resource_detail_container.dart';
@@ -10,7 +11,6 @@ import '../../../../../common/app_bar.dart';
 import '../../../../../common/data_not_available_text.dart';
 import '../../../../../common/loading_indicator.dart';
 import '../../../../../resources/app_strings.dart';
-import '../../../../../resources/routes/routes_names.dart';
 import '../../../../../resources/sized_box.dart';
 
 class ProcessedResourceActionScreen extends StatefulWidget {
@@ -51,17 +51,13 @@ class _ProcessedResourceActionScreenState
               );
 
               Navigate.to(context, AddProceedResourceActionScreen(model: args));
-
-              // Navigator.pushNamed(
-              //     context, RoutesNames.addProceedResourceActionsScreen,
-              //     arguments: args);
             },
           ),
-          CustomSizedBox.height(25),
+          CustomSizedBox.height(15),
           BlocBuilder<ProceedResourceActionCubit, ProceedResourceActionState>(
               builder: (context, state) {
             if (state.status == ProceedResourceActionEnum.loading) {
-              return LoadingIndicator.loadingExpanded();
+              return const ListTileShimmerEffect();
             }
             return state.resourceActionModel.isEmpty
                 ? DataNotAvailableText.withExpanded(

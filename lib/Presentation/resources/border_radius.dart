@@ -20,4 +20,5 @@ class AppBorderRadius {
   static const double notificationchildContainerRadius = 10.0;
   static const double checkBoxRadius = 6.0;
   static const double multiDropDownRadius = 10.0;
+  static const double shimmerContainerRadius = 6.0;
 }

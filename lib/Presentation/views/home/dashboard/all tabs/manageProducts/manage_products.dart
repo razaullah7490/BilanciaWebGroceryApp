@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
@@ -6,14 +5,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:grocery/Presentation/common/app_bar.dart';
 import 'package:grocery/Presentation/common/loading_indicator.dart';
+import 'package:grocery/Presentation/common/shimmer%20effect/list_tile_shimmer.dart';
 import 'package:grocery/Presentation/resources/app_strings.dart';
 import 'package:grocery/Presentation/resources/colors_palette.dart';
 import 'package:grocery/Presentation/resources/size.dart';
 import 'package:grocery/Presentation/resources/sized_box.dart';
-import 'package:grocery/Presentation/views/home/dashboard/all%20tabs/components/manage_products_upper_tiles.dart';
-import 'package:grocery/Presentation/views/home/dashboard/all%20tabs/components/products_container.dart';
 import 'package:grocery/Presentation/views/home/dashboard/all%20tabs/components/search_text_field.dart';
-import 'package:grocery/Presentation/views/home/dashboard/all%20tabs/manageProducts/manage_products_view_model.dart';
 import 'package:grocery/Presentation/views/home/inventory/all%20tabs/category/bloc/category_cubit.dart';
 import 'package:grocery/Presentation/views/home/inventory/all%20tabs/components/category_detail_container.dart';
 import '../../../../../common/data_not_available_text.dart';
@@ -120,7 +117,7 @@ class _ManageProductsScreenState extends State<ManageProductsScreen> {
                       BlocBuilder<CategoryCubit, CategoryState>(
                           builder: (context, state) {
                         if (state.status == CategoryEnum.loading) {
-                          return LoadingIndicator.loadingExpanded();
+                          return const ListTileShimmerEffect();
                         }
                         return state.categoryModel.isEmpty
                             ? DataNotAvailableText.withExpanded(

@@ -3,18 +3,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:grocery/Data/services/manager/proceed_resource_service.dart';
 import 'package:grocery/Presentation/common/delete_item_dialogue.dart';
 import 'package:grocery/Presentation/common/edit_delete_container.dart';
 import 'package:grocery/Presentation/resources/border_radius.dart';
 import 'package:grocery/Presentation/resources/colors_palette.dart';
 import 'package:grocery/Presentation/resources/routes/navigation.dart';
-import 'package:grocery/Presentation/resources/routes/routes_names.dart';
 import 'package:grocery/Presentation/resources/sized_box.dart';
 import 'package:grocery/Presentation/views/home/inventory/all%20tabs/proceedResource/addEditDeleteProceedResource/edit_proceed_resource.dart';
 import 'package:grocery/Presentation/views/home/inventory/all%20tabs/proceedResource/proceed_resource_screen.dart';
 import 'package:grocery/Presentation/views/home/inventory/all%20tabs/processedResourceAction/addEditDeleteProceedAction/add_proceed_resource_action.dart';
-import 'package:grocery/Presentation/views/home/inventory/all%20tabs/processedResourceAction/processed_resource_action.dart';
 import '../../../../../../Domain/models/inventory/proceed_resource_model.dart';
 import '../../../../../common/snack_bar_widget.dart';
 import '../../../../../resources/app_strings.dart';
@@ -51,11 +48,6 @@ class ProceedResourceDetailContainer extends StatelessWidget {
           isInventoryAction: false,
         );
         Navigate.to(context, AddProceedResourceActionScreen(model: args));
-        // Navigator.pushNamed(
-        //   context,
-        //   RoutesNames.addProceedResourceActionsScreen,
-        //   arguments: args,
-        // );
       },
       behavior: HitTestBehavior.opaque,
       child: Container(
@@ -144,9 +136,6 @@ class ProceedResourceDetailContainer extends StatelessWidget {
                   madeWith: model.madeWith,
                 );
                 Navigate.to(context, EditProceedResourceScreen(model: args));
-                // Navigator.pushNamed(
-                //     context, RoutesNames.editProceedResourceScreen,
-                //     arguments: args);
               },
               onTapDelete: () => deleteProceedResourceDialogue(context),
             ),
@@ -192,7 +181,7 @@ class ProceedResourceDetailContainer extends StatelessWidget {
         context: context,
         builder: (BuildContext context) {
           return DeleteItemDialogue(
-            text: AppStrings.processedResourceText,
+            text: model.name.toString(),
             onDeleteButtonTap: () async {
               if (model.isDeleted != true) {
                 context

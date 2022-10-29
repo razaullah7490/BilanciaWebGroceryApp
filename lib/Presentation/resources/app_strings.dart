@@ -1,371 +1,403 @@
 class AppStrings {
   //auth
   static const String routeErrorMessage = "Screen doesn't exist";
-  static const String loginText = "Login";
+  static const String loginText = "Accedere";
   static const String emailText = "Email";
-  static const String enterEmailText = "Enter email";
-  static const String passwordText = "Password";
-  static const String enterPasswordText = "Enter password";
-  static const String forgetPasswordText = "Forget Password";
-  static const String createNewAccountText = "Create a new account";
-  static const String signUpText = "Sign up";
-  static const String registerText = "Register";
-  static const String firstNameText = "First name";
-  static const String enterFirstNameText = "Enter First Name";
-  static const String lastNameText = "Last name";
-  static const String enterLastNameText = "Enter Last Name";
-  static const String alreadyRegisterText = "Already registered";
+  static const String enterEmailText = "Inserisci l'email";
+  static const String passwordText = "parola d'ordine";
+  static const String enterPasswordText = "inserire la password";
+  static const String forgetPasswordText = "Ha dimenticato la password";
+  static const String createNewAccountText = "Creare un nuovo account";
+  static const String signUpText = "Iscrizione";
+  static const String registerText = "Registrati";
+  static const String firstNameText = "Nome di battesimo";
+  static const String enterFirstNameText = "Inserisci il nome";
+  static const String lastNameText = "Cognome";
+  static const String enterLastNameText = "Inserisci il cognome";
+  static const String alreadyRegisterText = "Già registrato";
   static const String enterYourRegisterEmailText1 =
-      "Enter your registered email";
+      "Inserisci la tua email registrata";
   static const String enterYourRegisterEmailText2 =
-      "below to recover your password";
-  static const String submitText = "Submit";
-  static const String confirmationText = "Confirmation";
+      "qui sotto per recuperare la tua password";
+  static const String submitText = "Invia";
+  static const String confirmationText = "Conferma";
   static const String confirmationDescriptionText =
-      "5-digits code has been sent to your given email";
-  static const String didnotReceiveCodeText = "Didn't receive code?";
-  static const String sendAgainText = "Send again";
-  static const String confirmText = "Confirm";
-  static const String setNewPasswordText = "Set your \n new password";
-  static const String newPasswordText = "New password";
-  static const String enterNewPasswordText = "Enter new password";
-  static const String confirmPasswordText = "Confirm password";
-  static const String enterConfirmPasswordText = "Enter confirm password";
-  static const String doneText = "Done";
+      "Il codice a 5 cifre è stato inviato all'e-mail fornita";
+  static const String didnotReceiveCodeText = "Non hai ricevuto il codice?";
+  static const String sendAgainText = "Invia di nuovo";
+  static const String confirmText = "Confermare";
+  static const String setNewPasswordText = "Imposta la tua \n nuova password";
+  static const String newPasswordText = "Nuova password";
+  static const String enterNewPasswordText = "Inserire una nuova password";
+  static const String confirmPasswordText = "Conferma password";
+  static const String enterConfirmPasswordText = "Inserisci conferma password";
+  static const String doneText = "Fatto";
   static const String successfullyRecoveredText =
-      "Successfully \n Recover Password";
+      "Con successo \n Recupera la password";
   static const String loginToYourAccountText =
-      "Please login to your account using your new account already set now";
-  static const String fromGalleryText = "From Gallery";
-  static const String fromCameraText = "From Camera";
-  static const String updateText = "Update";
-  static const String doYouWantToDeleteText = "Do you want to delete the";
-  static const String cancelText = "Cancel";
-  static const String deleteText = "Delete";
-  static const String passwordLengthText = "At least 6 digits password";
-  static const String categoryDeleteInText = "Category Delete in 24 hours";
-  static const String resourceDeleteInText = "Resource Delete in 24 hours";
+      "Accedi al tuo account utilizzando il tuo nuovo account già impostato ora";
+  static const String fromGalleryText = "Dalla Galleria";
+  static const String fromCameraText = "Dalla fotocamera";
+  static const String updateText = "Aggiornare";
+  static const String doYouWantToDeleteText = "Vuoi eliminare il";
+  static const String cancelText = "Annulla";
+  static const String deleteText = "Elimina";
+  static const String passwordLengthText = "Password di almeno 6 cifre";
+  static const String categoryDeleteInText = "Categoria Elimina in 24 ore";
+  static const String resourceDeleteInText = "Elimina risorsa in 24 ore";
   static const String proceedResourceDeleteInText =
-      "Proceed resource Delete in 24 hours";
-  static const String notFoundText = "Not Found";
-  static const String editText = "Edit";
-  static const String allCategoriesText = "All Categories";
+      "Procedi risorsa Elimina tra 24 ore";
+  static const String notFoundText = "Non trovato";
+  static const String editText = "Modificare";
+  static const String allCategoriesText = "tutte le categorie";
 
   //dashboard
-  static const String dashboardText = "Dashboard";
-  static const String manageProductText = "Manage Products";
-  static const String inventoryText = "Inventory";
-  static const String settingText = "Settings";
-  static const String webPortalText = "Web Portal";
-  static const String notificationsText = "Notifications";
-  static const String editProfileText = "Edit Profile";
-  static const String changePasswordText = "Change Password";
-  static const String logOutText = "Log out";
-  static const String enterCurrentPasswordText = "Enter your current password";
-  static const String setNewPasswordText2 = "Set new password";
-  static const String currentPasswordText = "Current password";
-  static const String turnOnOffNotificationText = "Turn ON / OFF notifications";
-  static const String notificationText = "Notification";
-  static const String addEventText = "Add Event";
-  static const String allEventsText = "All Events";
-  static const String editEventText = "Edit Event";
-  static const String deleteEventText = "Delete Event";
-  static const String tagText = "Tags";
-  static const String allTagsText = "All Tags";
-  static const String addTagText = "Add Tag";
-  static const String editTagText = "Edit Tag";
-  static const String deleteTagText = "Delete Tag";
-  static const String titleText = "Title";
-  static const String enterTitleText = "Enter title here";
-  static const String descriptionText = "Description";
-  static const String enterDescriptionText = "Enter description here...";
-  static const String beginDateText = "Begin date";
-  static const String endDateText = "End date";
-  static const String participantsText = "Participants";
-  static const String addText = "Add";
-  static const String searchParticipantsText = "Search Participants";
-  static const String searchParticipantsHereText = "Search participants here";
-  static const String selectParticipantsText = "participants selected";
-  static const String tagNameText = "Tag name";
-  static const String selectTagColorText = "Select Tag Color";
-  static const String enterTagText = "Enter tag here";
-  static const String pickAColorText = "Pick Your Color";
-  static const String selectText = "Select";
-  static const String selectTagText = "Select tag";
-  static const String nameText = "Name";
-  static const String colorText = "Color";
-  static const String noTagsAddedText = "No Tag Added Yet";
-  static const String noEventsAddedText = "No Events Added Yet";
-  static const String noTagText = "No tag";
+  static const String dashboardText = "Pannello di controllo";
+  static const String manageProductText = "Gestisci prodotti";
+  static const String inventoryText = "Inventario";
+  static const String settingText = "Impostazioni";
+  static const String webPortalText = "Portale web";
+  static const String notificationsText = "Notifiche";
+  static const String noNotificationText = "Nessuna notifica";
+  static const String editProfileText = "Modifica Profilo";
+  static const String changePasswordText = "Cambia la password";
+  static const String logOutText = "Disconnettersi";
+  static const String enterCurrentPasswordText =
+      "Inserisci la tua password attuale";
+  static const String setNewPasswordText2 = "Imposta nuova password";
+  static const String currentPasswordText = "Password attuale";
+  static const String turnOnOffNotificationText =
+      "Attiva / disattiva le notifiche";
+  static const String notificationText = "Notifica";
+  static const String addEventText = "Aggiungi evento";
+  static const String allEventsText = "Tutti gli eventi";
+  static const String editEventText = "Modifica evento";
+  static const String deleteEventText = "Elimina evento";
+  static const String tagText = "Etichetta";
+  static const String allTagsText = "Tutti i etichetta";
+  static const String addTagText = "Aggiungi etichetta";
+  static const String editTagText = "Modifica etichetta";
+  static const String deleteTagText = "Elimina etichetta";
+  static const String titleText = "Titolo";
+  static const String enterTitleText = "Inserisci il titolo qui";
+  static const String descriptionText = "Descrizione";
+  static const String enterDescriptionText = "Inserisci la descrizione qui...";
+  static const String beginDateText = "Data di inizio";
+  static const String endDateText = "Data di fine";
+  static const String participantsText = "Partecipanti";
+  static const String addText = "Aggiungere";
+  static const String searchParticipantsText = "Cerca partecipanti";
+  static const String searchParticipantsHereText = "Cerca partecipanti qui";
+  static const String selectParticipantsText = "partecipanti selezionati";
+  static const String tagNameText = "Nome etichetta";
+  static const String selectTagColorText = "Seleziona Colore etichetta";
+  static const String enterTagText = "Inserisci il tag qui";
+  static const String pickAColorText = "Scegli il tuo colore";
+  static const String selectText = "Selezionare";
+  static const String selectTagText = "Seleziona etichetta";
+  static const String nameText = "Nome";
+  static const String colorText = "Colore";
+  static const String noTagsAddedText = "Nessun tag ancora aggiunto";
+  static const String noEventsAddedText = "Nessun evento ancora aggiunto";
+  static const String noTagText = "Nessun tag";
   static const String participantsLoadingText =
-      "Please wait, while participants being loaded";
-
-  //Inventory
+      "Si prega di attendere, mentre i partecipanti vengono caricati";
 
   //Product
-  static const String productsText = "Products";
-  static const String productText = "Product";
-  static const String addProductText = "Add Product";
-  static const String productNameText = "Product name";
-  static const String enterProductNameText = "Enter product name here";
-  static const String editProductText = "Edit Product";
-  static const String quantityOnlyText = "Quantity";
-  static const String enterQuantityText = "Enter quantity here";
-  static const String addImageText = "Add Image";
-  static const String noProductAddedText = "No Product Added Yet";
+  static const String productsText = "Prodotti";
+  static const String productText = "Prodotto";
+  static const String addProductText = "Aggiungi prodotto";
+  static const String productNameText = "Nome del prodotto";
+  static const String enterProductNameText =
+      "Inserisci qui il nome del prodotto";
+  static const String editProductText = "Modifica prodotto";
+  static const String quantityOnlyText = "Quantità";
+  static const String enterQuantityText = "Inserisci qui la quantità";
+  static const String addImageText = "Aggiungi immagine";
+  static const String noProductAddedText = "Nessun prodotto ancora aggiunto";
 
   //Category
-  static const String categoriesText = "Categories";
-  static const String categoryText = "Category";
-  static const String addCategoryText = "Add Category";
+  static const String categoriesText = "Categorie";
+  static const String categoryText = "Categoria";
+  static const String addCategoryText = "Aggiungi categoria";
   static const String aliquotaIVAText = "Aliquota IVA";
-  static const String ivaTypeText = "IVA Type";
-  static const String categoryNameText = "Category name";
-  static const String enterCategoryNameText = "Enter category name";
+  static const String ivaTypeText = "Tipo IVA";
+  static const String categoryNameText = "Nome della categoria";
+  static const String enterCategoryNameText =
+      "Inserisci il nome della categoria";
   static const String aliquotaIvaText = "Aliquota iva";
-  static const String enterAliquotaIvaText = "Enter Aliquota iva";
-  static const String selectIvaTypeText = "Select iva type";
-  static const String selectStatusText = "Select status";
-  static const String statusText = 'Status';
-  static const String editCategoryText = "Edit Category";
-  static const String noCategoryAddedText = "No Category Added Yet";
-  static const String defaultPriceText = "Default price";
-  static const String enterDefaultPriceText = "Enter default price";
-  static const String minValueText = "Min value";
-  static const String enterMinValueText = "Enter min value";
-  static const String maxValueText = "Max value";
-  static const String enterMaxValueText = "Enter max value";
-  static const String discountPriceText = "Discount Price";
-  static const String enterDiscountPriceText = "Enter Discount Price";
-  static const String keyModifierText = "Key modifier";
-  static const String enterKeyModifierText = "Enter key modifier";
+  static const String enterAliquotaIvaText = "Inserisci Aliquota iva";
+  static const String selectIvaTypeText = "Seleziona il tipo iva";
+  static const String selectStatusText = "Seleziona lo stato";
+  static const String statusText = 'Stato';
+  static const String editCategoryText = "Modifica categoria";
+  static const String noCategoryAddedText = "Nessuna categoria ancora aggiunta";
+  static const String defaultPriceText = "Prezzo predefinito";
+  static const String enterDefaultPriceText = "Inserisci il prezzo predefinito";
+  static const String minValueText = "Valore minimo";
+  static const String enterMinValueText = "Immettere il valore minimo";
+  static const String maxValueText = "Valore massimo";
+  static const String enterMaxValueText = "Immettere il valore massimo";
+  static const String discountPriceText = "Prezzo scontato";
+  static const String enterDiscountPriceText = "Inserisci il prezzo scontato";
+  static const String keyModifierText = "Modificatore chiave";
+  static const String enterKeyModifierText = "Immettere il modificatore chiave";
   static const String idGruppoText = "Id gruppo";
-  static const String enterIdGruppoText = "Enter id gruppo";
+  static const String enterIdGruppoText = "Inserisci id gruppo";
   static const String idAuxLanText = "Id aux lan";
-  static const String enterIdAuxLanText = "Enter id aux lan";
+  static const String enterIdAuxLanText = "Immettere id aux lan";
   static const String tipoScontoText = "Tipo sconto";
-  static const String enterTipoScontoText = "Enter tipo sconto";
+  static const String enterTipoScontoText = "Inserisci tipo sconto";
   static const String battSingolaText = "Batt singola";
 
   //resources
-  static const String resourcesText = "Resources";
-  static const String addResourceText = "Add Resource";
-  static const String salePriceText = "Sale Price";
-  static const String resourceNameText = "Resource name";
-  static const String enterResourceNameText = "Enter resource name";
-  static const String stockQuantityText = "Stock quantity";
-  static const String enterStockQuantityText = "Enter stock quantity";
-  static const String stockQuantityThresholdText = "Stock quantity threshold";
+  static const String resourcesText = "Risorse";
+  static const String addResourceText = "Aggiungi risorsa";
+  static const String salePriceText = "Prezzo di vendita";
+  static const String resourceNameText = "Nome risorsa";
+  static const String enterResourceNameText = "Inserisci il nome della risorsa";
+  static const String stockQuantityText = "Quantità di scorta";
+  static const String enterStockQuantityText =
+      "Inserisci la quantità di magazzino";
+  static const String stockQuantityThresholdText = "Soglia quantità scorte";
   static const String enterStockQuantityThresholdText =
-      "Enter stock quantity threshold";
-  static const String measureUnitText = "Measure unit";
-  static const String enterMeasureUnitText = "Enter measure unit";
+      "Immettere la soglia della quantità di magazzino";
+  static const String measureUnitText = "Unità di misura";
+  static const String enterMeasureUnitText = "Immettere l'unità di misura";
   static const String pluText = "PLU";
-  static const String enterPluText = "Enter plu";
-  static const String shelfLifeText = "Shelf life";
-  static const String enterShelfLifeText = "Enter shelf life";
-  static const String unitSalePriceText = "Unit sale price";
-  static const String enterUnitSalePriceText = "Enter unit sale price";
-
-  static const String unitPurchasePriceText = "Unit purchase price";
-  static const String enterUnitPurchasePriceText = "Enter unit purchase price";
-
-  static const String revenuePercentageText = "Revenue percentage";
-  static const String enterRevenuePercentageText = "Enter revenue percentage";
-  static const String selectCategoryText = "Select category";
-  static const String barcodeText = "Bar Code";
-  static const String scanACodeText = "Scan a code";
-  static const String editResourceText = "Edit Resource";
-  static const String noResourcesAddedText = "No Resource Added Yet";
+  static const String enterPluText = "Inserisci più";
+  static const String shelfLifeText = "Data di scadenza";
+  static const String enterShelfLifeText =
+      "Inserisci la durata di conservazione";
+  static const String unitSalePriceText = "Prezzo di vendita unitario";
+  static const String enterUnitSalePriceText =
+      "Inserisci il prezzo di vendita unitario";
+  static const String unitPurchasePriceText = "Prezzo di acquisto unitario";
+  static const String enterUnitPurchasePriceText =
+      "Immettere il prezzo di acquisto unitario";
+  static const String revenuePercentageText = "Percentuale di ricavo";
+  static const String enterRevenuePercentageText =
+      "Inserisci la percentuale di entrate";
+  static const String selectCategoryText = "Seleziona categoria";
+  static const String barcodeText = "Codice a barre";
+  static const String scanACodeText = "Scansiona un codice";
+  static const String editResourceText = "Modifica risorsa";
+  static const String noResourcesAddedText = "Nessuna risorsa ancora aggiunta";
 
   //resource actions
-  static const String resourceActionText = "Resource Actions";
-  static const String addActionText = "Add action";
-  static const String editResourceActionText = "Edit Resource Action";
-  static const String addResourceActionText = "Add Resource Action";
-  static const String moneyText = "Money";
-  static const String priceCounterText = "Price Counter";
-  static const String resourceText = 'Resource';
-  static const String selectActionTypeText = "Select Action Type";
-  static const String actionTypeText = "Action Type";
-  static const String enterMoneyText = "Enter money";
-  static const String enterPriceCounterText = "Enter price counter";
-  static const String enterResourceText = "Enter resource";
-  static const String isForInternalUsageText = "Is for internal usage";
+  static const String resourceActionText = "Azioni sulle risorse";
+  static const String addActionText = "Aggiungi azione";
+  static const String editResourceActionText = "Modifica azione risorsa";
+  static const String addResourceActionText = "Aggiungi Azione Risorsa";
+  static const String moneyText = "I soldi";
+  static const String priceCounterText = "Contaprezzi";
+  static const String resourceText = 'Risorsa';
+  static const String selectActionTypeText = "Seleziona Tipo di azione";
+  static const String actionTypeText = "Tipo di azione";
+  static const String enterMoneyText = "Inserisci i soldi";
+  static const String enterPriceCounterText = "Entra nel contatore dei prezzi";
+  static const String enterResourceText = "Inserisci risorsa";
+  static const String isForInternalUsageText = "È per uso interno";
   static const String noResourceActionAddedText =
-      "No Resource Action Added Yet";
-  static const String dateText = "Date";
-  static const String moneyTypeText = "Money Type";
-  static const String enterMoneyTypeText = "enter money type";
-  static const String threshold1Text = "Threshold 1";
-  static const String threshold2Text = "Threshold 2";
-  static const String enterThreshold1Text = "Enter threshold 1";
-  static const String enterThreshold2Text = "Enter threshold 2";
-  static const String price1Text = "Price 1";
-  static const String price2Text = "Price 2";
-  static const String enterPrice1Text = "Enter price 1";
-  static const String enterPrice2Text = "Enter price 2";
-  static const String flgConfigText = "Flg config";
-  static const String traceabilityText = "Traceability";
-  static const String traceabilityIdText = "Traceability ID";
-  static const String enterTraceabilityText = "Enter traceability";
-  static const String enterTraceabilityIdText = "Enter traceability ID";
+      "Nessuna azione sulle risorse ancora aggiunta";
+  static const String dateText = "Data";
+  static const String moneyTypeText = "Tipo di denaro";
+  static const String enterMoneyTypeText = "Inserisci il tipo di denaro";
+  static const String threshold1Text = "Soglia 1";
+  static const String threshold2Text = "Soglia 2";
+  static const String enterThreshold1Text = "Inserisci la soglia 1";
+  static const String enterThreshold2Text = "Inserisci la soglia 2";
+  static const String price1Text = "Prezzo 1";
+  static const String price2Text = "Prezzo 2";
+  static const String enterPrice1Text = "Inserisci il prezzo 1";
+  static const String enterPrice2Text = "Inserisci il prezzo 2";
+  static const String flgConfigText = "Configurazione FLG";
+  static const String traceabilityText = "Tracciabilità";
+  static const String traceabilityIdText = "ID di tracciabilità";
+  static const String enterTraceabilityText = "Inserisci la tracciabilità";
+  static const String enterTraceabilityIdText =
+      "Inserisci l'ID di tracciabilità";
 
   //proceed resource
-  static const String processedResourceText = "Processed Resource";
-  static const String addProccedText = "Add Proceed";
-  static const String addProccedResourceText = "Add Proceed Resource";
-  static const String editProceedResourceText = "Edit Proceed Resource";
+  static const String processedResourceText = "Risorsa elaborata";
+  static const String addProccedText = "Aggiungi Procedi";
+  static const String addProccedResourceText = "Aggiungi Risorsa Procedi";
+  static const String editProceedResourceText = "Modifica Risorsa Procedi";
   static const String tareText = "Tare";
-  static const String enterTareText = "Enter tare";
-  static const String weightTypeText = "Weight type";
-  static const String ingredientsText = "Ingredients";
-  static const String packagingDateText = "Packaging date";
-  static const String selectDateText = "Select date";
-  static const String expirationDateText = "Expiration date";
+  static const String enterTareText = "Immettere la tare";
+  static const String weightTypeText = "Tipo di peso";
+  static const String ingredientsText = "Ingredienti";
+  static const String packagingDateText = "Data di confezionamento";
+  static const String selectDateText = "Seleziona la data";
+  static const String expirationDateText = "Data di scadenza";
   static const String noProceedResourceAddedText =
-      "No Proceed Resource Added Yet";
+      "Nessuna risorsa per i proventi ancora aggiunta";
   static const String resourceAndResourcePercentageText =
-      "Add Resource And Resource Percentage Used";
-
-  static const String percentageText = "Percentage";
-  static const String percentageUsedText = "Percentage used";
+      "Aggiungi risorsa e percentuale di risorse utilizzate";
+  static const String percentageText = "Percentuale";
+  static const String percentageUsedText = "Percentuale utilizzata";
 
   //Processed Resource Action
-  static const String processedResourceActionText = "Processed Resource Action";
-  static const String addNewText = "Add New";
-  static const String editProcessedResourceActionText = "Edit Action";
+  static const String processedResourceActionText =
+      "Azione sulla risorsa elaborata";
+  static const String addNewText = "Aggiungere nuova";
+  static const String editProcessedResourceActionText = "Modifica azione";
   static const String noProceedResourceActionAddedText =
-      "No Proceed Resource Action Added Yet";
+      "Non è ancora stata aggiunta alcuna azione per procedere con la risorsa";
 
   // manage products
-  static const String searchHereText = "Search products here";
-  static const String productIdText = "Product ID:";
-  static const String quantityText = "Quantity:";
+  static const String searchHereText = "Cerca i prodotti qui";
+  static const String productIdText = "numero identificativo del prodotto:";
+  static const String quantityText = "Quantità:";
 
   //validation Text
-  static const String provideEmailText = "Please provide Email";
-  static const String provideValidEmailText = 'Please provide valid email';
-  static const String providePasswordText = "Please provide password";
-  static const String provideFirstNameText = "Please provide first name";
-  static const String provideLastNameText = "Please provide last name";
-  static const String provideNewPasswordText = "Please provide new password";
+  static const String provideEmailText = "Si prega di fornire e-mail";
+  static const String provideValidEmailText =
+      "Si prega di fornire un'e-mail valida";
+  static const String providePasswordText = "Si prega di fornire la password";
+  static const String provideFirstNameText = "Si prega di fornire il nome";
+  static const String provideLastNameText = "Si prega di fornire il cognome";
+  static const String provideNewPasswordText =
+      "Si prega di fornire una nuova password";
   static const String provideConfirmPasswordText =
-      "Please provide confirm passowrd";
-  static const String passwordNotMatch = "Password not match";
-  static const String provideProductNameText = "Please provide product name";
-  static const String provideQuantityText = "Please provide quantity";
-  static const String provideCategoryNameText = "Please provide category name";
-  static const String provideAliquotaIvaText = "Please provide aliquota iva";
-  static const String provideDefaultPriceText = "Please provide default price";
-  static const String provideMinValueText = "Please provide min value";
-  static const String provideMaxValueText = "Please provide max value";
+      "Si prega di fornire la password di conferma";
+  static const String passwordNotMatch = "La password non corrisponde";
+  static const String provideProductNameText =
+      "Si prega di fornire il nome del prodotto";
+  static const String provideQuantityText = "Si prega di fornire la quantità";
+  static const String provideCategoryNameText =
+      "Si prega di fornire il nome della categoria";
+  static const String provideAliquotaIvaText =
+      "Si prega di fornire aliquota iva";
+  static const String provideDefaultPriceText =
+      "Si prega di fornire il prezzo predefinito";
+  static const String provideMinValueText =
+      "Si prega di fornire un valore minimo";
+  static const String provideMaxValueText =
+      "Si prega di fornire il valore massimo";
   static const String provideDiscountPriceText =
-      "Please provide Discount Price";
-  static const String provideIVAtypeText = "Please provide Iva type";
-  static const String provideStatusText = "Please provide status";
-  static const String provideResourceNameText = "Please provide resource name";
+      "Si prega di fornire il prezzo scontato";
+  static const String provideIVAtypeText = "Si prega di fornire il tipo Iva";
+  static const String provideStatusText = "Si prega di fornire lo stato";
+  static const String provideResourceNameText =
+      "Si prega di fornire il nome della risorsa";
   static const String provideStockQuantityText =
-      "Please provide stock quantity";
+      "Si prega di fornire la quantità di magazzino";
   static const String provideStockQuantityThresholdText =
-      "Please provide stock quantity threshold";
-  static const String provideMeasureUnitText = "Please provide measure unit";
-  static const String providBarCodeText = "Please provide bar code";
-  static const String providePluText = "Please provide plu";
-  static const String provideShelfLifeText = "Please provide shelf life";
+      "Si prega di fornire la soglia della quantità di magazzino";
+  static const String provideMeasureUnitText =
+      "Si prega di fornire l'unità di misura";
+  static const String providBarCodeText =
+      "Si prega di fornire il codice a barre";
+  static const String providePluText = "Si prega di fornire più";
+  static const String provideShelfLifeText =
+      "Si prega di fornire la durata di conservazione";
   static const String provideUnitSalePriceText =
-      "Please provide unit sale price";
+      "Si prega di fornire il prezzo di vendita unitario";
   static const String provideUnitPurchasePriceText =
-      "Please provide unit purchase price";
+      "Si prega di fornire il prezzo di acquisto unitario";
   static const String provideRevenuePercentageText =
-      "Please provide revenue percantage";
-  static const String provideCategoryText = "Please provide category";
+      "Si prega di fornire la percentuale di entrate";
+  static const String provideCategoryText = "Si prega di fornire la categoria";
   static const String provideCurrentPasswordText =
-      "Please provide current password";
-  static const String provideActionTypeText = "Please provide action type";
-  static const String provideMoneyTypeText = "Please money type";
-  static const String provideMoneyText = "Please provide money";
-  static const String providePriceCounterText = "Please provide price Counter";
-  static const String provideResourceText = "Please provide resource";
-  static const String provideTareText = "Please provide tare";
-  static const String provideWeightTypeText = "Please provide weight type";
-  static const String provideIngredientText = "Please provide ingredient";
-  static const String provideThreshold1Text = "Please provide threshold 1";
-  static const String provideThreshold2Text = "Please provide threshold 2";
-  static const String providePrice1Text = "Please provide price 1";
-  static const String providePrice2Text = "Please provide price 2";
-  static const String provideTraceabilityText = "Please provide traceability";
+      "Si prega di fornire la password attuale";
+  static const String provideActionTypeText =
+      "Si prega di fornire il tipo di azione";
+  static const String provideMoneyTypeText = "Si prega di digitare denaro";
+  static const String provideMoneyText = "Si prega di fornire denaro";
+  static const String providePriceCounterText =
+      "Si prega di fornire il contatore dei prezzi";
+  static const String provideResourceText = "Si prega di fornire risorsa";
+  static const String provideTareText = "Si prega di fornire la tare";
+  static const String provideWeightTypeText =
+      "Si prega di fornire il tipo di peso";
+  static const String provideIngredientText =
+      "Si prega di fornire l'ingrediente";
+  static const String provideThreshold1Text = "Si prega di fornire la soglia 1";
+  static const String provideThreshold2Text = "Si prega di fornire la soglia 2";
+  static const String providePrice1Text = "Si prega di fornire il prezzo 1";
+  static const String providePrice2Text = "Si prega di fornire il prezzo 2";
+  static const String provideTraceabilityText =
+      "Si prega di fornire tracciabilità";
   static const String provideTraceabilityIdText =
-      "Please provide traceability ID";
-  static const String providePercentageText = "Percentage used";
-  static const String selectResourceText = "Select Resource";
-
-  static const String provideKeyModifierText = "Please provide key modifier";
-  static const String provideIdGruppoText = "Please provide id gruppo";
-  static const String provideIdAuxLanText = "Please provide id aux lan";
-  static const String provideTipoScontoText = "Please provide tipo sconto";
-  static const String provideTitleText = "Please provide title";
-  static const String provideDescriptionText = "Please provide description";
-  static const String providetagNameText = "Please provide tag name";
-  static const String descriptionValidateText = "Minimum length will be 40";
+      "Si prega di fornire un ID di tracciabilità";
+  static const String providePercentageText = "Percentuale utilizzata";
+  static const String selectResourceText = "Seleziona Risorsa";
+  static const String provideKeyModifierText =
+      "Si prega di fornire il modificatore chiave";
+  static const String provideIdGruppoText = "Si prega di fornire l'ID gruppo";
+  static const String provideIdAuxLanText = "Si prega di fornire id aux lan";
+  static const String provideTipoScontoText = "Si prega di fornire tipo sconto";
+  static const String provideTitleText = "Si prega di fornire il titolo";
+  static const String provideDescriptionText =
+      "Si prega di fornire una descrizione";
+  static const String providetagNameText =
+      "Si prega di fornire il nome del tag";
+  static const String descriptionValidateText = "La lunghezza minima sarà 40";
 
   //SnackBar Text
-  static const String loginSuccessfullyText = "Login Successfully";
-  static const String registerSuccessfullyText = "Registered Successfully";
+  static const String loginSuccessfullyText = "Accedi con successo";
+  static const String registerSuccessfullyText = "Registrato con successo";
   static const String profileUpdatedSuccessText =
-      "Profile Updated Successfully";
+      "Profilo aggiornato con successo";
   static const String passwordUpdatedSuccessText =
-      "Password Updated Successfully";
-
-  static const String pleaseSelectImageText = "Please select image";
-  static const String productAddedSuccessText = "Product Added Successfully";
+      "Password aggiornata correttamente";
+  static const String pleaseSelectImageText =
+      "Si prega di selezionare l'immagine";
+  static const String productAddedSuccessText =
+      "Prodotto aggiunto con successo";
   static const String productUpdatedSuccessText =
-      "Product Updated Successfully";
-  static const String productDeleteSuccessText = "Product Deleted Successfully";
-  static const String categoryAddedSuccessText = "Category Added Successfully";
+      "Prodotto aggiornato con successo";
+  static const String productDeleteSuccessText =
+      "Prodotto eliminato con successo";
+  static const String categoryAddedSuccessText =
+      "Categoria aggiunta con successo";
   static const String categoryUpdatedSuccessText =
-      "Category Updated Successfully";
+      "Categoria aggiornata con successo";
   static const String categoryDeleteSuccessText =
-      "Category Deleted Successfully";
-  static const String resourceAddedSuccessText = "Resource Added Successfully";
+      "Categoria eliminata con successo";
+  static const String resourceAddedSuccessText =
+      "Risorsa aggiunta con successo";
   static const String resourceUpdatedSuccessText =
-      "Resource Updated Successfully";
+      "Risorsa aggiornata con successo";
   static const String resourceDeleteSuccessText =
-      "Resource Deleted Successfully";
+      "Risorsa eliminata con successo";
   static const String resourceActionAddedSuccessText =
-      "Resource Action Added Successfully";
+      "Azione risorsa aggiunta con successo";
   static const String resourceActionUpdatedSuccessText =
-      "Resource Action Updated Successfully";
+      "Azione risorsa aggiornata correttamente";
   static const String resourceActionDeleteSuccessText =
-      "Resource Action Deleted Successfully";
+      "Azione risorsa eliminata con successo";
   static const String proceedResourceAddedSuccessText =
-      "Proceed Resource Added Successfully";
+      "Procedi Risorsa aggiunta con successo";
   static const String addAtleastOneText =
-      "Add at least one resource and resource percentage used";
+      "Aggiungi almeno una risorsa e una percentuale di risorse utilizzate";
   static const String proceedResourceUpdatedSuccessText =
-      "Proceed Resource Updated Successfully";
+      "Procedi risorsa aggiornata con successo";
   static const String proceedResourceDeleteSuccessText =
-      "Proceed Resource Deleted Successfully";
+      "Procedi Risorsa eliminata con successo";
   static const String proceedResourceActionAddedSuccessText =
-      "Proceed Resource Action Added Successfully";
+      "Procedi Azione risorsa aggiunta con successo";
   static const String proceedResourceActionUpdatedSuccessText =
-      "Proceed Resource Action Updated Successfully";
+      "Procedi Azione Risorsa Aggiornata con Successo";
   static const String proceedResourceActionDeleteSuccessText =
-      "Proceed Resource Action Deleted Successfully";
+      "Procedi azione risorsa eliminata con successo";
   static const String errorOccuredText =
-      "An error occured, Please try again!!!";
-  static const String logoutText = "Logout Successfully";
+      "Si è verificato un errore, riprova!!!";
+  static const String logoutText = "Disconnessione riuscita";
   static const String emailVerifiedText =
-      "Email Verified!\nPlease check you email address to reset your password";
-
+      "Email Verificata!\nControlla il tuo indirizzo email per reimpostare la password";
   static const String passwordChangedSuccessText =
-      "Password Changed Successfully";
-  static const String tagAddedSuccessText = "Tag Added Successfully";
-  static const String tagUpdatedSuccessText = "Tag Updated Successfully";
-  static const String tagDeleteSuccessText = "Tag Deleted Successfully";
-  static const String selectBeginDateText = "Please select begin date/time";
-  static const String selectEndDateText = "Please select end date/time";
-  static const String eventAddedSuccessText = "Event Added Successfully";
-  static const String eventUpdatedSuccessText = "Event Updated Successfully";
-  static const String eventDeleteSuccessText = "Event Deleted Successfully";
+      "Password cambiata con successo";
+  static const String tagAddedSuccessText = "Tag aggiunto con successo";
+  static const String tagUpdatedSuccessText = "Tag aggiornato con successo";
+  static const String tagDeleteSuccessText = "Tag eliminato con successo";
+  static const String selectBeginDateText =
+      "Si prega di selezionare la data/ora di inizio";
+  static const String selectEndDateText =
+      "Si prega di selezionare la data/ora di fine";
+  static const String eventAddedSuccessText = "Evento aggiunto con successo";
+  static const String eventUpdatedSuccessText =
+      "Evento aggiornato con successo";
+  static const String eventDeleteSuccessText = "Evento eliminato con successo";
 }

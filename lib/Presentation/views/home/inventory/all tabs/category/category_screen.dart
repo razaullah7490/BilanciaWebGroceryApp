@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:grocery/Presentation/common/add_item_button.dart';
 import 'package:grocery/Presentation/common/app_bar.dart';
 import 'package:grocery/Presentation/common/data_not_available_text.dart';
+import 'package:grocery/Presentation/common/shimmer%20effect/list_tile_shimmer.dart';
 import 'package:grocery/Presentation/resources/app_strings.dart';
 import 'package:grocery/Presentation/resources/routes/routes_names.dart';
 import 'package:grocery/Presentation/resources/sized_box.dart';
@@ -49,7 +50,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
           CustomSizedBox.height(15),
           BlocBuilder<CategoryCubit, CategoryState>(builder: ((context, state) {
             if (state.status == CategoryEnum.loading) {
-              return LoadingIndicator.loadingExpanded();
+              return const ListTileShimmerEffect();
             }
             return state.categoryModel.isEmpty
                 ? DataNotAvailableText.withExpanded(

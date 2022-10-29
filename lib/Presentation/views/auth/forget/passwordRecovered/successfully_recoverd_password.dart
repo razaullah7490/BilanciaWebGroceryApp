@@ -58,7 +58,7 @@ class _SuccessfullyRecoveredPasswordScreenState
       AppStrings.successfullyRecoveredText,
       textAlign: TextAlign.center,
       style: Styles.circularStdBook(
-        32.sp,
+        30.sp,
         AppColors.blackColor,
       ),
     );

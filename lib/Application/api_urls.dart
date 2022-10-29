@@ -20,4 +20,5 @@ class ApiUrls {
   static const String getAllUsersUrl = "$baseUrl/manager/list_users";
   static const String tagUrl = "$baseUrl/agenda/tag/";
   static const String eventUrl = "$baseUrl/agenda/event/";
+  static const String notificationUrl = "$baseUrl/manager/notification";
 }

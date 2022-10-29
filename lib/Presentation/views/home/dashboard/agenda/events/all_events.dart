@@ -1,14 +1,12 @@
 import "package:flutter/material.dart";
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:grocery/Data/services/agenda/event_service.dart';
+import 'package:grocery/Presentation/common/shimmer%20effect/list_tile_shimmer.dart';
 import 'package:grocery/Presentation/views/home/dashboard/agenda/events/Bloc/event_cubit.dart';
 import 'package:grocery/Presentation/views/home/dashboard/agenda/events/add_event.dart';
 import 'package:grocery/Presentation/views/home/dashboard/components/event_detail_container.dart';
-
 import '../../../../../common/add_item_button.dart';
 import '../../../../../common/app_bar.dart';
 import '../../../../../common/data_not_available_text.dart';
-import '../../../../../common/loading_indicator.dart';
 import '../../../../../resources/app_strings.dart';
 import '../../../../../resources/routes/navigation.dart';
 import '../../../../../resources/sized_box.dart';
@@ -47,7 +45,7 @@ class _AllEventsScreenState extends State<AllEventsScreen> {
           CustomSizedBox.height(20),
           BlocBuilder<EventCubit, EventState>(builder: (context, state) {
             if (state.status == EventEnum.loading) {
-              return LoadingIndicator.loadingExpanded();
+              return const ListTileShimmerEffect();
             }
             return state.eventModel.isEmpty
                 ? DataNotAvailableText.withExpanded(

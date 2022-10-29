@@ -3,15 +3,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:grocery/Presentation/common/add_item_button.dart';
 import 'package:grocery/Presentation/common/app_bar.dart';
 import 'package:grocery/Presentation/common/data_not_available_text.dart';
+import 'package:grocery/Presentation/common/shimmer%20effect/list_tile_shimmer.dart';
 import 'package:grocery/Presentation/resources/app_strings.dart';
 import 'package:grocery/Presentation/resources/routes/navigation.dart';
-import 'package:grocery/Presentation/resources/routes/routes_names.dart';
 import 'package:grocery/Presentation/resources/sized_box.dart';
 import 'package:grocery/Presentation/views/home/inventory/all%20tabs/components/resource_detail_container.dart';
 import 'package:grocery/Presentation/views/home/inventory/all%20tabs/resources/addEditDeleteResource/add_resource.dart';
 import 'package:grocery/Presentation/views/home/inventory/all%20tabs/resources/bloc/resource_cubit.dart';
-
-import '../../../../../common/loading_indicator.dart';
 
 class ResorucesScreen extends StatefulWidget {
   const ResorucesScreen({super.key});
@@ -47,7 +45,7 @@ class _ResorucesScreenState extends State<ResorucesScreen> {
           CustomSizedBox.height(25),
           BlocBuilder<ResourceCubit, ResourceState>(builder: (context, state) {
             if (state.status == ResourceEnum.loading) {
-              return LoadingIndicator.loadingExpanded();
+              return const ListTileShimmerEffect();
             }
             return state.resourceModel.isEmpty
                 ? DataNotAvailableText.withExpanded(

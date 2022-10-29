@@ -162,7 +162,7 @@ class ResourceDetailContainer extends StatelessWidget {
         context: context,
         builder: (BuildContext context) {
           return DeleteItemDialogue(
-            text: AppStrings.resourcesText,
+            text: model.resourceName,
             onDeleteButtonTap: () {
               if (model.isDeleted != true) {
                 context.read<ResourceCubit>().deleteResource(model.resourceId);

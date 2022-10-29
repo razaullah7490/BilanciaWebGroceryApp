@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:grocery/Domain/models/inventory/resources_model.dart';
+import 'package:grocery/Presentation/common/shimmer%20effect/product_list_tile_shimmer.dart';
 import '../../../../../common/app_bar.dart';
 import '../../../../../common/data_not_available_text.dart';
-import '../../../../../common/loading_indicator.dart';
 import '../../../../../resources/app_strings.dart';
 import '../../../../../resources/sized_box.dart';
 import '../components/category_detail_container.dart';
@@ -38,7 +38,7 @@ class _ProductsAssociatedToCategoryState
       ),
       body: Column(
         children: [
-          CustomSizedBox.height(20),
+          CustomSizedBox.height(10),
           BlocBuilder<ResourceCubit, ResourceState>(builder: (context, state) {
             Iterable<ResourcesModel> isExist = state.resourceModel.where((e) {
               return e.category == widget.categoryData.id;
@@ -47,7 +47,7 @@ class _ProductsAssociatedToCategoryState
             var newList = List.from(isExist);
 
             if (state.status == ResourceEnum.loading) {
-              return LoadingIndicator.loadingExpanded();
+              return const ProductListTileShimmerEffect();
             }
             return newList.isEmpty
                 ? DataNotAvailableText.withExpanded(
