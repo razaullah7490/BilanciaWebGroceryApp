@@ -1,18 +1,16 @@
 // ignore_for_file: prefer_typing_uninitialized_variables, use_build_context_synchronously, prefer_null_aware_operators
 import 'dart:developer';
 import 'dart:io';
-
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:grocery/Data/services/manager/proceed_resource_service.dart';
 import 'package:grocery/Presentation/common/app_bar.dart';
 import 'package:grocery/Presentation/common/bar_code_scan.dart';
 import 'package:grocery/Presentation/common/custom_button.dart';
 import 'package:grocery/Presentation/common/custom_drop_down.dart';
 import 'package:grocery/Presentation/common/snack_bar_widget.dart';
 import 'package:grocery/Presentation/resources/sized_box.dart';
+import 'package:grocery/Presentation/views/home/dashboard/components/tag_drop_down.dart';
 import 'package:grocery/Presentation/views/home/inventory/all%20tabs/proceedResource/proceed_resource_view_model.dart';
 import '../../../../../../../Data/errors/custom_error.dart';
 import '../../../../../../../Domain/models/inventory/proceed_resource_model.dart';
@@ -24,13 +22,13 @@ import '../../../../../../resources/app_strings.dart';
 import '../../../../../../resources/border_radius.dart';
 import '../../../../../../resources/colors_palette.dart';
 import '../../../../../../resources/routes/navigation.dart';
-import '../../../../../../resources/routes/routes_names.dart';
 import '../../../../../../resources/size.dart';
 import '../../../../../../resources/text_styles.dart';
 import '../../../../../../state management/bloc/ingredientsBloc/ingredients_cubit.dart';
-import '../../../../../../state management/bloc/ivaBloc/manager_iva_cubit.dart';
 import '../../category/bloc/category_cubit.dart';
 import '../../category/category_view_model.dart';
+import '../../components/single_searchable_drop_down.dart';
+import '../../iva/ivaBloc/manager_iva_cubit.dart';
 import '../../resources/bloc/resource_cubit.dart';
 import '../bloc/proceed_resource_cubit.dart';
 import '../proceed_resource_screen.dart';
@@ -80,6 +78,7 @@ class _EditProceedResourceScreenState extends State<EditProceedResourceScreen> {
   List<Map> madeWithList = List.empty(growable: true);
   List controllers = List.empty(growable: true);
   List resourceIds = [];
+  List resourceNames = List.empty(growable: true);
 
   @override
   void initState() {
@@ -117,32 +116,47 @@ class _EditProceedResourceScreenState extends State<EditProceedResourceScreen> {
     traceability = widget.model.traceability;
     traceabilityIdController.text = widget.model.traceabilityId.toString();
     madeWithList = widget.model.madeWith!;
-    addFields();
+
     Future.wait([
       context.read<CategoryCubit>().getCategory(),
       context.read<IngredientsCubit>().getIngredients(),
       context.read<ManagerIvaCubit>().getIva(),
       context.read<ResourceCubit>().getResource(),
-    ]);
+    ]).whenComplete(() => setState(() => addFields()));
     super.initState();
   }
 
   addFields() {
+    var resouceModel = context.read<ResourceCubit>().state.resourceModel;
+    log("Model $resouceModel");
+
     for (var i = 0; i < madeWithList.length; i++) {
+      var data = resouceModel
+          .where((element) =>
+              element.resourceId.toString() ==
+              madeWithList[i]['resource'].toString())
+          .toList();
+
+      log("Data $data");
+
       var controllerText = TextEditingController();
       controllerText.text =
           madeWithList[i]['resource_percentage_used'].toString();
       controllers.add(controllerText);
       resourceIds.add(madeWithList[i]['resource']);
+      resourceNames.addAll(data.map((e) => e.resourceName).toList());
+      log("Resource Name $resourceNames");
     }
   }
 
   allListWidget() {
     final controller = TextEditingController();
     var ids;
+    String resourceName = "Select";
     setState(() {
       controllers.add(controller);
       resourceIds.add(ids);
+      resourceNames.add(resourceName);
     });
   }
 
@@ -176,8 +190,6 @@ class _EditProceedResourceScreenState extends State<EditProceedResourceScreen> {
                     );
                     Navigator.of(context).pop();
                     Navigate.toReplace(context, const ProceedResourceScreen());
-                    // Navigator.pushReplacementNamed(
-                    //     context, RoutesNames.proceedResourceScreen);
                   }
                   if (state.error != const CustomError(error: '')) {
                     SnackBarWidget.buildSnackBar(
@@ -235,15 +247,16 @@ class _EditProceedResourceScreenState extends State<EditProceedResourceScreen> {
                             "plu": pluController.text.toString(),
                             "tare": tareController.text.toString(),
                             "weight_type": weightType.toString(),
-                            "ingredient": ingrediant.toString(),
+                            "ingredient":
+                                ingrediant == null ? "" : ingrediant.toString(),
                             "revenue_percentage":
                                 revenuePercentageController.text.toString(),
                             "expiration_date": expirationDate != null
                                 ? expirationDate.toString()
-                                : null,
+                                : "",
                             "packaging_date": packagingDate != null
                                 ? packagingDate.toString()
-                                : null,
+                                : "",
                             "unit_purchase_price":
                                 unitPurchasePriceController.text.toString(),
                             "is_active": status == "Active" ? "true" : "false",
@@ -258,7 +271,7 @@ class _EditProceedResourceScreenState extends State<EditProceedResourceScreen> {
                             "made_with": madeWithList,
                           };
 
-                          context
+                          await context
                               .read<ProceedResourceCubit>()
                               .editProceedResource(widget.model.id, map);
                         }
@@ -578,7 +591,7 @@ class _EditProceedResourceScreenState extends State<EditProceedResourceScreen> {
           textFieldUpperText(AppStrings.ingredientsText),
           BlocBuilder<IngredientsCubit, IngredientsState>(
               builder: (context, state) {
-            return CustomDropDownWidget(
+            return WithOutValidationDropDown(
               hintText: AppStrings.ingredientsText,
               value: ingrediant,
               itemsMap: state.modelList.map((v) {
@@ -587,7 +600,6 @@ class _EditProceedResourceScreenState extends State<EditProceedResourceScreen> {
                   child: Text(v.description.toString()),
                 );
               }).toList(),
-              validationText: AppStrings.provideIngredientText,
               onChanged: (v) {
                 setState(() {
                   ingrediant = v;
@@ -792,92 +804,127 @@ class _EditProceedResourceScreenState extends State<EditProceedResourceScreen> {
                     Flexible(
                       child: BlocBuilder<ResourceCubit, ResourceState>(
                           builder: (context, state) {
-                        return DropdownButtonFormField(
-                          autovalidateMode: AutovalidateMode.onUserInteraction,
-                          validator: (value) {
-                            if (value == null) {
-                              return AppStrings.selectResourceText;
-                            } else {
-                              return null;
-                            }
-                          },
-                          decoration: InputDecoration(
-                            errorMaxLines: 1,
-                            contentPadding: const EdgeInsets.only(
-                                    left: 16, right: 16, top: 12, bottom: 12)
-                                .r,
-                            errorBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(
-                                        AppBorderRadius.dropDownBorderRadius)
-                                    .r,
-                                borderSide: BorderSide(
-                                  color: AppColors.redColor2,
-                                  width: 1.w,
-                                )),
-                            enabledBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(
-                                        AppBorderRadius.dropDownBorderRadius)
-                                    .r,
-                                borderSide: BorderSide(
-                                  color: AppColors.secondaryColor,
-                                  width: 1.w,
-                                )),
-                            focusedBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(
-                                        AppBorderRadius.dropDownBorderRadius)
-                                    .r,
-                                borderSide: BorderSide(
-                                  color: AppColors.secondaryColor,
-                                  width: 1.w,
-                                )),
-                            focusedErrorBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(
-                                        AppBorderRadius.dropDownBorderRadius)
-                                    .r,
-                                borderSide: BorderSide(
-                                  color: AppColors.secondaryColor,
-                                  width: 1.w,
-                                )),
-                          ),
-                          hint: Text(
-                            AppStrings.resourceText,
-                            style: Styles.circularStdBook(
-                              AppSize.text14.sp,
-                              AppColors.hintTextColor,
-                            ),
-                          ),
-                          dropdownColor: Colors.white,
-                          icon: const Icon(
-                            Icons.keyboard_arrow_down,
-                            color: AppColors.secondaryColor,
-                          ),
-                          iconSize: AppSize.icon28.r,
-                          isExpanded: true,
-                          style: Styles.circularStdMedium(
-                            AppSize.text14.sp,
-                            AppColors.primaryColor,
-                          ),
+                        return SingleSearchableDialogue(
+                          hintText: resourceNames[index].toString(),
                           value: resourceIds[index],
-                          items: state.resourceModel.map((v) {
-                            return DropdownMenuItem(
-                              value: v.resourceId,
-                              child: Text(
-                                v.resourceName.toString(),
-                                maxLines: 1,
-                                style: const TextStyle(
-                                  overflow: TextOverflow.ellipsis,
-                                ),
-                              ),
-                            );
-                          }).toList(),
-                          onChanged: (v) {
+                          itemsMap: state.resourceModel
+                              .map((e) => DropdownMenuItem(
+                                    enabled: false,
+                                    value: e.resourceName,
+                                    child: Text(
+                                      e.resourceName,
+                                      maxLines: 1,
+                                      overflow: TextOverflow.ellipsis,
+                                      style: Styles.segoeUI(
+                                          15, AppColors.blackColor),
+                                    ),
+                                  ))
+                              .toList(),
+                          onChanged: (value) {
+                            var data = state.resourceModel.where(
+                                (element) => element.resourceName == value);
+                            log("Data $data");
                             setState(() {
-                              resourceIds[index] = v;
+                              resourceIds[index] =
+                                  data.map((e) => e.resourceId).first;
+
+                              resourceNames[index] =
+                                  data.map((e) => e.resourceName).first;
                             });
+                            log("ONCHANGE $resourceIds");
                           },
                         );
                       }),
                     ),
+                    // Flexible(
+                    //   child: BlocBuilder<ResourceCubit, ResourceState>(
+                    //       builder: (context, state) {
+                    //     return DropdownButtonFormField(
+                    //       autovalidateMode: AutovalidateMode.onUserInteraction,
+                    //       validator: (value) {
+                    //         if (value == null) {
+                    //           return AppStrings.selectResourceText;
+                    //         } else {
+                    //           return null;
+                    //         }
+                    //       },
+                    //       decoration: InputDecoration(
+                    //         errorMaxLines: 1,
+                    //         contentPadding: const EdgeInsets.only(
+                    //                 left: 16, right: 16, top: 12, bottom: 12)
+                    //             .r,
+                    //         errorBorder: OutlineInputBorder(
+                    //             borderRadius: BorderRadius.circular(
+                    //                     AppBorderRadius.dropDownBorderRadius)
+                    //                 .r,
+                    //             borderSide: BorderSide(
+                    //               color: AppColors.redColor2,
+                    //               width: 1.w,
+                    //             )),
+                    //         enabledBorder: OutlineInputBorder(
+                    //             borderRadius: BorderRadius.circular(
+                    //                     AppBorderRadius.dropDownBorderRadius)
+                    //                 .r,
+                    //             borderSide: BorderSide(
+                    //               color: AppColors.secondaryColor,
+                    //               width: 1.w,
+                    //             )),
+                    //         focusedBorder: OutlineInputBorder(
+                    //             borderRadius: BorderRadius.circular(
+                    //                     AppBorderRadius.dropDownBorderRadius)
+                    //                 .r,
+                    //             borderSide: BorderSide(
+                    //               color: AppColors.secondaryColor,
+                    //               width: 1.w,
+                    //             )),
+                    //         focusedErrorBorder: OutlineInputBorder(
+                    //             borderRadius: BorderRadius.circular(
+                    //                     AppBorderRadius.dropDownBorderRadius)
+                    //                 .r,
+                    //             borderSide: BorderSide(
+                    //               color: AppColors.secondaryColor,
+                    //               width: 1.w,
+                    //             )),
+                    //       ),
+                    //       hint: Text(
+                    //         AppStrings.resourceText,
+                    //         style: Styles.circularStdBook(
+                    //           AppSize.text14.sp,
+                    //           AppColors.hintTextColor,
+                    //         ),
+                    //       ),
+                    //       dropdownColor: Colors.white,
+                    //       icon: const Icon(
+                    //         Icons.keyboard_arrow_down,
+                    //         color: AppColors.secondaryColor,
+                    //       ),
+                    //       iconSize: AppSize.icon28.r,
+                    //       isExpanded: true,
+                    //       style: Styles.circularStdMedium(
+                    //         AppSize.text14.sp,
+                    //         AppColors.primaryColor,
+                    //       ),
+                    //       value: resourceIds[index],
+                    //       items: state.resourceModel.map((v) {
+                    //         return DropdownMenuItem(
+                    //           value: v.resourceId,
+                    //           child: Text(
+                    //             v.resourceName.toString(),
+                    //             maxLines: 1,
+                    //             style: const TextStyle(
+                    //               overflow: TextOverflow.ellipsis,
+                    //             ),
+                    //           ),
+                    //         );
+                    //       }).toList(),
+                    //       onChanged: (v) {
+                    //         setState(() {
+                    //           resourceIds[index] = v;
+                    //         });
+                    //       },
+                    //     );
+                    //   }),
+                    // ),
                     CustomSizedBox.width(10),
                     Flexible(
                       child: CustomTextField(

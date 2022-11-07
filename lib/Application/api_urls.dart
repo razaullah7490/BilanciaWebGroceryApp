@@ -21,4 +21,5 @@ class ApiUrls {
   static const String tagUrl = "$baseUrl/agenda/tag/";
   static const String eventUrl = "$baseUrl/agenda/event/";
   static const String notificationUrl = "$baseUrl/manager/notification";
+  static const String productionParkUrl = "$baseUrl/manager/production-park/";
 }

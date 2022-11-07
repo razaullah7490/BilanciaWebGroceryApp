@@ -1,8 +1,7 @@
 // ignore_for_file: prefer_typing_uninitialized_variables, use_build_context_synchronously
-
 import 'dart:developer';
 import 'dart:io';
-
+import '../../../../dashboard/components/tag_drop_down.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
@@ -21,7 +20,6 @@ import 'package:grocery/Presentation/resources/text_styles.dart';
 import 'package:grocery/Presentation/views/home/inventory/all%20tabs/category/category_view_model.dart';
 import 'package:grocery/Presentation/views/home/inventory/all%20tabs/resources/bloc/resource_cubit.dart';
 import 'package:image_picker/image_picker.dart';
-
 import '../../../../../../../Data/errors/custom_error.dart';
 import '../../../../../../../Domain/models/inventory/resources_model.dart';
 import '../../../../../../common/custom_bottom_sheet.dart';
@@ -31,11 +29,10 @@ import '../../../../../../common/image_picker.dart';
 import '../../../../../../common/loading_indicator.dart';
 import '../../../../../../resources/border_radius.dart';
 import '../../../../../../resources/routes/navigation.dart';
-import '../../../../../../resources/routes/routes_names.dart';
 import '../../../../../../resources/size.dart';
 import '../../../../../../state management/bloc/ingredientsBloc/ingredients_cubit.dart';
-import '../../../../../../state management/bloc/ivaBloc/manager_iva_cubit.dart';
 import '../../category/bloc/category_cubit.dart';
+import '../../iva/ivaBloc/manager_iva_cubit.dart';
 import '../../proceedResource/proceed_resource_view_model.dart';
 import '../resources_screen.dart';
 
@@ -225,7 +222,8 @@ class _EditResourceScreenState extends State<EditResourceScreen> {
                           "plu": pluController.text.toString(),
                           "tare": tareController.text.toString(),
                           "weight_type": weightType.toString(),
-                          "ingredient": ingrediant.toString(),
+                          "ingredient":
+                              ingrediant == null ? "" : ingrediant.toString(),
                           "revenue_percentage":
                               revenuePercentageController.text.toString(),
                           "expiration_date": expirationDate != null
@@ -618,7 +616,7 @@ class _EditResourceScreenState extends State<EditResourceScreen> {
           textFieldUpperText(AppStrings.ingredientsText),
           BlocBuilder<IngredientsCubit, IngredientsState>(
               builder: (context, state) {
-            return CustomDropDownWidget(
+            return WithOutValidationDropDown(
               hintText: AppStrings.ingredientsText,
               value: ingrediant,
               itemsMap: state.modelList.map((v) {
@@ -627,7 +625,6 @@ class _EditResourceScreenState extends State<EditResourceScreen> {
                   child: Text(v.description.toString()),
                 );
               }).toList(),
-              validationText: AppStrings.provideIngredientText,
               onChanged: (v) {
                 setState(() {
                   ingrediant = v;

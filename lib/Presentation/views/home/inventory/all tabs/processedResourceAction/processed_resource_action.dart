@@ -1,16 +1,21 @@
+// ignore_for_file: use_build_context_synchronously
+import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:grocery/Presentation/common/shimmer%20effect/list_tile_shimmer.dart';
 import 'package:grocery/Presentation/resources/routes/navigation.dart';
 import 'package:grocery/Presentation/views/home/inventory/all%20tabs/components/proceed_resource_action_detail_container.dart';
 import 'package:grocery/Presentation/views/home/inventory/all%20tabs/components/proceed_resource_detail_container.dart';
+import 'package:grocery/Presentation/views/home/inventory/all%20tabs/components/production_park_dailogue.dart';
 import 'package:grocery/Presentation/views/home/inventory/all%20tabs/processedResourceAction/addEditDeleteProceedAction/add_proceed_resource_action.dart';
 import 'package:grocery/Presentation/views/home/inventory/all%20tabs/processedResourceAction/bloc/proceed_resource_action_cubit.dart';
+import 'package:grocery/Presentation/views/home/inventory/all%20tabs/processedResourceAction/productionParkBloc/production_park_cubit.dart';
+import '../../../../../../Application/Prefs/app_prefs.dart';
 import '../../../../../common/add_item_button.dart';
 import '../../../../../common/app_bar.dart';
 import '../../../../../common/data_not_available_text.dart';
-import '../../../../../common/loading_indicator.dart';
 import '../../../../../resources/app_strings.dart';
+import '../../../../../resources/colors_palette.dart';
 import '../../../../../resources/sized_box.dart';
 
 class ProcessedResourceActionScreen extends StatefulWidget {
@@ -28,7 +33,19 @@ class _ProcessedResourceActionScreenState
     Future.wait([
       context.read<ProceedResourceActionCubit>().getProceedResourceAction(),
     ]);
+    showDialogue();
     super.initState();
+  }
+
+  showDialogue() async {
+    var id = await AppPrefs.getProcessedResourceId();
+    if (id.isNotEmpty) {
+      var res = await context.read<ProductionParkCubit>().getProductionPark(id);
+      if (res.isNotEmpty) {
+        await productionParkDialogue(context);
+        log("PRODUCTION PARK $res");
+      }
+    }
   }
 
   @override
@@ -43,7 +60,7 @@ class _ProcessedResourceActionScreenState
           addItemButtonWidget(
             context: context,
             text: AppStrings.addNewText,
-            onTap: () {
+            onTap: () async {
               final args = ProceedResourceData(
                 id: 0,
                 name: "",
@@ -70,13 +87,24 @@ class _ProcessedResourceActionScreenState
                         itemCount: state.resourceActionModel.length,
                         itemBuilder: (context, index) {
                           var singleData = state.resourceActionModel[index];
+                          log("Processed resource action Id ${singleData.processedresourceActionId}");
                           return ProceedResourceActionDetailContainer(
-                              model: singleData);
+                            model: singleData,
+                          );
                         }),
                   );
           }),
         ],
       ),
     );
+  }
+
+  Future<void> productionParkDialogue(BuildContext context) async {
+    return showDialog<void>(
+        barrierColor: AppColors.deleteDialogueBarrierColor,
+        context: context,
+        builder: (BuildContext context) {
+          return const ProductionParkDialogue();
+        });
   }
 }

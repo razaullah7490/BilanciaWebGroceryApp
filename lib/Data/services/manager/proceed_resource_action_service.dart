@@ -21,6 +21,7 @@ class ProceedResourceActionService {
       log("testing ${res.statusCode}");
       log("data ${res.body}");
       var data = json.decode(res.body);
+      await AppPrefs.setProcessedResourceId(data['id'].toString());
       if (res.statusCode != 201) {
         throw httpErrorHandler(data['detail'].toString());
       }

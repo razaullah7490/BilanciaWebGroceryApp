@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:grocery/Data/repository/manager/proceed_resource_repository.dart';
@@ -71,6 +73,7 @@ class ProceedResourceCubit extends Cubit<ProceedResourceState> {
       ));
       return res;
     } on CustomError catch (e) {
+      log("Cubit Error $e");
       emit(state.copyWith(
         status: ProceedResourceEnum.error,
         error: CustomError(error: e.toString()),

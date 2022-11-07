@@ -102,6 +102,8 @@ class AppStrings {
   static const String noTagText = "Nessun tag";
   static const String participantsLoadingText =
       "Si prega di attendere, mentre i partecipanti vengono caricati";
+  static const String noUpcomingEventsYetText =
+      "nessun evento ancora\npianificato";
 
   //Product
   static const String productsText = "Prodotti";
@@ -400,4 +402,19 @@ class AppStrings {
   static const String eventUpdatedSuccessText =
       "Evento aggiornato con successo";
   static const String eventDeleteSuccessText = "Evento eliminato con successo";
+
+  //Not Translated
+
+  static const String selectOriginActionText = "Select Origin Actions";
+  static const String selectResourceToContinueText =
+      "Select resource to continue";
+  static const String searchResourceText = "Search Resource";
+  static const String closeText = "Close";
+  static const String addIvaText = "Add Iva";
+  static const String valueText = "Value";
+  static const String addAliquotaIva = "Add Aliquota IVA";
+  static const String enterAliquotaIva = "Enter aliquota iva value";
+  static const String provideValue = "Provide value";
+  static const String noIvaAddedText = "No Iva Added Yet";
+  static const String ivaAddedSuccessText = "IVA value added Successfully";
 }

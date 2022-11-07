@@ -71,33 +71,35 @@ class ProceedResourceDetailContainer extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                CustomSizedBox.height(5),
-                titleText(model.name.toString()),
-                CustomSizedBox.height(5),
-                subTitleText("${AppStrings.aliquotaIVAText} :",
-                    model.ivaAliquota.toString()),
-                subTitleText(
-                    "${AppStrings.categoryText} :", model.category.toString()),
-                subTitleText("${AppStrings.quantityOnlyText} :",
-                    model.stockQuantity.toString()),
-                salePriceText(model.unitSalePrice.toString()),
-                subTitleText("${AppStrings.weightTypeText} :",
-                    model.weightType.toString()),
-                CustomSizedBox.height(3),
-                model.isDeleted == true
-                    ? Padding(
-                        padding: const EdgeInsets.only(top: AppSize.p6).r,
-                        child: Text(AppStrings.proceedResourceDeleteInText,
-                            style: Styles.segoeUI(
-                              AppSize.text10.sp,
-                              AppColors.redColor2,
-                            )),
-                      )
-                    : Container()
-              ],
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  CustomSizedBox.height(5),
+                  titleText(model.name.toString()),
+                  CustomSizedBox.height(5),
+                  subTitleText("${AppStrings.aliquotaIVAText} :",
+                      model.ivaAliquota.toString()),
+                  subTitleText("${AppStrings.categoryText} :",
+                      model.category.toString()),
+                  subTitleText("${AppStrings.quantityOnlyText} :",
+                      model.stockQuantity.toString()),
+                  salePriceText(model.unitSalePrice.toString()),
+                  subTitleText("${AppStrings.weightTypeText} :",
+                      model.weightType.toString()),
+                  CustomSizedBox.height(3),
+                  model.isDeleted == true
+                      ? Padding(
+                          padding: const EdgeInsets.only(top: AppSize.p6).r,
+                          child: Text(AppStrings.proceedResourceDeleteInText,
+                              style: Styles.segoeUI(
+                                AppSize.text10.sp,
+                                AppColors.redColor2,
+                              )),
+                        )
+                      : Container()
+                ],
+              ),
             ),
             editDeleteIcons(
               onTapEdit: () {
@@ -168,6 +170,8 @@ class ProceedResourceDetailContainer extends StatelessWidget {
   Widget titleText(String text) {
     return Text(
       text,
+      maxLines: 2,
+      overflow: TextOverflow.ellipsis,
       style: Styles.circularStdMedium(
         AppSize.text15.sp,
         AppColors.containerTextColor,

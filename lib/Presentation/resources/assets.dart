@@ -29,4 +29,7 @@ class Assets {
   static const String dashNewImage = "assets/images/dash_new.webp";
   static const String tagImage = "assets/images/tag.png";
   static const String noTagImage = "assets/images/noTag.png";
+  static const String eventImage = "assets/images/event.png";
+  static const String noMoreEventsImage = "assets/images/noMoreEvents.png";
+  static const String ivaImage = "assets/images/iva.png";
 }

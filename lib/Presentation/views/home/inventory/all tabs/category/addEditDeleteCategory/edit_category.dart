@@ -1,6 +1,4 @@
 // ignore_for_file: prefer_typing_uninitialized_variables
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -17,14 +15,12 @@ import 'package:grocery/Presentation/resources/text_styles.dart';
 import 'package:grocery/Presentation/views/home/inventory/all%20tabs/category/bloc/category_cubit.dart';
 import 'package:grocery/Presentation/views/home/inventory/all%20tabs/category/category_screen.dart';
 import 'package:grocery/Presentation/views/home/inventory/all%20tabs/category/category_view_model.dart';
-
 import '../../../../../../../Data/errors/custom_error.dart';
 import '../../../../../../../Domain/models/inventory/category_model.dart';
 import '../../../../../../common/loading_indicator.dart';
 import '../../../../../../resources/border_radius.dart';
 import '../../../../../../resources/routes/navigation.dart';
-import '../../../../../../resources/routes/routes_names.dart';
-import '../../../../../../state management/bloc/ivaBloc/manager_iva_cubit.dart';
+import '../../iva/ivaBloc/manager_iva_cubit.dart';
 
 class EditCategoryScreen extends StatefulWidget {
   final CategoryModel model;

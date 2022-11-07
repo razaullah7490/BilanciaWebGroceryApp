@@ -1,21 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:grocery/Domain/models/notification_model.dart';
 import 'package:grocery/Presentation/resources/assets.dart';
 import 'package:grocery/Presentation/resources/border_radius.dart';
 import 'package:grocery/Presentation/resources/colors_palette.dart';
 import 'package:grocery/Presentation/resources/size.dart';
 import 'package:grocery/Presentation/resources/sized_box.dart';
 import 'package:grocery/Presentation/resources/text_styles.dart';
+import 'package:intl/intl.dart';
 
 class NotficationDetailContainer extends StatelessWidget {
-  const NotficationDetailContainer({super.key});
+  final NotificationModel model;
+  const NotficationDetailContainer({
+    super.key,
+    required this.model,
+  });
 
   @override
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.symmetric(
         horizontal: AppSize.p15,
-        vertical: AppSize.p12,
+        vertical: AppSize.p14,
       ).r,
       margin: const EdgeInsets.symmetric(
               horizontal: AppSize.p16, vertical: AppSize.m8)
@@ -33,8 +39,8 @@ class NotficationDetailContainer extends StatelessWidget {
       child: Row(
         children: [
           Container(
-            width: 60.w,
-            height: 60.w,
+            width: 63.w,
+            height: 63.w,
             decoration: BoxDecoration(
               color: AppColors.dashContainerIcon4,
               borderRadius: BorderRadius.circular(
@@ -54,11 +60,16 @@ class NotficationDetailContainer extends StatelessWidget {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                titleText("Welcome to Baliancia Web!!!"),
                 CustomSizedBox.height(2),
-                subTitleText(
-                    "Explore the best grocery inventory at our platform"),
+                titleText(model.title),
+                subTitleText(model.message),
+                CustomSizedBox.height(2),
+                Align(
+                  alignment: Alignment.bottomRight,
+                  child: dateTimeText(getDateTime(model.dateTime)),
+                ),
               ],
             ),
           ),
@@ -89,5 +100,22 @@ class NotficationDetailContainer extends StatelessWidget {
         AppColors.containerTextColor,
       ),
     );
+  }
+
+  Widget dateTimeText(String text) {
+    return Text(
+      text,
+      maxLines: 1,
+      overflow: TextOverflow.ellipsis,
+      style: Styles.circularStdBook(
+        AppSize.text12.sp,
+        AppColors.hintTextColor,
+      ),
+    );
+  }
+
+  String getDateTime(dt) {
+    DateTime dateTime = DateTime.parse(dt);
+    return DateFormat('MMM dd,yyy').add_jm().format(dateTime);
   }
 }

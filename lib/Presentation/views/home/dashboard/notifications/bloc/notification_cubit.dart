@@ -35,4 +35,25 @@ class NotificationCubit extends Cubit<NotificationState> {
       return [];
     }
   }
+
+  Future<bool> editNotification(id) async {
+    emit(state.copyWith(
+      status: NotificationEnum.loading,
+      error: const CustomError(error: ""),
+    ));
+    try {
+      var res = await repo.editNotification(id);
+      emit(state.copyWith(
+        status: NotificationEnum.success,
+        error: const CustomError(error: ""),
+      ));
+      return res;
+    } on CustomError catch (e) {
+      emit(state.copyWith(
+        status: NotificationEnum.error,
+        error: CustomError(error: e.toString()),
+      ));
+      return false;
+    }
+  }
 }

@@ -258,7 +258,7 @@ class _EditEventScreenState extends State<EditEventScreen> {
           textFieldUpperText(AppStrings.tagText),
           BlocBuilder<TagsCubit, TagsState>(
             builder: (context, state) {
-              return TagDropDown(
+              return WithOutValidationDropDown(
                 hintText: AppStrings.selectTagText,
                 value: tag,
                 itemsMap: state.tagModel.map((v) {

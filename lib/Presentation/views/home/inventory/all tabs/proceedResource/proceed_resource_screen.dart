@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -8,9 +10,14 @@ import 'package:grocery/Presentation/resources/sized_box.dart';
 import 'package:grocery/Presentation/views/home/inventory/all%20tabs/components/proceed_resource_detail_container.dart';
 import 'package:grocery/Presentation/views/home/inventory/all%20tabs/proceedResource/addEditDeleteProceedResource/add_proceed_resource.dart';
 import 'package:grocery/Presentation/views/home/inventory/all%20tabs/proceedResource/bloc/proceed_resource_cubit.dart';
+import '../../../../../../Application/Prefs/app_prefs.dart';
 import '../../../../../common/data_not_available_text.dart';
 import '../../../../../common/shimmer effect/list_tile_shimmer.dart';
+import '../../../../../resources/colors_palette.dart';
 import '../../../../../resources/routes/navigation.dart';
+import '../components/production_park_dailogue.dart';
+import '../components/single_searchable_drop_down.dart';
+import '../processedResourceAction/productionParkBloc/production_park_cubit.dart';
 
 class ProceedResourceScreen extends StatefulWidget {
   const ProceedResourceScreen({super.key});
@@ -25,8 +32,19 @@ class _ProceedResourceScreenState extends State<ProceedResourceScreen> {
     Future.wait([
       context.read<ProceedResourceCubit>().getProceedResource(),
     ]);
-
+    showDialogue();
     super.initState();
+  }
+
+  showDialogue() async {
+    var id = await AppPrefs.getProcessedResourceId();
+    if (id.isNotEmpty) {
+      var res = await context.read<ProductionParkCubit>().getProductionPark(id);
+      if (res.isNotEmpty) {
+        await productionParkDialogue(context);
+        log("PRODUCTION PARK $res");
+      }
+    }
   }
 
   @override
@@ -42,8 +60,7 @@ class _ProceedResourceScreenState extends State<ProceedResourceScreen> {
             context: context,
             text: AppStrings.addProccedText,
             onTap: () => Navigate.to(context, const AddProceedResource()),
-            // Navigator.pushNamed(
-            //     context, RoutesNames.addProceedResourceScreen),
+            //Navigate.to(context, const SingleSearchableDropDown()),
           ),
           CustomSizedBox.height(25),
           BlocBuilder<ProceedResourceCubit, ProceedResourceState>(
@@ -62,7 +79,7 @@ class _ProceedResourceScreenState extends State<ProceedResourceScreen> {
                         itemCount: state.proceedResourceModel.length,
                         itemBuilder: (context, index) {
                           var singleData = state.proceedResourceModel[index];
-                          log("Single Data ${singleData.name}");
+
                           return ProceedResourceDetailContainer(
                               model: singleData);
                         }),
@@ -71,5 +88,14 @@ class _ProceedResourceScreenState extends State<ProceedResourceScreen> {
         ],
       ),
     );
+  }
+
+  Future<void> productionParkDialogue(BuildContext context) async {
+    return showDialog<void>(
+        barrierColor: AppColors.deleteDialogueBarrierColor,
+        context: context,
+        builder: (BuildContext context) {
+          return const ProductionParkDialogue();
+        });
   }
 }

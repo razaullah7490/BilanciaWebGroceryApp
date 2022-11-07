@@ -16,4 +16,13 @@ class IvaRepository {
       throw CustomError(error: e.toString());
     }
   }
+
+  Future<bool> addIva(ivaValue) async {
+    try {
+      var res = await ivaService.addIva(ivaValue);
+      return res;
+    } catch (e) {
+      throw CustomError(error: e.toString());
+    }
+  }
 }

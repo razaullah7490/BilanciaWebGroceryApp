@@ -109,7 +109,7 @@ class ProceedResourceService {
       );
 
       var data = json.decode(res.body);
-      log("Data ${res.statusCode} $data");
+      log("Response Data ${res.statusCode} $data");
       if (res.statusCode != 200) {
         log("Data ${res.statusCode} ${res.body}");
         throw httpErrorHandler(data['detail'].toString());

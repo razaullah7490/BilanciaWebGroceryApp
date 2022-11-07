@@ -1,10 +1,8 @@
 // ignore_for_file: prefer_typing_uninitialized_variables, use_build_context_synchronously
 import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:grocery/Data/services/manager/proceed_resource_action_service.dart';
 import 'package:grocery/Presentation/common/app_bar.dart';
 import 'package:grocery/Presentation/common/custom_button.dart';
 import 'package:grocery/Presentation/common/custom_drop_down.dart';
@@ -13,7 +11,6 @@ import 'package:grocery/Presentation/resources/app_strings.dart';
 import 'package:grocery/Presentation/resources/border_radius.dart';
 import 'package:grocery/Presentation/resources/colors_palette.dart';
 import 'package:grocery/Presentation/resources/routes/navigation.dart';
-import 'package:grocery/Presentation/resources/routes/routes_names.dart';
 import 'package:grocery/Presentation/resources/size.dart';
 import 'package:grocery/Presentation/resources/sized_box.dart';
 import 'package:grocery/Presentation/resources/text_styles.dart';
@@ -22,11 +19,11 @@ import 'package:grocery/Presentation/views/home/inventory/all%20tabs/proceedReso
 import 'package:grocery/Presentation/views/home/inventory/all%20tabs/processedResourceAction/processed_resource_action.dart';
 import 'package:grocery/Presentation/views/home/inventory/all%20tabs/resourceActions/resource_action_view_model.dart';
 import '../../../../../../../Data/errors/custom_error.dart';
-import '../../../../../../../Domain/models/inventory/proceed_resource_action_model.dart';
 import '../../../../../../common/custom_date_picker.dart';
 import '../../../../../../common/date_picker.dart';
 import '../../../../../../common/loading_indicator.dart';
 import '../../../../../../common/snack_bar_widget.dart';
+import '../../proceedResource/proceed_resource_screen.dart';
 import '../bloc/proceed_resource_action_cubit.dart';
 
 class AddProceedResourceActionScreen extends StatefulWidget {
@@ -91,8 +88,7 @@ class _AddProceedResourceActionScreenState
                     Navigator.of(context).pop();
                     Navigate.toReplace(
                         context, const ProcessedResourceActionScreen());
-                    // Navigator.pushReplacementNamed(
-                    //     context, RoutesNames.proceedResourceActionsScreen);
+
                     SnackBarWidget.buildSnackBar(
                       context,
                       AppStrings.proceedResourceActionAddedSuccessText,
@@ -102,6 +98,7 @@ class _AddProceedResourceActionScreenState
                     );
                   } else {
                     Navigator.of(context).pop();
+                    Navigate.toReplace(context, const ProceedResourceScreen());
                     SnackBarWidget.buildSnackBar(
                       context,
                       AppStrings.proceedResourceActionAddedSuccessText,
@@ -146,6 +143,7 @@ class _AddProceedResourceActionScreenState
                           "money_type": moneyType.toString(),
                         };
                         log("map $map");
+
                         await context
                             .read<ProceedResourceActionCubit>()
                             .addProceedResourceAction(map);

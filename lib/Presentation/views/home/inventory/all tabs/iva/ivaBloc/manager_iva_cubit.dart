@@ -2,7 +2,7 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:grocery/Data/repository/manager/iva_repository.dart';
 import 'package:grocery/Domain/models/manager/iva_model.dart';
-import '../../../../Data/errors/custom_error.dart';
+import '../../../../../../../Data/errors/custom_error.dart';
 part 'manager_iva_state.dart';
 
 class ManagerIvaCubit extends Cubit<ManagerIvaState> {
@@ -33,6 +33,28 @@ class ManagerIvaCubit extends Cubit<ManagerIvaState> {
         error: CustomError(error: e.toString()),
       ));
       return [];
+    }
+  }
+
+  Future<bool> addIva(ivaValue) async {
+    emit(state.copyWith(
+      status: IvaEnum.loading,
+      error: const CustomError(error: ""),
+    ));
+    try {
+      var res = await repo.addIva(ivaValue);
+      emit(state.copyWith(
+        status: IvaEnum.success,
+        error: const CustomError(error: ""),
+      ));
+
+      return res;
+    } on CustomError catch (e) {
+      emit(state.copyWith(
+        status: IvaEnum.error,
+        error: CustomError(error: e.toString()),
+      ));
+      return false;
     }
   }
 }

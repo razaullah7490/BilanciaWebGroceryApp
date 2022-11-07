@@ -19,6 +19,9 @@ import 'package:grocery/Presentation/views/home/dashboard/agenda/events/Bloc/eve
 import 'package:grocery/Presentation/views/home/dashboard/agenda/events/all_events.dart';
 import 'package:grocery/Presentation/views/home/dashboard/agenda/tags/Bloc/tags_cubit.dart';
 import 'package:grocery/Presentation/views/home/dashboard/agenda/tags/all_tags.dart';
+import 'package:grocery/Presentation/views/home/dashboard/components/no_event_container.dart';
+import 'package:grocery/Presentation/views/home/dashboard/components/no_more_events_container.dart';
+import 'package:grocery/Presentation/views/home/dashboard/notifications/bloc/notification_cubit.dart';
 import 'package:grocery/Presentation/views/home/dashboard/notifications/notifications_screen.dart';
 import 'package:intl/intl.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
@@ -41,6 +44,7 @@ class _DashBoardLargeAppBarState extends State<DashBoardLargeAppBar> {
     Future.wait([
       context.read<EventCubit>().getEvent(),
       context.read<TagsCubit>().getAllTags(),
+      context.read<NotificationCubit>().getNotifications(),
     ]);
     super.initState();
   }
@@ -54,15 +58,19 @@ class _DashBoardLargeAppBarState extends State<DashBoardLargeAppBar> {
         color: AppColors.appBarColor,
         child: Column(
           children: [
-            appBar("1"),
+            BlocBuilder<NotificationCubit, NotificationState>(
+                builder: (context, state) {
+              return appBar("${state.modelList.length}");
+            }),
             CustomSizedBox.height(10),
             BlocBuilder<EventCubit, EventState>(builder: (context, state) {
               var tagModel = context.read<TagsCubit>().state.tagModel;
+              //var eventModelLength = state.eventModel.length + 1;
               if (state.status == EventEnum.loading) {
                 return const EventContainerShimmerEffect();
               }
               return state.eventModel.isEmpty
-                  ? buildContainer()
+                  ? const NoMoreEventsContainer()
                   : Column(
                       children: [
                         CarouselSlider.builder(
@@ -100,64 +108,6 @@ class _DashBoardLargeAppBarState extends State<DashBoardLargeAppBar> {
             }),
           ],
         ),
-      ),
-    );
-  }
-
-  Widget buildContainer() {
-    return Container(
-      height: MediaQueryValues(context).height * 0.22,
-      margin: const EdgeInsets.symmetric(horizontal: AppSize.m10),
-      padding: const EdgeInsets.symmetric(
-        horizontal: AppSize.p14,
-        vertical: AppSize.p12,
-      ).r,
-      decoration: BoxDecoration(
-        color: AppColors.whiteColor,
-        borderRadius: BorderRadius.circular(
-          AppBorderRadius.dashboardSliderBorderRadius.r,
-        ),
-        boxShadow: [
-          BoxShadow(
-            color: AppColors.primaryColor.withOpacity(0.3),
-            blurRadius: 15,
-            spreadRadius: 2,
-            //offset:const Offset(0, 5),
-          ),
-        ],
-      ),
-      child: Row(
-        children: [
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  "Order\nGroceries\nOnline",
-                  style: Styles.circularStdMedium(
-                    22.sp,
-                    AppColors.primaryColor,
-                  ),
-                ),
-                CustomSizedBox.height(5),
-                Text(
-                  "Save time We'll do the shopping for you",
-                  style: Styles.circularStdBook(
-                    17.sp,
-                    AppColors.primaryColor.withOpacity(0.6),
-                  ),
-                ),
-              ],
-            ),
-          ),
-          Image.asset(
-            Assets.dashNewImage,
-            width: 135.w,
-            height: 110.h,
-            fit: BoxFit.fill,
-          ),
-        ],
       ),
     );
   }
@@ -251,10 +201,11 @@ class _DashBoardLargeAppBarState extends State<DashBoardLargeAppBar> {
                     ],
                   ),
                   child: Center(
-                    child: Icon(
-                      Icons.add_card_rounded,
+                    child: Image.asset(
+                      Assets.eventImage,
                       color: AppColors.primaryColor,
-                      size: AppSize.icon25.r,
+                      width: 27.w,
+                      height: 27.w,
                     ),
                   ),
                 ),

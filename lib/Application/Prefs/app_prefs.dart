@@ -69,4 +69,15 @@ class AppPrefs {
     var password = _prefs.getString(AppPrefsKeys.userPassword) ?? "";
     return password;
   }
+
+  static Future<void> setProcessedResourceId(String id) async {
+    SharedPreferences _prefs = await SharedPreferences.getInstance();
+    await _prefs.setString(AppPrefsKeys.processedResourceId, id);
+  }
+
+  static Future<String> getProcessedResourceId() async {
+    SharedPreferences _prefs = await SharedPreferences.getInstance();
+    var id = _prefs.getString(AppPrefsKeys.processedResourceId) ?? "";
+    return id;
+  }
 }

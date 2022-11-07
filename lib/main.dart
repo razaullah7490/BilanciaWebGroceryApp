@@ -17,6 +17,7 @@ import 'package:grocery/Data/repository/manager/all_users_repository.dart';
 import 'package:grocery/Data/repository/manager/notification_repository.dart';
 import 'package:grocery/Data/repository/manager/proceed_resource_action_repository.dart';
 import 'package:grocery/Data/repository/manager/proceed_resource_repository.dart';
+import 'package:grocery/Data/repository/manager/production_park_repository.dart';
 import 'package:grocery/Data/repository/manager/resource_action_repository.dart';
 import 'package:grocery/Data/repository/manager/resources_repository.dart';
 import 'package:grocery/Data/services/agenda/event_service.dart';
@@ -33,12 +34,11 @@ import 'package:grocery/Data/services/manager/iva_service.dart';
 import 'package:grocery/Data/services/manager/notification_service.dart';
 import 'package:grocery/Data/services/manager/proceed_resource_action_service.dart';
 import 'package:grocery/Data/services/manager/proceed_resource_service.dart';
+import 'package:grocery/Data/services/manager/production_park_service.dart';
 import 'package:grocery/Data/services/manager/resource_action_service.dart';
 import 'package:grocery/Data/services/manager/resources_service.dart';
 import 'package:grocery/Presentation/state%20management/bloc/ingredientsBloc/ingredients_cubit.dart';
-import 'package:grocery/Presentation/state%20management/bloc/ivaBloc/manager_iva_cubit.dart';
 import 'package:grocery/Presentation/views/auth/forget/Bloc/forget_password_cubit.dart';
-import 'package:grocery/Presentation/views/auth/forget/passwordRecovered/successfully_recoverd_password.dart';
 import 'package:grocery/Presentation/views/auth/forget/setNewPassword/set_new_password.dart';
 import 'package:grocery/Presentation/views/auth/login/login_screen.dart';
 import 'package:grocery/Presentation/views/auth/register/bloc/registration_cubit.dart';
@@ -50,6 +50,7 @@ import 'package:grocery/Presentation/views/home/dashboard/all%20tabs/settings/lo
 import 'package:grocery/Presentation/views/home/dashboard/notifications/bloc/notification_cubit.dart';
 import 'package:grocery/Presentation/views/home/inventory/all%20tabs/category/bloc/category_cubit.dart';
 import 'package:grocery/Presentation/views/home/inventory/all%20tabs/processedResourceAction/bloc/proceed_resource_action_cubit.dart';
+import 'package:grocery/Presentation/views/home/inventory/all%20tabs/processedResourceAction/productionParkBloc/production_park_cubit.dart';
 import 'package:grocery/Presentation/views/home/inventory/all%20tabs/products/bloc/product_cubit.dart';
 import 'package:grocery/Presentation/views/home/inventory/all%20tabs/resourceActions/bloc/resource_action_cubit.dart';
 import 'package:grocery/Presentation/views/home/inventory/all%20tabs/resources/bloc/resource_cubit.dart';
@@ -60,6 +61,7 @@ import 'Data/repository/manager/iva_repository.dart';
 import 'Data/services/auth/logout_service.dart';
 import 'Presentation/views/auth/login/bloc/login_cubit.dart';
 import 'Presentation/views/home/dashboard/all tabs/settings/editProfile/Bloc/user_cubit.dart';
+import 'Presentation/views/home/inventory/all tabs/iva/ivaBloc/manager_iva_cubit.dart';
 import 'Presentation/views/home/inventory/all tabs/proceedResource/bloc/proceed_resource_cubit.dart';
 
 Future<void> main() async {
@@ -177,6 +179,10 @@ class _MyAppState extends State<MyApp> {
                 create: (context) => NotificationRepository(
                       service: NotificationService(),
                     )),
+            RepositoryProvider(
+                create: (context) => ProductionParkRepository(
+                      service: ProductionParkService(),
+                    )),
           ],
           child: MultiBlocProvider(
             providers: [
@@ -233,6 +239,9 @@ class _MyAppState extends State<MyApp> {
               BlocProvider<NotificationCubit>(
                   create: (context) => NotificationCubit(
                       repo: context.read<NotificationRepository>())),
+              BlocProvider<ProductionParkCubit>(
+                  create: (context) => ProductionParkCubit(
+                      repo: context.read<ProductionParkRepository>())),
             ],
             child: MaterialApp(
               title: 'Bilancia Web',

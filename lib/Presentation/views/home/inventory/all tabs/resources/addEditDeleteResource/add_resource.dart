@@ -15,7 +15,6 @@ import 'package:grocery/Presentation/common/snack_bar_widget.dart';
 import 'package:grocery/Presentation/resources/app_strings.dart';
 import 'package:grocery/Presentation/resources/colors_palette.dart';
 import 'package:grocery/Presentation/resources/routes/navigation.dart';
-import 'package:grocery/Presentation/resources/routes/routes_names.dart';
 import 'package:grocery/Presentation/resources/sized_box.dart';
 import 'package:grocery/Presentation/resources/text_styles.dart';
 import 'package:grocery/Presentation/views/home/inventory/all%20tabs/category/bloc/category_cubit.dart';
@@ -31,7 +30,8 @@ import '../../../../../../common/image_picker.dart';
 import '../../../../../../resources/border_radius.dart';
 import '../../../../../../resources/size.dart';
 import '../../../../../../state management/bloc/ingredientsBloc/ingredients_cubit.dart';
-import '../../../../../../state management/bloc/ivaBloc/manager_iva_cubit.dart';
+import '../../../../dashboard/components/tag_drop_down.dart';
+import '../../iva/ivaBloc/manager_iva_cubit.dart';
 import '../../proceedResource/proceed_resource_view_model.dart';
 
 class AddResourceScreen extends StatefulWidget {
@@ -149,8 +149,6 @@ class _AddResourceScreenState extends State<AddResourceScreen> {
                     );
                     Navigator.of(context).pop();
                     Navigate.toReplace(context, const ResorucesScreen());
-                    // Navigator.pushReplacementNamed(
-                    //     context, RoutesNames.resourcesScreen);
                   }
                   if (state.error != const CustomError(error: '')) {
                     SnackBarWidget.buildSnackBar(
@@ -188,7 +186,8 @@ class _AddResourceScreenState extends State<AddResourceScreen> {
                           "plu": pluController.text.toString(),
                           "tare": tareController.text.toString(),
                           "weight_type": weightType.toString(),
-                          "ingredient": ingrediant.toString(),
+                          "ingredient":
+                              ingrediant == null ? "" : ingrediant.toString(),
                           "revenue_percentage":
                               revenuePercentageController.text.toString(),
                           "expiration_date": expirationDate != null
@@ -537,7 +536,7 @@ class _AddResourceScreenState extends State<AddResourceScreen> {
           textFieldUpperText(AppStrings.ingredientsText),
           BlocBuilder<IngredientsCubit, IngredientsState>(
               builder: (context, state) {
-            return CustomDropDownWidget(
+            return WithOutValidationDropDown(
               hintText: AppStrings.ingredientsText,
               value: ingrediant,
               itemsMap: state.modelList.map((v) {
@@ -546,7 +545,6 @@ class _AddResourceScreenState extends State<AddResourceScreen> {
                   child: Text(v.description.toString()),
                 );
               }).toList(),
-              validationText: AppStrings.provideIngredientText,
               onChanged: (v) {
                 setState(() {
                   ingrediant = v;

@@ -6,13 +6,12 @@ import 'package:grocery/Presentation/resources/colors_palette.dart';
 import 'package:grocery/Presentation/resources/size.dart';
 import 'package:grocery/Presentation/resources/text_styles.dart';
 
-class TagDropDown extends StatelessWidget {
+class WithOutValidationDropDown extends StatelessWidget {
   final String hintText;
   dynamic value;
-
   final ValueChanged onChanged;
   final List<DropdownMenuItem<Object>> itemsMap;
-  TagDropDown({
+  WithOutValidationDropDown({
     super.key,
     required this.hintText,
     required this.value,
