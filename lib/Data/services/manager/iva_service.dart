@@ -1,4 +1,4 @@
-// ignore_for_file: depend_on_referenced_packages
+// ignore_for_file: depend_on_referenced_packages, unused_local_variable
 import 'dart:convert';
 import 'dart:developer';
 import 'package:grocery/Application/Prefs/app_prefs.dart';
@@ -46,6 +46,49 @@ class IvaService {
       log("Body ${res.body}");
       if (res.statusCode != 201) {
         throw httpErrorHandler("An Error Occured, Please try again!");
+      }
+      return true;
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  static Future<bool> editIva(id, ivaValue) async {
+    var token = await AppPrefs.getLoginToken();
+    Map<String, dynamic> map = {"value": ivaValue};
+    String url = "${ApiUrls.ivaUrl}/$id/";
+    try {
+      var res = await http.put(
+        Uri.parse(url),
+        body: map,
+        headers: {
+          "Authorization": "Token $token",
+        },
+      );
+      log("testing ${res.statusCode}");
+      log("Body ${res.body}");
+      var data = json.decode(res.body);
+      if (res.statusCode != 200) {
+        throw httpErrorHandler(data['value'][0].toString());
+      }
+      return true;
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<bool> deleteIva(id) async {
+    var token = await AppPrefs.getLoginToken();
+    String url = "${ApiUrls.ivaUrl}/$id/";
+    try {
+      var res = await http.delete(
+        Uri.parse(url),
+        headers: {
+          "Authorization": "Token $token",
+        },
+      );
+      if (res.statusCode != 204) {
+        throw httpErrorHandler("no data");
       }
       return true;
     } catch (e) {

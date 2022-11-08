@@ -57,4 +57,46 @@ class ManagerIvaCubit extends Cubit<ManagerIvaState> {
       return false;
     }
   }
+
+  // Future<bool> editIva(id, ivaValue) async {
+  //   emit(state.copyWith(
+  //     status: IvaEnum.loading,
+  //     error: const CustomError(error: ""),
+  //   ));
+  //   try {
+  //     var res = await repo.editIva(id, ivaValue);
+  //     emit(state.copyWith(
+  //       status: IvaEnum.success,
+  //       error: const CustomError(error: ""),
+  //     ));
+  //     return res;
+  //   } on CustomError catch (e) {
+  //     emit(state.copyWith(
+  //       status: IvaEnum.error,
+  //       error: CustomError(error: e.toString()),
+  //     ));
+  //     return false;
+  //   }
+  // }
+
+  Future<bool> deleteIva(id) async {
+    emit(state.copyWith(
+      status: IvaEnum.loading,
+      error: const CustomError(error: ""),
+    ));
+    try {
+      var res = await repo.deleteIva(id);
+      emit(state.copyWith(
+        status: IvaEnum.success,
+        error: const CustomError(error: ""),
+      ));
+      return res;
+    } on CustomError catch (e) {
+      emit(state.copyWith(
+        status: IvaEnum.error,
+        error: CustomError(error: e.toString()),
+      ));
+      return false;
+    }
+  }
 }

@@ -25,4 +25,22 @@ class IvaRepository {
       throw CustomError(error: e.toString());
     }
   }
+
+  // Future<bool> editIva(id, ivaValue) async {
+  //   try {
+  //     var res = await ivaService.editIva(id, ivaValue);
+  //     return res;
+  //   } catch (e) {
+  //     throw CustomError(error: e.toString());
+  //   }
+  // }
+
+  Future<bool> deleteIva(id) async {
+    try {
+      var res = await ivaService.deleteIva(id);
+      return res;
+    } catch (e) {
+      throw CustomError(error: e.toString());
+    }
+  }
 }

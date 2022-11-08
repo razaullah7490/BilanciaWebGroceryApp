@@ -23,4 +23,13 @@ class LoadingIndicator {
       ),
     );
   }
+
+  static Widget smallLoading() {
+    return Center(
+      child: LoadingAnimationWidget.inkDrop(
+        color: AppColors.secondaryColor,
+        size: 25.r,
+      ),
+    );
+  }
 }

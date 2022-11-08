@@ -1,14 +1,25 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'dart:developer';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:grocery/Data/services/manager/iva_service.dart';
 import 'package:grocery/Presentation/resources/app_strings.dart';
 import 'package:grocery/Presentation/resources/sized_box.dart';
+import 'package:grocery/Presentation/views/home/inventory/all%20tabs/iva/ivaBloc/manager_iva_cubit.dart';
+import '../../../../../../Data/errors/custom_error.dart';
 import '../../../../../../Domain/models/manager/iva_model.dart';
+import '../../../../../common/delete_item_dialogue.dart';
 import '../../../../../common/edit_delete_container.dart';
+import '../../../../../common/loading_indicator.dart';
+import '../../../../../common/snack_bar_widget.dart';
 import '../../../../../resources/border_radius.dart';
 import '../../../../../resources/colors_palette.dart';
+import '../../../../../resources/routes/navigation.dart';
 import '../../../../../resources/size.dart';
 import '../../../../../resources/text_styles.dart';
+import '../iva/iva.dart';
 
 class IVADetailContainer extends StatefulWidget {
   final IvaModel model;
@@ -49,6 +60,7 @@ class _IVADetailContainerState extends State<IVADetailContainer> {
       child: Form(
         key: formKey,
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -75,37 +87,73 @@ class _IVADetailContainerState extends State<IVADetailContainer> {
                 ),
                 isEditPressed == false
                     ? editDeleteIcons(
-                        onTapDelete: () {},
+                        onTapDelete: () => deleteIvaDialogue(context),
                         onTapEdit: () {
                           setState(() {
-                            log("Value ${widget.model.value}");
                             ivaValueController.text =
                                 widget.model.value.toString();
                             isEditPressed = !isEditPressed;
                           });
                         },
                       )
-                    : Row(
-                        children: [
-                          Icon(
-                            Icons.check_circle_rounded,
-                            color: AppColors.primaryColor,
-                            size: AppSize.icon25.r,
-                          ),
-                          CustomSizedBox.width(2),
-                          Text(
-                            AppStrings.updateText,
-                            style: Styles.segoeUI(
-                              AppSize.text14.sp,
-                              AppColors.primaryColor,
-                            ),
-                          )
-                        ],
+                    : ivaEditButton(
+                        onTap: () async {
+                          var res = await IvaService.editIva(
+                            widget.model.id,
+                            ivaValueController.text.isEmpty
+                                ? "0.0"
+                                : ivaValueController.text,
+                          );
+
+                          if (res == true) {
+                            await SnackBarWidget.buildSnackBar(
+                              context,
+                              AppStrings.ivaUpdatedSuccessText,
+                              AppColors.greenColor,
+                              Icons.check,
+                              true,
+                            );
+
+                            await context.read<ManagerIvaCubit>().getIva();
+                          }
+                        },
                       ),
               ],
             ),
+            if (widget.model.isDeleted == true)
+              Text(
+                AppStrings.ivaDeleteInText,
+                style: Styles.segoeUI(
+                  AppSize.text12.sp,
+                  AppColors.redColor2,
+                ),
+              ),
           ],
         ),
+      ),
+    );
+  }
+
+  Widget ivaEditButton({required VoidCallback onTap}) {
+    return GestureDetector(
+      onTap: onTap,
+      behavior: HitTestBehavior.opaque,
+      child: Row(
+        children: [
+          Icon(
+            Icons.check_circle_rounded,
+            color: AppColors.primaryColor,
+            size: AppSize.icon25.r,
+          ),
+          CustomSizedBox.width(2),
+          Text(
+            AppStrings.updateText,
+            style: Styles.segoeUI(
+              AppSize.text14.sp,
+              AppColors.primaryColor,
+            ),
+          )
+        ],
       ),
     );
   }
@@ -118,6 +166,47 @@ class _IVADetailContainerState extends State<IVADetailContainer> {
         AppColors.containerTextColor,
       ),
     );
+  }
+
+  Future<void> deleteIvaDialogue(BuildContext context) async {
+    return showDialog<void>(
+        barrierColor: AppColors.deleteDialogueBarrierColor,
+        context: context,
+        builder: (BuildContext context) {
+          return BlocBuilder<ManagerIvaCubit, ManagerIvaState>(
+            builder: (context, state) {
+              return DeleteItemDialogue(
+                text: widget.model.value.toString(),
+                onDeleteButtonTap: () async {
+                  var res = await context
+                      .read<ManagerIvaCubit>()
+                      .deleteIva(widget.model.id);
+
+                  if (res == true) {
+                    Navigator.of(context).pop();
+                    Navigate.toReplace(context, const IvaScreen());
+                    SnackBarWidget.buildSnackBar(
+                      context,
+                      AppStrings.ivaDeleteSuccessText,
+                      AppColors.greenColor,
+                      Icons.check,
+                      true,
+                    );
+                  } else {
+                    Navigator.of(context).pop();
+                    SnackBarWidget.buildSnackBar(
+                      context,
+                      AppStrings.notFoundText,
+                      AppColors.redColor,
+                      Icons.close,
+                      true,
+                    );
+                  }
+                },
+              );
+            },
+          );
+        });
   }
 }
 

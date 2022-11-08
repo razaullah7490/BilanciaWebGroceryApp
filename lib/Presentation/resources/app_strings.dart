@@ -417,4 +417,7 @@ class AppStrings {
   static const String provideValue = "Provide value";
   static const String noIvaAddedText = "No Iva Added Yet";
   static const String ivaAddedSuccessText = "IVA value added Successfully";
+  static const String ivaUpdatedSuccessText = "IVA value updated Successfully";
+  static const String ivaDeleteSuccessText = "IVA value deleted Successfully";
+  static const String ivaDeleteInText = "Iva will be delete within 24 hours";
 }
