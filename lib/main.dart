@@ -1,4 +1,5 @@
 import 'dart:developer';
+
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:flutter/material.dart';
@@ -37,6 +38,8 @@ import 'package:grocery/Data/services/manager/proceed_resource_service.dart';
 import 'package:grocery/Data/services/manager/production_park_service.dart';
 import 'package:grocery/Data/services/manager/resource_action_service.dart';
 import 'package:grocery/Data/services/manager/resources_service.dart';
+import 'package:grocery/Presentation/state%20management/bloc/ingredientsBloc/ingredients_cubit.dart';
+import 'package:grocery/Presentation/state%20management/bloc/ivaBloc/manager_iva_cubit.dart';
 import 'package:grocery/Presentation/views/auth/forget/Bloc/forget_password_cubit.dart';
 import 'package:grocery/Presentation/views/auth/forget/setNewPassword/set_new_password.dart';
 import 'package:grocery/Presentation/views/auth/login/login_screen.dart';
@@ -53,6 +56,7 @@ import 'package:grocery/Presentation/views/home/inventory/all%20tabs/processedRe
 import 'package:grocery/Presentation/views/home/inventory/all%20tabs/products/bloc/product_cubit.dart';
 import 'package:grocery/Presentation/views/home/inventory/all%20tabs/resourceActions/bloc/resource_action_cubit.dart';
 import 'package:grocery/Presentation/views/home/inventory/all%20tabs/resources/bloc/resource_cubit.dart';
+
 import 'Data/repository/auth/login_repository.dart';
 import 'Data/repository/manager/category_repository.dart';
 import 'Data/repository/manager/ingredient_repository.dart';
