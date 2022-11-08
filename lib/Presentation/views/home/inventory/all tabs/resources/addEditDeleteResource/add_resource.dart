@@ -29,8 +29,8 @@ import '../../../../../../common/date_picker.dart';
 import '../../../../../../common/image_picker.dart';
 import '../../../../../../resources/border_radius.dart';
 import '../../../../../../resources/size.dart';
-import '../../../../../../state management/bloc/ingredientsBloc/ingredients_cubit.dart';
 import '../../../../dashboard/components/tag_drop_down.dart';
+import '../../ingredients/ingredientsBloc/ingredients_cubit.dart';
 import '../../iva/ivaBloc/manager_iva_cubit.dart';
 import '../../proceedResource/proceed_resource_view_model.dart';
 

@@ -18,4 +18,22 @@ class IngredientRepository {
       throw CustomError(error: e.toString());
     }
   }
+
+  Future<bool> addIngredient(String description) async {
+    try {
+      var res = await ingredientService.addIngredient(description);
+      return res;
+    } catch (e) {
+      throw CustomError(error: e.toString());
+    }
+  }
+
+  Future<bool> deleteIngredient(int id) async {
+    try {
+      var res = await ingredientService.deleteIngredient(id);
+      return res;
+    } catch (e) {
+      throw CustomError(error: e.toString());
+    }
+  }
 }

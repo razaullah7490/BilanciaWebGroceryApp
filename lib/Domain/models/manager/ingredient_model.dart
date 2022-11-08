@@ -1,29 +1,18 @@
-import 'dart:convert';
-
 class IngredientModel {
   final int ingrediantId;
   final String description;
+  final bool isDeleted;
   IngredientModel({
     required this.ingrediantId,
     required this.description,
+    required this.isDeleted,
   });
-
-  Map<String, dynamic> toMap() {
-    return <String, dynamic>{
-      'ingrediantId': ingrediantId,
-      'description': description,
-    };
-  }
 
   factory IngredientModel.fromMap(Map<String, dynamic> map) {
     return IngredientModel(
       ingrediantId: map['id'] as int,
       description: map['description'] as String,
+      isDeleted: map['is_deleted'] as bool,
     );
   }
-
-  String toJson() => json.encode(toMap());
-
-  factory IngredientModel.fromJson(String source) =>
-      IngredientModel.fromMap(json.decode(source) as Map<String, dynamic>);
 }

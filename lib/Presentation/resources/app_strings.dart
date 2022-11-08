@@ -402,6 +402,8 @@ class AppStrings {
   static const String eventUpdatedSuccessText =
       "Evento aggiornato con successo";
   static const String eventDeleteSuccessText = "Evento eliminato con successo";
+  static const String thisFieldCannotBeOmittedText =
+      "Questo campo non può essere omesso";
 
   //Not Translated
 
@@ -420,4 +422,16 @@ class AppStrings {
   static const String ivaUpdatedSuccessText = "IVA value updated Successfully";
   static const String ivaDeleteSuccessText = "IVA value deleted Successfully";
   static const String ivaDeleteInText = "Iva will be delete within 24 hours";
+  static const String addIngredientText = "Add Ingredient";
+  static const String ingredientDescriptionGreaterText =
+      "Ingredient length must be less than 1200";
+  static const String noIngredientAddedText = "No Ingredient Added Yet";
+  static const String ingredientAddedSuccessText =
+      "Ingredient added Successfully";
+  static const String ingredientUpdatedSuccessText =
+      "Ingredient updated Successfully";
+  static const String ingredientDeleteInText =
+      "Ingredient will be delete within 24 hours";
+  static const String ingredientDeleteSuccessText =
+      "Ingredient deleted Successfully";
 }

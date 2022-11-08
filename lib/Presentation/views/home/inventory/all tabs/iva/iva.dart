@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:grocery/Presentation/common/extensions/media_query_extension.dart';
+import 'package:grocery/Presentation/common/shimmer%20effect/iva_and_ingredients_shimmer.dart';
 import 'package:grocery/Presentation/views/home/inventory/all%20tabs/components/iva_detail_container.dart';
 import 'package:grocery/Presentation/views/home/inventory/all%20tabs/iva/add_iva.dart';
 import '../../../../../common/add_item_button.dart';
 import '../../../../../common/app_bar.dart';
 import '../../../../../common/data_not_available_text.dart';
-import '../../../../../common/loading_indicator.dart';
 import '../../../../../resources/app_strings.dart';
 import '../../../../../resources/sized_box.dart';
 import 'ivaBloc/manager_iva_cubit.dart';
@@ -64,9 +64,7 @@ class _IvaScreenState extends State<IvaScreen> {
             BlocBuilder<ManagerIvaCubit, ManagerIvaState>(
                 builder: (context, state) {
               if (state.status == IvaEnum.loading) {
-                return SizedBox(
-                    height: MediaQueryValues(context).height,
-                    child: LoadingIndicator.loading());
+                return const IvaAndIngredientShimmerEffect();
               }
               return state.modelList.isEmpty
                   ? SizedBox(

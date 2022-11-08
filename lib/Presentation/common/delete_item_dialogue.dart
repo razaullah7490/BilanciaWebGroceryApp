@@ -136,6 +136,8 @@ class DeleteItemDialogue extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: AppSize.p22).r,
       child: RichText(
         textAlign: TextAlign.center,
+        maxLines: 3,
+        overflow: TextOverflow.ellipsis,
         text: TextSpan(
             text: AppStrings.doYouWantToDeleteText,
             style: Styles.circularStdBook(

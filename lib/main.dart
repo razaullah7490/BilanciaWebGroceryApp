@@ -37,7 +37,6 @@ import 'package:grocery/Data/services/manager/proceed_resource_service.dart';
 import 'package:grocery/Data/services/manager/production_park_service.dart';
 import 'package:grocery/Data/services/manager/resource_action_service.dart';
 import 'package:grocery/Data/services/manager/resources_service.dart';
-import 'package:grocery/Presentation/state%20management/bloc/ingredientsBloc/ingredients_cubit.dart';
 import 'package:grocery/Presentation/views/auth/forget/Bloc/forget_password_cubit.dart';
 import 'package:grocery/Presentation/views/auth/forget/setNewPassword/set_new_password.dart';
 import 'package:grocery/Presentation/views/auth/login/login_screen.dart';
@@ -61,6 +60,7 @@ import 'Data/repository/manager/iva_repository.dart';
 import 'Data/services/auth/logout_service.dart';
 import 'Presentation/views/auth/login/bloc/login_cubit.dart';
 import 'Presentation/views/home/dashboard/all tabs/settings/editProfile/Bloc/user_cubit.dart';
+import 'Presentation/views/home/inventory/all tabs/ingredients/ingredientsBloc/ingredients_cubit.dart';
 import 'Presentation/views/home/inventory/all tabs/iva/ivaBloc/manager_iva_cubit.dart';
 import 'Presentation/views/home/inventory/all tabs/proceedResource/bloc/proceed_resource_cubit.dart';
 

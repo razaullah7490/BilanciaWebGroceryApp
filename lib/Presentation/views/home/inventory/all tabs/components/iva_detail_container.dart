@@ -1,6 +1,4 @@
 // ignore_for_file: use_build_context_synchronously
-
-import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -8,11 +6,9 @@ import 'package:grocery/Data/services/manager/iva_service.dart';
 import 'package:grocery/Presentation/resources/app_strings.dart';
 import 'package:grocery/Presentation/resources/sized_box.dart';
 import 'package:grocery/Presentation/views/home/inventory/all%20tabs/iva/ivaBloc/manager_iva_cubit.dart';
-import '../../../../../../Data/errors/custom_error.dart';
 import '../../../../../../Domain/models/manager/iva_model.dart';
 import '../../../../../common/delete_item_dialogue.dart';
 import '../../../../../common/edit_delete_container.dart';
-import '../../../../../common/loading_indicator.dart';
 import '../../../../../common/snack_bar_widget.dart';
 import '../../../../../resources/border_radius.dart';
 import '../../../../../resources/colors_palette.dart';
