@@ -8,6 +8,8 @@ import 'package:grocery/Presentation/resources/sized_box.dart';
 import 'package:grocery/Presentation/resources/text_styles.dart';
 import 'package:grocery/Presentation/views/home/dashboard/all%20tabs/settings/setting_view_model.dart';
 
+import '../../../../../resources/app_strings.dart';
+
 class SettingComponentsContainer extends StatelessWidget {
   final SettingGridModel model;
   const SettingComponentsContainer({
@@ -19,7 +21,6 @@ class SettingComponentsContainer extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () => Navigate.to(context, model.onTap),
-      // Navigator.pushNamed(context, model.onTap),
       behavior: HitTestBehavior.opaque,
       child: Container(
         padding: const EdgeInsets.symmetric(
@@ -46,8 +47,8 @@ class SettingComponentsContainer extends StatelessWidget {
               child: Center(
                   child: Image.asset(
                 model.imageUrl,
-                width: 24.w,
-                height: 24.w,
+                width: model.name == AppStrings.commandText ? 30.w : 24.w,
+                height: model.name == AppStrings.commandText ? 30.w : 24.w,
               )),
             ),
             CustomSizedBox.width(20),

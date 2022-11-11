@@ -64,11 +64,6 @@ class _SettingScreenState extends State<SettingScreen> {
                             MaterialPageRoute(
                                 builder: (context) => const LoginScreen()),
                             (Route<dynamic> route) => false);
-
-                        // Navigator.of(context).pushNamedAndRemoveUntil(
-                        //   RoutesNames.loginScreen,
-                        //   (Route<dynamic> route) => false,
-                        // );
                       }
 
                       if (state.status == LogoutEnum.error) {

@@ -1,6 +1,5 @@
+import 'dart:developer';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:grocery/Presentation/common/app_bar.dart';
@@ -8,8 +7,10 @@ import 'package:grocery/Presentation/common/loading_indicator.dart';
 import 'package:grocery/Presentation/common/shimmer%20effect/list_tile_shimmer.dart';
 import 'package:grocery/Presentation/resources/app_strings.dart';
 import 'package:grocery/Presentation/resources/colors_palette.dart';
+import 'package:grocery/Presentation/resources/routes/navigation.dart';
 import 'package:grocery/Presentation/resources/size.dart';
 import 'package:grocery/Presentation/resources/sized_box.dart';
+import 'package:grocery/Presentation/views/home/dashboard/all%20tabs/components/barcode_scanner.dart';
 import 'package:grocery/Presentation/views/home/dashboard/all%20tabs/components/search_text_field.dart';
 import 'package:grocery/Presentation/views/home/inventory/all%20tabs/category/bloc/category_cubit.dart';
 import 'package:grocery/Presentation/views/home/inventory/all%20tabs/components/category_detail_container.dart';
@@ -29,8 +30,9 @@ class ManageProductsScreen extends StatefulWidget {
 
 class _ManageProductsScreenState extends State<ManageProductsScreen> {
   final searchController = TextEditingController();
-  bool isProductSelected = true;
+  //bool isProductSelected = true;
   bool isLoad = false;
+
   @override
   void initState() {
     Future.wait([
@@ -55,32 +57,17 @@ class _ManageProductsScreenState extends State<ManageProductsScreen> {
           padding: const EdgeInsets.symmetric(horizontal: AppSize.p10).r,
           child: Column(
             children: [
-              //CustomSizedBox.height(20),
-              // ManageProductsUpperTiles(
-              //   isProductSelected: isProductSelected,
-              //   productsTap: () {
-              //     setState(() {
-              //       isProductSelected = true;
-              //     });
-              //   },
-              //   categoriesTap: () {
-              //     setState(() {
-              //       isProductSelected = false;
-              //     });
-              //   },
-              // ),
               CustomSizedBox.height(15),
-
               Row(
                 children: [
                   Flexible(
                     child: SearchTextField(
                       controller: searchController,
-                      onChanged: (v) {
+                      onChanged: (v) async {
+                        await context
+                            .read<ResourceCubit>()
+                            .searching(searchController.text);
                         setState(() {
-                          context
-                              .read<ResourceCubit>()
-                              .searching(searchController.text);
                           isLoad = true;
                         });
                       },
@@ -139,7 +126,6 @@ class _ManageProductsScreenState extends State<ManageProductsScreen> {
                     ],
                   ),
                 ),
-
               if (isLoad == true)
                 BlocConsumer<ResourceCubit, ResourceState>(
                     listener: (context, state) {},
@@ -191,7 +177,16 @@ class _ManageProductsScreenState extends State<ManageProductsScreen> {
   Widget barCodeWidget() {
     return GestureDetector(
       onTap: () async {
-        await scanBarcode();
+        Navigate.to(context, BarcodeScanner(
+          getBarcode: (barcode) async {
+            log("Barcode $barcode");
+            await context.read<ResourceCubit>().searching(barcode);
+            setState(() {
+              searchController.text = barcode;
+              isLoad = true;
+            });
+          },
+        ));
       },
       behavior: HitTestBehavior.opaque,
       child: Container(
@@ -229,25 +224,24 @@ class _ManageProductsScreenState extends State<ManageProductsScreen> {
     );
   }
 
-  Future scanBarcode() async {
-    try {
-      scanResult = await FlutterBarcodeScanner.scanBarcode(
-        "#52B467",
-        "Cancel",
-        true,
-        ScanMode.BARCODE,
-      );
-    } on PlatformException {
-      scanResult = "Failed, Please try again!!!";
-    }
-
-    if (!mounted) return;
-    if (scanResult.isNotEmpty) {
-      setState(() {
-        searchController.text =
-            scanResult.contains(pattern) ? "" : scanResult.toString();
-        isLoad = true;
-      });
-    }
-  }
+  // Future scanBarcode() async {
+  //   try {
+  //     scanResult = await FlutterBarcodeScanner.scanBarcode(
+  //       "#52B467",
+  //       "Cancel",
+  //       true,
+  //       ScanMode.BARCODE,
+  //     );
+  //   } on PlatformException {
+  //     scanResult = "Failed, Please try again!!!";
+  //   }
+  //   if (!mounted) return;
+  //   if (scanResult.isNotEmpty) {
+  //     setState(() {
+  //       isLoad = true;
+  //       searchController.text =
+  //           scanResult.contains(pattern) ? "" : scanResult.toString();
+  //     });
+  //   }
+  // }
 }

@@ -29,6 +29,7 @@ import '../../../../../../common/date_picker.dart';
 import '../../../../../../common/image_picker.dart';
 import '../../../../../../resources/border_radius.dart';
 import '../../../../../../resources/size.dart';
+import '../../../../dashboard/all tabs/components/barcode_scanner.dart';
 import '../../../../dashboard/components/tag_drop_down.dart';
 import '../../ingredients/ingredientsBloc/ingredients_cubit.dart';
 import '../../iva/ivaBloc/manager_iva_cubit.dart';
@@ -356,7 +357,16 @@ class _AddResourceScreenState extends State<AddResourceScreen> {
             controller: barCodeController,
             labelText: AppStrings.barcodeText,
             hintText: AppStrings.scanACodeText,
-            suffixIcon: BarcodeScanWidget(barCodeController: barCodeController),
+            suffixIcon: BarcodeScanWidget(onTap: () {
+              Navigate.to(context, BarcodeScanner(
+                getBarcode: (barcode) {
+                  log("Barcode $barcode");
+                  setState(() {
+                    barCodeController.text = barcode;
+                  });
+                },
+              ));
+            }),
             obscureText: false,
             textInputType: TextInputType.text,
             isLabel: false,

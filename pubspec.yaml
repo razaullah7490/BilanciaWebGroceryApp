@@ -40,16 +40,15 @@ dependencies:
   intl: ^0.17.0
   dio: ^4.0.6
   flutter_native_splash: ^2.2.9
-
   # firebase_dynamic_links: ^4.3.11
   # firebase_core: ^1.24.0
   multi_select_flutter: ^4.1.2
   flutter_colorpicker: ^1.0.3
   shimmer: ^2.0.0
   search_choices: ^2.1.5
-
   firebase_dynamic_links: ^5.0.2
   firebase_core: ^2.1.0
+  qr_code_scanner: ^1.0.1
 
 dev_dependencies:
   flutter_test:

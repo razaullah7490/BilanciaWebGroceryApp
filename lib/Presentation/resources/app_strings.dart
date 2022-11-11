@@ -434,4 +434,15 @@ class AppStrings {
       "Ingredient will be delete within 24 hours";
   static const String ingredientDeleteSuccessText =
       "Ingredient deleted Successfully";
+  static const String commandText = "Command";
+  static const String addCommandText = "Add Command";
+  static const String commandTypeText = "Command Type";
+  static const String selectCommandTypeText = "Select command type";
+  static const String provideCommandTypeText =
+      "Select command type, to continue";
+  static const String commandAddedSuccessText = "Command added Successfully";
+  static const String commandDeletedSuccessText =
+      "Command deleted Successfully";
+  static const String noCommandAddedText = "No Command Added Yet";
+  static const String noCategoryFoundText = "No Category\nFound";
 }

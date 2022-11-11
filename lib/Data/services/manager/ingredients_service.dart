@@ -1,5 +1,4 @@
 // ignore_for_file: unused_local_variable, depend_on_referenced_packages
-
 import 'dart:convert';
 import 'dart:developer';
 import 'package:grocery/Application/Prefs/app_prefs.dart';

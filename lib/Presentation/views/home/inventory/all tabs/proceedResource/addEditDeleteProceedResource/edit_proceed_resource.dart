@@ -411,7 +411,7 @@ class _EditProceedResourceScreenState extends State<EditProceedResourceScreen> {
             controller: barCodeController,
             labelText: AppStrings.barcodeText,
             hintText: AppStrings.scanACodeText,
-            suffixIcon: BarcodeScanWidget(barCodeController: barCodeController),
+            suffixIcon: BarcodeScanWidget(onTap: () {}),
             obscureText: false,
             textInputType: TextInputType.text,
             isLabel: false,

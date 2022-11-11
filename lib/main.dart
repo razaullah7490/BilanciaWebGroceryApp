@@ -1,5 +1,4 @@
 import 'dart:developer';
-
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:flutter/material.dart';
@@ -15,6 +14,7 @@ import 'package:grocery/Data/repository/auth/logout_repository.dart';
 import 'package:grocery/Data/repository/auth/registration_repository.dart';
 import 'package:grocery/Data/repository/auth/user_repository.dart';
 import 'package:grocery/Data/repository/manager/all_users_repository.dart';
+import 'package:grocery/Data/repository/manager/command_repository.dart';
 import 'package:grocery/Data/repository/manager/notification_repository.dart';
 import 'package:grocery/Data/repository/manager/proceed_resource_action_repository.dart';
 import 'package:grocery/Data/repository/manager/proceed_resource_repository.dart';
@@ -30,6 +30,7 @@ import 'package:grocery/Data/services/auth/registration_service.dart';
 import 'package:grocery/Data/services/auth/user_services.dart';
 import 'package:grocery/Data/services/manager/all_users_service.dart';
 import 'package:grocery/Data/services/manager/category_service.dart';
+import 'package:grocery/Data/services/manager/command_service.dart';
 import 'package:grocery/Data/services/manager/ingredients_service.dart';
 import 'package:grocery/Data/services/manager/iva_service.dart';
 import 'package:grocery/Data/services/manager/notification_service.dart';
@@ -38,8 +39,6 @@ import 'package:grocery/Data/services/manager/proceed_resource_service.dart';
 import 'package:grocery/Data/services/manager/production_park_service.dart';
 import 'package:grocery/Data/services/manager/resource_action_service.dart';
 import 'package:grocery/Data/services/manager/resources_service.dart';
-import 'package:grocery/Presentation/state%20management/bloc/ingredientsBloc/ingredients_cubit.dart';
-import 'package:grocery/Presentation/state%20management/bloc/ivaBloc/manager_iva_cubit.dart';
 import 'package:grocery/Presentation/views/auth/forget/Bloc/forget_password_cubit.dart';
 import 'package:grocery/Presentation/views/auth/forget/setNewPassword/set_new_password.dart';
 import 'package:grocery/Presentation/views/auth/login/login_screen.dart';
@@ -48,6 +47,7 @@ import 'package:grocery/Presentation/views/home/dashboard/agenda/events/Bloc/eve
 import 'package:grocery/Presentation/views/home/dashboard/agenda/events/Bloc/participants_cubit.dart';
 import 'package:grocery/Presentation/views/home/dashboard/agenda/tags/Bloc/tags_cubit.dart';
 import 'package:grocery/Presentation/views/home/dashboard/all%20tabs/settings/changePassword/Bloc/change_password_cubit.dart';
+import 'package:grocery/Presentation/views/home/dashboard/all%20tabs/settings/command/bloc/command_cubit.dart';
 import 'package:grocery/Presentation/views/home/dashboard/all%20tabs/settings/logout%20bloc/logout_cubit.dart';
 import 'package:grocery/Presentation/views/home/dashboard/notifications/bloc/notification_cubit.dart';
 import 'package:grocery/Presentation/views/home/inventory/all%20tabs/category/bloc/category_cubit.dart';
@@ -56,7 +56,6 @@ import 'package:grocery/Presentation/views/home/inventory/all%20tabs/processedRe
 import 'package:grocery/Presentation/views/home/inventory/all%20tabs/products/bloc/product_cubit.dart';
 import 'package:grocery/Presentation/views/home/inventory/all%20tabs/resourceActions/bloc/resource_action_cubit.dart';
 import 'package:grocery/Presentation/views/home/inventory/all%20tabs/resources/bloc/resource_cubit.dart';
-
 import 'Data/repository/auth/login_repository.dart';
 import 'Data/repository/manager/category_repository.dart';
 import 'Data/repository/manager/ingredient_repository.dart';
@@ -187,6 +186,10 @@ class _MyAppState extends State<MyApp> {
                 create: (context) => ProductionParkRepository(
                       service: ProductionParkService(),
                     )),
+            RepositoryProvider(
+                create: (context) => CommandRepository(
+                      service: CommandService(),
+                    )),
           ],
           child: MultiBlocProvider(
             providers: [
@@ -246,6 +249,9 @@ class _MyAppState extends State<MyApp> {
               BlocProvider<ProductionParkCubit>(
                   create: (context) => ProductionParkCubit(
                       repo: context.read<ProductionParkRepository>())),
+              BlocProvider<CommandCubit>(
+                  create: (context) =>
+                      CommandCubit(repo: context.read<CommandRepository>())),
             ],
             child: MaterialApp(
               title: 'Bilancia Web',

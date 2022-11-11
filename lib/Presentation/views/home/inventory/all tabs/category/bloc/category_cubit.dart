@@ -12,6 +12,17 @@ class CategoryCubit extends Cubit<CategoryState> {
     required this.repo,
   }) : super(CategoryState.initial());
 
+  List<CategoryModel> searchList = [];
+
+  searching(controller) {
+    searchList = state.categoryModel.where((element) {
+      return element.categoryName
+          .toString()
+          .toLowerCase()
+          .contains(controller.toLowerCase());
+    }).toList();
+  }
+
   Future<bool> addCategory(map) async {
     emit(state.copyWith(
       status: CategoryEnum.loading,

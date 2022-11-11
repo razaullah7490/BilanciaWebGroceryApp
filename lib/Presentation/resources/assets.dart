@@ -32,4 +32,10 @@ class Assets {
   static const String eventImage = "assets/images/event.png";
   static const String noMoreEventsImage = "assets/images/noMoreEvents.png";
   static const String ivaImage = "assets/images/iva.png";
+  static const String commandImage = "assets/images/command.png";
+  static const String switchCameraImage = "assets/images/switchCamera.png";
+  static const String cancelCameraImage = "assets/images/cancelCamera.png";
+  static const String flashOnImage = "assets/images/flashOn.png";
+  static const String flashOffImage = "assets/images/flashOff.png";
+  static const String notFoundImage = "assets/images/notFound.png";
 }

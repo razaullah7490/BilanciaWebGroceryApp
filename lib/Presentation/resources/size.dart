@@ -49,6 +49,7 @@ class AppSize {
   //Icon
   static const double icon25 = 25.0;
   static const double icon28 = 28.0;
+  static const double icon35 = 35.0;
   static const double editDeleteIconSize = 20.0;
   static const double plusIconSize = 20.0;
   static const double searchIcon = 25.0;

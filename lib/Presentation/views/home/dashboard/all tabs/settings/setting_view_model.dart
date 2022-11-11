@@ -2,13 +2,22 @@ import 'package:flutter/material.dart';
 import 'package:grocery/Presentation/resources/app_strings.dart';
 import 'package:grocery/Presentation/resources/assets.dart';
 import 'package:grocery/Presentation/resources/colors_palette.dart';
-import 'package:grocery/Presentation/resources/routes/routes_names.dart';
 import 'package:grocery/Presentation/views/home/dashboard/all%20tabs/settings/changePassword/change_password_screen.dart';
 import 'package:grocery/Presentation/views/home/dashboard/all%20tabs/settings/editProfile/edit_profile_screen.dart';
 import 'package:grocery/Presentation/views/home/dashboard/all%20tabs/settings/notificationSetting/notification_setting.dart';
 
+import 'command/command_screen.dart';
+
 class SettingViewModel {
   static List<SettingGridModel> settingList = [
+    SettingGridModel(
+      imageUrl: Assets.commandImage,
+      name: AppStrings.commandText,
+      backgroundColor: Colors.purple.withOpacity(0.1),
+      iconColor: Colors.purple.withOpacity(0.11),
+      borderColor: Colors.purple.withOpacity(0.1),
+      onTap: const CommandScreen(),
+    ),
     SettingGridModel(
       imageUrl: Assets.editProfile,
       name: AppStrings.editProfileText,
@@ -33,14 +42,6 @@ class SettingViewModel {
       borderColor: AppColors.notificationborderColor,
       onTap: const NotificationSettingScreen(),
     ),
-    // SettingGridModel(
-    //   imageUrl: Assets.logout,
-    //   name: AppStrings.logOutText,
-    //   backgroundColor: AppColors.addProductContainerColor,
-    //   iconColor: AppColors.logoutborderColor,
-    //   borderColor: AppColors.logoutborderColor,
-    //   onTap: "",
-    // ),
   ];
 }
 
