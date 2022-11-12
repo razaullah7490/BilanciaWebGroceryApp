@@ -1,5 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import '../../../Domain/models/inventory/proceed_resource_action_model.dart';
+import '../../../Domain/models/inventory/resource_action_model.dart';
 import '../../errors/custom_error.dart';
 import '../../services/manager/proceed_resource_action_service.dart';
 
@@ -19,9 +20,10 @@ class ProceedResourceActionRepository {
     }
   }
 
-  Future<List<ProcessedResourceActionModel>> getProceedResourceAction() async {
+  Future<ResourceActionModel> getProceedResourceAction(pageNumber) async {
     try {
-      var res = await proceedResourceActionService.getProceedResourceAction();
+      var res = await proceedResourceActionService
+          .getProceedResourceAction(pageNumber);
       return res;
     } catch (e) {
       throw CustomError(error: e.toString());

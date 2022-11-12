@@ -445,4 +445,5 @@ class AppStrings {
       "Command deleted Successfully";
   static const String noCommandAddedText = "No Command Added Yet";
   static const String noCategoryFoundText = "No Category\nFound";
+  static const String noSelectIngredientText = 'No Select';
 }

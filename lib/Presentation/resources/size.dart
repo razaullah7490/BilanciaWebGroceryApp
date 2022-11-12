@@ -29,6 +29,7 @@ class AppSize {
   static const double m4 = 4.0;
   static const double m15 = 15.0;
   static const double appBarIconMar = 20.0;
+  static const double m25 = 25.0;
   //Text
   static const double text10 = 10.0;
   static const double text12 = 12.0;

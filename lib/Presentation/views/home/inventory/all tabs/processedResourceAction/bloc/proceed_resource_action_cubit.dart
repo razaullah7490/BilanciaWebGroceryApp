@@ -2,7 +2,7 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:grocery/Data/repository/manager/proceed_resource_action_repository.dart';
 import '../../../../../../../Data/errors/custom_error.dart';
-import '../../../../../../../Domain/models/inventory/proceed_resource_action_model.dart';
+import '../../../../../../../Domain/models/inventory/resource_action_model.dart';
 part 'proceed_resource_action_state.dart';
 
 class ProceedResourceActionCubit extends Cubit<ProceedResourceActionState> {
@@ -32,14 +32,14 @@ class ProceedResourceActionCubit extends Cubit<ProceedResourceActionState> {
     }
   }
 
-  Future<List<ProcessedResourceActionModel>> getProceedResourceAction() async {
+  Future<ResourceActionModel> getProceedResourceAction(pageNumber) async {
     emit(state.copyWith(
       status: ProceedResourceActionEnum.loading,
       error: const CustomError(error: ""),
-      resourceActionModel: [],
+      resourceActionModel: ResourceActionModel(),
     ));
     try {
-      var res = await repo.getProceedResourceAction();
+      var res = await repo.getProceedResourceAction(pageNumber);
       emit(state.copyWith(
         status: ProceedResourceActionEnum.success,
         error: const CustomError(error: ""),
@@ -50,9 +50,9 @@ class ProceedResourceActionCubit extends Cubit<ProceedResourceActionState> {
       emit(state.copyWith(
         status: ProceedResourceActionEnum.error,
         error: CustomError(error: e.toString()),
-        resourceActionModel: [],
+        resourceActionModel: ResourceActionModel(),
       ));
-      return [];
+      return ResourceActionModel();
     }
   }
 

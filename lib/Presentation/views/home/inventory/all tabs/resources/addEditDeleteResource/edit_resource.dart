@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_typing_uninitialized_variables, use_build_context_synchronously
 import 'dart:developer';
 import 'dart:io';
+import '../../../../../../../Domain/models/manager/ingredient_model.dart';
 import '../../../../dashboard/components/tag_drop_down.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dio/dio.dart';
@@ -78,6 +79,20 @@ class _EditResourceScreenState extends State<EditResourceScreen> {
   var traceability;
   final traceabilityIdController = TextEditingController();
 
+  addNoSelect() async {
+    await context.read<IngredientsCubit>().getIngredients();
+    ingrediant =
+        widget.model.ingrediant != 0 ? widget.model.ingrediant : ingrediant;
+    var ingredientList = context.read<IngredientsCubit>().state.modelList;
+    ingredientList.insert(
+      0,
+      IngredientModel(
+        ingrediantId: 0,
+        description: AppStrings.noSelectIngredientText,
+      ),
+    );
+  }
+
   @override
   void initState() {
     resourceNameController.text = widget.model.resourceName;
@@ -118,11 +133,11 @@ class _EditResourceScreenState extends State<EditResourceScreen> {
 
     Future.wait([
       context.read<CategoryCubit>().getCategory(),
-      context.read<IngredientsCubit>().getIngredients(),
       context.read<ManagerIvaCubit>().getIva(),
     ]);
-    ingrediant =
-        widget.model.ingrediant != 0 ? widget.model.ingrediant : ingrediant;
+
+    addNoSelect();
+
     super.initState();
   }
 
@@ -222,8 +237,9 @@ class _EditResourceScreenState extends State<EditResourceScreen> {
                           "plu": pluController.text.toString(),
                           "tare": tareController.text.toString(),
                           "weight_type": weightType.toString(),
-                          "ingredient":
-                              ingrediant == null ? "" : ingrediant.toString(),
+                          "ingredient": ingrediant == null || ingrediant == 0
+                              ? ""
+                              : ingrediant.toString(),
                           "revenue_percentage":
                               revenuePercentageController.text.toString(),
                           "expiration_date": expirationDate != null
@@ -622,7 +638,17 @@ class _EditResourceScreenState extends State<EditResourceScreen> {
               itemsMap: state.modelList.map((v) {
                 return DropdownMenuItem(
                   value: v.ingrediantId,
-                  child: Text(v.description.toString()),
+                  child: Text(
+                    v.description.toString(),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: Styles.circularStdBook(
+                      AppSize.text14.sp,
+                      v.description == AppStrings.noSelectIngredientText
+                          ? AppColors.textColor
+                          : AppColors.primaryColor,
+                    ),
+                  ),
                 );
               }).toList(),
               onChanged: (v) {

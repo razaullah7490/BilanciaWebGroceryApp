@@ -17,6 +17,7 @@ import '../../../../../common/data_not_available_text.dart';
 import '../../../../../resources/app_strings.dart';
 import '../../../../../resources/colors_palette.dart';
 import '../../../../../resources/sized_box.dart';
+import '../components/actions_pagination.dart';
 
 class ProcessedResourceActionScreen extends StatefulWidget {
   const ProcessedResourceActionScreen({super.key});
@@ -28,11 +29,19 @@ class ProcessedResourceActionScreen extends StatefulWidget {
 
 class _ProcessedResourceActionScreenState
     extends State<ProcessedResourceActionScreen> {
+  int totalPages = 0;
   @override
   void initState() {
     Future.wait([
-      context.read<ProceedResourceActionCubit>().getProceedResourceAction(),
-    ]);
+      context.read<ProceedResourceActionCubit>().getProceedResourceAction(1),
+    ]).whenComplete(() {
+      totalPages = context
+          .read<ProceedResourceActionCubit>()
+          .state
+          .resourceActionModel
+          .totalPages!;
+      setState(() {});
+    });
     showDialogue();
     super.initState();
   }
@@ -51,6 +60,17 @@ class _ProcessedResourceActionScreenState
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      floatingActionButton: ActionsPaginationWidget(
+        totalPages: totalPages,
+        initialPage: 1,
+        onPageChanged: (v) async {
+          log("Page $v");
+          await context
+              .read<ProceedResourceActionCubit>()
+              .getProceedResourceAction(v);
+        },
+      ),
       appBar: const CustomAppBar(
         title: AppStrings.processedResourceActionText,
       ),
@@ -76,7 +96,7 @@ class _ProcessedResourceActionScreenState
             if (state.status == ProceedResourceActionEnum.loading) {
               return const ListTileShimmerEffect();
             }
-            return state.resourceActionModel.isEmpty
+            return state.resourceActionModel.results!.isEmpty
                 ? DataNotAvailableText.withExpanded(
                     AppStrings.noProceedResourceActionAddedText,
                   )
@@ -84,12 +104,21 @@ class _ProcessedResourceActionScreenState
                     child: ListView.builder(
                         shrinkWrap: true,
                         physics: const BouncingScrollPhysics(),
-                        itemCount: state.resourceActionModel.length,
+                        itemCount: state.resourceActionModel.results!.length,
                         itemBuilder: (context, index) {
-                          var singleData = state.resourceActionModel[index];
-                          log("Processed resource action Id ${singleData.processedresourceActionId}");
+                          var singleData =
+                              state.resourceActionModel.results![index];
+
                           return ProceedResourceActionDetailContainer(
-                            model: singleData,
+                            resourceActionId: singleData.resourceActionId!,
+                            resourceActionName: singleData.resourceActionName!,
+                            quantity: singleData.quantity!,
+                            money: singleData.money!,
+                            moneyType: singleData.moneyType!,
+                            priceCounter: singleData.priceCounter!,
+                            resource: singleData.resource!,
+                            isForInternalUsage: singleData.isForInternalUsage!,
+                            dateTime: singleData.dateTime!,
                           );
                         }),
                   );

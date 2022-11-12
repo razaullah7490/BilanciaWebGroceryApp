@@ -560,7 +560,15 @@ class _AddProceedResourceState extends State<AddProceedResource> {
               itemsMap: state.modelList.map((v) {
                 return DropdownMenuItem(
                   value: v.ingrediantId,
-                  child: Text(v.description.toString()),
+                  child: Text(
+                    v.description.toString(),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: Styles.circularStdBook(
+                      AppSize.text14.sp,
+                      AppColors.primaryColor,
+                    ),
+                  ),
                 );
               }).toList(),
               onChanged: (v) {

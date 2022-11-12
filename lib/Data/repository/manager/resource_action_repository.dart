@@ -19,9 +19,9 @@ class ResourceActionRepository {
     }
   }
 
-  Future<List<ResourceActionModel>> getResoruceAction() async {
+  Future<ResourceActionModel> getResoruceAction(pageNumber) async {
     try {
-      var res = await resourceActionService.getResoruceAction();
+      var res = await resourceActionService.getResoruceAction(pageNumber);
       return res;
     } catch (e) {
       throw CustomError(error: e.toString());

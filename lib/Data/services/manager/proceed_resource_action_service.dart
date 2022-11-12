@@ -4,7 +4,7 @@ import 'dart:developer';
 import 'package:grocery/Application/Prefs/app_prefs.dart';
 import 'package:grocery/Application/api_urls.dart';
 import 'package:grocery/Data/errors/http_error_handler.dart';
-import 'package:grocery/Domain/models/inventory/proceed_resource_action_model.dart';
+import 'package:grocery/Domain/models/inventory/resource_action_model.dart';
 import 'package:http/http.dart' as http;
 
 class ProceedResourceActionService {
@@ -31,23 +31,23 @@ class ProceedResourceActionService {
     }
   }
 
-  Future<List<ProcessedResourceActionModel>> getProceedResourceAction() async {
+  Future<ResourceActionModel> getProceedResourceAction(pageNumber) async {
     var token = await AppPrefs.getLoginToken();
     try {
       var res = await http.get(
-        Uri.parse(ApiUrls.proceedResourceActionUrl),
+        Uri.parse("${ApiUrls.proceedResourceActionUrl}?page=$pageNumber"),
         headers: {
           "Authorization": "Token $token",
         },
       );
       log("testing ${res.statusCode}");
-      var data = json.decode(res.body) as List<dynamic>;
+      var data = json.decode(res.body);
       if (res.statusCode != 200) {
         throw httpErrorHandler("No data");
       }
       log("data ${res.body}");
-      log("Data ${data.map((e) => ProcessedResourceActionModel.fromMap(e)).toList()}");
-      return data.map((e) => ProcessedResourceActionModel.fromMap(e)).toList();
+      log("Data ${ResourceActionModel.fromJson(data)}");
+      return ResourceActionModel.fromJson(data);
     } catch (e) {
       rethrow;
     }

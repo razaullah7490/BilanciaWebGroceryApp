@@ -13,6 +13,8 @@ class ResourceActionCubit extends Cubit<ResourceActionState> {
     required this.repo,
   }) : super(ResourceActionState.initial());
 
+  // int totalPages = 0;
+
   // fromStart() async {
   //   emit(state.copyWith(
   //       status: ResourceActionEnum.initial,
@@ -40,14 +42,14 @@ class ResourceActionCubit extends Cubit<ResourceActionState> {
     }
   }
 
-  Future<List<ResourceActionModel>> getResourceAction() async {
+  Future<ResourceActionModel> getResourceAction(pageNumber) async {
     emit(state.copyWith(
       status: ResourceActionEnum.loading,
       error: const CustomError(error: ""),
-      resourceActionModel: [],
+      resourceActionModel: ResourceActionModel(),
     ));
     try {
-      var res = await repo.getResoruceAction();
+      var res = await repo.getResoruceAction(pageNumber);
       emit(state.copyWith(
         status: ResourceActionEnum.success,
         error: const CustomError(error: ""),
@@ -58,9 +60,9 @@ class ResourceActionCubit extends Cubit<ResourceActionState> {
       emit(state.copyWith(
         status: ResourceActionEnum.error,
         error: CustomError(error: e.toString()),
-        resourceActionModel: [],
+        resourceActionModel: ResourceActionModel(),
       ));
-      return [];
+      return ResourceActionModel();
     }
   }
 

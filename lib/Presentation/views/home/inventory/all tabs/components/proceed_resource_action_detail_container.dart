@@ -17,10 +17,26 @@ import '../../../../../resources/colors_palette.dart';
 import '../processedResourceAction/bloc/proceed_resource_action_cubit.dart';
 
 class ProceedResourceActionDetailContainer extends StatelessWidget {
-  final ProcessedResourceActionModel model;
+  final int resourceActionId;
+  final String resourceActionName;
+  final double quantity;
+  final double money;
+  final String moneyType;
+  final int priceCounter;
+  final int resource;
+  final bool isForInternalUsage;
+  final String dateTime;
   const ProceedResourceActionDetailContainer({
     super.key,
-    required this.model,
+    required this.resourceActionId,
+    required this.resourceActionName,
+    required this.quantity,
+    required this.money,
+    required this.moneyType,
+    required this.priceCounter,
+    required this.resource,
+    required this.isForInternalUsage,
+    required this.dateTime,
   });
 
   @override
@@ -50,16 +66,14 @@ class ProceedResourceActionDetailContainer extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               CustomSizedBox.height(5),
-              titleText(model.processedresourceActionName),
+              titleText(resourceActionName.toString()),
               CustomSizedBox.height(5),
-              subTitleText("${AppStrings.quantityOnlyText} :",
-                  model.quantity.toString()),
+              subTitleText(
+                  "${AppStrings.quantityOnlyText} :", quantity.toString()),
               moneyAndResourceText(
-                  AppStrings.moneyText, "\$${model.money.toString()}"),
-              subTitleText("${AppStrings.priceCounterText} :",
-                  model.priceCounter.toString()),
-              moneyAndResourceText(
-                  AppStrings.resourceText, model.resource.toString()),
+                  AppStrings.moneyText, "\$${money.toString()}"),
+              subTitleText(
+                  "${AppStrings.priceCounterText} :", priceCounter.toString()),
             ],
           ),
           deleteButton(context),
@@ -130,12 +144,11 @@ class ProceedResourceActionDetailContainer extends StatelessWidget {
               ProceedResourceActionState>(
             builder: (context, state) {
               return DeleteItemDialogue(
-                text: model.processedresourceActionName,
+                text: resourceActionName,
                 onDeleteButtonTap: () async {
                   await context
                       .read<ProceedResourceActionCubit>()
-                      .deletProceedResourceAction(
-                          model.processedresourceActionId);
+                      .deletProceedResourceAction(resourceActionId);
 
                   Navigator.of(context).pop();
                   Navigate.toReplace(

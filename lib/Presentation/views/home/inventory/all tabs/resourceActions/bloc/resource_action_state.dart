@@ -10,7 +10,7 @@ enum ResourceActionEnum {
 
 class ResourceActionState extends Equatable {
   final ResourceActionEnum status;
-  final List<ResourceActionModel> resourceActionModel;
+  final ResourceActionModel resourceActionModel;
   final CustomError error;
   const ResourceActionState({
     required this.status,
@@ -19,10 +19,10 @@ class ResourceActionState extends Equatable {
   });
 
   factory ResourceActionState.initial() {
-    return const ResourceActionState(
+    return ResourceActionState(
       status: ResourceActionEnum.initial,
-      resourceActionModel: [],
-      error: CustomError(error: ""),
+      resourceActionModel: ResourceActionModel(),
+      error: const CustomError(error: ""),
     );
   }
 
@@ -31,7 +31,7 @@ class ResourceActionState extends Equatable {
 
   ResourceActionState copyWith({
     ResourceActionEnum? status,
-    List<ResourceActionModel>? resourceActionModel,
+    ResourceActionModel? resourceActionModel,
     CustomError? error,
   }) {
     return ResourceActionState(

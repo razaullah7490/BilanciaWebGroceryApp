@@ -38,4 +38,6 @@ class Assets {
   static const String flashOnImage = "assets/images/flashOn.png";
   static const String flashOffImage = "assets/images/flashOff.png";
   static const String notFoundImage = "assets/images/notFound.png";
+  static const String nextToFirstImage = "assets/images/nextToFirst.png";
+  static const String nextToLastImage = "assets/images/nextToLast.png";
 }

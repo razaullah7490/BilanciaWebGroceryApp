@@ -100,7 +100,7 @@ class _IngredientDetailContainerState extends State<IngredientDetailContainer> {
                     : descriptionEditButton(
                         onTap: () async {
                           var res = await IngredientService.editIngredient(
-                            widget.model.ingrediantId,
+                            widget.model.ingrediantId!,
                             ingredientDescriptionController.text,
                           );
 
@@ -193,11 +193,11 @@ class _IngredientDetailContainerState extends State<IngredientDetailContainer> {
           return BlocBuilder<IngredientsCubit, IngredientsState>(
             builder: (context, state) {
               return DeleteItemDialogue(
-                text: widget.model.description,
+                text: widget.model.description!,
                 onDeleteButtonTap: () async {
                   var res = await context
                       .read<IngredientsCubit>()
-                      .deleteIngredient(widget.model.ingrediantId);
+                      .deleteIngredient(widget.model.ingrediantId!);
 
                   if (res == true) {
                     Navigator.of(context).pop();

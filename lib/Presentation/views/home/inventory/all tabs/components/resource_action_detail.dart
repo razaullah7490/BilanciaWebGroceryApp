@@ -12,14 +12,29 @@ import 'package:grocery/Presentation/resources/size.dart';
 import 'package:grocery/Presentation/resources/sized_box.dart';
 import 'package:grocery/Presentation/resources/text_styles.dart';
 import 'package:grocery/Presentation/views/home/inventory/all%20tabs/resourceActions/resource_actions_screen.dart';
-import '../../../../../../Domain/models/inventory/resource_action_model.dart';
 import '../resourceActions/bloc/resource_action_cubit.dart';
 
 class ResourceActionDetailContainer extends StatelessWidget {
-  final ResourceActionModel model;
+  final int resourceActionId;
+  final String resourceActionName;
+  final double quantity;
+  final double money;
+  final String moneyType;
+  final int priceCounter;
+  final int resource;
+  final bool isForInternalUsage;
+  final String dateTime;
   const ResourceActionDetailContainer({
     super.key,
-    required this.model,
+    required this.resourceActionId,
+    required this.resourceActionName,
+    required this.quantity,
+    required this.money,
+    required this.moneyType,
+    required this.priceCounter,
+    required this.resource,
+    required this.isForInternalUsage,
+    required this.dateTime,
   });
 
   @override
@@ -49,15 +64,14 @@ class ResourceActionDetailContainer extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               CustomSizedBox.height(5),
-              titleText(model.resourceActionName),
+              titleText(resourceActionName),
               CustomSizedBox.height(5),
-              subTitleText("${AppStrings.quantityOnlyText} :",
-                  model.quantity.toString()),
+              subTitleText(
+                  "${AppStrings.quantityOnlyText} :", quantity.toString()),
               moneyAndResourceText(
-                  AppStrings.moneyText, "\$${model.money.toString()}"),
-              subTitleText("${AppStrings.priceCounterText} :",
-                  model.priceCounter.toString()),
-              //moneyAndResourceText(AppStrings.resourceText, model.resource),
+                  AppStrings.moneyText, "\$${money.toString()}"),
+              subTitleText(
+                  "${AppStrings.priceCounterText} :", priceCounter.toString()),
             ],
           ),
           deleteButton(context),
@@ -127,11 +141,11 @@ class ResourceActionDetailContainer extends StatelessWidget {
           return BlocBuilder<ResourceActionCubit, ResourceActionState>(
             builder: (context, state) {
               return DeleteItemDialogue(
-                text: model.resourceActionName,
+                text: resourceActionName,
                 onDeleteButtonTap: () async {
                   await context
                       .read<ResourceActionCubit>()
-                      .deleteResourceAction(model.resourceActionId);
+                      .deleteResourceAction(resourceActionId);
 
                   Navigator.of(context).pop();
                   Navigate.toReplace(context, const ResourceActionsScreen());

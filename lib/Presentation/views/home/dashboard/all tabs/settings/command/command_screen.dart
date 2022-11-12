@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:grocery/Presentation/common/shimmer%20effect/tag_shimmer.dart';
 import 'package:grocery/Presentation/views/home/dashboard/all%20tabs/settings/command/bloc/command_cubit.dart';
 import '../../../../../../common/add_item_button.dart';
 import '../../../../../../common/app_bar.dart';
 import '../../../../../../common/data_not_available_text.dart';
+import '../../../../../../common/shimmer effect/command_shimmer.dart';
 import '../../../../../../resources/app_strings.dart';
 import '../../../../../../resources/colors_palette.dart';
 import '../../../../../../resources/sized_box.dart';
@@ -45,7 +45,7 @@ class _CommandScreenState extends State<CommandScreen> {
           BlocBuilder<CommandCubit, CommandState>(
             builder: (context, state) {
               if (state.status == CommandEnum.loading) {
-                return const TagListTileShimmerEffect();
+                return const CommandShimmerEffect();
               }
               return state.model.isEmpty
                   ? DataNotAvailableText.withExpanded(

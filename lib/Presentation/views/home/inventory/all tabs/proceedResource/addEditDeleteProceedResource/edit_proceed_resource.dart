@@ -14,6 +14,7 @@ import 'package:grocery/Presentation/views/home/dashboard/components/tag_drop_do
 import 'package:grocery/Presentation/views/home/inventory/all%20tabs/proceedResource/proceed_resource_view_model.dart';
 import '../../../../../../../Data/errors/custom_error.dart';
 import '../../../../../../../Domain/models/inventory/proceed_resource_model.dart';
+import '../../../../../../../Domain/models/manager/ingredient_model.dart';
 import '../../../../../../common/custom_date_picker.dart';
 import '../../../../../../common/custom_text_field.dart';
 import '../../../../../../common/date_picker.dart';
@@ -80,6 +81,20 @@ class _EditProceedResourceScreenState extends State<EditProceedResourceScreen> {
   List resourceIds = [];
   List resourceNames = List.empty(growable: true);
 
+  addNoSelect() async {
+    await context.read<IngredientsCubit>().getIngredients();
+    ingrediant =
+        widget.model.ingredient != 0 ? widget.model.ingredient : ingrediant;
+    var ingredientList = context.read<IngredientsCubit>().state.modelList;
+    ingredientList.insert(
+      0,
+      IngredientModel(
+        ingrediantId: 0,
+        description: AppStrings.noSelectIngredientText,
+      ),
+    );
+  }
+
   @override
   void initState() {
     resourceNameController.text = widget.model.name!;
@@ -99,7 +114,7 @@ class _EditProceedResourceScreenState extends State<EditProceedResourceScreen> {
     category = widget.model.category;
     tareController.text = widget.model.tare.toString();
     weightType = widget.model.weightType ?? weightType;
-    ingrediant = widget.model.ingredient;
+    // ingrediant = widget.model.ingredient;
     expirationDate = widget.model.expirationDate != "null"
         ? DateTime.parse(widget.model.expirationDate!)
         : expirationDate;
@@ -119,10 +134,12 @@ class _EditProceedResourceScreenState extends State<EditProceedResourceScreen> {
 
     Future.wait([
       context.read<CategoryCubit>().getCategory(),
-      context.read<IngredientsCubit>().getIngredients(),
+      //context.read<IngredientsCubit>().getIngredients(),
       context.read<ManagerIvaCubit>().getIva(),
       context.read<ResourceCubit>().getResource(),
     ]).whenComplete(() => setState(() => addFields()));
+
+    addNoSelect();
     super.initState();
   }
 
@@ -247,8 +264,9 @@ class _EditProceedResourceScreenState extends State<EditProceedResourceScreen> {
                             "plu": pluController.text.toString(),
                             "tare": tareController.text.toString(),
                             "weight_type": weightType.toString(),
-                            "ingredient":
-                                ingrediant == null ? "" : ingrediant.toString(),
+                            "ingredient": ingrediant == null || ingrediant == 0
+                                ? ""
+                                : ingrediant.toString(),
                             "revenue_percentage":
                                 revenuePercentageController.text.toString(),
                             "expiration_date": expirationDate != null
@@ -597,7 +615,17 @@ class _EditProceedResourceScreenState extends State<EditProceedResourceScreen> {
               itemsMap: state.modelList.map((v) {
                 return DropdownMenuItem(
                   value: v.ingrediantId,
-                  child: Text(v.description.toString()),
+                  child: Text(
+                    v.description.toString(),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: Styles.circularStdBook(
+                      AppSize.text14.sp,
+                      v.description == AppStrings.noSelectIngredientText
+                          ? AppColors.textColor
+                          : AppColors.primaryColor,
+                    ),
+                  ),
                 );
               }).toList(),
               onChanged: (v) {

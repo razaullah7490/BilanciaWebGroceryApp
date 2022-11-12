@@ -10,7 +10,7 @@ enum ProceedResourceActionEnum {
 
 class ProceedResourceActionState extends Equatable {
   final ProceedResourceActionEnum status;
-  final List<ProcessedResourceActionModel> resourceActionModel;
+  final ResourceActionModel resourceActionModel;
   final CustomError error;
   const ProceedResourceActionState({
     required this.status,
@@ -19,10 +19,10 @@ class ProceedResourceActionState extends Equatable {
   });
 
   factory ProceedResourceActionState.initial() {
-    return const ProceedResourceActionState(
+    return ProceedResourceActionState(
       status: ProceedResourceActionEnum.initial,
-      resourceActionModel: [],
-      error: CustomError(error: ""),
+      resourceActionModel: ResourceActionModel(),
+      error: const CustomError(error: ""),
     );
   }
 
@@ -31,7 +31,7 @@ class ProceedResourceActionState extends Equatable {
 
   ProceedResourceActionState copyWith({
     ProceedResourceActionEnum? status,
-    List<ProcessedResourceActionModel>? resourceActionModel,
+    ResourceActionModel? resourceActionModel,
     CustomError? error,
   }) {
     return ProceedResourceActionState(

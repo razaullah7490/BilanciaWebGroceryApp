@@ -49,7 +49,7 @@ dependencies:
   firebase_dynamic_links: ^5.0.2
   firebase_core: ^2.1.0
   qr_code_scanner: ^1.0.1
-
+  number_pagination: ^0.0.3+2
 dev_dependencies:
   flutter_test:
     sdk: flutter

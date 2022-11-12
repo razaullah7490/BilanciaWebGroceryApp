@@ -29,23 +29,23 @@ class ResourceActionService {
     }
   }
 
-  Future<List<ResourceActionModel>> getResoruceAction() async {
+  Future<ResourceActionModel> getResoruceAction(pageNumber) async {
     var token = await AppPrefs.getLoginToken();
     try {
       var res = await http.get(
-        Uri.parse(ApiUrls.resourcesActionUrl),
+        Uri.parse("${ApiUrls.resourcesActionUrl}?page=$pageNumber"),
         headers: {
           "Authorization": "Token $token",
         },
       );
       log("testing ${res.statusCode}");
-      var data = json.decode(res.body) as List<dynamic>;
+      var data = json.decode(res.body);
       if (res.statusCode != 200) {
         throw httpErrorHandler("No data");
       }
       log("data ${res.body}");
-      log("Data ${data.map((e) => ResourceActionModel.fromMap(e)).toList()}");
-      return data.map((e) => ResourceActionModel.fromMap(e)).toList();
+      log("Data ${ResourceActionModel.fromJson(data)}");
+      return ResourceActionModel.fromJson(data);
     } catch (e) {
       rethrow;
     }

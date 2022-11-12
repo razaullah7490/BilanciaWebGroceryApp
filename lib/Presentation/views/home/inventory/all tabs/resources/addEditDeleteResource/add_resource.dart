@@ -5,6 +5,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:grocery/Domain/models/manager/ingredient_model.dart';
 import 'package:grocery/Presentation/common/app_bar.dart';
 import 'package:grocery/Presentation/common/bar_code_scan.dart';
 import 'package:grocery/Presentation/common/custom_button.dart';
@@ -79,6 +80,7 @@ class _AddResourceScreenState extends State<AddResourceScreen> {
       context.read<IngredientsCubit>().getIngredients(),
       context.read<ManagerIvaCubit>().getIva(),
     ]);
+
     stockQuantityController.text = "0";
     stockQuantityThresholdController.text = "0";
     measureUnit = CategoryViewModel.measureUnitList[0].toString();
@@ -552,7 +554,15 @@ class _AddResourceScreenState extends State<AddResourceScreen> {
               itemsMap: state.modelList.map((v) {
                 return DropdownMenuItem(
                   value: v.ingrediantId,
-                  child: Text(v.description.toString()),
+                  child: Text(
+                    v.description.toString(),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: Styles.circularStdBook(
+                      AppSize.text14.sp,
+                      AppColors.primaryColor,
+                    ),
+                  ),
                 );
               }).toList(),
               onChanged: (v) {
