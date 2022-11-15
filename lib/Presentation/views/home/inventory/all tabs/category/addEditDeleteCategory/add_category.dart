@@ -173,7 +173,7 @@ class _AddCategoryScreenState extends State<AddCategoryScreen> {
             hintText: AppStrings.enterDefaultPriceText,
             suffixIcon: const Text(""),
             obscureText: false,
-            textInputType: TextInputType.number,
+            textInputType: const TextInputType.numberWithOptions(decimal: true),
             isLabel: false,
             validator: (v) {
               if (v!.trim().isEmpty) {
