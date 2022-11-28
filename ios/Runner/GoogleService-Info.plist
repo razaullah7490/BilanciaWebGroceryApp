@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>696234262014-rsefsabv7fif4771os3a5ns6f644j1rh.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.696234262014-rsefsabv7fif4771os3a5ns6f644j1rh</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>696234262014-f6lk8o150jkf9r09bt3g03nc7u4kkvg3.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyAexdbyh7y34J0JEh-5PU44Stz9dEB43hA</string>
+	<key>GCM_SENDER_ID</key>
+	<string>696234262014</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.bilanciaweb.app</string>
+	<key>PROJECT_ID</key>
+	<string>bilancia-web</string>
+	<key>STORAGE_BUCKET</key>
+	<string>bilancia-web.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:696234262014:ios:49890e0eed6f3beed914af</string>
+</dict>
+</plist>
