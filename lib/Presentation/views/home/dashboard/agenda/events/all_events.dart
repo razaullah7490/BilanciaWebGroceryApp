@@ -1,15 +1,4 @@
-import "package:flutter/material.dart";
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:grocery/Presentation/common/shimmer%20effect/list_tile_shimmer.dart';
-import 'package:grocery/Presentation/views/home/dashboard/agenda/events/Bloc/event_cubit.dart';
-import 'package:grocery/Presentation/views/home/dashboard/agenda/events/add_event.dart';
-import 'package:grocery/Presentation/views/home/dashboard/components/event_detail_container.dart';
-import '../../../../../common/add_item_button.dart';
-import '../../../../../common/app_bar.dart';
-import '../../../../../common/data_not_available_text.dart';
-import '../../../../../resources/app_strings.dart';
-import '../../../../../resources/routes/navigation.dart';
-import '../../../../../resources/sized_box.dart';
+import 'package:grocery/Application/exports.dart';
 
 class AllEventsScreen extends StatefulWidget {
   const AllEventsScreen({super.key});

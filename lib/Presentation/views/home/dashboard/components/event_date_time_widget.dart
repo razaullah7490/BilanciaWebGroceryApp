@@ -1,11 +1,4 @@
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-
-import '../../../../resources/border_radius.dart';
-import '../../../../resources/colors_palette.dart';
-import '../../../../resources/size.dart';
-import '../../../../resources/text_styles.dart';
+import 'package:grocery/Application/exports.dart';
 
 class EventDateTimePicker {
   static Widget datePickerWidget({

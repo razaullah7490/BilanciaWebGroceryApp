@@ -1,7 +1,4 @@
-import 'package:grocery/Data/services/manager/resources_service.dart';
-import 'package:grocery/Domain/models/inventory/resources_model.dart';
-
-import '../../errors/custom_error.dart';
+import 'package:grocery/Application/exports.dart';
 
 class ResourcesRepository {
   final ResourcesService resourcesService;

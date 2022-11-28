@@ -1,15 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:grocery/Presentation/common/shimmer%20effect/tag_shimmer.dart';
-import 'package:grocery/Presentation/views/home/dashboard/agenda/tags/Bloc/tags_cubit.dart';
-import 'package:grocery/Presentation/views/home/dashboard/components/tag_detail_container.dart';
-import '../../../../../common/add_item_button.dart';
-import '../../../../../common/app_bar.dart';
-import '../../../../../common/data_not_available_text.dart';
-import '../../../../../resources/app_strings.dart';
-import '../../../../../resources/routes/navigation.dart';
-import '../../../../../resources/sized_box.dart';
-import 'add_tag.dart';
+import 'package:grocery/Application/exports.dart';
 
 class AllTagsScreen extends StatefulWidget {
   const AllTagsScreen({super.key});

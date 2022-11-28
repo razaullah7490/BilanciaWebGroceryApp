@@ -1,10 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:grocery/Presentation/resources/colors_palette.dart';
-import '../resources/app_strings.dart';
-import '../resources/border_radius.dart';
-import '../resources/size.dart';
-import '../resources/text_styles.dart';
+import 'package:grocery/Application/exports.dart';
 import 'package:intl/intl.dart' as intl;
 
 // ignore: must_be_immutable

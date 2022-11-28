@@ -1,6 +1,4 @@
-import 'package:grocery/Domain/models/auth/user_model.dart';
-import '../../errors/custom_error.dart';
-import '../../services/auth/user_services.dart';
+import 'package:grocery/Application/exports.dart';
 
 class UserRepository {
   final UserServices userServices;

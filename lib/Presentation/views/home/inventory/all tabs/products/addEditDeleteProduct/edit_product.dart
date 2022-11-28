@@ -1,24 +1,4 @@
-import 'dart:io';
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:grocery/Presentation/common/app_bar.dart';
-import 'package:grocery/Presentation/common/custom_bottom_sheet.dart';
-import 'package:grocery/Presentation/common/custom_button.dart';
-import 'package:grocery/Presentation/common/custom_text_field.dart';
-import 'package:grocery/Presentation/common/image_picker.dart';
-import 'package:grocery/Presentation/common/loading_indicator.dart';
-import 'package:grocery/Presentation/common/snack_bar_widget.dart';
-import 'package:grocery/Presentation/resources/app_strings.dart';
-import 'package:grocery/Presentation/resources/border_radius.dart';
-import 'package:grocery/Presentation/resources/colors_palette.dart';
-import 'package:grocery/Presentation/resources/size.dart';
-import 'package:grocery/Presentation/resources/sized_box.dart';
-import 'package:grocery/Presentation/resources/text_styles.dart';
-import 'package:grocery/Presentation/views/home/inventory/all%20tabs/products/bloc/product_cubit.dart';
-import 'package:image_picker/image_picker.dart';
-
-import '../../../../../../../Domain/models/inventory/products_model.dart';
+import 'package:grocery/Application/exports.dart';
 
 class EditProductScreen extends StatefulWidget {
   final ProductModel model;

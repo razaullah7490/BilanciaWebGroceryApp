@@ -1,22 +1,5 @@
 import 'dart:developer';
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:grocery/Presentation/common/add_item_button.dart';
-import 'package:grocery/Presentation/common/app_bar.dart';
-import 'package:grocery/Presentation/common/data_not_available_text.dart';
-import 'package:grocery/Presentation/resources/app_strings.dart';
-import 'package:grocery/Presentation/resources/routes/navigation.dart';
-import 'package:grocery/Presentation/resources/sized_box.dart';
-import 'package:grocery/Presentation/views/home/inventory/all%20tabs/components/product_detail_container.dart';
-import 'package:grocery/Presentation/views/home/inventory/all%20tabs/resourceActions/addEditDeleteResourceActions/add_resource_action.dart';
-import 'package:grocery/Presentation/views/home/inventory/all%20tabs/resourceActions/bloc/resource_action_cubit.dart';
-import '../../../../../common/shimmer effect/list_tile_shimmer.dart';
-import '../../../../../resources/colors_palette.dart';
-import '../../../../../resources/size.dart';
-import '../../../../../resources/text_styles.dart';
-import '../components/actions_pagination.dart';
-import '../components/resource_action_detail.dart';
+import 'package:grocery/Application/exports.dart';
 
 class ResourceActionsScreen extends StatefulWidget {
   const ResourceActionsScreen({super.key});

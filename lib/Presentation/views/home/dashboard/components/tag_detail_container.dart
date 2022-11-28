@@ -1,21 +1,5 @@
 // ignore_for_file: use_build_context_synchronously
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:grocery/Domain/models/manager/tag_model.dart';
-import 'package:grocery/Presentation/resources/app_strings.dart';
-import 'package:grocery/Presentation/resources/border_radius.dart';
-import 'package:grocery/Presentation/resources/routes/navigation.dart';
-import 'package:grocery/Presentation/views/home/dashboard/agenda/tags/all_tags.dart';
-import 'package:grocery/Presentation/views/home/dashboard/agenda/tags/edit_tag.dart';
-import '../../../../common/delete_item_dialogue.dart';
-import '../../../../common/edit_delete_container.dart';
-import '../../../../common/snack_bar_widget.dart';
-import '../../../../resources/colors_palette.dart';
-import '../../../../resources/size.dart';
-import '../../../../resources/sized_box.dart';
-import '../../../../resources/text_styles.dart';
-import '../agenda/tags/Bloc/tags_cubit.dart';
+import 'package:grocery/Application/exports.dart';
 
 class TagDetailContainer extends StatelessWidget {
   final TagModel model;

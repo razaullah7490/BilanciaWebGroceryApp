@@ -1,11 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:grocery/Presentation/resources/border_radius.dart';
-import 'package:grocery/Presentation/resources/colors_palette.dart';
-import 'package:grocery/Presentation/resources/size.dart';
-import 'package:grocery/Presentation/resources/text_styles.dart';
-import 'package:grocery/Presentation/views/home/dashboard/dashboard_view_model.dart';
-import '../../../../resources/routes/navigation.dart';
+import 'package:grocery/Application/exports.dart';
 
 class DashBoardGridTile extends StatelessWidget {
   const DashBoardGridTile({super.key});
@@ -23,7 +16,9 @@ class DashBoardGridTile extends StatelessWidget {
         itemCount: DashBoardViewModel.dashBoardList.length,
         itemBuilder: (context, index) {
           var singleData = DashBoardViewModel.dashBoardList[index];
-          return buildGridContainer(context, singleData);
+          return FadeAnimation(
+              delay: index.toDouble(),
+              child: buildGridContainer(context, singleData));
         },
       ),
     );

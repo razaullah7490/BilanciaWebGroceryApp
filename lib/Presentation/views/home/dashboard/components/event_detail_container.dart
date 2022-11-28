@@ -1,22 +1,5 @@
 // ignore_for_file: use_build_context_synchronously
-
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:grocery/Domain/models/manager/event_model.dart';
-import 'package:grocery/Presentation/resources/app_strings.dart';
-import 'package:grocery/Presentation/resources/routes/navigation.dart';
-import 'package:grocery/Presentation/resources/sized_box.dart';
-import 'package:grocery/Presentation/views/home/dashboard/agenda/events/Bloc/event_cubit.dart';
-import 'package:grocery/Presentation/views/home/dashboard/agenda/events/all_events.dart';
-import 'package:grocery/Presentation/views/home/dashboard/agenda/events/edit_event.dart';
-import '../../../../common/delete_item_dialogue.dart';
-import '../../../../common/edit_delete_container.dart';
-import '../../../../common/snack_bar_widget.dart';
-import '../../../../resources/border_radius.dart';
-import '../../../../resources/colors_palette.dart';
-import '../../../../resources/size.dart';
-import '../../../../resources/text_styles.dart';
+import 'package:grocery/Application/exports.dart';
 import 'package:intl/intl.dart';
 
 class EventDetailContainer extends StatefulWidget {

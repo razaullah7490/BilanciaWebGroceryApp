@@ -1,18 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:grocery/Data/services/manager/product_service.dart';
-import 'package:grocery/Presentation/common/add_item_button.dart';
-import 'package:grocery/Presentation/common/app_bar.dart';
-import 'package:grocery/Presentation/common/data_not_available_text.dart';
-import 'package:grocery/Presentation/resources/app_strings.dart';
-import 'package:grocery/Presentation/resources/routes/navigation.dart';
-import 'package:grocery/Presentation/resources/routes/routes_names.dart';
-import 'package:grocery/Presentation/resources/size.dart';
-import 'package:grocery/Presentation/resources/sized_box.dart';
-import 'package:grocery/Presentation/views/home/inventory/all%20tabs/products/addEditDeleteProduct/add_product.dart';
-import 'package:grocery/Presentation/views/home/inventory/all%20tabs/products/bloc/product_cubit.dart';
-import 'package:grocery/Presentation/views/home/inventory/all%20tabs/components/product_detail_container.dart';
+import 'package:grocery/Application/exports.dart';
 
 class ProductsScreen extends StatefulWidget {
   const ProductsScreen({super.key});

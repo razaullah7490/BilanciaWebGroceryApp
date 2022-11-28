@@ -1,7 +1,4 @@
-import 'package:equatable/equatable.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:grocery/Data/errors/custom_error.dart';
-import 'package:grocery/Data/repository/auth/login_repository.dart';
+import 'package:grocery/Application/exports.dart';
 part 'login_state.dart';
 
 class LoginCubit extends Cubit<LoginState> {

@@ -1,14 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:grocery/Presentation/resources/border_radius.dart';
-import 'package:grocery/Presentation/resources/colors_palette.dart';
-import 'package:grocery/Presentation/resources/routes/navigation.dart';
-import 'package:grocery/Presentation/resources/size.dart';
-import 'package:grocery/Presentation/resources/sized_box.dart';
-import 'package:grocery/Presentation/resources/text_styles.dart';
-import 'package:grocery/Presentation/views/home/dashboard/all%20tabs/settings/setting_view_model.dart';
-
-import '../../../../../resources/app_strings.dart';
+import 'package:grocery/Application/exports.dart';
 
 class SettingComponentsContainer extends StatelessWidget {
   final SettingGridModel model;

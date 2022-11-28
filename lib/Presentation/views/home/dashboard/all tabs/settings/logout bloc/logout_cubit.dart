@@ -1,9 +1,4 @@
-import 'package:equatable/equatable.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:grocery/Data/repository/auth/logout_repository.dart';
-
-import '../../../../../../../Data/errors/custom_error.dart';
-
+import 'package:grocery/Application/exports.dart';
 part 'logout_state.dart';
 
 class LogoutCubit extends Cubit<LogoutState> {

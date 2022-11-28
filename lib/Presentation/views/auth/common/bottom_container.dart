@@ -1,6 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:grocery/Presentation/resources/assets.dart';
+import 'package:grocery/Application/exports.dart';
 
 Widget bottomContainer() {
   return Expanded(

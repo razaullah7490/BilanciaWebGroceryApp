@@ -1,22 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:grocery/Presentation/common/delete_item_dialogue.dart';
-import 'package:grocery/Presentation/common/edit_delete_container.dart';
-import 'package:grocery/Presentation/common/snack_bar_widget.dart';
-import 'package:grocery/Presentation/resources/app_strings.dart';
-import 'package:grocery/Presentation/resources/border_radius.dart';
-import 'package:grocery/Presentation/resources/colors_palette.dart';
-import 'package:grocery/Presentation/resources/routes/navigation.dart';
-import 'package:grocery/Presentation/resources/routes/routes_names.dart';
-import 'package:grocery/Presentation/resources/size.dart';
-import 'package:grocery/Presentation/resources/sized_box.dart';
-import 'package:grocery/Presentation/resources/text_styles.dart';
-import 'package:grocery/Presentation/views/home/inventory/all%20tabs/resources/bloc/resource_cubit.dart';
-import 'package:grocery/Presentation/views/home/inventory/all%20tabs/resources/resources_screen.dart';
-
-import '../../../../../../Domain/models/inventory/resources_model.dart';
-import '../resources/addEditDeleteResource/edit_resource.dart';
+import 'package:grocery/Application/exports.dart';
 
 class ResourceDetailContainer extends StatelessWidget {
   final ResourcesModel model;

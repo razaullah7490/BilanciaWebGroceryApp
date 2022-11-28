@@ -1,15 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:grocery/Presentation/views/home/dashboard/all%20tabs/settings/command/bloc/command_cubit.dart';
-import '../../../../../../common/add_item_button.dart';
-import '../../../../../../common/app_bar.dart';
-import '../../../../../../common/data_not_available_text.dart';
-import '../../../../../../common/shimmer effect/command_shimmer.dart';
-import '../../../../../../resources/app_strings.dart';
-import '../../../../../../resources/colors_palette.dart';
-import '../../../../../../resources/sized_box.dart';
-import '../../components/command_detail_container.dart';
-import 'add_command_dailogue.dart';
+import 'package:grocery/Application/exports.dart';
 
 class CommandScreen extends StatefulWidget {
   const CommandScreen({Key? key}) : super(key: key);

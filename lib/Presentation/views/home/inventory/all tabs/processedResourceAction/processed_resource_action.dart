@@ -1,23 +1,6 @@
 // ignore_for_file: use_build_context_synchronously
 import 'dart:developer';
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:grocery/Presentation/common/shimmer%20effect/list_tile_shimmer.dart';
-import 'package:grocery/Presentation/resources/routes/navigation.dart';
-import 'package:grocery/Presentation/views/home/inventory/all%20tabs/components/proceed_resource_action_detail_container.dart';
-import 'package:grocery/Presentation/views/home/inventory/all%20tabs/components/proceed_resource_detail_container.dart';
-import 'package:grocery/Presentation/views/home/inventory/all%20tabs/components/production_park_dailogue.dart';
-import 'package:grocery/Presentation/views/home/inventory/all%20tabs/processedResourceAction/addEditDeleteProceedAction/add_proceed_resource_action.dart';
-import 'package:grocery/Presentation/views/home/inventory/all%20tabs/processedResourceAction/bloc/proceed_resource_action_cubit.dart';
-import 'package:grocery/Presentation/views/home/inventory/all%20tabs/processedResourceAction/productionParkBloc/production_park_cubit.dart';
-import '../../../../../../Application/Prefs/app_prefs.dart';
-import '../../../../../common/add_item_button.dart';
-import '../../../../../common/app_bar.dart';
-import '../../../../../common/data_not_available_text.dart';
-import '../../../../../resources/app_strings.dart';
-import '../../../../../resources/colors_palette.dart';
-import '../../../../../resources/sized_box.dart';
-import '../components/actions_pagination.dart';
+import 'package:grocery/Application/exports.dart';
 
 class ProcessedResourceActionScreen extends StatefulWidget {
   const ProcessedResourceActionScreen({super.key});

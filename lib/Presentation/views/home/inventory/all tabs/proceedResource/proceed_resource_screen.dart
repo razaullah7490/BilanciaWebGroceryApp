@@ -1,23 +1,6 @@
 // ignore_for_file: use_build_context_synchronously
-
 import 'dart:developer';
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:grocery/Presentation/common/add_item_button.dart';
-import 'package:grocery/Presentation/common/app_bar.dart';
-import 'package:grocery/Presentation/resources/app_strings.dart';
-import 'package:grocery/Presentation/resources/sized_box.dart';
-import 'package:grocery/Presentation/views/home/inventory/all%20tabs/components/proceed_resource_detail_container.dart';
-import 'package:grocery/Presentation/views/home/inventory/all%20tabs/proceedResource/addEditDeleteProceedResource/add_proceed_resource.dart';
-import 'package:grocery/Presentation/views/home/inventory/all%20tabs/proceedResource/bloc/proceed_resource_cubit.dart';
-import '../../../../../../Application/Prefs/app_prefs.dart';
-import '../../../../../common/data_not_available_text.dart';
-import '../../../../../common/shimmer effect/list_tile_shimmer.dart';
-import '../../../../../resources/colors_palette.dart';
-import '../../../../../resources/routes/navigation.dart';
-import '../components/production_park_dailogue.dart';
-import '../components/single_searchable_drop_down.dart';
-import '../processedResourceAction/productionParkBloc/production_park_cubit.dart';
+import 'package:grocery/Application/exports.dart';
 
 class ProceedResourceScreen extends StatefulWidget {
   const ProceedResourceScreen({super.key});
@@ -27,6 +10,8 @@ class ProceedResourceScreen extends StatefulWidget {
 }
 
 class _ProceedResourceScreenState extends State<ProceedResourceScreen> {
+  final searchController = TextEditingController();
+  bool isLoad = false;
   @override
   void initState() {
     Future.wait([
@@ -49,12 +34,66 @@ class _ProceedResourceScreenState extends State<ProceedResourceScreen> {
 
   @override
   Widget build(BuildContext context) {
+    var searchResourceList = context.watch<ProceedResourceCubit>().searchList;
     return Scaffold(
       appBar: const CustomAppBar(
         title: AppStrings.processedResourceText,
       ),
       body: Column(
         children: [
+          CustomSizedBox.height(10),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: AppSize.p10).r,
+            child: Row(
+              children: [
+                Flexible(
+                  child: SearchTextField(
+                    controller: searchController,
+                    onChanged: (v) async {
+                      await context
+                          .read<ProceedResourceCubit>()
+                          .searching(searchController.text);
+                      setState(() {
+                        isLoad = true;
+                      });
+                    },
+                    suffixIcon: isLoad && searchController.text.isNotEmpty
+                        ? GestureDetector(
+                            onTap: () {
+                              setState(() {
+                                searchController.clear();
+                                isLoad = false;
+                              });
+                            },
+                            behavior: HitTestBehavior.opaque,
+                            child: Icon(
+                              Icons.close,
+                              size: AppSize.clearSearchTextFieldIconSize.r,
+                              color: AppColors.hintTextColor,
+                            ),
+                          )
+                        : const Text(""),
+                  ),
+                ),
+                CustomSizedBox.width(10),
+                SearchBarcodeWidget(
+                  onTap: () async {
+                    Navigate.to(context, BarcodeScanner(
+                      getBarcode: (barcode) async {
+                        await context
+                            .read<ProceedResourceCubit>()
+                            .searching(barcode);
+                        setState(() {
+                          searchController.text = barcode;
+                          isLoad = true;
+                        });
+                      },
+                    ));
+                  },
+                ),
+              ],
+            ),
+          ),
           CustomSizedBox.height(20),
           addItemButtonWidget(
             context: context,
@@ -72,18 +111,23 @@ class _ProceedResourceScreenState extends State<ProceedResourceScreen> {
                 ? DataNotAvailableText.withExpanded(
                     AppStrings.noProceedResourceAddedText,
                   )
-                : Expanded(
-                    child: ListView.builder(
-                        shrinkWrap: true,
-                        physics: const BouncingScrollPhysics(),
-                        itemCount: state.proceedResourceModel.length,
-                        itemBuilder: (context, index) {
-                          var singleData = state.proceedResourceModel[index];
-
-                          return ProceedResourceDetailContainer(
-                              model: singleData);
-                        }),
-                  );
+                : searchResourceList.isEmpty && isLoad == true
+                    ? noProductFound()
+                    : Expanded(
+                        child: ListView.builder(
+                            shrinkWrap: true,
+                            physics: const BouncingScrollPhysics(),
+                            itemCount: isLoad == true
+                                ? searchResourceList.length
+                                : state.proceedResourceModel.length,
+                            itemBuilder: (context, index) {
+                              var singleData = isLoad == true
+                                  ? searchResourceList[index]
+                                  : state.proceedResourceModel[index];
+                              return ProceedResourceDetailContainer(
+                                  model: singleData);
+                            }),
+                      );
           })
         ],
       ),
@@ -97,5 +141,16 @@ class _ProceedResourceScreenState extends State<ProceedResourceScreen> {
         builder: (BuildContext context) {
           return const ProductionParkDialogue();
         });
+  }
+
+  Expanded noProductFound() {
+    return Expanded(
+      child: Image.asset(
+        Assets.noProductFound,
+        color: AppColors.primaryColor,
+        width: 200.w,
+        height: 200.h,
+      ),
+    );
   }
 }

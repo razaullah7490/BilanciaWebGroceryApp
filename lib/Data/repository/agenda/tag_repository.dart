@@ -1,6 +1,4 @@
-import 'package:grocery/Data/services/agenda/tag_services.dart';
-import '../../../Domain/models/manager/tag_model.dart';
-import '../../errors/custom_error.dart';
+import 'package:grocery/Application/exports.dart';
 
 class TagRepository {
   final TagService tagService;

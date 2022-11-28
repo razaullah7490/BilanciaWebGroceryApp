@@ -1,8 +1,4 @@
-import 'package:equatable/equatable.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:grocery/Data/repository/agenda/tag_repository.dart';
-import '../../../../../../../Data/errors/custom_error.dart';
-import '../../../../../../../Domain/models/manager/tag_model.dart';
+import 'package:grocery/Application/exports.dart';
 part 'tags_state.dart';
 
 class TagsCubit extends Cubit<TagsState> {

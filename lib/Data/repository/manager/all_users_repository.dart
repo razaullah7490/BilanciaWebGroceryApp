@@ -1,6 +1,4 @@
-import 'package:grocery/Data/services/manager/all_users_service.dart';
-import 'package:grocery/Domain/models/manager/all_users_model.dart';
-import '../../errors/custom_error.dart';
+import 'package:grocery/Application/exports.dart';
 
 class AllUsersRepository {
   final AllUsersService allUsersService;

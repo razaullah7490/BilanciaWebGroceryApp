@@ -1,6 +1,4 @@
-import 'package:grocery/Data/services/manager/category_service.dart';
-import 'package:grocery/Domain/models/inventory/category_model.dart';
-import '../../errors/custom_error.dart';
+import 'package:grocery/Application/exports.dart';
 
 class CategoryRepository {
   final CatergoryService catergoryService;

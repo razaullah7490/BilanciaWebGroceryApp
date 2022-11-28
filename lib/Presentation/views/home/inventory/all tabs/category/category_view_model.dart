@@ -10,8 +10,10 @@ class CategoryViewModel {
     "VI",
   ];
   static const List<String> statusList = [
-    "Active",
-    "InActive",
+    // "Active",
+    // "InActive",
+    "Attivo",
+    "Inattivo",
   ];
 
   static const List<String> measureUnitList = [

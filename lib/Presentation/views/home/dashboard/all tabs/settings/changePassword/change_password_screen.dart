@@ -1,19 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:grocery/Data/services/auth/change_password.dart';
-import 'package:grocery/Presentation/common/app_bar.dart';
-import 'package:grocery/Presentation/common/custom_button.dart';
-import 'package:grocery/Presentation/common/custom_text_field.dart';
-import 'package:grocery/Presentation/common/snack_bar_widget.dart';
-import 'package:grocery/Presentation/resources/app_strings.dart';
-import 'package:grocery/Presentation/resources/colors_palette.dart';
-import 'package:grocery/Presentation/resources/sized_box.dart';
-import 'package:grocery/Presentation/resources/text_styles.dart';
-import 'package:grocery/Presentation/views/home/dashboard/all%20tabs/settings/changePassword/Bloc/change_password_cubit.dart';
-import '../../../../../../../Data/errors/custom_error.dart';
-import '../../../../../../common/loading_indicator.dart';
-import '../../../../../../resources/size.dart';
+import 'package:grocery/Application/exports.dart';
 
 class ChangePasswordScreen extends StatefulWidget {
   const ChangePasswordScreen({super.key});

@@ -1,6 +1,4 @@
-import "package:flutter/material.dart";
-
-import '../../../../../resources/app_strings.dart';
+import 'package:grocery/Application/exports.dart';
 
 class WebPortalScreen extends StatelessWidget {
   const WebPortalScreen({super.key});

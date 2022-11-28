@@ -1,12 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:grocery/Presentation/resources/app_strings.dart';
-import 'package:grocery/Presentation/resources/assets.dart';
-import 'package:grocery/Presentation/resources/colors_palette.dart';
-import 'package:grocery/Presentation/views/home/dashboard/all%20tabs/settings/changePassword/change_password_screen.dart';
-import 'package:grocery/Presentation/views/home/dashboard/all%20tabs/settings/editProfile/edit_profile_screen.dart';
-import 'package:grocery/Presentation/views/home/dashboard/all%20tabs/settings/notificationSetting/notification_setting.dart';
-
-import 'command/command_screen.dart';
+import 'package:grocery/Application/exports.dart';
 
 class SettingViewModel {
   static List<SettingGridModel> settingList = [
@@ -34,14 +26,14 @@ class SettingViewModel {
       borderColor: AppColors.changePasswordborderColor,
       onTap: const ChangePasswordScreen(),
     ),
-    SettingGridModel(
-      imageUrl: Assets.settingNotification,
-      name: AppStrings.notificationsText,
-      backgroundColor: AppColors.notificationFillColor,
-      iconColor: AppColors.notificationborderColor,
-      borderColor: AppColors.notificationborderColor,
-      onTap: const NotificationSettingScreen(),
-    ),
+    // SettingGridModel(
+    //   imageUrl: Assets.settingNotification,
+    //   name: AppStrings.notificationsText,
+    //   backgroundColor: AppColors.notificationFillColor,
+    //   iconColor: AppColors.notificationborderColor,
+    //   borderColor: AppColors.notificationborderColor,
+    //   onTap: const NotificationSettingScreen(),
+    // ),
   ];
 }
 

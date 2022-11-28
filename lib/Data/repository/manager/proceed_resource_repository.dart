@@ -1,8 +1,5 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'package:grocery/Data/services/manager/proceed_resource_service.dart';
-import 'package:grocery/Domain/models/inventory/proceed_resource_model.dart';
-
-import '../../errors/custom_error.dart';
+import 'package:grocery/Application/exports.dart';
 
 class ProceedResourceRepository {
   final ProceedResourceService proceedResourceService;

@@ -1,25 +1,5 @@
 import 'dart:developer';
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:grocery/Presentation/common/app_bar.dart';
-import 'package:grocery/Presentation/common/loading_indicator.dart';
-import 'package:grocery/Presentation/common/shimmer%20effect/list_tile_shimmer.dart';
-import 'package:grocery/Presentation/resources/app_strings.dart';
-import 'package:grocery/Presentation/resources/colors_palette.dart';
-import 'package:grocery/Presentation/resources/routes/navigation.dart';
-import 'package:grocery/Presentation/resources/size.dart';
-import 'package:grocery/Presentation/resources/sized_box.dart';
-import 'package:grocery/Presentation/views/home/dashboard/all%20tabs/components/barcode_scanner.dart';
-import 'package:grocery/Presentation/views/home/dashboard/all%20tabs/components/search_text_field.dart';
-import 'package:grocery/Presentation/views/home/inventory/all%20tabs/category/bloc/category_cubit.dart';
-import 'package:grocery/Presentation/views/home/inventory/all%20tabs/components/category_detail_container.dart';
-import '../../../../../common/data_not_available_text.dart';
-import '../../../../../resources/assets.dart';
-import '../../../../../resources/border_radius.dart';
-import '../../../../../resources/text_styles.dart';
-import '../../../inventory/all tabs/components/product_detail_container.dart';
-import '../../../inventory/all tabs/resources/bloc/resource_cubit.dart';
+import 'package:grocery/Application/exports.dart';
 
 class ManageProductsScreen extends StatefulWidget {
   const ManageProductsScreen({super.key});
@@ -42,8 +22,8 @@ class _ManageProductsScreenState extends State<ManageProductsScreen> {
     super.initState();
   }
 
-  Pattern pattern = "-1";
-  String scanResult = "";
+  // Pattern pattern = "-1";
+  // String scanResult = "";
 
   @override
   Widget build(BuildContext context) {
@@ -90,7 +70,22 @@ class _ManageProductsScreenState extends State<ManageProductsScreen> {
                     ),
                   ),
                   CustomSizedBox.width(10),
-                  barCodeWidget(),
+                  SearchBarcodeWidget(
+                    onTap: () async {
+                      Navigate.to(context, BarcodeScanner(
+                        getBarcode: (barcode) async {
+                          log("Barcode $barcode");
+                          await context
+                              .read<ResourceCubit>()
+                              .searching(barcode);
+                          setState(() {
+                            searchController.text = barcode;
+                            isLoad = true;
+                          });
+                        },
+                      ));
+                    },
+                  ),
                 ],
               ),
               CustomSizedBox.height(15),
@@ -170,40 +165,6 @@ class _ManageProductsScreenState extends State<ManageProductsScreen> {
         color: AppColors.primaryColor,
         width: 200.w,
         height: 200.h,
-      ),
-    );
-  }
-
-  Widget barCodeWidget() {
-    return GestureDetector(
-      onTap: () async {
-        Navigate.to(context, BarcodeScanner(
-          getBarcode: (barcode) async {
-            log("Barcode $barcode");
-            await context.read<ResourceCubit>().searching(barcode);
-            setState(() {
-              searchController.text = barcode;
-              isLoad = true;
-            });
-          },
-        ));
-      },
-      behavior: HitTestBehavior.opaque,
-      child: Container(
-        width: 50.w,
-        height: 47.w,
-        decoration: BoxDecoration(
-          color: AppColors.primaryColor,
-          borderRadius:
-              BorderRadius.circular(AppBorderRadius.barcodeContainerRadius.r),
-        ),
-        child: Center(
-          child: Image.asset(
-            Assets.barcode,
-            width: 26.w,
-            height: 26.w,
-          ),
-        ),
       ),
     );
   }

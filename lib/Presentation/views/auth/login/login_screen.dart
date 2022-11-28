@@ -1,34 +1,6 @@
 // ignore_for_file: use_build_context_synchronously
-
+import 'package:grocery/Application/exports.dart';
 import 'dart:developer';
-import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:grocery/Application/Prefs/app_prefs.dart';
-import 'package:grocery/Application/Prefs/prefs_keys.dart';
-import 'package:grocery/Presentation/common/custom_button.dart';
-import 'package:grocery/Presentation/common/custom_text_field.dart';
-import 'package:grocery/Presentation/resources/app_strings.dart';
-import 'package:grocery/Presentation/resources/assets.dart';
-import 'package:grocery/Presentation/resources/colors_palette.dart';
-import 'package:grocery/Presentation/resources/routes/navigation.dart';
-import 'package:grocery/Presentation/resources/routes/routes_names.dart';
-import 'package:grocery/Presentation/resources/size.dart';
-import 'package:grocery/Presentation/resources/sized_box.dart';
-import 'package:grocery/Presentation/resources/text_styles.dart';
-import 'package:grocery/Presentation/state%20management/bloc/set_bool_cubit.dart';
-import 'package:grocery/Presentation/views/auth/common/bottom_container.dart';
-import 'package:grocery/Presentation/views/auth/common/bottom_text.dart';
-import 'package:grocery/Presentation/views/home/dashboard/dashboard.dart';
-import '../../../../Data/errors/custom_error.dart';
-import '../../../common/loading_indicator.dart';
-import '../../../common/snack_bar_widget.dart';
-import '../forget/forgetPassword/forget_password.dart';
-import '../forget/setNewPassword/set_new_password.dart';
-import '../register/register_screen.dart';
-import 'bloc/login_cubit.dart';
-import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});

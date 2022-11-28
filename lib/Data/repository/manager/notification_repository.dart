@@ -1,6 +1,4 @@
-import 'package:grocery/Data/services/manager/notification_service.dart';
-import '../../../Domain/models/notification_model.dart';
-import '../../errors/custom_error.dart';
+import 'package:grocery/Application/exports.dart';
 
 class NotificationRepository {
   final NotificationService service;

@@ -1,13 +1,7 @@
 // ignore_for_file: unused_local_variable, depend_on_referenced_packages
-import 'dart:convert';
 import 'dart:developer';
-import 'dart:io';
-import 'package:grocery/Domain/models/inventory/proceed_resource_model.dart';
 import 'package:http/http.dart' as http;
-import 'package:dio/dio.dart';
-import 'package:grocery/Application/Prefs/app_prefs.dart';
-import 'package:grocery/Application/api_urls.dart';
-import 'package:grocery/Data/errors/http_error_handler.dart';
+import 'package:grocery/Application/exports.dart';
 
 class ProceedResourceService {
   // static Future<bool> addProceedResource(map) async {
@@ -98,6 +92,7 @@ class ProceedResourceService {
     var bytes = utf8.encode(json.encode(map));
     var url = "${ApiUrls.proceedResourceUrl}/$id/";
     try {
+      log("Mappppp $map");
       var res = await http.put(
         Uri.parse(url),
         body: bytes,
@@ -116,6 +111,7 @@ class ProceedResourceService {
       }
       return true;
     } catch (e) {
+      log("Service Error $e");
       rethrow;
     }
   }

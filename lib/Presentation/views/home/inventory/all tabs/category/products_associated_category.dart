@@ -1,14 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:grocery/Domain/models/inventory/resources_model.dart';
-import 'package:grocery/Presentation/common/shimmer%20effect/product_list_tile_shimmer.dart';
-import '../../../../../common/app_bar.dart';
-import '../../../../../common/data_not_available_text.dart';
-import '../../../../../resources/app_strings.dart';
-import '../../../../../resources/sized_box.dart';
-import '../components/category_detail_container.dart';
-import '../components/product_detail_container.dart';
-import '../resources/bloc/resource_cubit.dart';
+import 'package:grocery/Application/exports.dart';
 
 class ProductsAssociatedToCategory extends StatefulWidget {
   final CategoryData categoryData;

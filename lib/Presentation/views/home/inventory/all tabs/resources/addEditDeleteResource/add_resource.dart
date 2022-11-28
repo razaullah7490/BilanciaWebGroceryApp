@@ -1,40 +1,6 @@
 // ignore_for_file: prefer_typing_uninitialized_variables, use_build_context_synchronously
 import 'dart:developer';
-import 'dart:io';
-import 'package:dio/dio.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:grocery/Domain/models/manager/ingredient_model.dart';
-import 'package:grocery/Presentation/common/app_bar.dart';
-import 'package:grocery/Presentation/common/bar_code_scan.dart';
-import 'package:grocery/Presentation/common/custom_button.dart';
-import 'package:grocery/Presentation/common/custom_drop_down.dart';
-import 'package:grocery/Presentation/common/custom_text_field.dart';
-import 'package:grocery/Presentation/common/loading_indicator.dart';
-import 'package:grocery/Presentation/common/snack_bar_widget.dart';
-import 'package:grocery/Presentation/resources/app_strings.dart';
-import 'package:grocery/Presentation/resources/colors_palette.dart';
-import 'package:grocery/Presentation/resources/routes/navigation.dart';
-import 'package:grocery/Presentation/resources/sized_box.dart';
-import 'package:grocery/Presentation/resources/text_styles.dart';
-import 'package:grocery/Presentation/views/home/inventory/all%20tabs/category/bloc/category_cubit.dart';
-import 'package:grocery/Presentation/views/home/inventory/all%20tabs/category/category_view_model.dart';
-import 'package:grocery/Presentation/views/home/inventory/all%20tabs/resources/bloc/resource_cubit.dart';
-import 'package:grocery/Presentation/views/home/inventory/all%20tabs/resources/resources_screen.dart';
-import 'package:image_picker/image_picker.dart';
-import '../../../../../../../Data/errors/custom_error.dart';
-import '../../../../../../common/custom_bottom_sheet.dart';
-import '../../../../../../common/custom_date_picker.dart';
-import '../../../../../../common/date_picker.dart';
-import '../../../../../../common/image_picker.dart';
-import '../../../../../../resources/border_radius.dart';
-import '../../../../../../resources/size.dart';
-import '../../../../dashboard/all tabs/components/barcode_scanner.dart';
-import '../../../../dashboard/components/tag_drop_down.dart';
-import '../../ingredients/ingredientsBloc/ingredients_cubit.dart';
-import '../../iva/ivaBloc/manager_iva_cubit.dart';
-import '../../proceedResource/proceed_resource_view_model.dart';
+import 'package:grocery/Application/exports.dart';
 
 class AddResourceScreen extends StatefulWidget {
   const AddResourceScreen({super.key});
@@ -73,14 +39,26 @@ class _AddResourceScreenState extends State<AddResourceScreen> {
   bool isFlgConfig = false;
   var traceability;
 
+  addNoSelect() async {
+    await context.read<IngredientsCubit>().getIngredients();
+    var ingredientList = context.read<IngredientsCubit>().state.modelList;
+    ingredientList.insert(
+      0,
+      IngredientModel(
+        ingrediantId: 0,
+        description: AppStrings.noSelectIngredientText,
+      ),
+    );
+  }
+
   @override
   void initState() {
     Future.wait([
       context.read<CategoryCubit>().getCategory(),
-      context.read<IngredientsCubit>().getIngredients(),
+      //context.read<IngredientsCubit>().getIngredients(),
       context.read<ManagerIvaCubit>().getIva(),
     ]);
-
+    addNoSelect();
     stockQuantityController.text = "0";
     stockQuantityThresholdController.text = "0";
     measureUnit = CategoryViewModel.measureUnitList[0].toString();
@@ -189,8 +167,9 @@ class _AddResourceScreenState extends State<AddResourceScreen> {
                           "plu": pluController.text.toString(),
                           "tare": tareController.text.toString(),
                           "weight_type": weightType.toString(),
-                          "ingredient":
-                              ingrediant == null ? "" : ingrediant.toString(),
+                          "ingredient": ingrediant == null || ingrediant == 0
+                              ? ""
+                              : ingrediant.toString(),
                           "revenue_percentage":
                               revenuePercentageController.text.toString(),
                           "expiration_date": expirationDate != null
@@ -201,7 +180,7 @@ class _AddResourceScreenState extends State<AddResourceScreen> {
                               : "",
                           "unit_purchase_price":
                               unitPurchasePriceController.text.toString(),
-                          "is_active": status == "Active" ? "true" : "false",
+                          "is_active": status == "Attivo" ? "true" : "false",
                           "threshold_1": threshold1Controller.text.toString(),
                           "threshold_2": threshold2Controller.text.toString(),
                           "price_1": price1Controller.text.toString(),
@@ -560,7 +539,9 @@ class _AddResourceScreenState extends State<AddResourceScreen> {
                     overflow: TextOverflow.ellipsis,
                     style: Styles.circularStdBook(
                       AppSize.text14.sp,
-                      AppColors.primaryColor,
+                      v.description == AppStrings.noSelectIngredientText
+                          ? AppColors.textColor
+                          : AppColors.primaryColor,
                     ),
                   ),
                 );

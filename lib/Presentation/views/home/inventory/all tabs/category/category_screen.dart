@@ -1,21 +1,4 @@
-import 'dart:developer';
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:grocery/Presentation/common/add_item_button.dart';
-import 'package:grocery/Presentation/common/app_bar.dart';
-import 'package:grocery/Presentation/common/data_not_available_text.dart';
-import 'package:grocery/Presentation/common/shimmer%20effect/list_tile_shimmer.dart';
-import 'package:grocery/Presentation/resources/app_strings.dart';
-import 'package:grocery/Presentation/resources/sized_box.dart';
-import 'package:grocery/Presentation/views/home/inventory/all%20tabs/category/addEditDeleteCategory/add_category.dart';
-import 'package:grocery/Presentation/views/home/inventory/all%20tabs/category/bloc/category_cubit.dart';
-import 'package:grocery/Presentation/views/home/inventory/all%20tabs/components/category_detail_container.dart';
-import '../../../../../common/not_found_widget.dart';
-import '../../../../../resources/colors_palette.dart';
-import '../../../../../resources/routes/navigation.dart';
-import '../../../../../resources/size.dart';
-import '../../../dashboard/all tabs/components/search_text_field.dart';
+import 'package:grocery/Application/exports.dart';
 
 class CategoryScreen extends StatefulWidget {
   const CategoryScreen({super.key});
@@ -46,39 +29,33 @@ class _CategoryScreenState extends State<CategoryScreen> {
         children: [
           CustomSizedBox.height(10),
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: AppSize.m10).r,
-            child: Row(
-              children: [
-                Flexible(
-                  child: SearchTextField(
-                    controller: searchController,
-                    onChanged: (v) async {
-                      await context
-                          .read<CategoryCubit>()
-                          .searching(searchController.text);
-                      setState(() {
-                        isLoad = true;
-                      });
-                    },
-                    suffixIcon: isLoad && searchController.text.isNotEmpty
-                        ? GestureDetector(
-                            onTap: () {
-                              setState(() {
-                                searchController.clear();
-                                isLoad = false;
-                              });
-                            },
-                            behavior: HitTestBehavior.opaque,
-                            child: Icon(
-                              Icons.close,
-                              size: AppSize.clearSearchTextFieldIconSize.r,
-                              color: AppColors.hintTextColor,
-                            ),
-                          )
-                        : const Text(""),
-                  ),
-                ),
-              ],
+            padding: const EdgeInsets.symmetric(horizontal: AppSize.p10).r,
+            child: SearchTextField(
+              controller: searchController,
+              onChanged: (v) async {
+                await context
+                    .read<CategoryCubit>()
+                    .searching(searchController.text);
+                setState(() {
+                  isLoad = true;
+                });
+              },
+              suffixIcon: isLoad && searchController.text.isNotEmpty
+                  ? GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          searchController.clear();
+                          isLoad = false;
+                        });
+                      },
+                      behavior: HitTestBehavior.opaque,
+                      child: Icon(
+                        Icons.close,
+                        size: AppSize.clearSearchTextFieldIconSize.r,
+                        color: AppColors.hintTextColor,
+                      ),
+                    )
+                  : const Text(""),
             ),
           ),
           CustomSizedBox.height(20),

@@ -1,10 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:grocery/Presentation/resources/app_strings.dart';
-import '../../../../../resources/border_radius.dart';
-import '../../../../../resources/colors_palette.dart';
-import '../../../../../resources/size.dart';
-import '../../../../../resources/text_styles.dart';
+import 'package:grocery/Application/exports.dart';
 
 class IngredientMultiLineTextField extends StatelessWidget {
   final TextEditingController controller;

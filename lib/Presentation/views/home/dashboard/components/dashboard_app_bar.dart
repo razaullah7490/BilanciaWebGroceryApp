@@ -1,34 +1,5 @@
-import 'package:flutter/material.dart';
-import 'package:cached_network_image/cached_network_image.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:grocery/Presentation/common/extensions/color_extension.dart';
-import 'package:grocery/Presentation/common/extensions/media_query_extension.dart';
-import 'package:grocery/Presentation/common/loading_indicator.dart';
-import 'package:grocery/Presentation/common/shimmer%20effect/event_container_shimmer.dart';
-import 'package:grocery/Presentation/resources/app_strings.dart';
-import 'package:grocery/Presentation/resources/assets.dart';
-import 'package:grocery/Presentation/resources/border_radius.dart';
-import 'package:grocery/Presentation/resources/colors_palette.dart';
-import 'package:grocery/Presentation/resources/size.dart';
-import 'package:grocery/Presentation/resources/sized_box.dart';
-import 'package:carousel_slider/carousel_slider.dart';
-import 'package:grocery/Presentation/resources/text_styles.dart';
-import 'package:grocery/Presentation/views/home/dashboard/agenda/events/Bloc/event_cubit.dart';
-import 'package:grocery/Presentation/views/home/dashboard/agenda/events/all_events.dart';
-import 'package:grocery/Presentation/views/home/dashboard/agenda/tags/Bloc/tags_cubit.dart';
-import 'package:grocery/Presentation/views/home/dashboard/agenda/tags/all_tags.dart';
-import 'package:grocery/Presentation/views/home/dashboard/components/no_event_container.dart';
-import 'package:grocery/Presentation/views/home/dashboard/components/no_more_events_container.dart';
-import 'package:grocery/Presentation/views/home/dashboard/notifications/bloc/notification_cubit.dart';
-import 'package:grocery/Presentation/views/home/dashboard/notifications/notifications_screen.dart';
+import 'package:grocery/Application/exports.dart';
 import 'package:intl/intl.dart';
-import 'package:loading_animation_widget/loading_animation_widget.dart';
-import 'package:smooth_page_indicator/smooth_page_indicator.dart';
-import '../../../../../Domain/models/manager/event_model.dart';
-import '../../../../../Domain/models/manager/tag_model.dart';
-import '../../../../resources/routes/navigation.dart';
 
 class DashBoardLargeAppBar extends StatefulWidget {
   const DashBoardLargeAppBar({super.key});

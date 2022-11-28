@@ -1,11 +1,5 @@
 import 'dart:developer';
-
-import 'package:equatable/equatable.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:grocery/Data/repository/manager/proceed_resource_repository.dart';
-
-import '../../../../../../../Data/errors/custom_error.dart';
-import '../../../../../../../Domain/models/inventory/proceed_resource_model.dart';
+import 'package:grocery/Application/exports.dart';
 part 'proceed_resource_state.dart';
 
 class ProceedResourceCubit extends Cubit<ProceedResourceState> {
@@ -13,6 +7,21 @@ class ProceedResourceCubit extends Cubit<ProceedResourceState> {
   ProceedResourceCubit({
     required this.repo,
   }) : super(ProceedResourceState.initial());
+
+  List<ProceedResourcesModel> searchList = [];
+
+  searching(controller) {
+    searchList = state.proceedResourceModel.where((element) {
+      return element.name
+              .toString()
+              .toLowerCase()
+              .contains(controller.toLowerCase()) ||
+          element.barcode
+              .toString()
+              .toLowerCase()
+              .contains(controller.toLowerCase());
+    }).toList();
+  }
 
   Future<bool> addProccedResource(Map<String, dynamic> map) async {
     emit(state.copyWith(

@@ -1,11 +1,7 @@
 // ignore_for_file: unused_local_variable, depend_on_referenced_packages
-import 'dart:convert';
 import 'dart:developer';
-import 'package:grocery/Application/Prefs/app_prefs.dart';
-import 'package:grocery/Application/api_urls.dart';
-import 'package:grocery/Data/errors/http_error_handler.dart';
-import 'package:grocery/Domain/models/inventory/category_model.dart';
 import 'package:http/http.dart' as http;
+import 'package:grocery/Application/exports.dart';
 
 class CatergoryService {
   Future<bool> addCategory(map) async {
@@ -18,6 +14,7 @@ class CatergoryService {
           "Authorization": "Token $token",
         },
       );
+      log("Response ${res.body}");
       var data = json.decode(res.body);
       log("testing ${res.statusCode}");
 

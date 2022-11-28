@@ -1,16 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:grocery/Domain/models/notification_model.dart';
-import 'package:grocery/Presentation/common/app_bar.dart';
-import 'package:grocery/Presentation/common/shimmer%20effect/notification_tile_shimmer.dart';
-import 'package:grocery/Presentation/resources/app_strings.dart';
-import 'package:grocery/Presentation/resources/colors_palette.dart';
-import 'package:grocery/Presentation/resources/size.dart';
-import 'package:grocery/Presentation/views/home/dashboard/components/notification_detail.dart';
-import '../../../../common/data_not_available_text.dart';
-import '../../../../resources/border_radius.dart';
-import 'bloc/notification_cubit.dart';
+import 'package:grocery/Application/exports.dart';
 
 class NotificationScreen extends StatefulWidget {
   const NotificationScreen({super.key});

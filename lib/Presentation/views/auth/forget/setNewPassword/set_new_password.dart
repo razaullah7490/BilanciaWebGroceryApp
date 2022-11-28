@@ -1,26 +1,5 @@
 // ignore_for_file: use_build_context_synchronously
-
-import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:grocery/Data/services/auth/forget_password_service.dart';
-import 'package:grocery/Presentation/common/custom_button.dart';
-import 'package:grocery/Presentation/common/custom_text_field.dart';
-import 'package:grocery/Presentation/resources/app_strings.dart';
-import 'package:grocery/Presentation/resources/colors_palette.dart';
-import 'package:grocery/Presentation/resources/routes/navigation.dart';
-import 'package:grocery/Presentation/resources/size.dart';
-import 'package:grocery/Presentation/resources/sized_box.dart';
-import 'package:grocery/Presentation/resources/text_styles.dart';
-import 'package:grocery/Presentation/state%20management/bloc/set_bool_cubit.dart';
-import 'package:grocery/Presentation/views/auth/common/screen_pattern.dart';
-import 'package:grocery/Presentation/views/auth/forget/passwordRecovered/successfully_recoverd_password.dart';
-
-import '../../../../../Data/errors/custom_error.dart';
-import '../../../../common/loading_indicator.dart';
-import '../../../../common/snack_bar_widget.dart';
-import '../Bloc/forget_password_cubit.dart';
+import 'package:grocery/Application/exports.dart';
 
 class SetNewPasswordScreen extends StatefulWidget {
   final PendingDynamicLinkData? initialLink;

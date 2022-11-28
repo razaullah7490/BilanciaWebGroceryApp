@@ -1,10 +1,4 @@
-import 'package:equatable/equatable.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:grocery/Data/repository/manager/resource_action_repository.dart';
-
-import '../../../../../../../Data/errors/custom_error.dart';
-import '../../../../../../../Domain/models/inventory/resource_action_model.dart';
-
+import 'package:grocery/Application/exports.dart';
 part 'resource_action_state.dart';
 
 class ResourceActionCubit extends Cubit<ResourceActionState> {

@@ -1,21 +1,5 @@
 // ignore_for_file: must_be_immutable, prefer_typing_uninitialized_variables, use_build_context_synchronously
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:grocery/Presentation/common/custom_drop_down.dart';
-import 'package:grocery/Presentation/resources/app_strings.dart';
-import 'package:grocery/Presentation/resources/border_radius.dart';
-import 'package:grocery/Presentation/resources/colors_palette.dart';
-import 'package:grocery/Presentation/resources/routes/navigation.dart';
-import 'package:grocery/Presentation/resources/size.dart';
-import 'package:grocery/Presentation/common/extensions/media_query_extension.dart';
-import 'package:grocery/Presentation/resources/sized_box.dart';
-import 'package:grocery/Presentation/resources/text_styles.dart';
-import 'package:grocery/Presentation/views/home/dashboard/all%20tabs/settings/command/bloc/command_cubit.dart';
-import 'package:grocery/Presentation/views/home/dashboard/all%20tabs/settings/command/command_screen.dart';
-
-import '../../../../../../common/loading_indicator.dart';
-import '../../../../../../common/snack_bar_widget.dart';
+import 'package:grocery/Application/exports.dart';
 
 class CommandAddDialogue extends StatefulWidget {
   const CommandAddDialogue({
@@ -28,10 +12,10 @@ class CommandAddDialogue extends StatefulWidget {
 
 class _CommandAddDialogueState extends State<CommandAddDialogue> {
   List<String> commandTypeList = [
-    "fp",
-    "update_from_scales",
-    "update_from_server",
-    "end_workday",
+    "Registratore Telematico", //fp
+    "Aggiorna cloud da bilance", //update_from_scales
+    "Aggiorna bilance da cloud", //update_from_server
+    "Chiusura giornaliera", //end_workday
   ];
   var selectedCommand;
   final formKey = GlobalKey<FormState>();

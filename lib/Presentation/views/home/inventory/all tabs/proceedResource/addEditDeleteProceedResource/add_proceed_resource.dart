@@ -1,37 +1,6 @@
 // ignore_for_file: prefer_typing_uninitialized_variables, use_build_context_synchronously, unused_local_variable, prefer_null_aware_operators
-import 'dart:async';
-import 'dart:io';
 import 'dart:developer';
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:grocery/Presentation/common/app_bar.dart';
-import 'package:grocery/Presentation/common/bar_code_scan.dart';
-import 'package:grocery/Presentation/common/custom_button.dart';
-import 'package:grocery/Presentation/common/custom_drop_down.dart';
-import 'package:grocery/Presentation/common/snack_bar_widget.dart';
-import 'package:grocery/Presentation/resources/sized_box.dart';
-import 'package:grocery/Presentation/views/home/dashboard/components/tag_drop_down.dart';
-import 'package:grocery/Presentation/views/home/inventory/all%20tabs/components/single_searchable_drop_down.dart';
-import 'package:grocery/Presentation/views/home/inventory/all%20tabs/proceedResource/proceed_resource_screen.dart';
-import 'package:grocery/Presentation/views/home/inventory/all%20tabs/proceedResource/proceed_resource_view_model.dart';
-import '../../../../../../../Data/errors/custom_error.dart';
-import '../../../../../../common/custom_date_picker.dart';
-import '../../../../../../common/custom_text_field.dart';
-import '../../../../../../common/date_picker.dart';
-import '../../../../../../common/loading_indicator.dart';
-import '../../../../../../resources/app_strings.dart';
-import '../../../../../../resources/border_radius.dart';
-import '../../../../../../resources/colors_palette.dart';
-import '../../../../../../resources/routes/navigation.dart';
-import '../../../../../../resources/size.dart';
-import '../../../../../../resources/text_styles.dart';
-import '../../category/bloc/category_cubit.dart';
-import '../../category/category_view_model.dart';
-import '../../ingredients/ingredientsBloc/ingredients_cubit.dart';
-import '../../iva/ivaBloc/manager_iva_cubit.dart';
-import '../../resources/bloc/resource_cubit.dart';
-import '../bloc/proceed_resource_cubit.dart';
+import 'package:grocery/Application/exports.dart';
 
 class AddProceedResource extends StatefulWidget {
   const AddProceedResource({super.key});
@@ -75,14 +44,27 @@ class _AddProceedResourceState extends State<AddProceedResource> {
   List resourceIds = List.empty(growable: true);
   List resourceNames = List.empty(growable: true);
 
+  addNoSelect() async {
+    await context.read<IngredientsCubit>().getIngredients();
+    var ingredientList = context.read<IngredientsCubit>().state.modelList;
+    ingredientList.insert(
+      0,
+      IngredientModel(
+        ingrediantId: 0,
+        description: AppStrings.noSelectIngredientText,
+      ),
+    );
+  }
+
   @override
   void initState() {
     Future.wait([
       context.read<CategoryCubit>().getCategory(),
-      context.read<IngredientsCubit>().getIngredients(),
+      //context.read<IngredientsCubit>().getIngredients(),
       context.read<ManagerIvaCubit>().getIva(),
       context.read<ResourceCubit>().getResource(),
     ]);
+    addNoSelect();
     stockQuantityController.text = "0";
     stockQuantityThresholdController.text = "0";
     measureUnit = CategoryViewModel.measureUnitList[0].toString();
@@ -199,8 +181,9 @@ class _AddProceedResourceState extends State<AddProceedResource> {
                             "plu": pluController.text.toString(),
                             "tare": tareController.text.toString(),
                             "weight_type": weightType.toString(),
-                            "ingredient":
-                                ingrediant == null ? "" : ingrediant.toString(),
+                            "ingredient": ingrediant == null || ingrediant == 0
+                                ? ""
+                                : ingrediant.toString(),
                             "revenue_percentage":
                                 revenuePercentageController.text.toString(),
                             "expiration_date": expirationDate != null
@@ -211,7 +194,7 @@ class _AddProceedResourceState extends State<AddProceedResource> {
                                 : null,
                             "unit_purchase_price":
                                 unitPurchasePriceController.text.toString(),
-                            "is_active": status == "Active" ? "true" : "false",
+                            "is_active": status == "Attivo" ? "true" : "false",
                             "threshold_1": threshold1Controller.text.toString(),
                             "threshold_2": threshold2Controller.text.toString(),
                             "price_1": price1Controller.text.toString(),
@@ -374,7 +357,16 @@ class _AddProceedResourceState extends State<AddProceedResource> {
             controller: barCodeController,
             labelText: AppStrings.barcodeText,
             hintText: AppStrings.scanACodeText,
-            suffixIcon: BarcodeScanWidget(onTap: () {}),
+            suffixIcon: BarcodeScanWidget(onTap: () {
+              Navigate.to(context, BarcodeScanner(
+                getBarcode: (barcode) {
+                  log("Barcode $barcode");
+                  setState(() {
+                    barCodeController.text = barcode;
+                  });
+                },
+              ));
+            }),
             obscureText: false,
             textInputType: TextInputType.text,
             isLabel: false,
@@ -566,7 +558,9 @@ class _AddProceedResourceState extends State<AddProceedResource> {
                     overflow: TextOverflow.ellipsis,
                     style: Styles.circularStdBook(
                       AppSize.text14.sp,
-                      AppColors.primaryColor,
+                      v.description == AppStrings.noSelectIngredientText
+                          ? AppColors.textColor
+                          : AppColors.primaryColor,
                     ),
                   ),
                 );
@@ -826,10 +820,16 @@ class _AddProceedResourceState extends State<AddProceedResource> {
     return Column(
       children: [
         Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Flexible(
-                child: tableText(AppStrings.resourceAndResourcePercentageText)),
-            CustomSizedBox.width(15),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                tableBoldText(AppStrings.compositionText),
+                CustomSizedBox.height(5),
+                tableText(AppStrings.resourceAndResourcePercentageText),
+              ],
+            ),
             addResourceButton(),
           ],
         ),
@@ -1036,7 +1036,23 @@ class _AddProceedResourceState extends State<AddProceedResource> {
         text,
         maxLines: 2,
         style: Styles.circularStdBook(
-          AppSize.text15.sp,
+          AppSize.text14.sp,
+          AppColors.primaryColor,
+        ),
+      ),
+    );
+  }
+
+  Widget tableBoldText(String text) {
+    return Padding(
+      padding: const EdgeInsets.only(
+        left: AppSize.p2,
+      ).r,
+      child: Text(
+        text,
+        maxLines: 1,
+        style: Styles.circularStdMedium(
+          AppSize.text16.sp,
           AppColors.primaryColor,
         ),
       ),

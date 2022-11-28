@@ -1,24 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 // ignore_for_file: use_build_context_synchronously
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:grocery/Presentation/common/delete_item_dialogue.dart';
-import 'package:grocery/Presentation/common/edit_delete_container.dart';
-import 'package:grocery/Presentation/common/snack_bar_widget.dart';
-import 'package:grocery/Presentation/resources/app_strings.dart';
-import 'package:grocery/Presentation/resources/border_radius.dart';
-import 'package:grocery/Presentation/resources/colors_palette.dart';
-import 'package:grocery/Presentation/resources/routes/navigation.dart';
-import 'package:grocery/Presentation/resources/routes/routes_names.dart';
-import 'package:grocery/Presentation/resources/size.dart';
-import 'package:grocery/Presentation/resources/sized_box.dart';
-import 'package:grocery/Presentation/resources/text_styles.dart';
-import 'package:grocery/Presentation/views/home/inventory/all%20tabs/category/addEditDeleteCategory/edit_category.dart';
-import 'package:grocery/Presentation/views/home/inventory/all%20tabs/category/bloc/category_cubit.dart';
-import 'package:grocery/Presentation/views/home/inventory/all%20tabs/category/category_screen.dart';
-import 'package:grocery/Presentation/views/home/inventory/all%20tabs/category/products_associated_category.dart';
-import '../../../../../../Domain/models/inventory/category_model.dart';
+import 'package:grocery/Application/exports.dart';
 
 class CategoryData {
   final int id;
@@ -129,13 +111,15 @@ class CategoryDetailContainer extends StatelessWidget {
         vertical: AppSize.p6,
       ).r,
       decoration: BoxDecoration(
-        color: AppColors.primaryColor,
+        color: model.status == true
+            ? AppColors.primaryColor
+            : Colors.yellow.shade600,
         borderRadius: BorderRadius.circular(
           AppBorderRadius.categoryStatusRadius,
         ).r,
       ),
       child: Text(
-        model.status == true ? "Active" : "InActive",
+        model.status == true ? "Attivo" : "Inattivo",
         style: Styles.segoeUI(
           AppSize.text12.sp,
           AppColors.whiteColor,

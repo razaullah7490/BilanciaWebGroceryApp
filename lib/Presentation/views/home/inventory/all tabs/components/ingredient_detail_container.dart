@@ -1,24 +1,6 @@
 // ignore_for_file: use_build_context_synchronously
 import 'dart:developer';
-
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:grocery/Data/services/manager/ingredients_service.dart';
-import 'package:grocery/Domain/models/manager/ingredient_model.dart';
-import 'package:grocery/Presentation/resources/app_strings.dart';
-import 'package:grocery/Presentation/resources/sized_box.dart';
-import 'package:grocery/Presentation/views/home/inventory/all%20tabs/components/ingredient_textfield.dart';
-import 'package:grocery/Presentation/views/home/inventory/all%20tabs/ingredients/ingredientsBloc/ingredients_cubit.dart';
-import '../../../../../common/delete_item_dialogue.dart';
-import '../../../../../common/edit_delete_container.dart';
-import '../../../../../common/snack_bar_widget.dart';
-import '../../../../../resources/border_radius.dart';
-import '../../../../../resources/colors_palette.dart';
-import '../../../../../resources/routes/navigation.dart';
-import '../../../../../resources/size.dart';
-import '../../../../../resources/text_styles.dart';
-import '../ingredients/ingredients.dart';
+import 'package:grocery/Application/exports.dart';
 
 class IngredientDetailContainer extends StatefulWidget {
   final IngredientModel model;

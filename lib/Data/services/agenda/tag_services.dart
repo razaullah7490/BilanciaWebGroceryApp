@@ -1,11 +1,7 @@
 // ignore_for_file: unused_local_variable, depend_on_referenced_packages
-import 'package:grocery/Domain/models/manager/tag_model.dart';
-import 'dart:convert';
 import 'dart:developer';
-import 'package:grocery/Application/Prefs/app_prefs.dart';
-import 'package:grocery/Application/api_urls.dart';
-import 'package:grocery/Data/errors/http_error_handler.dart';
 import 'package:http/http.dart' as http;
+import 'package:grocery/Application/exports.dart';
 
 class TagService {
   Future<List<TagModel>> getAllTags() async {

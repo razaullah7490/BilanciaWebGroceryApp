@@ -1,31 +1,5 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'dart:developer';
-import 'dart:io';
-
-import 'package:cached_network_image/cached_network_image.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-
-import 'package:grocery/Domain/models/inventory/resources_model.dart';
-import 'package:grocery/Presentation/common/delete_item_dialogue.dart';
-import 'package:grocery/Presentation/common/edit_delete_container.dart';
-import 'package:grocery/Presentation/common/snack_bar_widget.dart';
-import 'package:grocery/Presentation/resources/app_strings.dart';
-import 'package:grocery/Presentation/resources/assets.dart';
-import 'package:grocery/Presentation/resources/border_radius.dart';
-import 'package:grocery/Presentation/resources/colors_palette.dart';
-import 'package:grocery/Presentation/resources/routes/navigation.dart';
-import 'package:grocery/Presentation/resources/routes/routes_names.dart';
-import 'package:grocery/Presentation/resources/size.dart';
-import 'package:grocery/Presentation/resources/sized_box.dart';
-import 'package:grocery/Presentation/resources/text_styles.dart';
-import 'package:grocery/Presentation/views/home/inventory/all%20tabs/components/pop_up_menu.dart';
-import 'package:grocery/Presentation/views/home/inventory/all%20tabs/resourceActions/addEditDeleteResourceActions/add_resource_action.dart';
-import 'package:grocery/Presentation/views/home/inventory/all%20tabs/resources/addEditDeleteResource/edit_resource.dart';
-
-import '../../../../../common/loading_indicator.dart';
-import '../resources/bloc/resource_cubit.dart';
+import 'package:grocery/Application/exports.dart';
 
 class ResourceData {
   int id;
@@ -56,11 +30,6 @@ class ProductDetailContainer extends StatelessWidget {
           isInventoryAction: false,
         );
         Navigate.to(context, AddResourceActionScreen(resourceData: args));
-        // Navigator.pushNamed(
-        //   context,
-        //   RoutesNames.addResourceActionsScreen,
-        //   arguments: args,
-        // );
       },
       behavior: HitTestBehavior.opaque,
       child: Container(
@@ -187,11 +156,6 @@ class ProductDetailContainer extends StatelessWidget {
                   );
 
                   Navigate.to(context, EditResourceScreen(model: args));
-                  // Navigator.pushNamed(
-                  //   context,
-                  //   RoutesNames.editResourceScreen,
-                  //   arguments: args,
-                  // );
                 }
               },
             ),

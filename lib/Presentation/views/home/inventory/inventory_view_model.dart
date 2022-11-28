@@ -1,13 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:grocery/Presentation/resources/app_strings.dart';
-import 'package:grocery/Presentation/resources/assets.dart';
-import 'package:grocery/Presentation/resources/colors_palette.dart';
-import 'package:grocery/Presentation/views/home/inventory/all%20tabs/ingredients/ingredients.dart';
-import 'package:grocery/Presentation/views/home/inventory/all%20tabs/iva/iva.dart';
-import 'package:grocery/Presentation/views/home/inventory/all%20tabs/proceedResource/proceed_resource_screen.dart';
-import 'package:grocery/Presentation/views/home/inventory/all%20tabs/resourceActions/resource_actions_screen.dart';
-import 'package:grocery/Presentation/views/home/inventory/all%20tabs/resources/resources_screen.dart';
-import 'all tabs/processedResourceAction/processed_resource_action.dart';
+import 'package:grocery/Application/exports.dart';
 
 class InventoryViewModel {
   static List<InventoryGridModel> inventoryList = [

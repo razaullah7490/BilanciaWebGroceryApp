@@ -1,23 +1,5 @@
 import 'dart:developer';
-import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:grocery/Presentation/common/custom_button.dart';
-import 'package:grocery/Presentation/common/custom_text_field.dart';
-import 'package:grocery/Presentation/resources/app_strings.dart';
-import 'package:grocery/Presentation/resources/colors_palette.dart';
-import 'package:grocery/Presentation/resources/routes/navigation.dart';
-import 'package:grocery/Presentation/resources/size.dart';
-import 'package:grocery/Presentation/resources/sized_box.dart';
-import 'package:grocery/Presentation/resources/text_styles.dart';
-import 'package:grocery/Presentation/views/auth/common/screen_pattern.dart';
-import 'package:grocery/Presentation/views/auth/forget/setNewPassword/set_new_password.dart';
-import '../../../../../Data/errors/custom_error.dart';
-import '../../../../common/loading_indicator.dart';
-import '../../../../common/snack_bar_widget.dart';
-import '../Bloc/forget_password_cubit.dart';
+import 'package:grocery/Application/exports.dart';
 
 class ForgetPasswordScreen extends StatefulWidget {
   const ForgetPasswordScreen({super.key});

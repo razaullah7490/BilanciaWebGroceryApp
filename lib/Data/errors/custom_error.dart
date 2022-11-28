@@ -1,4 +1,4 @@
-import 'package:equatable/equatable.dart';
+import 'package:grocery/Application/exports.dart';
 
 class CustomError extends Equatable {
   final String error;

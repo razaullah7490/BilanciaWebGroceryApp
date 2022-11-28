@@ -1,9 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:grocery/Presentation/resources/size.dart';
-import 'package:grocery/Presentation/resources/sized_box.dart';
-import 'package:shimmer/shimmer.dart';
-import '../../resources/border_radius.dart';
+import 'package:grocery/Application/exports.dart';
 
 class ProductionParkTileShimmerEffect extends StatelessWidget {
   const ProductionParkTileShimmerEffect({Key? key}) : super(key: key);

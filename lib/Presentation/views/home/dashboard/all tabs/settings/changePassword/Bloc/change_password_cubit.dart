@@ -1,8 +1,4 @@
-import 'package:equatable/equatable.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:grocery/Data/repository/auth/change_password_repository.dart';
-
-import '../../../../../../../../Data/errors/custom_error.dart';
+import 'package:grocery/Application/exports.dart';
 part 'change_password_state.dart';
 
 class ChangePasswordCubit extends Cubit<ChangePasswordState> {

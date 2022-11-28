@@ -1,9 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:grocery/Presentation/resources/assets.dart';
-import 'package:grocery/Presentation/resources/colors_palette.dart';
-import 'package:grocery/Presentation/resources/size.dart';
-import 'package:qr_code_scanner/qr_code_scanner.dart';
+import 'package:grocery/Application/exports.dart';
 
 class BarcodeScanner extends StatefulWidget {
   final void Function(String) getBarcode;

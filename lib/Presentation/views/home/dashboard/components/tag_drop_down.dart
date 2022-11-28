@@ -1,10 +1,5 @@
 // ignore_for_file: must_be_immutable
-import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:grocery/Presentation/resources/border_radius.dart';
-import 'package:grocery/Presentation/resources/colors_palette.dart';
-import 'package:grocery/Presentation/resources/size.dart';
-import 'package:grocery/Presentation/resources/text_styles.dart';
+import 'package:grocery/Application/exports.dart';
 
 class WithOutValidationDropDown extends StatelessWidget {
   final String hintText;

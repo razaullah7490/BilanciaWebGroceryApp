@@ -6,18 +6,15 @@
 // import 'package:grocery/Presentation/resources/colors_palette.dart';
 // import '../resources/assets.dart';
 // import '../resources/size.dart';
-
 // class BarcodeScanWidget extends StatefulWidget {
 //   final TextEditingController barCodeController;
 //   const BarcodeScanWidget({
 //     super.key,
 //     required this.barCodeController,
 //   });
-
 //   @override
 //   State<BarcodeScanWidget> createState() => _BarcodeScanWidgetState();
 // }
-
 // class _BarcodeScanWidgetState extends State<BarcodeScanWidget> {
 //   Pattern pattern = "-1";
 //   @override
@@ -45,7 +42,6 @@
 //       ),
 //     );
 //   }
-
 //   Future scanBarcode() async {
 //     String scanResult;
 //     try {
@@ -58,7 +54,6 @@
 //     } on PlatformException {
 //       scanResult = "Failed, Please try again!!!";
 //     }
-
 //     if (!mounted) return;
 //     if (scanResult.isNotEmpty) {
 //       setState(() {
@@ -69,12 +64,7 @@
 //   }
 // }
 
-import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:grocery/Presentation/resources/border_radius.dart';
-import 'package:grocery/Presentation/resources/colors_palette.dart';
-import '../resources/assets.dart';
-import '../resources/size.dart';
+import 'package:grocery/Application/exports.dart';
 
 class BarcodeScanWidget extends StatelessWidget {
   final VoidCallback onTap;

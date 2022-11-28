@@ -1,17 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:grocery/Presentation/common/app_bar.dart';
-import 'package:grocery/Presentation/common/extensions/media_query_extension.dart';
-import 'package:grocery/Presentation/resources/app_strings.dart';
-import 'package:grocery/Presentation/resources/border_radius.dart';
-import 'package:grocery/Presentation/resources/colors_palette.dart';
-import 'package:grocery/Presentation/resources/size.dart';
-import 'package:grocery/Presentation/resources/sized_box.dart';
-import 'package:grocery/Presentation/resources/text_styles.dart';
-import 'package:grocery/Presentation/views/home/inventory/all%20tabs/category/category_screen.dart';
-import 'package:grocery/Presentation/views/home/inventory/inventory_view_model.dart';
-import '../../../resources/assets.dart';
-import '../../../resources/routes/navigation.dart';
+import 'package:grocery/Application/exports.dart';
 
 class Inventory extends StatelessWidget {
   const Inventory({super.key});
@@ -44,11 +31,12 @@ class Inventory extends StatelessWidget {
                   itemCount: InventoryViewModel.inventoryList.length,
                   itemBuilder: (context, index) {
                     var singleData = InventoryViewModel.inventoryList[index];
-                    return buildGridContainer(context, singleData);
+                    return FadeAnimation(
+                        delay: index.toDouble(),
+                        child: buildGridContainer(context, singleData));
                   },
                 ),
                 CustomSizedBox.height(20),
-        
               ],
             ),
           ),

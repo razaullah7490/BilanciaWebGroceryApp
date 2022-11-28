@@ -1,22 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:grocery/Presentation/common/custom_button.dart';
-import 'package:grocery/Presentation/common/custom_text_field.dart';
-import 'package:grocery/Presentation/common/loading_indicator.dart';
-import 'package:grocery/Presentation/common/snack_bar_widget.dart';
-import 'package:grocery/Presentation/resources/app_strings.dart';
-import 'package:grocery/Presentation/resources/assets.dart';
-import 'package:grocery/Presentation/resources/colors_palette.dart';
-import 'package:grocery/Presentation/resources/size.dart';
-import 'package:grocery/Presentation/resources/sized_box.dart';
-import 'package:grocery/Presentation/resources/text_styles.dart';
-import 'package:grocery/Presentation/state%20management/bloc/set_bool_cubit.dart';
-import 'package:grocery/Presentation/views/auth/common/bottom_container.dart';
-import 'package:grocery/Presentation/views/auth/common/bottom_text.dart';
-import 'package:grocery/Presentation/views/auth/register/bloc/registration_cubit.dart';
-
-import '../../../../Data/errors/custom_error.dart';
+import 'package:grocery/Application/exports.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
@@ -30,6 +12,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   final lastNameContoller = TextEditingController();
   final emailController = TextEditingController();
   final passwordContoller = TextEditingController();
+  final confirmPasswordContoller = TextEditingController();
   final formKey = GlobalKey<FormState>();
 
   @override
@@ -102,7 +85,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       bottomText(
                         context,
                         "${AppStrings.alreadyRegisterText}?",
-                        AppStrings.loginText,
+                        AppStrings.loginInRegistrationText,
                         () => Navigator.of(context).pop(),
                       ),
                     ],
@@ -239,6 +222,40 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         return AppStrings.providePasswordText;
                       } else if (v.length < 6) {
                         return AppStrings.passwordLengthText;
+                      } else {
+                        return null;
+                      }
+                    },
+                  );
+                },
+              ),
+            ),
+            CustomSizedBox.height(12),
+            BlocProvider(
+              create: (context) => SetBoolCubit(false),
+              child: BlocBuilder<SetBoolCubit, bool>(
+                builder: (context, state) {
+                  return CustomTextField(
+                    controller: confirmPasswordContoller,
+                    labelText: AppStrings.confirmPasswordText,
+                    hintText: AppStrings.confirmPasswordText,
+                    suffixIcon: IconButton(
+                      onPressed: () => state
+                          ? context.read<SetBoolCubit>().changeState(false)
+                          : context.read<SetBoolCubit>().changeState(true),
+                      icon: Icon(
+                        state ? Icons.visibility_off : Icons.visibility,
+                        color: Colors.grey,
+                        size: 20.r,
+                      ),
+                    ),
+                    obscureText: state,
+                    textInputType: TextInputType.text,
+                    validator: (v) {
+                      if (v!.trim().isEmpty) {
+                        return AppStrings.providePasswordText;
+                      } else if (v != passwordContoller.text) {
+                        return AppStrings.passwordNotMatch;
                       } else {
                         return null;
                       }

@@ -1,21 +1,5 @@
 // ignore_for_file: use_build_context_synchronously
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:grocery/Data/services/manager/iva_service.dart';
-import 'package:grocery/Presentation/resources/app_strings.dart';
-import 'package:grocery/Presentation/resources/sized_box.dart';
-import 'package:grocery/Presentation/views/home/inventory/all%20tabs/iva/ivaBloc/manager_iva_cubit.dart';
-import '../../../../../../Domain/models/manager/iva_model.dart';
-import '../../../../../common/delete_item_dialogue.dart';
-import '../../../../../common/edit_delete_container.dart';
-import '../../../../../common/snack_bar_widget.dart';
-import '../../../../../resources/border_radius.dart';
-import '../../../../../resources/colors_palette.dart';
-import '../../../../../resources/routes/navigation.dart';
-import '../../../../../resources/size.dart';
-import '../../../../../resources/text_styles.dart';
-import '../iva/iva.dart';
+import 'package:grocery/Application/exports.dart';
 
 class IVADetailContainer extends StatefulWidget {
   final IvaModel model;
@@ -67,7 +51,7 @@ class _IVADetailContainerState extends State<IVADetailContainer> {
                       valueText(),
                       isEditPressed == false
                           ? Text(
-                              widget.model.value.toString(),
+                              "${widget.model.value.toString()}%",
                               style: Styles.segoeUI(
                                 AppSize.text14.sp,
                                 AppColors.containerTextColor,
@@ -158,7 +142,7 @@ class _IVADetailContainerState extends State<IVADetailContainer> {
     return Text(
       "${AppStrings.valueText}: ",
       style: Styles.circularStdMedium(
-        AppSize.text17.sp,
+        AppSize.text15.sp,
         AppColors.containerTextColor,
       ),
     );
@@ -217,12 +201,12 @@ class IvaTextField extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
       width: 100.w,
-      height: 35.h,
+      height: 30.h,
       child: TextFormField(
         controller: controller,
         autofocus: true,
         keyboardType: TextInputType.number,
-        style: Styles.segoeUI(AppSize.text15.sp, AppColors.blackColor),
+        style: Styles.segoeUI(AppSize.text14.sp, AppColors.blackColor),
         cursorColor: AppColors.primaryColor,
         decoration: InputDecoration(
           contentPadding: const EdgeInsets.only(left: AppSize.p15).r,

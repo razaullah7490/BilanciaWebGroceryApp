@@ -1,24 +1,5 @@
 // ignore_for_file: use_build_context_synchronously
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:grocery/Application/Prefs/prefs_keys.dart';
-import 'package:grocery/Data/services/auth/logout_service.dart';
-import 'package:grocery/Presentation/common/app_bar.dart';
-import 'package:grocery/Presentation/resources/app_strings.dart';
-import 'package:grocery/Presentation/resources/routes/routes_names.dart';
-import 'package:grocery/Presentation/resources/size.dart';
-import 'package:grocery/Presentation/resources/sized_box.dart';
-import 'package:grocery/Presentation/views/home/dashboard/all%20tabs/components/logout_button.dart';
-import 'package:grocery/Presentation/views/home/dashboard/all%20tabs/components/setting_components_container.dart';
-import 'package:grocery/Presentation/views/home/dashboard/all%20tabs/settings/logout%20bloc/logout_cubit.dart';
-import 'package:grocery/Presentation/views/home/dashboard/all%20tabs/settings/setting_view_model.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-
-import '../../../../../common/loading_indicator.dart';
-import '../../../../../common/snack_bar_widget.dart';
-import '../../../../../resources/colors_palette.dart';
-import '../../../../auth/login/login_screen.dart';
+import 'package:grocery/Application/exports.dart';
 
 class SettingScreen extends StatefulWidget {
   const SettingScreen({super.key});

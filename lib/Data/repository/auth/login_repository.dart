@@ -1,5 +1,4 @@
-import 'package:grocery/Data/services/auth/login_service.dart';
-import '../../errors/custom_error.dart';
+import 'package:grocery/Application/exports.dart';
 
 class LoginRepository {
   final LoginService loginService;

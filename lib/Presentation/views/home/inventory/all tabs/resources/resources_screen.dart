@@ -1,15 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:grocery/Presentation/common/add_item_button.dart';
-import 'package:grocery/Presentation/common/app_bar.dart';
-import 'package:grocery/Presentation/common/data_not_available_text.dart';
-import 'package:grocery/Presentation/common/shimmer%20effect/list_tile_shimmer.dart';
-import 'package:grocery/Presentation/resources/app_strings.dart';
-import 'package:grocery/Presentation/resources/routes/navigation.dart';
-import 'package:grocery/Presentation/resources/sized_box.dart';
-import 'package:grocery/Presentation/views/home/inventory/all%20tabs/components/resource_detail_container.dart';
-import 'package:grocery/Presentation/views/home/inventory/all%20tabs/resources/addEditDeleteResource/add_resource.dart';
-import 'package:grocery/Presentation/views/home/inventory/all%20tabs/resources/bloc/resource_cubit.dart';
+import 'package:grocery/Application/exports.dart';
 
 class ResorucesScreen extends StatefulWidget {
   const ResorucesScreen({super.key});
@@ -19,6 +8,8 @@ class ResorucesScreen extends StatefulWidget {
 }
 
 class _ResorucesScreenState extends State<ResorucesScreen> {
+  final searchController = TextEditingController();
+  bool isLoad = false;
   @override
   void initState() {
     Future.wait([
@@ -29,12 +20,64 @@ class _ResorucesScreenState extends State<ResorucesScreen> {
 
   @override
   Widget build(BuildContext context) {
+    var searchResourceList = context.watch<ResourceCubit>().searchList;
     return Scaffold(
       appBar: const CustomAppBar(
         title: AppStrings.resourcesText,
       ),
       body: Column(
         children: [
+          CustomSizedBox.height(10),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: AppSize.p10).r,
+            child: Row(
+              children: [
+                Flexible(
+                  child: SearchTextField(
+                    controller: searchController,
+                    onChanged: (v) async {
+                      await context
+                          .read<ResourceCubit>()
+                          .searching(searchController.text);
+                      setState(() {
+                        isLoad = true;
+                      });
+                    },
+                    suffixIcon: isLoad && searchController.text.isNotEmpty
+                        ? GestureDetector(
+                            onTap: () {
+                              setState(() {
+                                searchController.clear();
+                                isLoad = false;
+                              });
+                            },
+                            behavior: HitTestBehavior.opaque,
+                            child: Icon(
+                              Icons.close,
+                              size: AppSize.clearSearchTextFieldIconSize.r,
+                              color: AppColors.hintTextColor,
+                            ),
+                          )
+                        : const Text(""),
+                  ),
+                ),
+                CustomSizedBox.width(10),
+                SearchBarcodeWidget(
+                  onTap: () async {
+                    Navigate.to(context, BarcodeScanner(
+                      getBarcode: (barcode) async {
+                        await context.read<ResourceCubit>().searching(barcode);
+                        setState(() {
+                          searchController.text = barcode;
+                          isLoad = true;
+                        });
+                      },
+                    ));
+                  },
+                ),
+              ],
+            ),
+          ),
           CustomSizedBox.height(20),
           addItemButtonWidget(
             context: context,
@@ -51,18 +94,35 @@ class _ResorucesScreenState extends State<ResorucesScreen> {
                 ? DataNotAvailableText.withExpanded(
                     AppStrings.noResourcesAddedText,
                   )
-                : Expanded(
-                    child: ListView.builder(
-                        shrinkWrap: true,
-                        physics: const BouncingScrollPhysics(),
-                        itemCount: state.resourceModel.length,
-                        itemBuilder: (context, index) {
-                          var singleData = state.resourceModel[index];
-                          return ResourceDetailContainer(model: singleData);
-                        }),
-                  );
+                : searchResourceList.isEmpty && isLoad == true
+                    ? noProductFound()
+                    : Expanded(
+                        child: ListView.builder(
+                            shrinkWrap: true,
+                            physics: const BouncingScrollPhysics(),
+                            itemCount: isLoad == true
+                                ? searchResourceList.length
+                                : state.resourceModel.length,
+                            itemBuilder: (context, index) {
+                              var singleData = isLoad == true
+                                  ? searchResourceList[index]
+                                  : state.resourceModel[index];
+                              return ResourceDetailContainer(model: singleData);
+                            }),
+                      );
           }),
         ],
+      ),
+    );
+  }
+
+  Expanded noProductFound() {
+    return Expanded(
+      child: Image.asset(
+        Assets.noProductFound,
+        color: AppColors.primaryColor,
+        width: 200.w,
+        height: 200.h,
       ),
     );
   }

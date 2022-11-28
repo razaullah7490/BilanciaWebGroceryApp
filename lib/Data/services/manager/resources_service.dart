@@ -1,12 +1,7 @@
 // ignore_for_file: depend_on_referenced_packages, unused_local_variable
-import 'dart:convert';
 import 'dart:developer';
-import 'package:grocery/Application/Prefs/app_prefs.dart';
-import 'package:grocery/Application/api_urls.dart';
-import 'package:grocery/Domain/models/inventory/resources_model.dart';
 import 'package:http/http.dart' as http;
-import '../../errors/http_error_handler.dart';
-import 'package:dio/dio.dart';
+import 'package:grocery/Application/exports.dart';
 
 class ResourcesService {
   Future<bool> addResource(map) async {

@@ -1,14 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:grocery/Presentation/common/extensions/media_query_extension.dart';
-import 'package:grocery/Presentation/resources/app_strings.dart';
-import 'package:multi_select_flutter/chip_display/multi_select_chip_display.dart';
-import 'package:multi_select_flutter/dialog/multi_select_dialog_field.dart';
-import 'package:multi_select_flutter/util/multi_select_item.dart';
-import '../../../../resources/border_radius.dart';
-import '../../../../resources/colors_palette.dart';
-import '../../../../resources/size.dart';
-import '../../../../resources/text_styles.dart';
+import 'package:grocery/Application/exports.dart';
 
 class MultiSelectDropDown extends StatelessWidget {
   final List<MultiSelectItem<int>> itemsMap;

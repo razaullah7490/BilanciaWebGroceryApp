@@ -1,31 +1,6 @@
 // ignore_for_file: prefer_typing_uninitialized_variables, use_build_context_synchronously
 import 'dart:developer';
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:grocery/Data/services/agenda/event_service.dart';
-import 'package:grocery/Domain/models/manager/event_model.dart';
-import 'package:grocery/Presentation/common/custom_button.dart';
-import 'package:grocery/Presentation/views/home/dashboard/agenda/events/Bloc/event_cubit.dart';
-import 'package:multi_select_flutter/util/multi_select_item.dart';
-import '../../../../../../Data/errors/custom_error.dart';
-import '../../../../../common/loading_indicator.dart';
-import '../../../../../common/snack_bar_widget.dart';
-import '../../../../../common/app_bar.dart';
-import '../../../../../common/custom_text_field.dart';
-import '../../../../../common/mult_line_text_field.dart';
-import '../../../../../resources/app_strings.dart';
-import '../../../../../resources/colors_palette.dart';
-import '../../../../../resources/routes/navigation.dart';
-import '../../../../../resources/size.dart';
-import '../../../../../resources/sized_box.dart';
-import '../../../../../resources/text_styles.dart';
-import '../../components/event_date_time_widget.dart';
-import '../../components/multi_select_drop_down.dart';
-import '../../components/tag_drop_down.dart';
-import '../tags/Bloc/tags_cubit.dart';
-import 'Bloc/participants_cubit.dart';
-import 'all_events.dart';
+import 'package:grocery/Application/exports.dart';
 
 class EditEventScreen extends StatefulWidget {
   final EventModel model;

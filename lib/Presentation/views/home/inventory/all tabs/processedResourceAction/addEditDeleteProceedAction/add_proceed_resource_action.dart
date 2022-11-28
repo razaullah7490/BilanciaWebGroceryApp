@@ -1,30 +1,6 @@
 // ignore_for_file: prefer_typing_uninitialized_variables, use_build_context_synchronously
 import 'dart:developer';
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:grocery/Presentation/common/app_bar.dart';
-import 'package:grocery/Presentation/common/custom_button.dart';
-import 'package:grocery/Presentation/common/custom_drop_down.dart';
-import 'package:grocery/Presentation/common/custom_text_field.dart';
-import 'package:grocery/Presentation/resources/app_strings.dart';
-import 'package:grocery/Presentation/resources/border_radius.dart';
-import 'package:grocery/Presentation/resources/colors_palette.dart';
-import 'package:grocery/Presentation/resources/routes/navigation.dart';
-import 'package:grocery/Presentation/resources/size.dart';
-import 'package:grocery/Presentation/resources/sized_box.dart';
-import 'package:grocery/Presentation/resources/text_styles.dart';
-import 'package:grocery/Presentation/views/home/inventory/all%20tabs/components/proceed_resource_detail_container.dart';
-import 'package:grocery/Presentation/views/home/inventory/all%20tabs/proceedResource/bloc/proceed_resource_cubit.dart';
-import 'package:grocery/Presentation/views/home/inventory/all%20tabs/processedResourceAction/processed_resource_action.dart';
-import 'package:grocery/Presentation/views/home/inventory/all%20tabs/resourceActions/resource_action_view_model.dart';
-import '../../../../../../../Data/errors/custom_error.dart';
-import '../../../../../../common/custom_date_picker.dart';
-import '../../../../../../common/date_picker.dart';
-import '../../../../../../common/loading_indicator.dart';
-import '../../../../../../common/snack_bar_widget.dart';
-import '../../proceedResource/proceed_resource_screen.dart';
-import '../bloc/proceed_resource_action_cubit.dart';
+import 'package:grocery/Application/exports.dart';
 
 class AddProceedResourceActionScreen extends StatefulWidget {
   final ProceedResourceData model;
@@ -135,8 +111,8 @@ class _AddProceedResourceActionScreenState
                           "date_time":
                               dateTime != null ? dateTime.toString() : "",
                           "print_counter": printCounterController.text,
-                          "is_for_internal_usage":
-                              isInternalUsage == false ? "false" : "true",
+                          "is_for_internal_usage": "false",
+                          //isInternalUsage == false ? "false" : "true",
                           "resource": widget.model.isInventoryAction == true
                               ? allResources.toString()
                               : "${widget.model.id}",
@@ -310,8 +286,8 @@ class _AddProceedResourceActionScreenState
                 },
               ),
             ),
-          CustomSizedBox.height(15),
-          internalUsage(),
+          // CustomSizedBox.height(15),
+          // internalUsage(),
           CustomSizedBox.height(30),
         ],
       ),

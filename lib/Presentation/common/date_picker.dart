@@ -1,5 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:grocery/Presentation/resources/colors_palette.dart';
+import 'package:grocery/Application/exports.dart';
 
 Future<DateTime?> datePicker(
   BuildContext context,

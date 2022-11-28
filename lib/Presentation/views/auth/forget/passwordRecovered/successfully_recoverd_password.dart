@@ -1,13 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:grocery/Presentation/common/custom_button.dart';
-import 'package:grocery/Presentation/resources/app_strings.dart';
-import 'package:grocery/Presentation/resources/assets.dart';
-import 'package:grocery/Presentation/resources/colors_palette.dart';
-import 'package:grocery/Presentation/resources/sized_box.dart';
-import 'package:grocery/Presentation/resources/text_styles.dart';
-import 'package:grocery/Presentation/views/auth/common/screen_pattern.dart';
-import 'package:grocery/Presentation/views/auth/login/login_screen.dart';
+import 'package:grocery/Application/exports.dart';
 
 class SuccessfullyRecoveredPasswordScreen extends StatefulWidget {
   const SuccessfullyRecoveredPasswordScreen({super.key});

@@ -1,6 +1,4 @@
-import 'package:grocery/Data/services/manager/iva_service.dart';
-import '../../../Domain/models/manager/iva_model.dart';
-import '../../errors/custom_error.dart';
+import 'package:grocery/Application/exports.dart';
 
 class IvaRepository {
   final IvaService ivaService;

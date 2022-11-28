@@ -1,20 +1,5 @@
 // ignore_for_file: use_build_context_synchronously
-
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:grocery/Presentation/resources/routes/navigation.dart';
-import 'package:grocery/Presentation/resources/size.dart';
-import 'package:grocery/Presentation/resources/sized_box.dart';
-import 'package:grocery/Presentation/resources/text_styles.dart';
-import 'package:grocery/Presentation/views/home/inventory/all%20tabs/processedResourceAction/processed_resource_action.dart';
-import '../../../../../../Domain/models/inventory/proceed_resource_action_model.dart';
-import '../../../../../common/delete_item_dialogue.dart';
-import '../../../../../common/snack_bar_widget.dart';
-import '../../../../../resources/app_strings.dart';
-import '../../../../../resources/border_radius.dart';
-import '../../../../../resources/colors_palette.dart';
-import '../processedResourceAction/bloc/proceed_resource_action_cubit.dart';
+import 'package:grocery/Application/exports.dart';
 
 class ProceedResourceActionDetailContainer extends StatelessWidget {
   final int resourceActionId;

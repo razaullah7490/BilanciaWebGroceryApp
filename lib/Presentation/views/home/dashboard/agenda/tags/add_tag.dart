@@ -1,23 +1,5 @@
 import 'dart:developer';
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_colorpicker/flutter_colorpicker.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:grocery/Presentation/common/custom_button.dart';
-import 'package:grocery/Presentation/resources/border_radius.dart';
-import 'package:grocery/Presentation/views/home/dashboard/agenda/tags/all_tags.dart';
-import '../../../../../../Data/errors/custom_error.dart';
-import '../../../../../common/app_bar.dart';
-import '../../../../../common/custom_text_field.dart';
-import '../../../../../common/loading_indicator.dart';
-import '../../../../../common/snack_bar_widget.dart';
-import '../../../../../resources/app_strings.dart';
-import '../../../../../resources/colors_palette.dart';
-import '../../../../../resources/routes/navigation.dart';
-import '../../../../../resources/size.dart';
-import '../../../../../resources/sized_box.dart';
-import '../../../../../resources/text_styles.dart';
-import 'Bloc/tags_cubit.dart';
+import 'package:grocery/Application/exports.dart';
 
 class AddTagScreen extends StatefulWidget {
   const AddTagScreen({super.key});

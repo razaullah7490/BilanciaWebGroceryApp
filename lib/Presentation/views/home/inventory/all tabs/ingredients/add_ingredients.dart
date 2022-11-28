@@ -1,17 +1,5 @@
 // ignore_for_file: use_build_context_synchronously
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:grocery/Presentation/common/custom_button.dart';
-import 'package:grocery/Presentation/common/loading_indicator.dart';
-import 'package:grocery/Presentation/resources/app_strings.dart';
-import 'package:grocery/Presentation/views/home/inventory/all%20tabs/components/ingredient_textfield.dart';
-import 'package:grocery/Presentation/views/home/inventory/all%20tabs/ingredients/ingredientsBloc/ingredients_cubit.dart';
-import '../../../../../common/snack_bar_widget.dart';
-import '../../../../../resources/colors_palette.dart';
-import '../../../../../resources/size.dart';
-import '../../../../../resources/sized_box.dart';
-import '../../../../../resources/text_styles.dart';
+import 'package:grocery/Application/exports.dart';
 
 class AddIngredientBottomSheet extends StatefulWidget {
   const AddIngredientBottomSheet({super.key});

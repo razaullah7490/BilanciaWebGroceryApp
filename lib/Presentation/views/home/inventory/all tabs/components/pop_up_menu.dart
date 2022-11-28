@@ -1,9 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:grocery/Presentation/resources/size.dart';
-import '../../../../../resources/app_strings.dart';
-import '../../../../../resources/colors_palette.dart';
-import '../../../../../resources/text_styles.dart';
+import 'package:grocery/Application/exports.dart';
 
 class PopUpMenuWidget extends StatelessWidget {
   final ValueChanged onSelected;

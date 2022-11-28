@@ -1,41 +1,6 @@
 // ignore_for_file: prefer_typing_uninitialized_variables, use_build_context_synchronously
 import 'dart:developer';
-import 'dart:io';
-import '../../../../../../../Domain/models/manager/ingredient_model.dart';
-import '../../../../dashboard/components/tag_drop_down.dart';
-import 'package:cached_network_image/cached_network_image.dart';
-import 'package:dio/dio.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:grocery/Presentation/common/app_bar.dart';
-import 'package:grocery/Presentation/common/bar_code_scan.dart';
-import 'package:grocery/Presentation/common/custom_button.dart';
-import 'package:grocery/Presentation/common/custom_drop_down.dart';
-import 'package:grocery/Presentation/common/custom_text_field.dart';
-import 'package:grocery/Presentation/common/snack_bar_widget.dart';
-import 'package:grocery/Presentation/resources/app_strings.dart';
-import 'package:grocery/Presentation/resources/colors_palette.dart';
-import 'package:grocery/Presentation/resources/sized_box.dart';
-import 'package:grocery/Presentation/resources/text_styles.dart';
-import 'package:grocery/Presentation/views/home/inventory/all%20tabs/category/category_view_model.dart';
-import 'package:grocery/Presentation/views/home/inventory/all%20tabs/resources/bloc/resource_cubit.dart';
-import 'package:image_picker/image_picker.dart';
-import '../../../../../../../Data/errors/custom_error.dart';
-import '../../../../../../../Domain/models/inventory/resources_model.dart';
-import '../../../../../../common/custom_bottom_sheet.dart';
-import '../../../../../../common/custom_date_picker.dart';
-import '../../../../../../common/date_picker.dart';
-import '../../../../../../common/image_picker.dart';
-import '../../../../../../common/loading_indicator.dart';
-import '../../../../../../resources/border_radius.dart';
-import '../../../../../../resources/routes/navigation.dart';
-import '../../../../../../resources/size.dart';
-import '../../category/bloc/category_cubit.dart';
-import '../../ingredients/ingredientsBloc/ingredients_cubit.dart';
-import '../../iva/ivaBloc/manager_iva_cubit.dart';
-import '../../proceedResource/proceed_resource_view_model.dart';
-import '../resources_screen.dart';
+import 'package:grocery/Application/exports.dart';
 
 class EditResourceScreen extends StatefulWidget {
   final ResourcesModel model;
@@ -250,7 +215,7 @@ class _EditResourceScreenState extends State<EditResourceScreen> {
                               : "",
                           "unit_purchase_price":
                               unitPurchasePriceController.text.toString(),
-                          "is_active": status == "Active" ? "true" : "false",
+                          "is_active": status == "Attivo" ? "true" : "false",
                           "threshold_1": threshold1Controller.text.toString(),
                           "threshold_2": threshold2Controller.text.toString(),
                           "price_1": price1Controller.text.toString(),
@@ -463,7 +428,16 @@ class _EditResourceScreenState extends State<EditResourceScreen> {
             controller: barCodeController,
             labelText: AppStrings.barcodeText,
             hintText: AppStrings.scanACodeText,
-            suffixIcon: BarcodeScanWidget(onTap: () {}),
+            suffixIcon: BarcodeScanWidget(onTap: () {
+              Navigate.to(context, BarcodeScanner(
+                getBarcode: (barcode) {
+                  log("Barcode $barcode");
+                  setState(() {
+                    barCodeController.text = barcode;
+                  });
+                },
+              ));
+            }),
             obscureText: false,
             textInputType: TextInputType.text,
             validator: (v) {
@@ -633,7 +607,9 @@ class _EditResourceScreenState extends State<EditResourceScreen> {
           BlocBuilder<IngredientsCubit, IngredientsState>(
               builder: (context, state) {
             return WithOutValidationDropDown(
-              hintText: AppStrings.ingredientsText,
+              hintText: widget.model.ingrediant == 0
+                  ? AppStrings.noSelectIngredientText
+                  : AppStrings.ingredientsText,
               value: ingrediant,
               itemsMap: state.modelList.map((v) {
                 return DropdownMenuItem(

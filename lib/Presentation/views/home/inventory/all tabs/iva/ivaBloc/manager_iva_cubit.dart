@@ -1,8 +1,4 @@
-import 'package:equatable/equatable.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:grocery/Data/repository/manager/iva_repository.dart';
-import 'package:grocery/Domain/models/manager/iva_model.dart';
-import '../../../../../../../Data/errors/custom_error.dart';
+import 'package:grocery/Application/exports.dart';
 part 'manager_iva_state.dart';
 
 class ManagerIvaCubit extends Cubit<ManagerIvaState> {

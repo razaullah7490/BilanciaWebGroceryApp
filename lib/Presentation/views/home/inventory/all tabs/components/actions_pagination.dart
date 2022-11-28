@@ -1,9 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import '../../../../../resources/colors_palette.dart';
-import '../../../../../resources/size.dart';
-import 'package:grocery/Presentation/resources/border_radius.dart';
-import 'package:number_pagination/number_pagination.dart';
+import 'package:grocery/Application/exports.dart';
 
 class ActionsPaginationWidget extends StatelessWidget {
   final int totalPages;

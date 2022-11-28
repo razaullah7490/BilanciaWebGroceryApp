@@ -1,10 +1,4 @@
-import 'package:equatable/equatable.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:grocery/Data/repository/agenda/event_repository.dart';
-import 'package:grocery/Domain/models/manager/event_model.dart';
-
-import '../../../../../../../Data/errors/custom_error.dart';
-
+import 'package:grocery/Application/exports.dart';
 part 'event_state.dart';
 
 class EventCubit extends Cubit<EventState> {
