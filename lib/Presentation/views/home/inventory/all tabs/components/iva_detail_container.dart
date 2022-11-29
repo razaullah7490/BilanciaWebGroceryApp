@@ -205,7 +205,7 @@ class IvaTextField extends StatelessWidget {
       child: TextFormField(
         controller: controller,
         autofocus: true,
-        keyboardType: TextInputType.number,
+        keyboardType:const TextInputType.numberWithOptions(decimal: true),
         style: Styles.segoeUI(AppSize.text14.sp, AppColors.blackColor),
         cursorColor: AppColors.primaryColor,
         decoration: InputDecoration(

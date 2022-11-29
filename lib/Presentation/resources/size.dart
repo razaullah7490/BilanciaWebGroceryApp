@@ -24,6 +24,8 @@ class AppSize {
   static const double appBarIconPad = 3.0;
   // margin
   static const double m10 = 10.0;
+  static const double m11 = 11.0;
+  static const double m12 = 12.0;
   static const double m8 = 8.0;
   static const double m6 = 6.0;
   static const double m4 = 4.0;
@@ -54,7 +56,7 @@ class AppSize {
   static const double editDeleteIconSize = 20.0;
   static const double plusIconSize = 20.0;
   static const double searchIcon = 25.0;
-  static const double appBarIconSize = 30.0;
+  static const double appBarIconSize = 19.0;
   static const double bottomSheetIconSize = 26.0;
   static const double clearSearchTextFieldIconSize = 20.0;
 }

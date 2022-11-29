@@ -14,10 +14,10 @@ class FadeAnimation extends StatelessWidget {
   Widget build(BuildContext context) {
     final tween = MovieTween()
       ..tween('opacity', Tween(begin: 0.0, end: 1.0),
-          duration: const Duration(milliseconds: 200), curve: Curves.easeIn)
+          duration: const Duration(milliseconds: 300), curve: Curves.easeIn)
       ..tween(
           'translateY',
-          duration: const Duration(milliseconds: 200),
+          duration: const Duration(milliseconds: 500),
           Tween(begin: -30.0, end: 0.0),
           curve: Curves.easeOut);
 

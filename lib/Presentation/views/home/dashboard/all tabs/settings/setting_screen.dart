@@ -27,6 +27,7 @@ class _SettingScreenState extends State<SettingScreen> {
                       shrinkWrap: true,
                       physics: const BouncingScrollPhysics(),
                       itemCount: SettingViewModel.settingList.length,
+                      padding: EdgeInsets.zero,
                       itemBuilder: (context, index) {
                         var singleData = SettingViewModel.settingList[index];
                         return SettingComponentsContainer(model: singleData);

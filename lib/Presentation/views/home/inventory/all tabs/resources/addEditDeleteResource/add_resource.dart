@@ -286,7 +286,7 @@ class _AddResourceScreenState extends State<AddResourceScreen> {
             hintText: AppStrings.enterStockQuantityText,
             suffixIcon: const Text(""),
             obscureText: false,
-            textInputType: TextInputType.number,
+            textInputType: const TextInputType.numberWithOptions(decimal: true),
             isLabel: false,
             validator: (v) {
               if (v!.trim().isEmpty) {
@@ -304,7 +304,7 @@ class _AddResourceScreenState extends State<AddResourceScreen> {
             hintText: AppStrings.enterStockQuantityThresholdText,
             suffixIcon: const Text(""),
             obscureText: false,
-            textInputType: TextInputType.number,
+            textInputType: const TextInputType.numberWithOptions(decimal: true),
             isLabel: false,
             validator: (v) {
               if (v!.trim().isEmpty) {
@@ -367,7 +367,7 @@ class _AddResourceScreenState extends State<AddResourceScreen> {
             hintText: AppStrings.enterPluText,
             suffixIcon: const Text(""),
             obscureText: false,
-            textInputType: TextInputType.number,
+            textInputType: const TextInputType.numberWithOptions(decimal: true),
             isLabel: false,
             validator: (v) {
               if (v!.trim().isEmpty) {
@@ -385,7 +385,7 @@ class _AddResourceScreenState extends State<AddResourceScreen> {
             hintText: AppStrings.enterShelfLifeText,
             suffixIcon: const Text(""),
             obscureText: false,
-            textInputType: TextInputType.number,
+            textInputType: const TextInputType.numberWithOptions(decimal: true),
             isLabel: false,
             validator: (v) {
               if (v!.trim().isEmpty) {
@@ -403,7 +403,7 @@ class _AddResourceScreenState extends State<AddResourceScreen> {
             hintText: AppStrings.enterUnitSalePriceText,
             suffixIcon: const Text(""),
             obscureText: false,
-            textInputType: TextInputType.number,
+            textInputType: const TextInputType.numberWithOptions(decimal: true),
             isLabel: false,
             validator: (v) {
               if (v!.trim().isEmpty) {
@@ -421,7 +421,7 @@ class _AddResourceScreenState extends State<AddResourceScreen> {
             hintText: AppStrings.enterUnitPurchasePriceText,
             suffixIcon: const Text(""),
             obscureText: false,
-            textInputType: TextInputType.number,
+            textInputType: const TextInputType.numberWithOptions(decimal: true),
             isLabel: false,
             validator: (v) {
               // if (v!.trim().isEmpty) {
@@ -439,7 +439,7 @@ class _AddResourceScreenState extends State<AddResourceScreen> {
             hintText: AppStrings.enterRevenuePercentageText,
             suffixIcon: const Text(""),
             obscureText: false,
-            textInputType: TextInputType.number,
+            textInputType: const TextInputType.numberWithOptions(decimal: true),
             isLabel: false,
             validator: (v) {
               // if (v!.trim().isEmpty) {
@@ -495,7 +495,7 @@ class _AddResourceScreenState extends State<AddResourceScreen> {
             hintText: AppStrings.enterTareText,
             suffixIcon: const Text(""),
             obscureText: false,
-            textInputType: TextInputType.number,
+            textInputType: const TextInputType.numberWithOptions(decimal: true),
             isLabel: false,
             validator: (v) {
               if (v!.trim().isEmpty) {
@@ -583,7 +583,7 @@ class _AddResourceScreenState extends State<AddResourceScreen> {
             hintText: AppStrings.enterThreshold1Text,
             suffixIcon: const Text(""),
             obscureText: false,
-            textInputType: TextInputType.number,
+            textInputType: const TextInputType.numberWithOptions(decimal: true),
             isLabel: false,
             validator: (v) {
               if (v!.trim().isEmpty) {
@@ -601,7 +601,7 @@ class _AddResourceScreenState extends State<AddResourceScreen> {
             hintText: AppStrings.enterThreshold2Text,
             suffixIcon: const Text(""),
             obscureText: false,
-            textInputType: TextInputType.number,
+            textInputType: const TextInputType.numberWithOptions(decimal: true),
             isLabel: false,
             validator: (v) {
               if (v!.trim().isEmpty) {
@@ -619,7 +619,7 @@ class _AddResourceScreenState extends State<AddResourceScreen> {
             hintText: AppStrings.enterPrice1Text,
             suffixIcon: const Text(""),
             obscureText: false,
-            textInputType: TextInputType.number,
+            textInputType: const TextInputType.numberWithOptions(decimal: true),
             isLabel: false,
             validator: (v) {
               if (v!.trim().isEmpty) {
@@ -637,7 +637,7 @@ class _AddResourceScreenState extends State<AddResourceScreen> {
             hintText: AppStrings.enterPrice2Text,
             suffixIcon: const Text(""),
             obscureText: false,
-            textInputType: TextInputType.number,
+            textInputType: const TextInputType.numberWithOptions(decimal: true),
             isLabel: false,
             validator: (v) {
               if (v!.trim().isEmpty) {
@@ -675,7 +675,7 @@ class _AddResourceScreenState extends State<AddResourceScreen> {
             hintText: AppStrings.enterTraceabilityIdText,
             suffixIcon: const Text(""),
             obscureText: false,
-            textInputType: TextInputType.number,
+            textInputType: const TextInputType.numberWithOptions(decimal: true),
             isLabel: false,
             validator: (v) {
               if (v!.trim().isEmpty) {
