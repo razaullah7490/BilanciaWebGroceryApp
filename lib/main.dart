@@ -17,7 +17,7 @@ Future<void> main() async {
   );
 }
 
-Future init() async {
+gFuture init() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   await ScreenUtil.ensureScreenSize();
