@@ -33,7 +33,7 @@ class _AddIvaBottomSheetState extends State<AddIvaBottomSheet> {
                 hintText: AppStrings.enterAliquotaIva,
                 suffixIcon: const Text(''),
                 obscureText: false,
-                textInputType: TextInputType.number,
+                textInputType: const TextInputType.numberWithOptions(decimal: true),
                 validator: (v) {
                   if (v!.trim().isEmpty) {
                     return AppStrings.provideValue;

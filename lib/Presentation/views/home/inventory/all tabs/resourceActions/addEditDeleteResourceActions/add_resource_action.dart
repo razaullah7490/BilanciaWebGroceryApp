@@ -175,7 +175,7 @@ class _AddResourceActionScreenState extends State<AddResourceActionScreen> {
             hintText: AppStrings.enterQuantityText,
             suffixIcon: const Text(""),
             obscureText: false,
-            textInputType: TextInputType.number,
+            textInputType: const TextInputType.numberWithOptions(decimal: true),
             isLabel: false,
             validator: (v) {
               if (v!.trim().isEmpty) {
@@ -193,7 +193,7 @@ class _AddResourceActionScreenState extends State<AddResourceActionScreen> {
             hintText: AppStrings.enterMoneyText,
             suffixIcon: const Text(""),
             obscureText: false,
-            textInputType: TextInputType.number,
+            textInputType: const TextInputType.numberWithOptions(decimal: true),
             isLabel: false,
             validator: (v) {
               if (v!.trim().isEmpty) {
@@ -246,7 +246,7 @@ class _AddResourceActionScreenState extends State<AddResourceActionScreen> {
             hintText: AppStrings.enterPriceCounterText,
             suffixIcon: const Text(""),
             obscureText: false,
-            textInputType: TextInputType.number,
+            textInputType: const TextInputType.numberWithOptions(decimal: true),
             isLabel: false,
             validator: (v) {
               if (v!.trim().isEmpty) {
@@ -287,7 +287,7 @@ class _AddResourceActionScreenState extends State<AddResourceActionScreen> {
                 hintText: AppStrings.enterResourceText,
                 suffixIcon: const Text(""),
                 obscureText: false,
-                textInputType: TextInputType.number,
+                textInputType: const TextInputType.numberWithOptions(decimal: true),
                 isLabel: false,
                 validator: (v) {
                   if (v!.trim().isEmpty) {

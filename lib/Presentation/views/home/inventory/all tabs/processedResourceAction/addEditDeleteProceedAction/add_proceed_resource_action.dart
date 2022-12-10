@@ -176,7 +176,7 @@ class _AddProceedResourceActionScreenState
             hintText: AppStrings.enterQuantityText,
             suffixIcon: const Text(""),
             obscureText: false,
-            textInputType: TextInputType.number,
+            textInputType: const TextInputType.numberWithOptions(decimal: true),
             isLabel: false,
             validator: (v) {
               if (v!.trim().isEmpty) {
@@ -194,7 +194,7 @@ class _AddProceedResourceActionScreenState
             hintText: AppStrings.enterMoneyText,
             suffixIcon: const Text(""),
             obscureText: false,
-            textInputType: TextInputType.number,
+            textInputType: const TextInputType.numberWithOptions(decimal: true),
             isLabel: false,
             validator: (v) {
               if (v!.trim().isEmpty) {
@@ -241,7 +241,7 @@ class _AddProceedResourceActionScreenState
             hintText: AppStrings.enterPriceCounterText,
             suffixIcon: const Text(""),
             obscureText: false,
-            textInputType: TextInputType.number,
+            textInputType: const TextInputType.numberWithOptions(decimal: true),
             isLabel: false,
             validator: (v) {
               if (v!.trim().isEmpty) {
@@ -282,7 +282,7 @@ class _AddProceedResourceActionScreenState
                 hintText: AppStrings.enterResourceText,
                 suffixIcon: const Text(""),
                 obscureText: false,
-                textInputType: TextInputType.number,
+                textInputType: const TextInputType.numberWithOptions(decimal: true),
                 isLabel: false,
                 validator: (v) {
                   if (v!.trim().isEmpty) {

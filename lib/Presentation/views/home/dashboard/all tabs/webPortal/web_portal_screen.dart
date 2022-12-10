@@ -7,12 +7,13 @@ class WebPortalScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.white,
+        backgroundColor: AppColors.secondaryColor,
         elevation: 5,
       ),
-      body: const Center(
+      body:  Center(
         child: Text(
           AppStrings.routeErrorMessage,
+          style: Styles.segoeUI(AppSize.text18.sp, AppColors.blackColor,),
         ),
       ),
     );

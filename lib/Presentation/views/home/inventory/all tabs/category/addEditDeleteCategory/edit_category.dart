@@ -158,7 +158,7 @@ class _EditCategoryScreenState extends State<EditCategoryScreen> {
             hintText: AppStrings.enterDefaultPriceText,
             suffixIcon: const Text(""),
             obscureText: false,
-            textInputType: TextInputType.number,
+            textInputType: const TextInputType.numberWithOptions(decimal: true),
             validator: (v) {
               if (v!.trim().isEmpty) {
                 return AppStrings.provideAliquotaIvaText;
@@ -174,7 +174,7 @@ class _EditCategoryScreenState extends State<EditCategoryScreen> {
             hintText: AppStrings.enterMinValueText,
             suffixIcon: const Text(""),
             obscureText: false,
-            textInputType: TextInputType.number,
+            textInputType: const TextInputType.numberWithOptions(decimal: true),
             validator: (v) {
               if (v!.trim().isEmpty) {
                 return AppStrings.provideMinValueText;
@@ -190,7 +190,7 @@ class _EditCategoryScreenState extends State<EditCategoryScreen> {
             hintText: AppStrings.enterMaxValueText,
             suffixIcon: const Text(""),
             obscureText: false,
-            textInputType: TextInputType.number,
+            textInputType: const TextInputType.numberWithOptions(decimal: true),
             validator: (v) {
               if (v!.trim().isEmpty) {
                 return AppStrings.maxValueText;
@@ -206,7 +206,7 @@ class _EditCategoryScreenState extends State<EditCategoryScreen> {
             hintText: AppStrings.enterDiscountPriceText,
             suffixIcon: const Text(""),
             obscureText: false,
-            textInputType: TextInputType.number,
+            textInputType: const TextInputType.numberWithOptions(decimal: true),
             validator: (v) {
               if (v!.trim().isEmpty) {
                 return AppStrings.provideDiscountPriceText;
@@ -279,7 +279,7 @@ class _EditCategoryScreenState extends State<EditCategoryScreen> {
             hintText: AppStrings.enterKeyModifierText,
             suffixIcon: const Text(""),
             obscureText: false,
-            textInputType: TextInputType.number,
+            textInputType: const TextInputType.numberWithOptions(decimal: true),
             validator: (v) {
               if (v!.trim().isEmpty) {
                 return AppStrings.provideKeyModifierText;
@@ -295,7 +295,7 @@ class _EditCategoryScreenState extends State<EditCategoryScreen> {
             hintText: AppStrings.enterIdGruppoText,
             suffixIcon: const Text(""),
             obscureText: false,
-            textInputType: TextInputType.number,
+            textInputType: const TextInputType.numberWithOptions(decimal: true),
             validator: (v) {
               if (v!.trim().isEmpty) {
                 return AppStrings.provideIdGruppoText;
@@ -313,7 +313,7 @@ class _EditCategoryScreenState extends State<EditCategoryScreen> {
             hintText: AppStrings.enterIdAuxLanText,
             suffixIcon: const Text(""),
             obscureText: false,
-            textInputType: TextInputType.number,
+            textInputType: const TextInputType.numberWithOptions(decimal: true),
             validator: (v) {
               if (v!.trim().isEmpty) {
                 return AppStrings.provideIdAuxLanText;
@@ -329,7 +329,7 @@ class _EditCategoryScreenState extends State<EditCategoryScreen> {
             hintText: AppStrings.enterTipoScontoText,
             suffixIcon: const Text(""),
             obscureText: false,
-            textInputType: TextInputType.number,
+            textInputType: const TextInputType.numberWithOptions(decimal: true),
             validator: (v) {
               if (v!.trim().isEmpty) {
                 return AppStrings.provideTipoScontoText;

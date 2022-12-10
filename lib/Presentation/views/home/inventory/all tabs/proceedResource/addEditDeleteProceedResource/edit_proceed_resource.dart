@@ -346,7 +346,7 @@ class _EditProceedResourceScreenState extends State<EditProceedResourceScreen> {
             hintText: AppStrings.enterStockQuantityText,
             suffixIcon: const Text(""),
             obscureText: false,
-            textInputType: TextInputType.number,
+            textInputType: const TextInputType.numberWithOptions(decimal: true),
             isLabel: false,
             validator: (v) {
               if (v!.trim().isEmpty) {
@@ -364,7 +364,7 @@ class _EditProceedResourceScreenState extends State<EditProceedResourceScreen> {
             hintText: AppStrings.enterStockQuantityThresholdText,
             suffixIcon: const Text(""),
             obscureText: false,
-            textInputType: TextInputType.number,
+            textInputType: const TextInputType.numberWithOptions(decimal: true),
             isLabel: false,
             validator: (v) {
               if (v!.trim().isEmpty) {
@@ -427,7 +427,7 @@ class _EditProceedResourceScreenState extends State<EditProceedResourceScreen> {
             hintText: AppStrings.enterPluText,
             suffixIcon: const Text(""),
             obscureText: false,
-            textInputType: TextInputType.number,
+            textInputType: const TextInputType.numberWithOptions(decimal: true),
             isLabel: false,
             validator: (v) {
               if (v!.trim().isEmpty) {
@@ -445,7 +445,7 @@ class _EditProceedResourceScreenState extends State<EditProceedResourceScreen> {
             hintText: AppStrings.enterShelfLifeText,
             suffixIcon: const Text(""),
             obscureText: false,
-            textInputType: TextInputType.number,
+            textInputType: const TextInputType.numberWithOptions(decimal: true),
             isLabel: false,
             validator: (v) {
               if (v!.trim().isEmpty) {
@@ -463,7 +463,7 @@ class _EditProceedResourceScreenState extends State<EditProceedResourceScreen> {
             hintText: AppStrings.enterUnitSalePriceText,
             suffixIcon: const Text(""),
             obscureText: false,
-            textInputType: TextInputType.number,
+            textInputType: const TextInputType.numberWithOptions(decimal: true),
             isLabel: false,
             validator: (v) {
               if (v!.trim().isEmpty) {
@@ -481,7 +481,7 @@ class _EditProceedResourceScreenState extends State<EditProceedResourceScreen> {
             hintText: AppStrings.enterUnitPurchasePriceText,
             suffixIcon: const Text(""),
             obscureText: false,
-            textInputType: TextInputType.number,
+            textInputType: const TextInputType.numberWithOptions(decimal: true),
             isLabel: false,
             validator: (v) {
               // if (v!.trim().isEmpty) {
@@ -499,7 +499,7 @@ class _EditProceedResourceScreenState extends State<EditProceedResourceScreen> {
             hintText: AppStrings.enterRevenuePercentageText,
             suffixIcon: const Text(""),
             obscureText: false,
-            textInputType: TextInputType.number,
+            textInputType: const TextInputType.numberWithOptions(decimal: true),
             isLabel: false,
             validator: (v) {
               // if (v!.trim().isEmpty) {
@@ -555,7 +555,7 @@ class _EditProceedResourceScreenState extends State<EditProceedResourceScreen> {
             hintText: AppStrings.enterTareText,
             suffixIcon: const Text(""),
             obscureText: false,
-            textInputType: TextInputType.number,
+            textInputType: const TextInputType.numberWithOptions(decimal: true),
             isLabel: false,
             validator: (v) {
               if (v!.trim().isEmpty) {
@@ -645,7 +645,7 @@ class _EditProceedResourceScreenState extends State<EditProceedResourceScreen> {
             hintText: AppStrings.enterThreshold1Text,
             suffixIcon: const Text(""),
             obscureText: false,
-            textInputType: TextInputType.number,
+            textInputType: const TextInputType.numberWithOptions(decimal: true),
             isLabel: false,
             validator: (v) {
               if (v!.trim().isEmpty) {
@@ -663,7 +663,7 @@ class _EditProceedResourceScreenState extends State<EditProceedResourceScreen> {
             hintText: AppStrings.enterThreshold2Text,
             suffixIcon: const Text(""),
             obscureText: false,
-            textInputType: TextInputType.number,
+            textInputType: const TextInputType.numberWithOptions(decimal: true),
             isLabel: false,
             validator: (v) {
               if (v!.trim().isEmpty) {
@@ -681,7 +681,7 @@ class _EditProceedResourceScreenState extends State<EditProceedResourceScreen> {
             hintText: AppStrings.enterPrice1Text,
             suffixIcon: const Text(""),
             obscureText: false,
-            textInputType: TextInputType.number,
+            textInputType: const TextInputType.numberWithOptions(decimal: true),
             isLabel: false,
             validator: (v) {
               if (v!.trim().isEmpty) {
@@ -699,7 +699,7 @@ class _EditProceedResourceScreenState extends State<EditProceedResourceScreen> {
             hintText: AppStrings.enterPrice2Text,
             suffixIcon: const Text(""),
             obscureText: false,
-            textInputType: TextInputType.number,
+            textInputType: const TextInputType.numberWithOptions(decimal: true),
             isLabel: false,
             validator: (v) {
               if (v!.trim().isEmpty) {
@@ -737,7 +737,7 @@ class _EditProceedResourceScreenState extends State<EditProceedResourceScreen> {
             hintText: AppStrings.enterTraceabilityIdText,
             suffixIcon: const Text(""),
             obscureText: false,
-            textInputType: TextInputType.number,
+            textInputType: const TextInputType.numberWithOptions(decimal: true),
             isLabel: false,
             validator: (v) {
               if (v!.trim().isEmpty) {
@@ -959,7 +959,7 @@ class _EditProceedResourceScreenState extends State<EditProceedResourceScreen> {
                           ),
                         ),
                         obscureText: false,
-                        textInputType: TextInputType.number,
+                        textInputType: const TextInputType.numberWithOptions(decimal: true),
                         isLabel: false,
                         validator: (v) {
                           if (v!.trim().isEmpty) {

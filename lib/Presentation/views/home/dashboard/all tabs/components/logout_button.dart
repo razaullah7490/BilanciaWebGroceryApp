@@ -17,7 +17,7 @@ class LogoutButton extends StatelessWidget {
           horizontal: AppSize.p15,
           vertical: AppSize.p15,
         ).r,
-        margin: const EdgeInsets.symmetric(vertical: AppSize.m10).r,
+        margin: const EdgeInsets.symmetric(vertical: AppSize.m12).r,
         decoration: BoxDecoration(
           color: AppColors.addProductContainerColor,
           borderRadius: BorderRadius.circular(

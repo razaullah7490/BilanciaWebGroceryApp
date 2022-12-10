@@ -47,7 +47,7 @@ class CustomAppBarState extends State<CustomAppBar> {
               child: Padding(
                 padding: const EdgeInsets.only(right: AppSize.appBarIconPad).r,
                 child: Icon(
-                  Icons.navigate_before,
+                  Icons.arrow_back_ios_new_rounded,
                   color: AppColors.primaryColor,
                   size: AppSize.appBarIconSize.r,
                 ),

@@ -171,7 +171,7 @@ class _AddCategoryScreenState extends State<AddCategoryScreen> {
             hintText: AppStrings.enterMinValueText,
             suffixIcon: const Text(""),
             obscureText: false,
-            textInputType: TextInputType.number,
+            textInputType: const TextInputType.numberWithOptions(decimal: true),
             isLabel: false,
             validator: (v) {
               if (v!.trim().isEmpty) {
@@ -189,7 +189,7 @@ class _AddCategoryScreenState extends State<AddCategoryScreen> {
             hintText: AppStrings.enterMaxValueText,
             suffixIcon: const Text(""),
             obscureText: false,
-            textInputType: TextInputType.number,
+            textInputType: const TextInputType.numberWithOptions(decimal: true),
             isLabel: false,
             validator: (v) {
               if (v!.trim().isEmpty) {
@@ -207,7 +207,7 @@ class _AddCategoryScreenState extends State<AddCategoryScreen> {
             hintText: AppStrings.enterDiscountPriceText,
             suffixIcon: const Text(""),
             obscureText: false,
-            textInputType: TextInputType.number,
+            textInputType: const TextInputType.numberWithOptions(decimal: true),
             isLabel: false,
             validator: (v) {
               if (v!.trim().isEmpty) {
@@ -282,7 +282,7 @@ class _AddCategoryScreenState extends State<AddCategoryScreen> {
             hintText: AppStrings.enterKeyModifierText,
             suffixIcon: const Text(""),
             obscureText: false,
-            textInputType: TextInputType.number,
+            textInputType: const TextInputType.numberWithOptions(decimal: true),
             isLabel: false,
             validator: (v) {
               if (v!.trim().isEmpty) {
@@ -300,7 +300,7 @@ class _AddCategoryScreenState extends State<AddCategoryScreen> {
             hintText: AppStrings.enterIdGruppoText,
             suffixIcon: const Text(""),
             obscureText: false,
-            textInputType: TextInputType.number,
+            textInputType: const TextInputType.numberWithOptions(decimal: true),
             isLabel: false,
             validator: (v) {
               if (v!.trim().isEmpty) {
@@ -320,7 +320,7 @@ class _AddCategoryScreenState extends State<AddCategoryScreen> {
             hintText: AppStrings.enterIdAuxLanText,
             suffixIcon: const Text(""),
             obscureText: false,
-            textInputType: TextInputType.number,
+            textInputType: const TextInputType.numberWithOptions(decimal: true),
             isLabel: false,
             validator: (v) {
               if (v!.trim().isEmpty) {
@@ -338,7 +338,7 @@ class _AddCategoryScreenState extends State<AddCategoryScreen> {
             hintText: AppStrings.enterTipoScontoText,
             suffixIcon: const Text(""),
             obscureText: false,
-            textInputType: TextInputType.number,
+            textInputType: const TextInputType.numberWithOptions(decimal: true),
             isLabel: false,
             validator: (v) {
               if (v!.trim().isEmpty) {
