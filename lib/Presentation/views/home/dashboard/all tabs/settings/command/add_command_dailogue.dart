@@ -1,4 +1,6 @@
 // ignore_for_file: must_be_immutable, prefer_typing_uninitialized_variables, use_build_context_synchronously
+import 'dart:developer';
+
 import 'package:grocery/Application/exports.dart';
 
 class CommandAddDialogue extends StatefulWidget {
@@ -11,12 +13,6 @@ class CommandAddDialogue extends StatefulWidget {
 }
 
 class _CommandAddDialogueState extends State<CommandAddDialogue> {
-  List<String> commandTypeList = [
-    "Registratore Telematico", //fp
-    "Aggiorna cloud da bilance", //update_from_scales
-    "Aggiorna bilance da cloud", //update_from_server
-    "Chiusura giornaliera", //end_workday
-  ];
   var selectedCommand;
   final formKey = GlobalKey<FormState>();
 
@@ -77,15 +73,23 @@ class _CommandAddDialogueState extends State<CommandAddDialogue> {
                                       setState(() {
                                         selectedCommand = v;
                                       });
+                                      log("Command $selectedCommand");
                                     },
-                                    itemsMap: commandTypeList
-                                        .map((e) => DropdownMenuItem(
-                                              value: e,
-                                              child: Text(
-                                                e.toString(),
-                                              ),
-                                            ))
-                                        .toList()),
+                                    itemsMap: CommandViewModel.commandTypeList
+                                        .map((e) {
+                                      return DropdownMenuItem(
+                                        value: e.id,
+                                        child: Text(e.value),
+                                      );
+                                    }).toList()),
+                                // itemsMap: commandTypeList
+                                //     .map((e) => DropdownMenuItem(
+                                //           value: e,
+                                //           child: Text(
+                                //             e.toString(),
+                                //           ),
+                                //         ))
+                                //     .toList()),
                               ],
                             ),
                           ),

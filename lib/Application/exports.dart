@@ -224,3 +224,4 @@ export 'package:grocery/Presentation/views/home/inventory/all%20tabs/components/
 export 'package:grocery/Presentation/views/home/inventory/all%20tabs/components/resource_detail_container.dart';
 export 'package:grocery/Presentation/views/home/inventory/all%20tabs/resources/addEditDeleteResource/add_resource.dart';
 export 'package:grocery/Presentation/common/search_barcode_widget.dart';
+export 'package:grocery/Presentation/views/home/dashboard/all%20tabs/settings/command/command_view_model.dart';

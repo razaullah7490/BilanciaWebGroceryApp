@@ -36,7 +36,7 @@ class CommandDetailContainer extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               CustomSizedBox.height(5),
-              titleText(model.commandType),
+              titleText(),
               CustomSizedBox.height(5),
               subTitleText(convertDateAndTime(model.issuingDateTime)),
               CustomSizedBox.height(10),
@@ -135,9 +135,9 @@ class CommandDetailContainer extends StatelessWidget {
     );
   }
 
-  Widget titleText(String text) {
+  Widget titleText() {
     return Text(
-      text,
+      CommandViewModel.checkTitle(model.commandType),
       maxLines: 1,
       overflow: TextOverflow.ellipsis,
       style: Styles.circularStdMedium(

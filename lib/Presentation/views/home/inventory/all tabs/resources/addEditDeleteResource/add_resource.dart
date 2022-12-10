@@ -65,12 +65,12 @@ class _AddResourceScreenState extends State<AddResourceScreen> {
     shelfLifeController.text = "7";
     status = CategoryViewModel.statusList[0].toString();
     tareController.text = "0";
-    weightType = ProcessedResourceViewModel.weightTypeList[0].toString();
+    weightType = ProcessedResourceViewModel.weightTypeModelList[0].id;
     threshold1Controller.text = "0";
     threshold2Controller.text = "0";
     price1Controller.text = "0";
     price2Controller.text = "0";
-    traceability = ProcessedResourceViewModel.traceabilityList[0].toString();
+    traceability = ProcessedResourceViewModel.traceabilityModelList[0].id;
     traceabilityIdController.text = "0";
 
     super.initState();
@@ -197,6 +197,8 @@ class _AddResourceScreenState extends State<AddResourceScreen> {
                           formData.files.add(MapEntry("image",
                               MultipartFile.fromFileSync(image!.path)));
                         }
+
+                        log("RESPONSE $map");
 
                         await context
                             .read<ResourceCubit>()
@@ -510,12 +512,18 @@ class _AddResourceScreenState extends State<AddResourceScreen> {
           CustomDropDownWidget(
             hintText: AppStrings.weightTypeText,
             value: weightType,
-            itemsMap: ProcessedResourceViewModel.weightTypeList.map((v) {
+            itemsMap: ProcessedResourceViewModel.weightTypeModelList.map((e) {
               return DropdownMenuItem(
-                value: v,
-                child: Text(v.toString()),
+                value: e.id,
+                child: Text(e.text),
               );
             }).toList(),
+            // itemsMap: ProcessedResourceViewModel.weightTypeList.map((v) {
+            //   return DropdownMenuItem(
+            //     value: v,
+            //     child: Text(v.toString()),
+            //   );
+            // }).toList(),
             validationText: AppStrings.provideWeightTypeText,
             onChanged: (v) {
               setState(() {
@@ -654,12 +662,18 @@ class _AddResourceScreenState extends State<AddResourceScreen> {
           CustomDropDownWidget(
             hintText: AppStrings.traceabilityText,
             value: traceability,
-            itemsMap: ProcessedResourceViewModel.traceabilityList.map((v) {
+            itemsMap: ProcessedResourceViewModel.traceabilityModelList.map((e) {
               return DropdownMenuItem(
-                value: v,
-                child: Text(v.toString()),
+                value: e.id,
+                child: Text(e.text),
               );
             }).toList(),
+            // itemsMap: ProcessedResourceViewModel.traceabilityList.map((v) {
+            //   return DropdownMenuItem(
+            //     value: v,
+            //     child: Text(v.toString()),
+            //   );
+            // }).toList(),
             validationText: AppStrings.provideTraceabilityText,
             onChanged: (v) {
               setState(() {
