@@ -51,7 +51,7 @@ class ProceedResourceActionDetailContainer extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               CustomSizedBox.height(5),
-              titleText(resourceActionName.toString()),
+              titleText(),
               CustomSizedBox.height(5),
               subTitleText(
                   "${AppStrings.quantityOnlyText} :", quantity.toString()),
@@ -90,9 +90,9 @@ class ProceedResourceActionDetailContainer extends StatelessWidget {
     );
   }
 
-  Widget titleText(String text) {
+  Widget titleText() {
     return Text(
-      text,
+      ResourceActionViewModel.checkActionType(resourceActionName),
       style: Styles.circularStdMedium(
         AppSize.text15.sp,
         AppColors.containerTextColor,

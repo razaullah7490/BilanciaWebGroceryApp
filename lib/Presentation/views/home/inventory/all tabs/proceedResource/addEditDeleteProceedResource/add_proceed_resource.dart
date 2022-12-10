@@ -120,7 +120,7 @@ class _AddProceedResourceState extends State<AddProceedResource> {
                       true,
                     );
                     Navigator.of(context).pop();
-                    Navigate.to(context, const ProceedResourceScreen());
+                    Navigate.toReplace(context, const ProceedResourceScreen());
                   }
 
                   if (state.error != const CustomError(error: '')) {
@@ -990,7 +990,8 @@ class _AddProceedResourceState extends State<AddProceedResource> {
                           ),
                         ),
                         obscureText: false,
-                        textInputType: const TextInputType.numberWithOptions(decimal: true),
+                        textInputType: const TextInputType.numberWithOptions(
+                            decimal: true),
                         isLabel: false,
                         validator: (v) {
                           if (v!.trim().isEmpty) {

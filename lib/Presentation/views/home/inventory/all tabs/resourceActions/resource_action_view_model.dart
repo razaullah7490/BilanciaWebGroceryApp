@@ -41,6 +41,25 @@ class ResourceActionViewModel {
     ActionTypeModel(id: "production", value: "Produzione"),
   ];
 
+  static checkActionType(String title) {
+    switch (title) {
+      case "purchase":
+        return "Acquisto";
+      case "internal_purchase":
+        return "Acquisto a uso interno";
+      case "sale":
+        return "Vendita";
+      case "internal_usage":
+        return "Uso interno";
+      case "waste":
+        return "Scarto";
+      case "production":
+        return "Produzione";
+      case "creation":
+        return "creation";
+    }
+  }
+
   static List<MoneyTypeModel> moneyTypeModelList = [
     MoneyTypeModel(id: "unit_price", value: "Prezzo unitario"),
     MoneyTypeModel(id: "total_price", value: "Prezzo totale"),
