@@ -16,6 +16,7 @@ class ResourceActionService {
       );
       log("testing ${res.statusCode}");
       var data = json.decode(res.body);
+      log("Data $data");
       if (res.statusCode != 201) {
         throw httpErrorHandler(data['detail'].toString());
       }

@@ -88,7 +88,7 @@ class _AddCategoryScreenState extends State<AddCategoryScreen> {
                     text: AppStrings.addCategoryText,
                     onTap: () async {
                       if (formKey.currentState!.validate()) {
-                        Map map = {
+                        Map<String, dynamic> map = {
                           "name": categoryNameController.text,
                           "default_price": defaultPriceController.text,
                           "min_value": minValueContoller.text,

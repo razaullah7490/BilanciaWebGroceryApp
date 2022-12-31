@@ -30,7 +30,7 @@ class _AddResourceActionScreenState extends State<AddResourceActionScreen> {
 
   @override
   void initState() {
-    actionType = ResourceActionViewModel.actionTypeList[0].toString();
+    actionType = ResourceActionViewModel.actionTypeModelList[0].id;
     printCounterController.text = '0';
     resourceController.text = widget.resourceData.name;
     getResource();
@@ -120,8 +120,8 @@ class _AddResourceActionScreenState extends State<AddResourceActionScreen> {
                                   : "${widget.resourceData.id}",
                           "money_type": moneyType.toString(),
                         };
-                        log("map $map");
-                        context
+                        log("Data $map");
+                        await context
                             .read<ResourceActionCubit>()
                             .addResourceAction(map);
                       }
@@ -148,12 +148,18 @@ class _AddResourceActionScreenState extends State<AddResourceActionScreen> {
           CustomDropDownWidget(
             hintText: AppStrings.actionTypeText,
             value: actionType,
-            itemsMap: ResourceActionViewModel.actionTypeList.map((v) {
+            itemsMap: ResourceActionViewModel.actionTypeModelList.map((e) {
               return DropdownMenuItem(
-                value: v,
-                child: Text(v.toString()),
+                value: e.id,
+                child: Text(e.value),
               );
             }).toList(),
+            // itemsMap: ResourceActionViewModel.actionTypeList.map((v) {
+            //   return DropdownMenuItem(
+            //     value: v,
+            //     child: Text(v.toString()),
+            //   );
+            // }).toList(),
             validationText: AppStrings.provideActionTypeText,
             onChanged: (v) {
               setState(() {
@@ -202,12 +208,18 @@ class _AddResourceActionScreenState extends State<AddResourceActionScreen> {
           CustomDropDownWidget(
             hintText: AppStrings.moneyTypeText,
             value: moneyType,
-            itemsMap: ResourceActionViewModel.moneyTypeList.map((v) {
+            itemsMap: ResourceActionViewModel.moneyTypeModelList.map((e) {
               return DropdownMenuItem(
-                value: v,
-                child: Text(v.toString()),
+                value: e.id,
+                child: Text(e.value),
               );
             }).toList(),
+            // itemsMap: ResourceActionViewModel.moneyTypeList.map((v) {
+            //   return DropdownMenuItem(
+            //     value: v,
+            //     child: Text(v.toString()),
+            //   );
+            // }).toList(),
             validationText: AppStrings.provideMoneyTypeText,
             onChanged: (v) {
               setState(() {

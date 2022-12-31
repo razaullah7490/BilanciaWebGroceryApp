@@ -30,7 +30,7 @@ class _AddProceedResourceActionScreenState
   @override
   void initState() {
     actionType =
-        ResourceActionViewModel.proceedResourceActionTypeList[0].toString();
+        ResourceActionViewModel.proceedResourceActionTypeModelList[0].id;
     resourceController.text = widget.model.name;
     getProceedResource();
     super.initState();
@@ -147,13 +147,20 @@ class _AddProceedResourceActionScreenState
           CustomDropDownWidget(
             hintText: AppStrings.actionTypeText,
             value: actionType,
-            itemsMap:
-                ResourceActionViewModel.proceedResourceActionTypeList.map((v) {
+            itemsMap: ResourceActionViewModel.proceedResourceActionTypeModelList
+                .map((e) {
               return DropdownMenuItem(
-                value: v.toString(),
-                child: Text(v.toString()),
+                value: e.id,
+                child: Text(e.value),
               );
             }).toList(),
+            // itemsMap:
+            //     ResourceActionViewModel.proceedResourceActionTypeList.map((v) {
+            //   return DropdownMenuItem(
+            //     value: v.toString(),
+            //     child: Text(v.toString()),
+            //   );
+            // }).toList(),
             validationText: AppStrings.provideActionTypeText,
             onChanged: (v) {
               setState(() {
@@ -202,10 +209,10 @@ class _AddProceedResourceActionScreenState
           CustomDropDownWidget(
             hintText: AppStrings.moneyTypeText,
             value: moneyType,
-            itemsMap: ResourceActionViewModel.moneyTypeList.map((v) {
+            itemsMap: ResourceActionViewModel.moneyTypeModelList.map((e) {
               return DropdownMenuItem(
-                value: v,
-                child: Text(v.toString()),
+                value: e.id,
+                child: Text(e.value),
               );
             }).toList(),
             validationText: AppStrings.provideMoneyTypeText,

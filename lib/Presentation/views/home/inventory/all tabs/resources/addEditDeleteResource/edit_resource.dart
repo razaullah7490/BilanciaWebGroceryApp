@@ -86,7 +86,7 @@ class _EditResourceScreenState extends State<EditResourceScreen> {
 
     unitPurchasePriceController.text =
         widget.model.unitPurchasePrice.toString();
-    status = widget.model.status == true ? "Active" : "InActive";
+    status = widget.model.status == true ? "Attivo" : "Inattivo";
 
     threshold1Controller.text = widget.model.threshold1.toString();
     threshold2Controller.text = widget.model.threshold2.toString();
@@ -589,10 +589,10 @@ class _EditResourceScreenState extends State<EditResourceScreen> {
           CustomDropDownWidget(
             hintText: AppStrings.weightTypeText,
             value: weightType,
-            itemsMap: ProcessedResourceViewModel.weightTypeList.map((v) {
+            itemsMap: ProcessedResourceViewModel.weightTypeModelList.map((e) {
               return DropdownMenuItem(
-                value: v,
-                child: Text(v.toString()),
+                value: e.id,
+                child: Text(e.text),
               );
             }).toList(),
             validationText: AppStrings.provideWeightTypeText,
@@ -727,10 +727,10 @@ class _EditResourceScreenState extends State<EditResourceScreen> {
           CustomDropDownWidget(
             hintText: AppStrings.traceabilityText,
             value: traceability,
-            itemsMap: ProcessedResourceViewModel.traceabilityList.map((v) {
+            itemsMap: ProcessedResourceViewModel.traceabilityModelList.map((e) {
               return DropdownMenuItem(
-                value: v,
-                child: Text(v.toString()),
+                value: e.id,
+                child: Text(e.text),
               );
             }).toList(),
             validationText: AppStrings.provideTraceabilityText,

@@ -77,7 +77,7 @@ class _EditProceedResourceScreenState extends State<EditProceedResourceScreen> {
     barCodeController.text = widget.model.barcode.toString();
     stockQuantityController.text = widget.model.stockQuantity.toString();
     ivaType = widget.model.ivaType;
-    status = widget.model.isActive == true ? "Active" : "InActive";
+    status = widget.model.isActive == true ? "Attivo" : "Inattivo";
     measureUnit = widget.model.measureUnit;
     category = widget.model.category;
     tareController.text = widget.model.tare.toString();
@@ -570,10 +570,10 @@ class _EditProceedResourceScreenState extends State<EditProceedResourceScreen> {
           CustomDropDownWidget(
             hintText: AppStrings.weightTypeText,
             value: weightType.toString(),
-            itemsMap: ProcessedResourceViewModel.weightTypeList.map((v) {
+            itemsMap: ProcessedResourceViewModel.weightTypeModelList.map((e) {
               return DropdownMenuItem(
-                value: v,
-                child: Text(v.toString()),
+                value: e.id,
+                child: Text(e.text),
               );
             }).toList(),
             validationText: AppStrings.provideWeightTypeText,
@@ -716,10 +716,10 @@ class _EditProceedResourceScreenState extends State<EditProceedResourceScreen> {
           CustomDropDownWidget(
             hintText: AppStrings.traceabilityText,
             value: traceability.toString(),
-            itemsMap: ProcessedResourceViewModel.traceabilityList.map((v) {
+            itemsMap: ProcessedResourceViewModel.traceabilityModelList.map((e) {
               return DropdownMenuItem(
-                value: v,
-                child: Text(v.toString()),
+                value: e.id,
+                child: Text(e.text),
               );
             }).toList(),
             validationText: AppStrings.provideTraceabilityText,

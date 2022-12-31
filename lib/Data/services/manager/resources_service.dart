@@ -24,6 +24,7 @@ class ResourcesService {
       return true;
     } on DioError catch (e) {
       if (e.response!.statusCode != 201) {
+        log("Resource RESPONSE ${e.response!.data}");
         throw httpErrorHandler(e.response!.data['detail']);
       } else {
         return false;

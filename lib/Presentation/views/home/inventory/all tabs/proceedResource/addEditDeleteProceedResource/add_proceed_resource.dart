@@ -71,12 +71,12 @@ class _AddProceedResourceState extends State<AddProceedResource> {
     shelfLifeController.text = "7";
     status = CategoryViewModel.statusList[0].toString();
     tareController.text = "0";
-    weightType = ProcessedResourceViewModel.weightTypeList[0].toString();
+    weightType = ProcessedResourceViewModel.weightTypeModelList[0].id;
     threshold1Controller.text = "0";
     threshold2Controller.text = "0";
     price1Controller.text = "0";
     price2Controller.text = "0";
-    traceability = ProcessedResourceViewModel.traceabilityList[0].toString();
+    traceability = ProcessedResourceViewModel.traceabilityModelList[0].id;
     traceabilityIdController.text = "0";
     unitPurchasePriceController.text = "0";
     revenuePercentageController.text = "0";
@@ -120,7 +120,7 @@ class _AddProceedResourceState extends State<AddProceedResource> {
                       true,
                     );
                     Navigator.of(context).pop();
-                    Navigate.to(context, const ProceedResourceScreen());
+                    Navigate.toReplace(context, const ProceedResourceScreen());
                   }
 
                   if (state.error != const CustomError(error: '')) {
@@ -529,10 +529,10 @@ class _AddProceedResourceState extends State<AddProceedResource> {
           CustomDropDownWidget(
             hintText: AppStrings.weightTypeText,
             value: weightType,
-            itemsMap: ProcessedResourceViewModel.weightTypeList.map((v) {
+            itemsMap: ProcessedResourceViewModel.weightTypeModelList.map((e) {
               return DropdownMenuItem(
-                value: v,
-                child: Text(v.toString()),
+                value: e.id,
+                child: Text(e.text),
               );
             }).toList(),
             validationText: AppStrings.provideWeightTypeText,
@@ -673,10 +673,10 @@ class _AddProceedResourceState extends State<AddProceedResource> {
           CustomDropDownWidget(
             hintText: AppStrings.traceabilityText,
             value: traceability,
-            itemsMap: ProcessedResourceViewModel.traceabilityList.map((v) {
+            itemsMap: ProcessedResourceViewModel.traceabilityModelList.map((e) {
               return DropdownMenuItem(
-                value: v,
-                child: Text(v.toString()),
+                value: e.id,
+                child: Text(e.text),
               );
             }).toList(),
             validationText: AppStrings.provideTraceabilityText,
@@ -990,7 +990,8 @@ class _AddProceedResourceState extends State<AddProceedResource> {
                           ),
                         ),
                         obscureText: false,
-                        textInputType: const TextInputType.numberWithOptions(decimal: true),
+                        textInputType: const TextInputType.numberWithOptions(
+                            decimal: true),
                         isLabel: false,
                         validator: (v) {
                           if (v!.trim().isEmpty) {
