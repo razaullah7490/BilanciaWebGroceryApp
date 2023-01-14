@@ -1,5 +1,9 @@
 // ignore_for_file: use_build_context_synchronously
+import 'dart:developer';
+
 import 'package:grocery/Application/exports.dart';
+
+import '../../../../../../Application/functions.dart';
 
 class AddIvaBottomSheet extends StatefulWidget {
   const AddIvaBottomSheet({super.key});
@@ -28,12 +32,14 @@ class _AddIvaBottomSheetState extends State<AddIvaBottomSheet> {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: AppSize.p18).r,
               child: CustomTextField(
-                controller: aliquotaIvaValueController,
                 labelText: AppStrings.valueText,
                 hintText: AppStrings.enterAliquotaIva,
                 suffixIcon: const Text(''),
                 obscureText: false,
-                textInputType: const TextInputType.numberWithOptions(decimal: true),
+                onChanged: (v) {
+                  commaReplaceToDot(aliquotaIvaValueController, v);
+                },
+                textInputType:const TextInputType.numberWithOptions(decimal: true),
                 validator: (v) {
                   if (v!.trim().isEmpty) {
                     return AppStrings.provideValue;
@@ -77,6 +83,7 @@ class _AddIvaBottomSheetState extends State<AddIvaBottomSheet> {
                   scale: 0.8,
                   text: AppStrings.addText,
                   onTap: () async {
+                    log("TEXT ${aliquotaIvaValueController.text}");
                     if (formKey.currentState!.validate()) {
                       await context
                           .read<ManagerIvaCubit>()

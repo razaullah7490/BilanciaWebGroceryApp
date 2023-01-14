@@ -2,6 +2,8 @@
 import 'dart:developer';
 import 'package:grocery/Application/exports.dart';
 
+import '../../../../../../../Application/functions.dart';
+
 class AddCategoryScreen extends StatefulWidget {
   const AddCategoryScreen({super.key});
 
@@ -109,6 +111,10 @@ class _AddCategoryScreenState extends State<AddCategoryScreen> {
 
                         await context.read<CategoryCubit>().addCategory(map);
                       }
+
+
+
+
                     },
                   );
                 })),
@@ -148,11 +154,13 @@ class _AddCategoryScreenState extends State<AddCategoryScreen> {
           CustomSizedBox.height(20),
           textFieldUpperText(AppStrings.defaultPriceText),
           CustomTextField(
-            controller: defaultPriceController,
             labelText: AppStrings.defaultPriceText,
             hintText: AppStrings.enterDefaultPriceText,
             suffixIcon: const Text(""),
             obscureText: false,
+            onChanged: (v) {
+              commaReplaceToDot(defaultPriceController, v);
+            },
             textInputType: const TextInputType.numberWithOptions(decimal: true),
             isLabel: false,
             validator: (v) {
@@ -166,11 +174,14 @@ class _AddCategoryScreenState extends State<AddCategoryScreen> {
           CustomSizedBox.height(20),
           textFieldUpperText(AppStrings.minValueText),
           CustomTextField(
-            controller: minValueContoller,
+
             labelText: AppStrings.minValueText,
             hintText: AppStrings.enterMinValueText,
             suffixIcon: const Text(""),
             obscureText: false,
+            onChanged: (v) {
+              commaReplaceToDot(minValueContoller, v);
+            },
             textInputType: const TextInputType.numberWithOptions(decimal: true),
             isLabel: false,
             validator: (v) {
@@ -184,11 +195,13 @@ class _AddCategoryScreenState extends State<AddCategoryScreen> {
           CustomSizedBox.height(20),
           textFieldUpperText(AppStrings.maxValueText),
           CustomTextField(
-            controller: maxValueController,
             labelText: AppStrings.maxValueText,
             hintText: AppStrings.enterMaxValueText,
             suffixIcon: const Text(""),
             obscureText: false,
+            onChanged: (v) {
+              commaReplaceToDot(maxValueController, v);
+            },
             textInputType: const TextInputType.numberWithOptions(decimal: true),
             isLabel: false,
             validator: (v) {
@@ -202,11 +215,14 @@ class _AddCategoryScreenState extends State<AddCategoryScreen> {
           CustomSizedBox.height(20),
           textFieldUpperText(AppStrings.discountPriceText),
           CustomTextField(
-            controller: discountPriceContoller,
+
             labelText: AppStrings.discountPriceText,
             hintText: AppStrings.enterDiscountPriceText,
             suffixIcon: const Text(""),
             obscureText: false,
+            onChanged: (v) {
+              commaReplaceToDot(discountPriceContoller, v);
+            },
             textInputType: const TextInputType.numberWithOptions(decimal: true),
             isLabel: false,
             validator: (v) {
@@ -277,11 +293,14 @@ class _AddCategoryScreenState extends State<AddCategoryScreen> {
           CustomSizedBox.height(20),
           textFieldUpperText(AppStrings.keyModifierText),
           CustomTextField(
-            controller: keyModifierController,
+
             labelText: AppStrings.keyModifierText,
             hintText: AppStrings.enterKeyModifierText,
             suffixIcon: const Text(""),
             obscureText: false,
+            onChanged: (v) {
+              commaReplaceToDot(keyModifierController, v);
+            },
             textInputType: const TextInputType.numberWithOptions(decimal: true),
             isLabel: false,
             validator: (v) {
@@ -295,11 +314,14 @@ class _AddCategoryScreenState extends State<AddCategoryScreen> {
           CustomSizedBox.height(20),
           textFieldUpperText(AppStrings.idGruppoText),
           CustomTextField(
-            controller: idGruppoController,
+
             labelText: AppStrings.idGruppoText,
             hintText: AppStrings.enterIdGruppoText,
             suffixIcon: const Text(""),
             obscureText: false,
+            onChanged: (v) {
+              commaReplaceToDot(idGruppoController, v);
+            },
             textInputType: const TextInputType.numberWithOptions(decimal: true),
             isLabel: false,
             validator: (v) {
@@ -315,11 +337,14 @@ class _AddCategoryScreenState extends State<AddCategoryScreen> {
           CustomSizedBox.height(10),
           textFieldUpperText(AppStrings.idAuxLanText),
           CustomTextField(
-            controller: idAuxLanController,
+
             labelText: AppStrings.idAuxLanText,
             hintText: AppStrings.enterIdAuxLanText,
             suffixIcon: const Text(""),
             obscureText: false,
+            onChanged: (v) {
+              commaReplaceToDot(idAuxLanController, v);
+            },
             textInputType: const TextInputType.numberWithOptions(decimal: true),
             isLabel: false,
             validator: (v) {
@@ -333,11 +358,13 @@ class _AddCategoryScreenState extends State<AddCategoryScreen> {
           CustomSizedBox.height(20),
           textFieldUpperText(AppStrings.tipoScontoText),
           CustomTextField(
-            controller: tipoScontoController,
             labelText: AppStrings.tipoScontoText,
             hintText: AppStrings.enterTipoScontoText,
             suffixIcon: const Text(""),
             obscureText: false,
+            onChanged: (v) {
+              commaReplaceToDot(tipoScontoController, v);
+            },
             textInputType: const TextInputType.numberWithOptions(decimal: true),
             isLabel: false,
             validator: (v) {

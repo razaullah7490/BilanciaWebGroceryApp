@@ -2,6 +2,8 @@
 import 'dart:developer';
 import 'package:grocery/Application/exports.dart';
 
+import '../../../../../../../Application/functions.dart';
+
 class EditProceedResourceScreen extends StatefulWidget {
   final ProceedResourcesModel model;
   const EditProceedResourceScreen({
@@ -341,7 +343,11 @@ class _EditProceedResourceScreenState extends State<EditProceedResourceScreen> {
           CustomSizedBox.height(20),
           textFieldUpperText(AppStrings.stockQuantityText),
           CustomTextField(
-            controller: stockQuantityController,
+            // controller: stockQuantityController,
+            initialValue: widget.model.stockQuantity.toString(),
+            onChanged: (v) {
+              commaReplaceToDot(stockQuantityController, v);
+            },
             labelText: AppStrings.stockQuantityText,
             hintText: AppStrings.enterStockQuantityText,
             suffixIcon: const Text(""),
@@ -359,7 +365,11 @@ class _EditProceedResourceScreenState extends State<EditProceedResourceScreen> {
           CustomSizedBox.height(20),
           textFieldUpperText(AppStrings.stockQuantityThresholdText),
           CustomTextField(
-            controller: stockQuantityThresholdController,
+            // controller: stockQuantityThresholdController,
+            initialValue: widget.model.stockQuantityThreshold.toString(),
+            onChanged: (v) {
+              commaReplaceToDot(stockQuantityThresholdController, v);
+            },
             labelText: AppStrings.stockQuantityThresholdText,
             hintText: AppStrings.enterStockQuantityThresholdText,
             suffixIcon: const Text(""),
@@ -422,7 +432,11 @@ class _EditProceedResourceScreenState extends State<EditProceedResourceScreen> {
           CustomSizedBox.height(20),
           textFieldUpperText(AppStrings.pluText),
           CustomTextField(
-            controller: pluController,
+            // controller: pluController,
+            initialValue: widget.model.plu.toString(),
+            onChanged: (v) {
+              commaReplaceToDot(pluController, v);
+            },
             labelText: AppStrings.pluText,
             hintText: AppStrings.enterPluText,
             suffixIcon: const Text(""),
@@ -440,7 +454,11 @@ class _EditProceedResourceScreenState extends State<EditProceedResourceScreen> {
           CustomSizedBox.height(20),
           textFieldUpperText(AppStrings.shelfLifeText),
           CustomTextField(
-            controller: shelfLifeController,
+            initialValue: widget.model.shelfLife.toString(),
+            onChanged: (v) {
+              commaReplaceToDot(shelfLifeController, v);
+            },
+            // controller: shelfLifeController,
             labelText: AppStrings.shelfLifeText,
             hintText: AppStrings.enterShelfLifeText,
             suffixIcon: const Text(""),
@@ -458,7 +476,12 @@ class _EditProceedResourceScreenState extends State<EditProceedResourceScreen> {
           CustomSizedBox.height(20),
           textFieldUpperText(AppStrings.unitSalePriceText),
           CustomTextField(
-            controller: unitSalePriceController,
+            // controller: unitSalePriceController,
+            onChanged: (v) {
+              commaReplaceToDot(unitSalePriceController, v);
+            },
+            initialValue: widget.model.unitSalePrice.toString(),
+
             labelText: AppStrings.unitSalePriceText,
             hintText: AppStrings.enterUnitSalePriceText,
             suffixIcon: const Text(""),
@@ -476,7 +499,12 @@ class _EditProceedResourceScreenState extends State<EditProceedResourceScreen> {
           CustomSizedBox.height(20),
           textFieldUpperText(AppStrings.unitPurchasePriceText),
           CustomTextField(
-            controller: unitPurchasePriceController,
+            onChanged: (v) {
+              commaReplaceToDot(unitPurchasePriceController, v);
+            },
+            initialValue: widget.model.unitPurchasePrice.toString(),
+
+            // controller: unitPurchasePriceController,
             labelText: AppStrings.unitPurchasePriceText,
             hintText: AppStrings.enterUnitPurchasePriceText,
             suffixIcon: const Text(""),
@@ -494,7 +522,12 @@ class _EditProceedResourceScreenState extends State<EditProceedResourceScreen> {
           CustomSizedBox.height(20),
           textFieldUpperText(AppStrings.revenuePercentageText),
           CustomTextField(
-            controller: revenuePercentageController,
+            initialValue: widget.model.revenuePercentage.toString(),
+            onChanged: (v) {
+              commaReplaceToDot(revenuePercentageController, v);
+            },
+
+            // controller: revenuePercentageController,
             labelText: AppStrings.revenuePercentageText,
             hintText: AppStrings.enterRevenuePercentageText,
             suffixIcon: const Text(""),
@@ -550,7 +583,12 @@ class _EditProceedResourceScreenState extends State<EditProceedResourceScreen> {
           CustomSizedBox.height(20),
           textFieldUpperText(AppStrings.tareText),
           CustomTextField(
-            controller: tareController,
+            // controller: tareController,
+            initialValue: widget.model.tare.toString(),
+            onChanged: (v) {
+              commaReplaceToDot(tareController, v);
+            },
+
             labelText: AppStrings.tareText,
             hintText: AppStrings.enterTareText,
             suffixIcon: const Text(""),
@@ -640,7 +678,11 @@ class _EditProceedResourceScreenState extends State<EditProceedResourceScreen> {
           CustomSizedBox.height(20),
           textFieldUpperText(AppStrings.threshold1Text),
           CustomTextField(
-            controller: threshold1Controller,
+            // controller: threshold1Controller,
+            initialValue: widget.model.threshold1.toString(),
+            onChanged: (v) {
+              commaReplaceToDot(threshold1Controller, v);
+            },
             labelText: AppStrings.threshold1Text,
             hintText: AppStrings.enterThreshold1Text,
             suffixIcon: const Text(""),
@@ -658,7 +700,11 @@ class _EditProceedResourceScreenState extends State<EditProceedResourceScreen> {
           CustomSizedBox.height(20),
           textFieldUpperText(AppStrings.threshold2Text),
           CustomTextField(
-            controller: threshold2Controller,
+            // controller: threshold2Controller,
+            initialValue: widget.model.threshold2.toString(),
+            onChanged: (v) {
+              commaReplaceToDot(threshold2Controller, v);
+            },
             labelText: AppStrings.threshold2Text,
             hintText: AppStrings.enterThreshold2Text,
             suffixIcon: const Text(""),
@@ -676,7 +722,11 @@ class _EditProceedResourceScreenState extends State<EditProceedResourceScreen> {
           CustomSizedBox.height(20),
           textFieldUpperText(AppStrings.price1Text),
           CustomTextField(
-            controller: price1Controller,
+            // controller: price1Controller,
+            initialValue: widget.model.price1.toString(),
+            onChanged: (v) {
+              commaReplaceToDot(price1Controller, v);
+            },
             labelText: AppStrings.price1Text,
             hintText: AppStrings.enterPrice1Text,
             suffixIcon: const Text(""),
@@ -694,7 +744,11 @@ class _EditProceedResourceScreenState extends State<EditProceedResourceScreen> {
           CustomSizedBox.height(20),
           textFieldUpperText(AppStrings.price2Text),
           CustomTextField(
-            controller: price2Controller,
+            // controller: price2Controller,
+            initialValue: widget.model.price2.toString(),
+            onChanged: (v) {
+              commaReplaceToDot(price2Controller, v);
+            },
             labelText: AppStrings.price2Text,
             hintText: AppStrings.enterPrice2Text,
             suffixIcon: const Text(""),
@@ -732,7 +786,11 @@ class _EditProceedResourceScreenState extends State<EditProceedResourceScreen> {
           CustomSizedBox.height(20),
           textFieldUpperText(AppStrings.traceabilityIdText),
           CustomTextField(
-            controller: traceabilityIdController,
+            initialValue: widget.model.traceabilityId.toString(),
+            onChanged: (v) {
+              commaReplaceToDot(traceabilityIdController, v);
+            },
+            // controller: traceabilityIdController,
             labelText: AppStrings.traceabilityIdText,
             hintText: AppStrings.enterTraceabilityIdText,
             suffixIcon: const Text(""),

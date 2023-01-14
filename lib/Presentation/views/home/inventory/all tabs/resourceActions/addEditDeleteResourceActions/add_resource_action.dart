@@ -3,6 +3,8 @@
 import 'dart:developer';
 import 'package:grocery/Application/exports.dart';
 
+import '../../../../../../../Application/functions.dart';
+
 class AddResourceActionScreen extends StatefulWidget {
   final ResourceData resourceData;
 
@@ -170,7 +172,10 @@ class _AddResourceActionScreenState extends State<AddResourceActionScreen> {
           CustomSizedBox.height(20),
           textFieldUpperText(AppStrings.quantityOnlyText),
           CustomTextField(
-            controller: quantityController,
+            onChanged: (v) {
+              commaReplaceToDot(quantityController, v);
+            },
+            // controller: quantityController,
             labelText: AppStrings.quantityOnlyText,
             hintText: AppStrings.enterQuantityText,
             suffixIcon: const Text(""),
@@ -188,7 +193,10 @@ class _AddResourceActionScreenState extends State<AddResourceActionScreen> {
           CustomSizedBox.height(20),
           textFieldUpperText(AppStrings.moneyText),
           CustomTextField(
-            controller: moneyController,
+            onChanged: (v) {
+              commaReplaceToDot(moneyController, v);
+            },
+            // controller: moneyController,
             labelText: AppStrings.moneyText,
             hintText: AppStrings.enterMoneyText,
             suffixIcon: const Text(""),
@@ -241,11 +249,14 @@ class _AddResourceActionScreenState extends State<AddResourceActionScreen> {
           CustomSizedBox.height(20),
           textFieldUpperText(AppStrings.priceCounterText),
           CustomTextField(
-            controller: printCounterController,
+            // controller: printCounterController,
             labelText: AppStrings.priceCounterText,
             hintText: AppStrings.enterPriceCounterText,
             suffixIcon: const Text(""),
             obscureText: false,
+            onChanged: (v) {
+              commaReplaceToDot(printCounterController, v);
+            },
             textInputType: const TextInputType.numberWithOptions(decimal: true),
             isLabel: false,
             validator: (v) {
@@ -287,6 +298,9 @@ class _AddResourceActionScreenState extends State<AddResourceActionScreen> {
                 hintText: AppStrings.enterResourceText,
                 suffixIcon: const Text(""),
                 obscureText: false,
+                // onChanged: (v) {
+                //   commaReplaceToDot(resourceController, v);
+                // },
                 textInputType: const TextInputType.numberWithOptions(decimal: true),
                 isLabel: false,
                 validator: (v) {
@@ -315,6 +329,7 @@ class _AddResourceActionScreenState extends State<AddResourceActionScreen> {
             data: Theme.of(context).copyWith(
               unselectedWidgetColor: AppColors.primaryColor,
             ),
+
             child: Checkbox(
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.all(

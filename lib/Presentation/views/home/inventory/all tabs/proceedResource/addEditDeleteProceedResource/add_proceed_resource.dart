@@ -2,6 +2,8 @@
 import 'dart:developer';
 import 'package:grocery/Application/exports.dart';
 
+import '../../../../../../../Application/functions.dart';
+
 class AddProceedResource extends StatefulWidget {
   const AddProceedResource({super.key});
 
@@ -300,7 +302,10 @@ class _AddProceedResourceState extends State<AddProceedResource> {
           CustomSizedBox.height(20),
           textFieldUpperText(AppStrings.stockQuantityText),
           CustomTextField(
-            controller: stockQuantityController,
+            // controller: stockQuantityController,
+            onChanged: (v) {
+              commaReplaceToDot(stockQuantityController, v);
+            },
             labelText: AppStrings.stockQuantityText,
             hintText: AppStrings.enterStockQuantityText,
             suffixIcon: const Text(""),
@@ -318,7 +323,10 @@ class _AddProceedResourceState extends State<AddProceedResource> {
           CustomSizedBox.height(20),
           textFieldUpperText(AppStrings.stockQuantityThresholdText),
           CustomTextField(
-            controller: stockQuantityThresholdController,
+            // controller: stockQuantityThresholdController,
+            onChanged: (v) {
+              commaReplaceToDot(stockQuantityThresholdController, v);
+            },
             labelText: AppStrings.stockQuantityThresholdText,
             hintText: AppStrings.enterStockQuantityThresholdText,
             suffixIcon: const Text(""),
@@ -381,7 +389,10 @@ class _AddProceedResourceState extends State<AddProceedResource> {
           CustomSizedBox.height(20),
           textFieldUpperText(AppStrings.pluText),
           CustomTextField(
-            controller: pluController,
+            // controller: pluController,
+            onChanged: (v) {
+              commaReplaceToDot(pluController, v);
+            },
             labelText: AppStrings.pluText,
             hintText: AppStrings.enterPluText,
             suffixIcon: const Text(""),
@@ -399,7 +410,10 @@ class _AddProceedResourceState extends State<AddProceedResource> {
           CustomSizedBox.height(20),
           textFieldUpperText(AppStrings.shelfLifeText),
           CustomTextField(
-            controller: shelfLifeController,
+            // controller: shelfLifeController,
+            onChanged: (v) {
+              commaReplaceToDot(shelfLifeController, v);
+            },
             labelText: AppStrings.shelfLifeText,
             hintText: AppStrings.enterShelfLifeText,
             suffixIcon: const Text(""),
@@ -417,7 +431,10 @@ class _AddProceedResourceState extends State<AddProceedResource> {
           CustomSizedBox.height(20),
           textFieldUpperText(AppStrings.unitSalePriceText),
           CustomTextField(
-            controller: unitSalePriceController,
+            // controller: unitSalePriceController,
+            onChanged: (v) {
+              commaReplaceToDot(unitSalePriceController, v);
+            },
             labelText: AppStrings.unitSalePriceText,
             hintText: AppStrings.enterUnitSalePriceText,
             suffixIcon: const Text(""),
@@ -435,11 +452,14 @@ class _AddProceedResourceState extends State<AddProceedResource> {
           CustomSizedBox.height(20),
           textFieldUpperText(AppStrings.unitPurchasePriceText),
           CustomTextField(
-            controller: unitPurchasePriceController,
+            // controller: unitPurchasePriceController,
             labelText: AppStrings.unitPurchasePriceText,
             hintText: AppStrings.enterUnitPurchasePriceText,
             suffixIcon: const Text(""),
             obscureText: false,
+            onChanged: (v) {
+              commaReplaceToDot(unitPurchasePriceController, v);
+            },
             textInputType: const TextInputType.numberWithOptions(decimal: true),
             isLabel: false,
             validator: (v) {
@@ -453,11 +473,14 @@ class _AddProceedResourceState extends State<AddProceedResource> {
           CustomSizedBox.height(20),
           textFieldUpperText(AppStrings.revenuePercentageText),
           CustomTextField(
-            controller: revenuePercentageController,
+            // controller: revenuePercentageController,
             labelText: AppStrings.revenuePercentageText,
             hintText: AppStrings.enterRevenuePercentageText,
             suffixIcon: const Text(""),
             obscureText: false,
+            onChanged: (v) {
+              commaReplaceToDot(revenuePercentageController, v);
+            },
             textInputType: const TextInputType.numberWithOptions(decimal: true),
             isLabel: false,
             validator: (v) {
@@ -509,7 +532,10 @@ class _AddProceedResourceState extends State<AddProceedResource> {
           CustomSizedBox.height(20),
           textFieldUpperText(AppStrings.tareText),
           CustomTextField(
-            controller: tareController,
+            // controller: tareController,
+            onChanged: (v) {
+              commaReplaceToDot(tareController, v);
+            },
             labelText: AppStrings.tareText,
             hintText: AppStrings.enterTareText,
             suffixIcon: const Text(""),
@@ -597,7 +623,10 @@ class _AddProceedResourceState extends State<AddProceedResource> {
           CustomSizedBox.height(20),
           textFieldUpperText(AppStrings.threshold1Text),
           CustomTextField(
-            controller: threshold1Controller,
+            // controller: threshold1Controller,
+            onChanged: (v) {
+              commaReplaceToDot(threshold1Controller, v);
+            },
             labelText: AppStrings.threshold1Text,
             hintText: AppStrings.enterThreshold1Text,
             suffixIcon: const Text(""),
@@ -615,7 +644,10 @@ class _AddProceedResourceState extends State<AddProceedResource> {
           CustomSizedBox.height(20),
           textFieldUpperText(AppStrings.threshold2Text),
           CustomTextField(
-            controller: threshold2Controller,
+            onChanged: (v) {
+              commaReplaceToDot(threshold2Controller, v);
+            },
+            // controller: threshold2Controller,
             labelText: AppStrings.threshold2Text,
             hintText: AppStrings.enterThreshold2Text,
             suffixIcon: const Text(""),
@@ -633,7 +665,10 @@ class _AddProceedResourceState extends State<AddProceedResource> {
           CustomSizedBox.height(20),
           textFieldUpperText(AppStrings.price1Text),
           CustomTextField(
-            controller: price1Controller,
+            onChanged: (v) {
+              commaReplaceToDot(price1Controller, v);
+            },
+            // controller: price1Controller,
             labelText: AppStrings.price1Text,
             hintText: AppStrings.enterPrice1Text,
             suffixIcon: const Text(""),
@@ -651,7 +686,10 @@ class _AddProceedResourceState extends State<AddProceedResource> {
           CustomSizedBox.height(20),
           textFieldUpperText(AppStrings.price2Text),
           CustomTextField(
-            controller: price2Controller,
+            onChanged: (v) {
+              commaReplaceToDot(price2Controller, v);
+            },
+            // controller: price2Controller,
             labelText: AppStrings.price2Text,
             hintText: AppStrings.enterPrice2Text,
             suffixIcon: const Text(""),
@@ -689,7 +727,10 @@ class _AddProceedResourceState extends State<AddProceedResource> {
           CustomSizedBox.height(20),
           textFieldUpperText(AppStrings.traceabilityIdText),
           CustomTextField(
-            controller: traceabilityIdController,
+            onChanged: (v) {
+              commaReplaceToDot(traceabilityIdController, v);
+            },
+            // controller: traceabilityIdController,
             labelText: AppStrings.traceabilityIdText,
             hintText: AppStrings.enterTraceabilityIdText,
             suffixIcon: const Text(""),
