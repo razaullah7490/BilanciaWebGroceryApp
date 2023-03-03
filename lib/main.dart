@@ -123,6 +123,10 @@ class _MyAppState extends State<MyApp> {
             RepositoryProvider(
                 create: (context) =>
                     CommandRepository(service: CommandService())),
+            RepositoryProvider(
+                create: (context) => ExportRepository(
+                      service: ExportService(),
+                    )),
           ],
           child: MultiBlocProvider(
             providers: [
@@ -185,6 +189,9 @@ class _MyAppState extends State<MyApp> {
               BlocProvider<CommandCubit>(
                   create: (context) =>
                       CommandCubit(repo: context.read<CommandRepository>())),
+              BlocProvider<ExportCubit>(
+                  create: (context) =>
+                      ExportCubit(repo: context.read<ExportRepository>())),
             ],
             child: MaterialApp(
               title: 'Bilancia Web',

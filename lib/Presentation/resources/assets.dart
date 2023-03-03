@@ -40,4 +40,5 @@ class Assets {
   static const String notFoundImage = "assets/images/notFound.png";
   static const String nextToFirstImage = "assets/images/nextToFirst.png";
   static const String nextToLastImage = "assets/images/nextToLast.png";
+  static const String exportImage = "assets/images/export.png";
 }

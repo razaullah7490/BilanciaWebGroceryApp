@@ -23,4 +23,5 @@ class ApiUrls {
   static const String notificationUrl = "$baseUrl/manager/notification";
   static const String productionParkUrl = "$baseUrl/manager/production-park/";
   static const String commandUrl = "$baseUrl/manager/microserver";
+  static const String exportUrl = "$baseUrl/manager/warehouse/";
 }
