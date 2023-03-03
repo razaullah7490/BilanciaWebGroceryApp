@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_typing_uninitialized_variables
 import 'dart:developer';
+
 import 'package:grocery/Application/exports.dart';
 
 import '../../../../../../../Application/functions.dart';
@@ -111,10 +112,6 @@ class _AddCategoryScreenState extends State<AddCategoryScreen> {
 
                         await context.read<CategoryCubit>().addCategory(map);
                       }
-
-
-
-
                     },
                   );
                 })),
@@ -174,7 +171,6 @@ class _AddCategoryScreenState extends State<AddCategoryScreen> {
           CustomSizedBox.height(20),
           textFieldUpperText(AppStrings.minValueText),
           CustomTextField(
-
             labelText: AppStrings.minValueText,
             hintText: AppStrings.enterMinValueText,
             suffixIcon: const Text(""),
@@ -215,7 +211,6 @@ class _AddCategoryScreenState extends State<AddCategoryScreen> {
           CustomSizedBox.height(20),
           textFieldUpperText(AppStrings.discountPriceText),
           CustomTextField(
-
             labelText: AppStrings.discountPriceText,
             hintText: AppStrings.enterDiscountPriceText,
             suffixIcon: const Text(""),
@@ -293,7 +288,7 @@ class _AddCategoryScreenState extends State<AddCategoryScreen> {
           CustomSizedBox.height(20),
           textFieldUpperText(AppStrings.keyModifierText),
           CustomTextField(
-
+            initialValue: "0",
             labelText: AppStrings.keyModifierText,
             hintText: AppStrings.enterKeyModifierText,
             suffixIcon: const Text(""),
@@ -314,7 +309,7 @@ class _AddCategoryScreenState extends State<AddCategoryScreen> {
           CustomSizedBox.height(20),
           textFieldUpperText(AppStrings.idGruppoText),
           CustomTextField(
-
+            initialValue: "1",
             labelText: AppStrings.idGruppoText,
             hintText: AppStrings.enterIdGruppoText,
             suffixIcon: const Text(""),
@@ -337,7 +332,7 @@ class _AddCategoryScreenState extends State<AddCategoryScreen> {
           CustomSizedBox.height(10),
           textFieldUpperText(AppStrings.idAuxLanText),
           CustomTextField(
-
+            initialValue: "0",
             labelText: AppStrings.idAuxLanText,
             hintText: AppStrings.enterIdAuxLanText,
             suffixIcon: const Text(""),
@@ -358,6 +353,7 @@ class _AddCategoryScreenState extends State<AddCategoryScreen> {
           CustomSizedBox.height(20),
           textFieldUpperText(AppStrings.tipoScontoText),
           CustomTextField(
+            initialValue: "0",
             labelText: AppStrings.tipoScontoText,
             hintText: AppStrings.enterTipoScontoText,
             suffixIcon: const Text(""),

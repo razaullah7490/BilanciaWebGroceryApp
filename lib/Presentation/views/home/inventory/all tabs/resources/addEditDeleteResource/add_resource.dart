@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_typing_uninitialized_variables, use_build_context_synchronously
 import 'dart:developer';
+
 import 'package:grocery/Application/exports.dart';
 
 import '../../../../../../../Application/functions.dart';
@@ -285,6 +286,7 @@ class _AddResourceScreenState extends State<AddResourceScreen> {
           CustomSizedBox.height(20),
           textFieldUpperText(AppStrings.stockQuantityText),
           CustomTextField(
+            initialValue: "0",
             // controller: stockQuantityController,
             labelText: AppStrings.stockQuantityText,
             hintText: AppStrings.enterStockQuantityText,
@@ -306,6 +308,7 @@ class _AddResourceScreenState extends State<AddResourceScreen> {
           CustomSizedBox.height(20),
           textFieldUpperText(AppStrings.stockQuantityThresholdText),
           CustomTextField(
+            initialValue: "0",
             // controller: stockQuantityThresholdController,
             labelText: AppStrings.stockQuantityThresholdText,
             hintText: AppStrings.enterStockQuantityThresholdText,
@@ -393,6 +396,7 @@ class _AddResourceScreenState extends State<AddResourceScreen> {
           CustomSizedBox.height(20),
           textFieldUpperText(AppStrings.shelfLifeText),
           CustomTextField(
+            initialValue: "7",
             // controller: shelfLifeController,
             labelText: AppStrings.shelfLifeText,
             hintText: AppStrings.enterShelfLifeText,
@@ -515,6 +519,7 @@ class _AddResourceScreenState extends State<AddResourceScreen> {
           CustomSizedBox.height(20),
           textFieldUpperText(AppStrings.tareText),
           CustomTextField(
+            initialValue: "0",
             // controller: tareController,
             labelText: AppStrings.tareText,
             hintText: AppStrings.enterTareText,
@@ -612,6 +617,7 @@ class _AddResourceScreenState extends State<AddResourceScreen> {
           CustomSizedBox.height(20),
           textFieldUpperText(AppStrings.threshold1Text),
           CustomTextField(
+            initialValue: "0",
             // controller: threshold1Controller,
             labelText: AppStrings.threshold1Text,
             hintText: AppStrings.enterThreshold1Text,
@@ -633,6 +639,7 @@ class _AddResourceScreenState extends State<AddResourceScreen> {
           CustomSizedBox.height(20),
           textFieldUpperText(AppStrings.threshold2Text),
           CustomTextField(
+            initialValue: "0",
             // controller: threshold2Controller,
             labelText: AppStrings.threshold2Text,
             hintText: AppStrings.enterThreshold2Text,
@@ -654,6 +661,7 @@ class _AddResourceScreenState extends State<AddResourceScreen> {
           CustomSizedBox.height(20),
           textFieldUpperText(AppStrings.price1Text),
           CustomTextField(
+            initialValue: "0",
             // controller: price1Controller,
             labelText: AppStrings.price1Text,
             hintText: AppStrings.enterPrice1Text,
@@ -675,6 +683,7 @@ class _AddResourceScreenState extends State<AddResourceScreen> {
           CustomSizedBox.height(20),
           textFieldUpperText(AppStrings.price2Text),
           CustomTextField(
+            initialValue: "0",
             // controller: price2Controller,
             labelText: AppStrings.price2Text,
             hintText: AppStrings.enterPrice2Text,
@@ -722,6 +731,7 @@ class _AddResourceScreenState extends State<AddResourceScreen> {
           CustomSizedBox.height(20),
           textFieldUpperText(AppStrings.traceabilityIdText),
           CustomTextField(
+            initialValue: "0",
             // controller: traceabilityIdController,
             labelText: AppStrings.traceabilityIdText,
             hintText: AppStrings.enterTraceabilityIdText,
