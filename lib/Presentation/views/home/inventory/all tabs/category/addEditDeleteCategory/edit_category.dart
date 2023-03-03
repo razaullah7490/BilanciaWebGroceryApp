@@ -1,6 +1,8 @@
 // ignore_for_file: prefer_typing_uninitialized_variables
 import 'package:grocery/Application/exports.dart';
 
+import '../../../../../../../Application/functions.dart';
+
 class EditCategoryScreen extends StatefulWidget {
   final CategoryModel model;
   const EditCategoryScreen({
@@ -153,11 +155,14 @@ class _EditCategoryScreenState extends State<EditCategoryScreen> {
           ),
           CustomSizedBox.height(20),
           CustomTextField(
-            controller: defaultPriceController,
+            initialValue: widget.model.defaultPrice.toString(),
             labelText: AppStrings.defaultPriceText,
             hintText: AppStrings.enterDefaultPriceText,
             suffixIcon: const Text(""),
             obscureText: false,
+            onChanged: (v) {
+              commaReplaceToDot(defaultPriceController, v);
+            },
             textInputType: const TextInputType.numberWithOptions(decimal: true),
             validator: (v) {
               if (v!.trim().isEmpty) {
@@ -169,11 +174,14 @@ class _EditCategoryScreenState extends State<EditCategoryScreen> {
           ),
           CustomSizedBox.height(20),
           CustomTextField(
-            controller: minValueContoller,
+            initialValue: widget.model.minPrice.toString(),
             labelText: AppStrings.minValueText,
             hintText: AppStrings.enterMinValueText,
             suffixIcon: const Text(""),
             obscureText: false,
+            onChanged: (v) {
+              commaReplaceToDot(minValueContoller, v);
+            },
             textInputType: const TextInputType.numberWithOptions(decimal: true),
             validator: (v) {
               if (v!.trim().isEmpty) {
@@ -185,11 +193,14 @@ class _EditCategoryScreenState extends State<EditCategoryScreen> {
           ),
           CustomSizedBox.height(20),
           CustomTextField(
-            controller: maxValueController,
+            initialValue: widget.model.maxPrice.toString(),
             labelText: AppStrings.maxValueText,
             hintText: AppStrings.enterMaxValueText,
             suffixIcon: const Text(""),
             obscureText: false,
+            onChanged: (v) {
+              commaReplaceToDot(maxValueController, v);
+            },
             textInputType: const TextInputType.numberWithOptions(decimal: true),
             validator: (v) {
               if (v!.trim().isEmpty) {
@@ -201,11 +212,14 @@ class _EditCategoryScreenState extends State<EditCategoryScreen> {
           ),
           CustomSizedBox.height(20),
           CustomTextField(
-            controller: discountPriceContoller,
+            initialValue: widget.model.discountPrice.toString(),
             labelText: AppStrings.discountPriceText,
             hintText: AppStrings.enterDiscountPriceText,
             suffixIcon: const Text(""),
             obscureText: false,
+            onChanged: (v) {
+              commaReplaceToDot(discountPriceContoller, v);
+            },
             textInputType: const TextInputType.numberWithOptions(decimal: true),
             validator: (v) {
               if (v!.trim().isEmpty) {
@@ -274,11 +288,14 @@ class _EditCategoryScreenState extends State<EditCategoryScreen> {
           }),
           CustomSizedBox.height(20),
           CustomTextField(
-            controller: keyModifierController,
+            initialValue: widget.model.keyModifier.toString(),
             labelText: AppStrings.keyModifierText,
             hintText: AppStrings.enterKeyModifierText,
             suffixIcon: const Text(""),
             obscureText: false,
+            onChanged: (v) {
+              commaReplaceToDot(keyModifierController, v);
+            },
             textInputType: const TextInputType.numberWithOptions(decimal: true),
             validator: (v) {
               if (v!.trim().isEmpty) {
@@ -290,11 +307,14 @@ class _EditCategoryScreenState extends State<EditCategoryScreen> {
           ),
           CustomSizedBox.height(20),
           CustomTextField(
-            controller: idGruppoController,
+            initialValue: widget.model.idGruppo.toString(),
             labelText: AppStrings.idGruppoText,
             hintText: AppStrings.enterIdGruppoText,
             suffixIcon: const Text(""),
             obscureText: false,
+            onChanged: (v) {
+              commaReplaceToDot(idGruppoController, v);
+            },
             textInputType: const TextInputType.numberWithOptions(decimal: true),
             validator: (v) {
               if (v!.trim().isEmpty) {
@@ -308,11 +328,14 @@ class _EditCategoryScreenState extends State<EditCategoryScreen> {
           battSingolaWidget(),
           CustomSizedBox.height(10),
           CustomTextField(
-            controller: idAuxLanController,
+            initialValue: widget.model.idAuxLan.toString(),
             labelText: AppStrings.idAuxLanText,
             hintText: AppStrings.enterIdAuxLanText,
             suffixIcon: const Text(""),
             obscureText: false,
+            onChanged: (v) {
+              commaReplaceToDot(idAuxLanController, v);
+            },
             textInputType: const TextInputType.numberWithOptions(decimal: true),
             validator: (v) {
               if (v!.trim().isEmpty) {
@@ -324,11 +347,15 @@ class _EditCategoryScreenState extends State<EditCategoryScreen> {
           ),
           CustomSizedBox.height(20),
           CustomTextField(
-            controller: tipoScontoController,
+            initialValue: widget.model.tipoSconto.toString(),
             labelText: AppStrings.tipoScontoText,
             hintText: AppStrings.enterTipoScontoText,
             suffixIcon: const Text(""),
             obscureText: false,
+            onChanged: (v) {
+              commaReplaceToDot(tipoScontoController, v);
+
+            },
             textInputType: const TextInputType.numberWithOptions(decimal: true),
             validator: (v) {
               if (v!.trim().isEmpty) {

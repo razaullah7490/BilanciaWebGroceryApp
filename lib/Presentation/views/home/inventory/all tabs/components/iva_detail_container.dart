@@ -1,6 +1,8 @@
 // ignore_for_file: use_build_context_synchronously
 import 'package:grocery/Application/exports.dart';
 
+import '../../../../../../Application/functions.dart';
+
 class IVADetailContainer extends StatefulWidget {
   final IvaModel model;
   const IVADetailContainer({
@@ -59,7 +61,11 @@ class _IVADetailContainerState extends State<IVADetailContainer> {
                             )
                           : Flexible(
                               child: IvaTextField(
-                                controller: ivaValueController,
+                                // controller: ivaValueController,
+                                initialValue: widget.model.value.toString(),
+                                onChanged: (v) {
+                                  commaReplaceToDot(ivaValueController, v);
+                                },
                               ),
                             ),
                     ],
@@ -191,10 +197,14 @@ class _IVADetailContainerState extends State<IVADetailContainer> {
 }
 
 class IvaTextField extends StatelessWidget {
-  final TextEditingController controller;
+  final TextEditingController? controller;
+  final ValueChanged? onChanged;
+  final String? initialValue;
   const IvaTextField({
     super.key,
-    required this.controller,
+    this.controller,
+    this.onChanged,
+    this.initialValue,
   });
 
   @override
@@ -203,6 +213,8 @@ class IvaTextField extends StatelessWidget {
       width: 100.w,
       height: 30.h,
       child: TextFormField(
+        initialValue: initialValue,
+        onChanged: onChanged,
         controller: controller,
         autofocus: true,
         keyboardType:const TextInputType.numberWithOptions(decimal: true),

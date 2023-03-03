@@ -2,6 +2,8 @@
 import 'dart:developer';
 import 'package:grocery/Application/exports.dart';
 
+import '../../../../../../../Application/functions.dart';
+
 class AddProceedResourceActionScreen extends StatefulWidget {
   final ProceedResourceData model;
   const AddProceedResourceActionScreen({
@@ -171,7 +173,10 @@ class _AddProceedResourceActionScreenState
           CustomSizedBox.height(20),
           textFieldUpperText(AppStrings.quantityOnlyText),
           CustomTextField(
-            controller: quantityController,
+            onChanged: (v) {
+              commaReplaceToDot(quantityController, v);
+            },
+            // controller: quantityController,
             labelText: AppStrings.quantityOnlyText,
             hintText: AppStrings.enterQuantityText,
             suffixIcon: const Text(""),
@@ -189,7 +194,10 @@ class _AddProceedResourceActionScreenState
           CustomSizedBox.height(20),
           textFieldUpperText(AppStrings.moneyText),
           CustomTextField(
-            controller: moneyController,
+            onChanged: (v) {
+              commaReplaceToDot(moneyController, v);
+            },
+            // controller: moneyController,
             labelText: AppStrings.moneyText,
             hintText: AppStrings.enterMoneyText,
             suffixIcon: const Text(""),
@@ -236,7 +244,10 @@ class _AddProceedResourceActionScreenState
           CustomSizedBox.height(20),
           textFieldUpperText(AppStrings.priceCounterText),
           CustomTextField(
-            controller: printCounterController,
+            // controller: printCounterController,
+            onChanged: (v) {
+              commaReplaceToDot(printCounterController, v);
+            },
             labelText: AppStrings.priceCounterText,
             hintText: AppStrings.enterPriceCounterText,
             suffixIcon: const Text(""),

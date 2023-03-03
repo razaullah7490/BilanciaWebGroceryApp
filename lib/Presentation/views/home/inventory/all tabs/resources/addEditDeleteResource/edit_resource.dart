@@ -2,6 +2,8 @@
 import 'dart:developer';
 import 'package:grocery/Application/exports.dart';
 
+import '../../../../../../../Application/functions.dart';
+
 class EditResourceScreen extends StatefulWidget {
   final ResourcesModel model;
   const EditResourceScreen({
@@ -375,11 +377,15 @@ class _EditResourceScreenState extends State<EditResourceScreen> {
           ),
           CustomSizedBox.height(20),
           CustomTextField(
-            controller: stockQuantityController,
+            // controller: stockQuantityController,
+            initialValue: widget.model.stockQuantity.toString(),
             labelText: AppStrings.stockQuantityText,
             hintText: AppStrings.enterStockQuantityText,
             suffixIcon: const Text(""),
             obscureText: false,
+            onChanged: (v) {
+              commaReplaceToDot(stockQuantityController, v);
+            },
             textInputType: const TextInputType.numberWithOptions(decimal: true),
             validator: (v) {
               if (v!.trim().isEmpty) {
@@ -391,11 +397,15 @@ class _EditResourceScreenState extends State<EditResourceScreen> {
           ),
           CustomSizedBox.height(20),
           CustomTextField(
-            controller: stockQuantityThresholdController,
+            // controller: stockQuantityThresholdController,
+            initialValue: widget.model.stockQuantityThreshold.toString(),
             labelText: AppStrings.stockQuantityThresholdText,
             hintText: AppStrings.enterStockQuantityThresholdText,
             suffixIcon: const Text(""),
             obscureText: false,
+            onChanged: (v) {
+              commaReplaceToDot(stockQuantityThresholdController, v);
+            },
             textInputType: const TextInputType.numberWithOptions(decimal: true),
             validator: (v) {
               if (v!.trim().isEmpty) {
@@ -450,11 +460,15 @@ class _EditResourceScreenState extends State<EditResourceScreen> {
           ),
           CustomSizedBox.height(20),
           CustomTextField(
-            controller: pluController,
+            initialValue: widget.model.plu.toString(),
+            // controller: pluController,
             labelText: AppStrings.pluText,
             hintText: AppStrings.enterPluText,
             suffixIcon: const Text(""),
             obscureText: false,
+            onChanged: (v) {
+              commaReplaceToDot(pluController, v);
+            },
             textInputType: const TextInputType.numberWithOptions(decimal: true),
             validator: (v) {
               if (v!.trim().isEmpty) {
@@ -466,11 +480,15 @@ class _EditResourceScreenState extends State<EditResourceScreen> {
           ),
           CustomSizedBox.height(20),
           CustomTextField(
-            controller: shelfLifeController,
+            initialValue: widget.model.shelfLife.toString(),
+            // controller: shelfLifeController,
             labelText: AppStrings.shelfLifeText,
             hintText: AppStrings.enterShelfLifeText,
             suffixIcon: const Text(""),
             obscureText: false,
+            onChanged: (v) {
+              commaReplaceToDot(shelfLifeController, v);
+            },
             textInputType: const TextInputType.numberWithOptions(decimal: true),
             validator: (v) {
               if (v!.trim().isEmpty) {
@@ -482,11 +500,15 @@ class _EditResourceScreenState extends State<EditResourceScreen> {
           ),
           CustomSizedBox.height(20),
           CustomTextField(
-            controller: unitSalePriceController,
+            initialValue: widget.model.unitSalePrice.toString(),
+            // controller: unitSalePriceController,
             labelText: AppStrings.unitSalePriceText,
             hintText: AppStrings.enterUnitSalePriceText,
             suffixIcon: const Text(""),
             obscureText: false,
+            onChanged: (v) {
+              commaReplaceToDot(unitSalePriceController, v);
+            },
             textInputType: const TextInputType.numberWithOptions(decimal: true),
             validator: (v) {
               if (v!.trim().isEmpty) {
@@ -498,11 +520,15 @@ class _EditResourceScreenState extends State<EditResourceScreen> {
           ),
           CustomSizedBox.height(20),
           CustomTextField(
-            controller: unitPurchasePriceController,
+            // controller: unitPurchasePriceController,
+            initialValue: widget.model.unitPurchasePrice.toString(),
             labelText: AppStrings.unitPurchasePriceText,
             hintText: AppStrings.enterUnitPurchasePriceText,
             suffixIcon: const Text(""),
             obscureText: false,
+            onChanged: (v) {
+              commaReplaceToDot(unitPurchasePriceController, v);
+            },
             textInputType: const TextInputType.numberWithOptions(decimal: true),
             validator: (v) {
               // if (v!.trim().isEmpty) {
@@ -514,11 +540,15 @@ class _EditResourceScreenState extends State<EditResourceScreen> {
           ),
           CustomSizedBox.height(20),
           CustomTextField(
-            controller: revenuePercentageController,
+            initialValue: widget.model.revenuePercentage.toString(),
+            // controller: revenuePercentageController,
             labelText: AppStrings.revenuePercentageText,
             hintText: AppStrings.enterRevenuePercentageText,
             suffixIcon: const Text(""),
             obscureText: false,
+            onChanged: (v) {
+              commaReplaceToDot(revenuePercentageController, v);
+            },
             textInputType: const TextInputType.numberWithOptions(decimal: true),
             validator: (v) {
               // if (v!.trim().isEmpty) {
@@ -569,11 +599,15 @@ class _EditResourceScreenState extends State<EditResourceScreen> {
           CustomSizedBox.height(20),
           textFieldUpperText(AppStrings.tareText),
           CustomTextField(
-            controller: tareController,
+            // controller: tareController,
+            initialValue: widget.model.tare.toString(),
             labelText: AppStrings.tareText,
             hintText: AppStrings.enterTareText,
             suffixIcon: const Text(""),
             obscureText: false,
+            onChanged: (v) {
+              commaReplaceToDot(tareController, v);
+            },
             textInputType: const TextInputType.numberWithOptions(decimal: true),
             isLabel: false,
             validator: (v) {
@@ -658,11 +692,15 @@ class _EditResourceScreenState extends State<EditResourceScreen> {
           ),
           CustomSizedBox.height(20),
           CustomTextField(
-            controller: threshold1Controller,
+            // controller: threshold1Controller,
+            initialValue: widget.model.threshold1.toString(),
             labelText: AppStrings.threshold1Text,
             hintText: AppStrings.enterThreshold1Text,
             suffixIcon: const Text(""),
             obscureText: false,
+            onChanged: (v) {
+              commaReplaceToDot(threshold1Controller, v);
+            },
             textInputType: const TextInputType.numberWithOptions(decimal: true),
             validator: (v) {
               if (v!.trim().isEmpty) {
@@ -674,11 +712,15 @@ class _EditResourceScreenState extends State<EditResourceScreen> {
           ),
           CustomSizedBox.height(20),
           CustomTextField(
-            controller: threshold2Controller,
+            // controller: threshold2Controller,
+            initialValue: widget.model.threshold2.toString(),
             labelText: AppStrings.threshold2Text,
             hintText: AppStrings.enterThreshold2Text,
             suffixIcon: const Text(""),
             obscureText: false,
+            onChanged: (v) {
+              commaReplaceToDot(threshold2Controller, v);
+            },
             textInputType: const TextInputType.numberWithOptions(decimal: true),
             validator: (v) {
               if (v!.trim().isEmpty) {
@@ -690,11 +732,15 @@ class _EditResourceScreenState extends State<EditResourceScreen> {
           ),
           CustomSizedBox.height(20),
           CustomTextField(
-            controller: price1Controller,
+            initialValue: widget.model.price1.toString(),
+            // controller: price1Controller,
             labelText: AppStrings.price1Text,
             hintText: AppStrings.enterPrice1Text,
             suffixIcon: const Text(""),
             obscureText: false,
+            onChanged: (v) {
+              commaReplaceToDot(price1Controller, v);
+            },
             textInputType: const TextInputType.numberWithOptions(decimal: true),
             validator: (v) {
               if (v!.trim().isEmpty) {
@@ -706,11 +752,15 @@ class _EditResourceScreenState extends State<EditResourceScreen> {
           ),
           CustomSizedBox.height(20),
           CustomTextField(
-            controller: price2Controller,
+            // controller: price2Controller,
             labelText: AppStrings.price2Text,
+            initialValue: widget.model.price2.toString(),
             hintText: AppStrings.enterPrice2Text,
             suffixIcon: const Text(""),
             obscureText: false,
+            onChanged: (v) {
+              commaReplaceToDot(price2Controller, v);
+            },
             textInputType: const TextInputType.numberWithOptions(decimal: true),
             validator: (v) {
               if (v!.trim().isEmpty) {
@@ -742,11 +792,15 @@ class _EditResourceScreenState extends State<EditResourceScreen> {
           ),
           CustomSizedBox.height(20),
           CustomTextField(
-            controller: traceabilityIdController,
+            // controller: traceabilityIdController,
+            initialValue: widget.model.traceabilityId.toString(),
             labelText: AppStrings.traceabilityIdText,
             hintText: AppStrings.enterTraceabilityIdText,
             suffixIcon: const Text(""),
             obscureText: false,
+            onChanged: (v) {
+              commaReplaceToDot(traceabilityIdController, v);
+            },
             textInputType: const TextInputType.numberWithOptions(decimal: true),
             validator: (v) {
               if (v!.trim().isEmpty) {

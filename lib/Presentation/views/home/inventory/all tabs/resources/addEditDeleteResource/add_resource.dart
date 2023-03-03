@@ -2,6 +2,8 @@
 import 'dart:developer';
 import 'package:grocery/Application/exports.dart';
 
+import '../../../../../../../Application/functions.dart';
+
 class AddResourceScreen extends StatefulWidget {
   const AddResourceScreen({super.key});
 
@@ -283,11 +285,14 @@ class _AddResourceScreenState extends State<AddResourceScreen> {
           CustomSizedBox.height(20),
           textFieldUpperText(AppStrings.stockQuantityText),
           CustomTextField(
-            controller: stockQuantityController,
+            // controller: stockQuantityController,
             labelText: AppStrings.stockQuantityText,
             hintText: AppStrings.enterStockQuantityText,
             suffixIcon: const Text(""),
             obscureText: false,
+            onChanged: (v) {
+              commaReplaceToDot(stockQuantityController, v);
+            },
             textInputType: const TextInputType.numberWithOptions(decimal: true),
             isLabel: false,
             validator: (v) {
@@ -301,11 +306,14 @@ class _AddResourceScreenState extends State<AddResourceScreen> {
           CustomSizedBox.height(20),
           textFieldUpperText(AppStrings.stockQuantityThresholdText),
           CustomTextField(
-            controller: stockQuantityThresholdController,
+            // controller: stockQuantityThresholdController,
             labelText: AppStrings.stockQuantityThresholdText,
             hintText: AppStrings.enterStockQuantityThresholdText,
             suffixIcon: const Text(""),
             obscureText: false,
+            onChanged: (v) {
+              commaReplaceToDot(stockQuantityThresholdController, v);
+            },
             textInputType: const TextInputType.numberWithOptions(decimal: true),
             isLabel: false,
             validator: (v) {
@@ -364,11 +372,14 @@ class _AddResourceScreenState extends State<AddResourceScreen> {
           CustomSizedBox.height(20),
           textFieldUpperText(AppStrings.pluText),
           CustomTextField(
-            controller: pluController,
+            // controller: pluController,
             labelText: AppStrings.pluText,
             hintText: AppStrings.enterPluText,
             suffixIcon: const Text(""),
             obscureText: false,
+            onChanged: (v) {
+              commaReplaceToDot(pluController, v);
+            },
             textInputType: const TextInputType.numberWithOptions(decimal: true),
             isLabel: false,
             validator: (v) {
@@ -382,11 +393,14 @@ class _AddResourceScreenState extends State<AddResourceScreen> {
           CustomSizedBox.height(20),
           textFieldUpperText(AppStrings.shelfLifeText),
           CustomTextField(
-            controller: shelfLifeController,
+            // controller: shelfLifeController,
             labelText: AppStrings.shelfLifeText,
             hintText: AppStrings.enterShelfLifeText,
             suffixIcon: const Text(""),
             obscureText: false,
+            onChanged: (v) {
+              commaReplaceToDot(shelfLifeController, v);
+            },
             textInputType: const TextInputType.numberWithOptions(decimal: true),
             isLabel: false,
             validator: (v) {
@@ -400,11 +414,14 @@ class _AddResourceScreenState extends State<AddResourceScreen> {
           CustomSizedBox.height(20),
           textFieldUpperText(AppStrings.unitSalePriceText),
           CustomTextField(
-            controller: unitSalePriceController,
+            // controller: unitSalePriceController,
             labelText: AppStrings.unitSalePriceText,
             hintText: AppStrings.enterUnitSalePriceText,
             suffixIcon: const Text(""),
             obscureText: false,
+            onChanged: (v) {
+              commaReplaceToDot(unitSalePriceController, v);
+            },
             textInputType: const TextInputType.numberWithOptions(decimal: true),
             isLabel: false,
             validator: (v) {
@@ -418,11 +435,14 @@ class _AddResourceScreenState extends State<AddResourceScreen> {
           CustomSizedBox.height(20),
           textFieldUpperText(AppStrings.unitPurchasePriceText),
           CustomTextField(
-            controller: unitPurchasePriceController,
+            // controller: unitPurchasePriceController,
             labelText: AppStrings.unitPurchasePriceText,
             hintText: AppStrings.enterUnitPurchasePriceText,
             suffixIcon: const Text(""),
             obscureText: false,
+            onChanged: (v) {
+              commaReplaceToDot(unitPurchasePriceController, v);
+            },
             textInputType: const TextInputType.numberWithOptions(decimal: true),
             isLabel: false,
             validator: (v) {
@@ -436,11 +456,14 @@ class _AddResourceScreenState extends State<AddResourceScreen> {
           CustomSizedBox.height(20),
           textFieldUpperText(AppStrings.revenuePercentageText),
           CustomTextField(
-            controller: revenuePercentageController,
+            // controller: revenuePercentageController,
             labelText: AppStrings.revenuePercentageText,
             hintText: AppStrings.enterRevenuePercentageText,
             suffixIcon: const Text(""),
             obscureText: false,
+            onChanged: (v) {
+              commaReplaceToDot(revenuePercentageController, v);
+            },
             textInputType: const TextInputType.numberWithOptions(decimal: true),
             isLabel: false,
             validator: (v) {
@@ -492,11 +515,14 @@ class _AddResourceScreenState extends State<AddResourceScreen> {
           CustomSizedBox.height(20),
           textFieldUpperText(AppStrings.tareText),
           CustomTextField(
-            controller: tareController,
+            // controller: tareController,
             labelText: AppStrings.tareText,
             hintText: AppStrings.enterTareText,
             suffixIcon: const Text(""),
             obscureText: false,
+            onChanged: (v) {
+              commaReplaceToDot(tareController, v);
+            },
             textInputType: const TextInputType.numberWithOptions(decimal: true),
             isLabel: false,
             validator: (v) {
@@ -586,11 +612,14 @@ class _AddResourceScreenState extends State<AddResourceScreen> {
           CustomSizedBox.height(20),
           textFieldUpperText(AppStrings.threshold1Text),
           CustomTextField(
-            controller: threshold1Controller,
+            // controller: threshold1Controller,
             labelText: AppStrings.threshold1Text,
             hintText: AppStrings.enterThreshold1Text,
             suffixIcon: const Text(""),
             obscureText: false,
+            onChanged: (v) {
+              commaReplaceToDot(threshold1Controller, v);
+            },
             textInputType: const TextInputType.numberWithOptions(decimal: true),
             isLabel: false,
             validator: (v) {
@@ -604,11 +633,14 @@ class _AddResourceScreenState extends State<AddResourceScreen> {
           CustomSizedBox.height(20),
           textFieldUpperText(AppStrings.threshold2Text),
           CustomTextField(
-            controller: threshold2Controller,
+            // controller: threshold2Controller,
             labelText: AppStrings.threshold2Text,
             hintText: AppStrings.enterThreshold2Text,
             suffixIcon: const Text(""),
             obscureText: false,
+            onChanged: (v) {
+              commaReplaceToDot(threshold2Controller, v);
+            },
             textInputType: const TextInputType.numberWithOptions(decimal: true),
             isLabel: false,
             validator: (v) {
@@ -622,11 +654,14 @@ class _AddResourceScreenState extends State<AddResourceScreen> {
           CustomSizedBox.height(20),
           textFieldUpperText(AppStrings.price1Text),
           CustomTextField(
-            controller: price1Controller,
+            // controller: price1Controller,
             labelText: AppStrings.price1Text,
             hintText: AppStrings.enterPrice1Text,
             suffixIcon: const Text(""),
             obscureText: false,
+            onChanged: (v) {
+              commaReplaceToDot(price1Controller, v);
+            },
             textInputType: const TextInputType.numberWithOptions(decimal: true),
             isLabel: false,
             validator: (v) {
@@ -640,11 +675,14 @@ class _AddResourceScreenState extends State<AddResourceScreen> {
           CustomSizedBox.height(20),
           textFieldUpperText(AppStrings.price2Text),
           CustomTextField(
-            controller: price2Controller,
+            // controller: price2Controller,
             labelText: AppStrings.price2Text,
             hintText: AppStrings.enterPrice2Text,
             suffixIcon: const Text(""),
             obscureText: false,
+            onChanged: (v) {
+              commaReplaceToDot(price2Controller, v);
+            },
             textInputType: const TextInputType.numberWithOptions(decimal: true),
             isLabel: false,
             validator: (v) {
@@ -684,11 +722,14 @@ class _AddResourceScreenState extends State<AddResourceScreen> {
           CustomSizedBox.height(20),
           textFieldUpperText(AppStrings.traceabilityIdText),
           CustomTextField(
-            controller: traceabilityIdController,
+            // controller: traceabilityIdController,
             labelText: AppStrings.traceabilityIdText,
             hintText: AppStrings.enterTraceabilityIdText,
             suffixIcon: const Text(""),
             obscureText: false,
+            onChanged: (v) {
+              commaReplaceToDot(traceabilityIdController, v);
+            },
             textInputType: const TextInputType.numberWithOptions(decimal: true),
             isLabel: false,
             validator: (v) {

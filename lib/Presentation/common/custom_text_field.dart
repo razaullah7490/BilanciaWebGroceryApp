@@ -1,7 +1,9 @@
 import 'package:grocery/Application/exports.dart';
 
+import '../../Application/functions.dart';
+
 class CustomTextField extends StatefulWidget {
-  final TextEditingController controller;
+  final TextEditingController? controller;
   final String labelText;
   final String hintText;
   final Widget suffixIcon;
@@ -9,8 +11,13 @@ class CustomTextField extends StatefulWidget {
   final TextInputType textInputType;
   final String? Function(String?)? validator;
   final bool isLabel;
+  // final List<TextInputFormatter>? inputFormatters;
+  final ValueChanged? onChanged;
+final String? initialValue;
+// final bool? isDotReplace;
   const CustomTextField({
-    required this.controller,
+    @required this.controller,
+    @required this.initialValue,
     required this.labelText,
     required this.hintText,
     required this.suffixIcon,
@@ -18,6 +25,9 @@ class CustomTextField extends StatefulWidget {
     required this.textInputType,
     required this.validator,
     this.isLabel = true,
+    // this.inputFormatters,
+    this.onChanged,
+    // this.isDotReplace = false,
     super.key,
   });
 
@@ -43,6 +53,18 @@ class _CustomTextFieldState extends State<CustomTextField> {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      initialValue: widget.initialValue,
+      onChanged: widget.onChanged,
+      // onChanged: (v){
+      //   // widget.controller?.text = v;
+      //   if(widget.isDotReplace!){
+      //     commaReplaceToDot(widget.controller!, v);
+      //   }
+      //   if(widget.onChanged != null){
+      //     widget.onChanged!(v);
+      //   }
+      // },
+      // inputFormatters: widget.inputFormatters,
       autovalidateMode: AutovalidateMode.onUserInteraction,
       focusNode: focusNode,
       onTap: requestFocus,
