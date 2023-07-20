@@ -1,6 +1,8 @@
 // ignore_for_file: use_build_context_synchronously
-import 'package:grocery/Application/exports.dart';
 import 'dart:developer';
+
+import 'package:app_tracking_transparency/app_tracking_transparency.dart';
+import 'package:grocery/Application/exports.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -36,8 +38,40 @@ class _LoginScreenState extends State<LoginScreen> {
     });
   }
 
+  transparencyDialog() async {
+    // If the system can show an authorization request dialog
+    if (await AppTrackingTransparency.trackingAuthorizationStatus ==
+        TrackingStatus.notDetermined) {
+      // Show a custom explainer dialog before the system dialog
+      await showCustomTrackingDialog(context);
+      // Wait for dialog popping animation
+      await Future.delayed(const Duration(milliseconds: 200));
+      // Request system's tracking authorization dialog
+      await AppTrackingTransparency.requestTrackingAuthorization();
+    }
+  }
+
+  Future<void> showCustomTrackingDialog(BuildContext context) async =>
+      await showDialog<void>(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: const Text('Dear User'),
+          content: const Text(
+            'We care about your privacy and data security. We keep this app free by showing product. '
+            'Can we continue to use your data to tailor product recommended for you?\n\nYou can change your choice anytime in the app settings. '
+            'Our partners will collect data and use a unique identifier on your device to show you ads.',
+          ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(context),
+              child: const Text('Continue'),
+            ),
+          ],
+        ),
+      );
   @override
   void initState() {
+    transparencyDialog();
     checkUserLogin();
     initDynamicLink();
     super.initState();
@@ -51,7 +85,6 @@ class _LoginScreenState extends State<LoginScreen> {
         slivers: [
           SliverFillRemaining(
             hasScrollBody: false,
-
             child: Column(
               children: [
                 Expanded(

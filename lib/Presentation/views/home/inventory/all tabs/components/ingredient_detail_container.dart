@@ -1,5 +1,6 @@
 // ignore_for_file: use_build_context_synchronously
 import 'dart:developer';
+
 import 'package:grocery/Application/exports.dart';
 
 class IngredientDetailContainer extends StatefulWidget {
@@ -174,7 +175,7 @@ class _IngredientDetailContainerState extends State<IngredientDetailContainer> {
         builder: (BuildContext context) {
           return BlocBuilder<IngredientsCubit, IngredientsState>(
             builder: (context, state) {
-              return DeleteItemDialogue(
+              return DeleteItemDialogue2(
                 text: widget.model.description!,
                 onDeleteButtonTap: () async {
                   var res = await context

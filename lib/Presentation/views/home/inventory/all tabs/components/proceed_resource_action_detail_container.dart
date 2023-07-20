@@ -128,7 +128,7 @@ class ProceedResourceActionDetailContainer extends StatelessWidget {
           return BlocBuilder<ProceedResourceActionCubit,
               ProceedResourceActionState>(
             builder: (context, state) {
-              return DeleteItemDialogue(
+              return DeleteItemDialogue2(
                 text: resourceActionName,
                 onDeleteButtonTap: () async {
                   await context

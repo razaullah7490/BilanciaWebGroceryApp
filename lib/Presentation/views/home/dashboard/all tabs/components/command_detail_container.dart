@@ -79,7 +79,7 @@ class CommandDetailContainer extends StatelessWidget {
         builder: (BuildContext context) {
           return BlocBuilder<CommandCubit, CommandState>(
             builder: (context, state) {
-              return DeleteItemDialogue(
+              return DeleteItemDialogue2(
                 text: model.commandType,
                 onDeleteButtonTap: () async {
                   await context.read<CommandCubit>().deleteCommand(model.id);

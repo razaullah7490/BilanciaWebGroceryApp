@@ -97,7 +97,7 @@ class TagDetailContainer extends StatelessWidget {
         builder: (BuildContext context) {
           return BlocBuilder<TagsCubit, TagsState>(
             builder: (context, state) {
-              return DeleteItemDialogue(
+              return DeleteItemDialogue2(
                 text: model.name.toString(),
                 onDeleteButtonTap: () async {
                   await context.read<TagsCubit>().deleteTag(model.id);

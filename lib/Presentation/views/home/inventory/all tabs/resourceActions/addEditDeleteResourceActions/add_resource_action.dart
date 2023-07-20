@@ -268,6 +268,7 @@ class _AddResourceActionScreenState extends State<AddResourceActionScreen> {
                 return null;
               }
             },
+            controller: null,
           ),
           CustomSizedBox.height(20),
           textFieldUpperText(AppStrings.resourceText),

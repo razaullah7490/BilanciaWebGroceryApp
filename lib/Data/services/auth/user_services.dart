@@ -1,7 +1,8 @@
 // ignore_for_file: depend_on_referenced_packages, unused_local_variable
 import 'dart:developer';
-import 'package:http/http.dart' as http;
+
 import 'package:grocery/Application/exports.dart';
+import 'package:http/http.dart' as http;
 
 class UserServices {
   Future<List<UserModel>> getUser() async {
@@ -44,6 +45,26 @@ class UserServices {
       log("testing ${res.statusCode}");
       log("Data ${res.body}");
       if (res.statusCode != 200) {
+        throw httpErrorHandler("no data");
+      }
+      return true;
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<bool> deleteAccount(id) async {
+    var token = await AppPrefs.getLoginToken();
+    try {
+      var res = await http.delete(
+        Uri.parse('${ApiUrls.deleteUrl}/$id'),
+        headers: {
+          "Authorization": "Token $token",
+        },
+      );
+      log("testing ${res.statusCode}");
+      log("Data ${res.body}");
+      if (res.statusCode != 204) {
         throw httpErrorHandler("no data");
       }
       return true;

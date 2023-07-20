@@ -19,8 +19,10 @@ class Assets {
   static const String barcode = "assets/images/barcode.png";
   static const String gallery = "assets/images/gallery.png";
   static const String delete = "assets/images/delete.png";
+  static const String deleteSuccess = 'assets/images/successdelete.png';
   static const String notification = "assets/images/notification.png";
   static const String editProfile = "assets/images/editProfile.png";
+  static const String deleteIcon = 'assets/images/deleteicon.png';
   static const String changePassword = "assets/images/changePassword.png";
   static const String settingNotification = "assets/images/notifications.png";
   static const String logout = "assets/images/logout.png";

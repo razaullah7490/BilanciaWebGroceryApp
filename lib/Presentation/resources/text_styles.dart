@@ -1,8 +1,10 @@
 import 'package:flutter/cupertino.dart';
 
 class Styles {
-  static TextStyle circularStdBook(double fontSize, Color color) {
+  static TextStyle circularStdBook(double fontSize, Color color,
+      {double letterSpacing = 0.0, double customH = 1}) {
     return TextStyle(
+      height: customH,
       fontSize: fontSize,
       color: color,
       fontFamily: "Circular Std Book",

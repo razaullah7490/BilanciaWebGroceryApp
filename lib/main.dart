@@ -1,4 +1,7 @@
 import 'dart:developer';
+
+import 'package:grocery/Application/Cubit/delete_account_cubit.dart';
+
 import 'Application/exports.dart';
 
 Future<void> main() async {
@@ -192,6 +195,8 @@ class _MyAppState extends State<MyApp> {
               BlocProvider<ExportCubit>(
                   create: (context) =>
                       ExportCubit(repo: context.read<ExportRepository>())),
+              BlocProvider<DeleteAccountCubit>(
+                  create: (context) => DeleteAccountCubit())
             ],
             child: MaterialApp(
               title: 'Bilancia Web',

@@ -1,5 +1,7 @@
 import 'package:grocery/Application/exports.dart';
 
+import 'DeleteScreens/delete_screen.dart';
+
 class SettingViewModel {
   static List<SettingGridModel> settingList = [
     SettingGridModel(
@@ -25,6 +27,14 @@ class SettingViewModel {
       iconColor: AppColors.dashContainerBack5,
       borderColor: AppColors.changePasswordborderColor,
       onTap: const ChangePasswordScreen(),
+    ),
+    SettingGridModel(
+      imageUrl: Assets.deleteIcon,
+      name: "Eliminare l'account",
+      backgroundColor: AppColors.changePasswordFillColor,
+      iconColor: AppColors.dashContainerBack5,
+      borderColor: AppColors.changePasswordborderColor,
+      onTap: const DeleteInfo(),
     ),
     // SettingGridModel(
     //   imageUrl: Assets.settingNotification,

@@ -161,7 +161,7 @@ class _IVADetailContainerState extends State<IVADetailContainer> {
         builder: (BuildContext context) {
           return BlocBuilder<ManagerIvaCubit, ManagerIvaState>(
             builder: (context, state) {
-              return DeleteItemDialogue(
+              return DeleteItemDialogue2(
                 text: widget.model.value.toString(),
                 onDeleteButtonTap: () async {
                   var res = await context
@@ -217,7 +217,7 @@ class IvaTextField extends StatelessWidget {
         onChanged: onChanged,
         controller: controller,
         autofocus: true,
-        keyboardType:const TextInputType.numberWithOptions(decimal: true),
+        keyboardType: const TextInputType.numberWithOptions(decimal: true),
         style: Styles.segoeUI(AppSize.text14.sp, AppColors.blackColor),
         cursorColor: AppColors.primaryColor,
         decoration: InputDecoration(

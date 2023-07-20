@@ -166,7 +166,7 @@ class ProceedResourceDetailContainer extends StatelessWidget {
         barrierColor: AppColors.deleteDialogueBarrierColor,
         context: context,
         builder: (BuildContext context) {
-          return DeleteItemDialogue(
+          return DeleteItemDialogue2(
             text: model.name.toString(),
             onDeleteButtonTap: () async {
               if (model.isDeleted != true) {

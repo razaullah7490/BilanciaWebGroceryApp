@@ -10,6 +10,7 @@ class ApiUrls {
   static const String resourcesUrl = "$baseUrl/manager/resource/";
   static const String resourcesActionUrl = "$baseUrl/manager/resource-action/";
   static const String userUrl = "$baseUrl/auth/user";
+  static const String deleteUrl = "$baseUrl/auth/delete";
   static const String proceedResourceUrl =
       "$baseUrl/manager/processed-resource/";
   static const String changePasswordUrl = "$baseUrl/auth/change-password/";

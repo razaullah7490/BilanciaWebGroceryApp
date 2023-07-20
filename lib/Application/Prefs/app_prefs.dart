@@ -78,4 +78,10 @@ class AppPrefs {
     var id = _prefs.getString(AppPrefsKeys.processedResourceId) ?? "";
     return id;
   }
+
+  static clearPref() async {
+    SharedPreferences _prefs = await SharedPreferences.getInstance();
+
+    await _prefs.clear();
+  }
 }

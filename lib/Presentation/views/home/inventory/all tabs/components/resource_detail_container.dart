@@ -143,7 +143,7 @@ class ResourceDetailContainer extends StatelessWidget {
         barrierColor: AppColors.deleteDialogueBarrierColor,
         context: context,
         builder: (BuildContext context) {
-          return DeleteItemDialogue(
+          return DeleteItemDialogue2(
             text: model.resourceName,
             onDeleteButtonTap: () {
               if (model.isDeleted != true) {

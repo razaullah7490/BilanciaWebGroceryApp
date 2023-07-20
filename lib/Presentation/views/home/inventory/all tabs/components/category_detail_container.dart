@@ -155,7 +155,7 @@ class CategoryDetailContainer extends StatelessWidget {
         barrierColor: AppColors.deleteDialogueBarrierColor,
         context: context,
         builder: (BuildContext context) {
-          return DeleteItemDialogue(
+          return DeleteItemDialogue2(
             text: model.categoryName,
             onDeleteButtonTap: () async {
               if (model.isDeleted != true) {
